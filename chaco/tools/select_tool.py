@@ -1,12 +1,10 @@
-
-
 # Enthought library imports
 from enable.api import BaseTool, KeySpec
 from traits.api import Enum, Float, Instance
 
 
 class SelectTool(BaseTool):
-    """ Base class for tools that handle some level of click-to-select
+    """Base class for tools that handle some level of click-to-select
     interaction.  Handles the logic of different kinds of selection
     modes.  Subclasses only need to implement a few concrete methods
     to handle actual selection/deselection.
@@ -35,11 +33,12 @@ class SelectTool(BaseTool):
 
     #: The modifier key to use to multi-select points.  Only used in **toggle**
     #: and **multi** selection modes.
-    multiselect_modifier = Instance(KeySpec, args=(None, "control"), allow_none=True)
-
+    multiselect_modifier = Instance(
+        KeySpec, args=(None, "control"), allow_none=True
+    )
 
     def _get_selection_state(self, event):
-        """ Returns a tuple reflecting the current selection state
+        """Returns a tuple reflecting the current selection state
 
         Parameters
         ----------
@@ -57,24 +56,22 @@ class SelectTool(BaseTool):
         raise NotImplementedError
 
     def _get_selection_token(self, event):
-        """ Returns a token corresponding to the selection event.  This token
+        """Returns a token corresponding to the selection event.  This token
         is passed in to the select and deselect methods.  By default, this
         just returns the event itself.
         """
         return event
 
     def _select(self, token, append=True):
-        """ Selects the given token.
-        """
+        """Selects the given token."""
         raise NotImplementedError
 
     def _deselect(self, token, append=True):
-        """ Deselects the given token.
-        """
+        """Deselects the given token."""
         raise NotImplementedError
 
     def normal_left_down(self, event):
-        """ Handles the left mouse button being pressed when the tool is in the
+        """Handles the left mouse button being pressed when the tool is in the
         'normal' state.
 
         If selecting is enabled and the cursor is within **threshold** of a
@@ -87,8 +84,9 @@ class SelectTool(BaseTool):
             modifier_down = self.multiselect_modifier.match(event)
             token = self._get_selection_token(event)
 
-            if (self.selection_mode == "single") or\
-                    (self.selection_mode == "multi" and not modifier_down):
+            if (self.selection_mode == "single") or (
+                self.selection_mode == "multi" and not modifier_down
+            ):
                 if clicked and not already_selected:
                     if self.selection_mode == "single" or not modifier_down:
                         self._select(token, append=False)
@@ -106,6 +104,3 @@ class SelectTool(BaseTool):
                         self._select(token)
                     event.handled = True
             return
-
-
-

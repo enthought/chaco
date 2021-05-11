@@ -30,42 +30,49 @@ class Demo(HasTraits):
 
     traits_view = View(
         Group(
-            UItem('plot', editor=ComponentEditor(size=(1000, 500))),
-            orientation="vertical"
+            UItem("plot", editor=ComponentEditor(size=(1000, 500))),
+            orientation="vertical",
         ),
-        resizable=True, title="Demo of image origin and orientation"
+        resizable=True,
+        title="Demo of image origin and orientation",
     )
 
     def _plot_default(self):
         # Create a GridContainer to hold all of our plots: 2 rows, 4 columns:
-        container = GridContainer(fill_padding=True,
-                                  bgcolor="lightgray", use_backbuffer=True,
-                                  shape=(2, 4))
+        container = GridContainer(
+            fill_padding=True,
+            bgcolor="lightgray",
+            use_backbuffer=True,
+            shape=(2, 4),
+        )
 
-        arrangements = [('top left', 'h'),
-                        ('top right', 'h'),
-                        ('top left', 'v'),
-                        ('top right', 'v'),
-                        ('bottom left', 'h'),
-                        ('bottom right', 'h'),
-                        ('bottom left', 'v'),
-                        ('bottom right', 'v')]
-        orientation_name = {'h': 'horizontal', 'v': 'vertical'}
+        arrangements = [
+            ("top left", "h"),
+            ("top right", "h"),
+            ("top left", "v"),
+            ("top right", "v"),
+            ("bottom left", "h"),
+            ("bottom right", "h"),
+            ("bottom left", "v"),
+            ("bottom right", "v"),
+        ]
+        orientation_name = {"h": "horizontal", "v": "vertical"}
 
         pd = ArrayPlotData(image=face())
         # Plot some bessel functions and add the plots to our container
         for origin, orientation in arrangements:
             plot = Plot(pd, default_origin=origin, orientation=orientation)
-            plot.img_plot('image')
+            plot.img_plot("image")
 
             # Attach some tools to the plot
             plot.tools.append(PanTool(plot))
             zoom = ZoomTool(plot, tool_mode="box", always_on=False)
             plot.overlays.append(zoom)
 
-            title = '{0}, {1}'
-            plot.title = title.format(orientation_name[orientation],
-                                      origin.replace(' ', '-'))
+            title = "{0}, {1}"
+            plot.title = title.format(
+                orientation_name[orientation], origin.replace(" ", "-")
+            )
 
             # Add to the grid container
             container.add(plot)

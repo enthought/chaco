@@ -9,24 +9,24 @@ addons:
     - ccache
     - cmake
     - swig
+    - libxkbcommon-x11-0
     - libglu1-mesa-dev
-
+    - libxcb-icccm4
+    - libxcb-image0
+    - libxcb-keysyms1
+    - libxcb-randr0
+    - libxcb-render-util0
+    - libxcb-xinerama0
+    
 env:
   global:
-    - INSTALL_EDM_VERSION=2.0.0
+    - INSTALL_EDM_VERSION=3.0.1
       PYTHONUNBUFFERED="1"
+      QT_DEBUG_PLUGINS="1"
 
 matrix:
   include:
-  - env: RUNTIME=2.7 TOOLKITS="null pyqt pyside wx"
-  - os : osx
-    env: RUNTIME=2.7 TOOLKITS="null pyqt pyside wx"
-  - env: RUNTIME=3.5 TOOLKITS="null pyqt"
-  - os : osx
-    env: RUNTIME=3.5 TOOLKITS="null pyqt"
-  - env: RUNTIME=3.6 TOOLKITS="null pyqt"
-  - os : osx
-    env: RUNTIME=3.6 TOOLKITS="null pyqt"
+  - env: RUNTIME=3.6 TOOLKITS="null pyqt pyqt5 pyside2"
   fast_finish: true
 
 branches:
@@ -51,8 +51,15 @@ before_install:
 
   - edm install -y wheel click coverage
 install:
-  - for toolkit in ${TOOLKITS}; do edm run -- python ci/edmtool.py install --runtime=${RUNTIME} --toolkit=${toolkit} || exit; done
+  - for toolkit in ${TOOLKITS}; do
+        if [[ ${TRAVIS_EVENT_TYPE} == "cron" ]] ; then
+          edm run -- python ci/edmtool.py install --runtime=${RUNTIME} --toolkit=${toolkit} --source || exit;
+        else
+          edm run -- python ci/edmtool.py install --runtime=${RUNTIME} --toolkit=${toolkit} || exit;
+        fi;
+    done
 script:
+  - if [[ ${TOOLKITS} == 'null' ]]; then edm run -- python ci/edmtool.py flake8 --runtime=${RUNTIME} --toolkit=null; fi
   - for toolkit in ${TOOLKITS}; do edm run -- python ci/edmtool.py test --runtime=${RUNTIME} --toolkit=${toolkit} || exit; done
 
 after_success:

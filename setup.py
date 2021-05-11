@@ -6,6 +6,7 @@ import subprocess
 
 from numpy import get_include
 from setuptools import setup, Extension, find_packages
+from Cython.Build import cythonize
 
 MAJOR = 4
 MINOR = 8
@@ -94,7 +95,7 @@ if not is_released:
     # write_version_py(), otherwise the import of _version messes
     # up the build under Python 3.
     fullversion = VERSION
-    chaco_version_path =  os.path.join(
+    chaco_version_path = os.path.join(
         os.path.dirname(__file__), 'chaco', '_version.py')
     if os.path.exists('.git'):
         git_rev, dev_num = git_version()
@@ -106,7 +107,6 @@ if not is_released:
             raise RuntimeError("Unable to read git_revision. Try removing "
                                "chaco/_version.py and the build directory "
                                "before building.")
-
 
         match = re.match(r'.*?\.dev(?P<dev_num>\d+)', fullversion)
         if match is None:
@@ -143,35 +143,29 @@ if __name__ == "__main__":
 
     cython_speedups = Extension(
         'chaco._cython_speedups',
-        sources=['chaco/_cython_speedups.c'],
+        sources=['chaco/_cython_speedups.pyx'],
         include_dirs=[numpy_include_dir],
     )
 
     downsampling_lttb = Extension(
         'chaco.downsample._lttb',
-        sources=['chaco/downsample/_lttb.c'],
+        sources=['chaco/downsample/_lttb.pyx'],
         include_dirs=[numpy_include_dir],
     )
 
-    # Commenting this out for now, until we get the module fully tested and
-    # working
-    #speedups = Extension(
-    #    'chaco._speedups',
-    #    sources = ['chaco/_speedups.cpp'],
-    #    include_dirs = [get_include()],
-    #    define_macros=[('NUMPY', None)],
-    #)
+    cython_extensions = cythonize([cython_speedups, downsampling_lttb])
+    extensions = [contour] + cython_extensions
 
     setup(
-        name = 'chaco',
-        version = __version__,
-        author = 'Peter Wang, et. al.',
-        author_email = 'info@enthought.com',
-        maintainer = 'ETS Developers',
-        maintainer_email = 'enthought-dev@enthought.com',
-        url = 'http://docs.enthought.com/chaco',
-        download_url = 'https://github.com/enthought/chaco',
-        classifiers = [c.strip() for c in """\
+        name='chaco',
+        version=__version__,
+        author='Peter Wang, et. al.',
+        author_email='info@enthought.com',
+        maintainer='ETS Developers',
+        maintainer_email='enthought-dev@enthought.com',
+        url='http://docs.enthought.com/chaco',
+        download_url='https://github.com/enthought/chaco',
+        classifiers=[c.strip() for c in """\
             Development Status :: 5 - Production/Stable
             Intended Audience :: Developers
             Intended Audience :: Science/Research
@@ -188,18 +182,19 @@ if __name__ == "__main__":
             Topic :: Software Development :: Libraries
             """.splitlines() if len(c.strip()) > 0],
         package_data={
-            'chaco': ['tools/toolbars/images/*.png',
-                      'layers/data/*.svg',
-                      'tests/data/PngSuite/*.png']
+            'chaco': [
+                'layers/data/*.svg',
+                'tests/data/PngSuite/*.png',
+                'tools/toolbars/images/*.png',
+            ]
         },
-        description = 'interactive 2-dimensional plotting',
-        long_description = open('README.rst').read(),
-        ext_modules = [contour, cython_speedups, downsampling_lttb],
-        include_package_data = True,
-        install_requires = __requires__,
-        license = 'BSD',
-        packages = find_packages(),
-        platforms = ["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
-        zip_safe = False,
-        use_2to3=False,
+        description='interactive 2-dimensional plotting',
+        long_description=open('README.rst').read(),
+        ext_modules=extensions,
+        include_package_data=True,
+        install_requires=__requires__,
+        license='BSD',
+        packages=find_packages(),
+        platforms=["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
+        zip_safe=False,
     )

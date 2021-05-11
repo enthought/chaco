@@ -3,8 +3,9 @@
 from enable.api import BaseTool
 from traits.api import Dict, List
 
+
 class BroadcasterTool(BaseTool):
-    """ A simple tool that keeps a list of other tools, and broadcasts events it
+    """A simple tool that keeps a list of other tools, and broadcasts events it
     receives to all of the tools.
     """
 
@@ -16,11 +17,11 @@ class BroadcasterTool(BaseTool):
     mouse_owners = Dict
 
     def dispatch(self, event, suffix):
-        """ Dispatches a mouse event based on the current event state.
+        """Dispatches a mouse event based on the current event state.
 
         Overrides BaseTool.
         """
-        handled = False   # keeps track of whether any tool handled this event
+        handled = False  # keeps track of whether any tool handled this event
 
         if event.window.mouse_owner == self:
             tools = list(self.mouse_owners.keys())

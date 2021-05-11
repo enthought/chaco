@@ -3,11 +3,11 @@
 
 # Enthought library imports
 from traits.api import Bool, Enum
-from enable.tools.drag_tool import DragTool
+from enable.tools.api import DragTool
 
 
 class LegendTool(DragTool):
-    """ A tool for interacting with legends.
+    """A tool for interacting with legends.
 
     Attach this tool to a legend by setting the tool's **component**
     to the legend.
@@ -20,23 +20,25 @@ class LegendTool(DragTool):
     #: the quadrant into which it is dropped.
     auto_align = Bool(True)
 
-
     def is_draggable(self, x, y):
-        """ Returns whether the (x,y) position is in a region that is OK to
+        """Returns whether the (x,y) position is in a region that is OK to
         drag.
 
         Overrides DragTool.
         """
         if self.component:
             legend = self.component
-            return (x >= legend.x and x <= legend.x2 and \
-                    y >= legend.y and y <= legend.y2)
+            return (
+                x >= legend.x
+                and x <= legend.x2
+                and y >= legend.y
+                and y <= legend.y2
+            )
         else:
             return False
 
-
     def drag_start(self, event):
-        """ Called when the drag operation starts.
+        """Called when the drag operation starts.
 
         Implements DragTool.
         """
@@ -44,11 +46,9 @@ class LegendTool(DragTool):
             self.original_padding = self.component.padding
             event.window.set_mouse_owner(self, event.net_transform())
             event.handled = True
-        return
-
 
     def dragging(self, event):
-        """ This method is called for every mouse_move event that the tool
+        """This method is called for every mouse_move event that the tool
         receives while the user is dragging the mouse.
 
         Implements DragTool. Moves the legend by aligning it to a corner of its
@@ -78,11 +78,9 @@ class LegendTool(DragTool):
 
             event.handled = True
             legend.request_redraw()
-        return
-
 
     def drag_end(self, event):
-        """ Called when a mouse event causes the drag operation to end.
+        """Called when a mouse event causes the drag operation to end.
 
         Implements DragTool.
         """
@@ -117,6 +115,3 @@ class LegendTool(DragTool):
                 event.window.set_mouse_owner(None)
             event.handled = True
             legend.request_redraw()
-        return
-
-# EOF

@@ -4,17 +4,12 @@ A plot that renders text values along one dimension
 """
 
 
-from __future__ import absolute_import
-
-
-import six.moves as sm
-
 from numpy import array, empty
 
 # Enthought library imports
 from enable.api import black_color_trait
 from kiva.trait_defs.kiva_font_trait import KivaFont
-from traits.api import Bool, Enum, Float, Int, Instance, List, on_trait_change
+from traits.api import Bool, Enum, Float, Int, Instance, List, observe
 
 # local imports
 from .array_data_source import ArrayDataSource
@@ -29,7 +24,7 @@ class TextPlot1D(Base1DPlot):
     value = Instance(ArrayDataSource)
 
     #: The font of the tick labels.
-    text_font = KivaFont('modern 10')
+    text_font = KivaFont("modern 10")
 
     #: The color of the tick labels.
     text_color = black_color_trait
@@ -41,7 +36,7 @@ class TextPlot1D(Base1DPlot):
     text_margin = Int(2)
 
     #: the anchor point of the text (corner is better for 45 degree rotation)
-    text_alignment = Enum('edge', 'corner')
+    text_alignment = Enum("edge", "corner")
 
     #: alignment of text relative to non-index direction
     alignment = Enum("center", "left", "right", "top", "bottom")
@@ -53,25 +48,25 @@ class TextPlot1D(Base1DPlot):
     #: offset of text relative to non-index direction in pixels
     text_offset = Float
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: private trait holding position of text relative to non-index direction
     _text_position = Float
 
     #: flag for whether the cache of Label instances is valid
-    _label_cache_valid = Bool(False)
+    _label_cache_valid = Bool(False, transient=True)
 
     #: cache of Label instances for faster rendering
-    _label_cache = List
+    _label_cache = List(transient=True)
 
     #: cache of bounding boxes of labels
-    _label_box_cache = List
+    _label_box_cache = List(transient=True)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _compute_labels(self, gc):
         """Generate the Label instances for the plot. """
@@ -81,10 +76,14 @@ class TextPlot1D(Base1DPlot):
                 font=self.text_font,
                 color=self.text_color,
                 rotate_angle=self.text_rotate_angle,
-                margin=self.text_margin
-            ) for text in self.value.get_data()]
-        self._label_box_cache = [array(label.get_bounding_box(gc), float)
-                                 for label in self._label_cache]
+                margin=self.text_margin,
+            )
+            for text in self.value.get_data()
+        ]
+        self._label_box_cache = [
+            array(label.get_bounding_box(gc), float)
+            for label in self._label_cache
+        ]
         self._label_cache_valid = True
 
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
@@ -98,7 +97,7 @@ class TextPlot1D(Base1DPlot):
         coord = self._compute_screen_coord()
         pts = empty(shape=(len(coord), 2))
 
-        if self.orientation == 'v':
+        if self.orientation == "v":
             pts[:, 1] = coord
             pts[:, 0] = self._text_position
         else:
@@ -110,7 +109,7 @@ class TextPlot1D(Base1DPlot):
     def _render(self, gc, pts, labels):
         with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
-            for pt, label in sm.zip(pts, labels):
+            for pt, label in zip(pts, labels):
                 with gc:
                     x, y = self._get_index_text_position(gc, pt, label)
                     gc.translate_ctm(x, y)
@@ -121,19 +120,19 @@ class TextPlot1D(Base1DPlot):
         x, y = pt
         width, height = label.get_bounding_box(gc)
 
-        if self.orientation == 'v':
+        if self.orientation == "v":
             position, width = y, height
         else:
             position = x
 
-        if self.index_alignment == 'center':
-            position -= width/2.0
-        elif self.index_alignment in ['left', 'bottom']:
+        if self.index_alignment == "center":
+            position -= width / 2.0
+        elif self.index_alignment in ["left", "bottom"]:
             position -= width
         # If alignment is 'right' or 'top' we do nothing as that already
         # matches the default behavior
 
-        if self.orientation == 'v':
+        if self.orientation == "v":
             return x, position
         else:
             return position, y
@@ -143,54 +142,54 @@ class TextPlot1D(Base1DPlot):
         x, y = self.position
         w, h = self.bounds
 
-        if self.orientation == 'v':
+        if self.orientation == "v":
             y, h = x, w
 
-        if self.alignment == 'center':
-            position = y + h/2.0
-        elif self.alignment in ['left', 'bottom']:
+        if self.alignment == "center":
+            position = y + h / 2.0
+        elif self.alignment in ["left", "bottom"]:
             position = y
-        elif self.alignment in ['right', 'top']:
+        elif self.alignment in ["right", "top"]:
             position = y + h
 
         position += self.text_offset
         return position
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Trait handlers
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def __text_position_default(self):
         return self._get_text_position()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Trait events
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
-    @on_trait_change("index.data_changed")
-    def _invalidate(self):
+    @observe("index.data_changed")
+    def _invalidate(self, event):
         self._cache_valid = False
         self._screen_cache_valid = False
         self._label_cache_valid = False
 
-    @on_trait_change("value.data_changed")
-    def _invalidate_labels(self):
+    @observe("value.data_changed")
+    def _invalidate_labels(self, event):
         self._label_cache_valid = False
 
     def _bounds_changed(self, old, new):
-        super(TextPlot1D, self)._bounds_changed(old, new)
+        super()._bounds_changed(old, new)
         self._text_position = self._get_text_position()
 
     def _bounds_items_changed(self, event):
-        super(TextPlot1D, self)._bounds_items_changed(event)
+        super()._bounds_items_changed(event)
         self._text_position = self._get_text_position()
 
     def _orientation_changed(self):
-        super(TextPlot1D, self)._orientation_changed()
+        super()._orientation_changed()
         self._text_position = self._get_text_position()
 
     def _direction_changed(self):
-        super(TextPlot1D, self)._direction_changed()
+        super()._direction_changed()
         self._text_position = self._get_text_position()
 
     def _alignment_changed(self):

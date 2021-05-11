@@ -11,7 +11,7 @@ from .plot_component import PlotComponent
 
 
 class AbstractOverlay(PlotComponent):
-    """ The base class for overlays and underlays of the plot area.
+    """The base class for overlays and underlays of the plot area.
 
     The only default additional feature of an overlay is that it implements
     an overlay() drawing method that overlays this component on top of
@@ -33,15 +33,14 @@ class AbstractOverlay(PlotComponent):
     def __init__(self, component=None, *args, **kw):
         if component is not None:
             self.component = component
-        super(AbstractOverlay, self).__init__(*args, **kw)
+        super().__init__(*args, **kw)
 
     def overlay(self, other_component, gc, view_bounds=None, mode="normal"):
-        """ Draws this component overlaid on another component.
-        """
+        """Draws this component overlaid on another component."""
         pass
 
     def _draw(self, gc, view_bounds=None, mode="normal"):
-        """ Draws the component, paying attention to **draw_order**.  If the
+        """Draws the component, paying attention to **draw_order**.  If the
         overlay has a non-null .component, then renders as an overlay;
         otherwise, default to the standard PlotComponent behavior.
 
@@ -50,15 +49,10 @@ class AbstractOverlay(PlotComponent):
         if self.component is not None:
             self.overlay(self.component, gc, view_bounds, mode)
         else:
-            super(AbstractOverlay, self)._draw(gc, view_bounds, mode)
-        return
+            super()._draw(gc, view_bounds, mode)
 
     def _request_redraw(self):
-        """ Overrides Enable Component.
-        """
+        """Overrides Enable Component."""
         if self.component is not None:
             self.component.request_redraw()
-        super(AbstractOverlay, self)._request_redraw()
-        return
-
-# EOF
+        super()._request_redraw()

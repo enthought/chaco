@@ -7,8 +7,9 @@ from traits.api import Bool, Dict, Event, HasTraits
 # Local relative imports
 from .base import DimensionTrait
 
+
 class AbstractDataSource(HasTraits):
-    """ This abstract interface must be implemented by any class supplying data
+    """This abstract interface must be implemented by any class supplying data
     to Chaco.
 
     Chaco does not have a notion of a "data format". For the most part, a data
@@ -25,12 +26,12 @@ class AbstractDataSource(HasTraits):
     #: The dimensionality of the value at each index point.
     #: Subclasses re-declare this trait as a read-only trait with
     #: the right default value.
-    value_dimension = DimensionTrait
+    value_dimension = DimensionTrait(transient=True)
 
     #: The dimensionality of the indices into this data source.
     #: Subclasses re-declare this trait as a read-only trait with
     #: the right default value.
-    index_dimension = DimensionTrait
+    index_dimension = DimensionTrait(transient=True)
 
     #: A dictionary keyed on strings.  In general, it maps to indices (or tuples
     #: of indices, depending on **value_dimension**), as in the case of
@@ -50,11 +51,11 @@ class AbstractDataSource(HasTraits):
 
     #: Should the data that this datasource refers to be serialized when
     #: the datasource is serialized?
-    persist_data = Bool(True)
+    persist_data = Bool(True, transient=True)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Abstract methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def get_data(self, lod=None):
         """get_data() -> data_array
@@ -119,22 +120,7 @@ class AbstractDataSource(HasTraits):
         """
         raise NotImplementedError
 
-
     ### Persistence ###########################################################
 
     def _metadata_default(self):
-        return {"selections":[], "annotations":[]}
-
-    def __getstate__(self):
-        state = super(AbstractDataSource,self).__getstate__()
-
-        # everything but 'metadata'
-        for key in ['value_dimension', 'index_dimension', 'persist_data']:
-            if key in state:
-                del state[key]
-
-        return state
-
-
-
-# EOF
+        return {"selections": [], "annotations": []}

@@ -1,5 +1,3 @@
-import six
-
 import numpy
 
 from traits.etsconfig.api import ETSConfig
@@ -9,24 +7,31 @@ from chaco.plot_graphics_context import PlotGraphicsContext
 from kiva.image import Image
 from pyface.image_resource import ImageResource
 from pyface.api import FileDialog, OK, error
-from traits.api import Instance, Str, Property, cached_property, \
-    List, Int, Enum
+from traits.api import (
+    Instance,
+    Str,
+    Property,
+    cached_property,
+    List,
+    Int,
+    Enum,
+)
 
 
 class ToolbarButton(Button):
     image = Str()
     _image = Instance(Image)
 
-    color = 'black'
+    color = "black"
 
-    width = Property(Int, depends_on='label, image')
-    height = Property(Int, depends_on='label, image')
+    width = Property(Int, observe="label, image")
+    height = Property(Int, observe="label, image")
 
     # bounds are used for hit testing
-    bounds = Property(List, depends_on='label, image')
+    bounds = Property(List, observe="label, image")
 
     def __init__(self, *args, **kw):
-        super(ToolbarButton, self).__init__(*args, **kw)
+        super().__init__(*args, **kw)
 
         image_resource = ImageResource(self.image)
         self._image = Image(image_resource.absolute_path)
@@ -51,9 +56,10 @@ class ToolbarButton(Button):
 
     def _draw_actual_button(self, gc):
         x_offset = self.x + (self.width - self._image.width()) / 2
-        gc.draw_image(self._image,
-                      (x_offset, self.y + 2, self._image.width(),
-                       self._image.height()))
+        gc.draw_image(
+            self._image,
+            (x_offset, self.y + 2, self._image.width(), self._image.height()),
+        )
 
         if self.label is not None and len(self.label) > 0:
             gc.set_font(self.label_font)
@@ -69,37 +75,35 @@ class ToolbarButton(Button):
 
 
 class IndexAxisLogButton(ToolbarButton):
-    label = 'X Log Scale'
-    tooltip = 'Change index axis scale'
-    image = 'zoom-fit-width'
+    label = "X Log Scale"
+    tooltip = "Change index axis scale"
+    image = "zoom-fit-width"
 
     def perform(self, event):
-        if self.container.component.index_scale == 'linear':
-            self.container.component.index_scale = 'log'
+        if self.container.component.index_scale == "linear":
+            self.container.component.index_scale = "log"
         else:
-            self.container.component.index_scale = 'linear'
+            self.container.component.index_scale = "linear"
         self.container.request_redraw()
-        return
 
 
 class ValueAxisLogButton(ToolbarButton):
-    label = 'Y Log Scale'
-    tooltip = 'Change value axis scale'
-    image = 'zoom-fit-height'
+    label = "Y Log Scale"
+    tooltip = "Change value axis scale"
+    image = "zoom-fit-height"
 
     def perform(self, event):
-        if self.container.component.value_scale == 'linear':
-            self.container.component.value_scale = 'log'
+        if self.container.component.value_scale == "linear":
+            self.container.component.value_scale = "log"
         else:
-            self.container.component.value_scale = 'linear'
+            self.container.component.value_scale = "linear"
         self.container.request_redraw()
-        return
 
 
 class ZoomResetButton(ToolbarButton):
-    label = 'Zoom Reset'
-    tooltip = 'Zoom Reset'
-    image = 'zoom-original'
+    label = "Zoom Reset"
+    tooltip = "Zoom Reset"
+    image = "zoom-original"
 
     def perform(self, event):
         plot_component = self.container.component
@@ -112,16 +116,16 @@ class ZoomResetButton(ToolbarButton):
 
 
 class SaveAsButton(ToolbarButton):
-    label = 'Save As'
-    tooltip = 'Save As'
-    image = 'document-save'
+    label = "Save As"
+    tooltip = "Save As"
+    image = "document-save"
 
     def perform(self, event):
 
         plot_component = self.container.component
 
-        filter = 'PNG file (*.png)|*.png|\nTIFF file (*.tiff)|*.tiff|'
-        dialog = FileDialog(action='save as', wildcard=filter)
+        filter = "PNG file (*.png)|*.png|\nTIFF file (*.tiff)|*.tiff|"
+        dialog = FileDialog(action="save as", wildcard=filter)
 
         if dialog.open() != OK:
             return
@@ -139,11 +143,14 @@ class SaveAsButton(ToolbarButton):
         try:
             gc.save(filename)
         except KeyError as e:
-            errmsg = ("The filename must have an extension that matches "
-                      "a graphics format, such as '.png' or '.tiff'.")
-            if str(e.message) != '':
-                errmsg = ("Unknown filename extension: '%s'\n" %
-                          str(e.message)) + errmsg
+            errmsg = (
+                "The filename must have an extension that matches "
+                "a graphics format, such as '.png' or '.tiff'."
+            )
+            if str(e.message) != "":
+                errmsg = (
+                    "Unknown filename extension: '%s'\n" % str(e.message)
+                ) + errmsg
 
             error(None, errmsg, title="Invalid Filename Extension")
 
@@ -153,8 +160,8 @@ class SaveAsButton(ToolbarButton):
 
 class CopyToClipboardButton(ToolbarButton):
     label = "Copy Image"
-    tooltip = 'Copy to the clipboard'
-    image = 'edit-copy'
+    tooltip = "Copy to the clipboard"
+    image = "edit-copy"
 
     def perform(self, event):
         plot_component = self.container.component
@@ -168,7 +175,7 @@ class CopyToClipboardButton(ToolbarButton):
         gc = PlotGraphicsContext((width, height), dpi=72)
         gc.render_component(plot_component)
 
-        if ETSConfig.toolkit == 'wx':
+        if ETSConfig.toolkit == "wx":
             self._perform_wx(width, height, gc)
         else:
             pass
@@ -179,8 +186,9 @@ class CopyToClipboardButton(ToolbarButton):
     def _perform_wx(self, width, height, gc):
         import wx
 
-        bitmap = wx.BitmapFromBufferRGBA(width + 1, height + 1,
-                                         gc.bmp_array.flatten())
+        bitmap = wx.BitmapFromBufferRGBA(
+            width + 1, height + 1, gc.bmp_array.flatten()
+        )
         data = wx.BitmapDataObject()
         data.SetBitmap(bitmap)
         if wx.TheClipboard.Open():
@@ -192,15 +200,15 @@ class CopyToClipboardButton(ToolbarButton):
 
 class ExportDataToClipboardButton(ToolbarButton):
     label = "Copy Data"
-    tooltip = 'Copy data to the clipboard'
-    image = 'application-vnd-ms-excel'
+    tooltip = "Copy data to the clipboard"
+    image = "application-vnd-ms-excel"
 
-    orientation = Enum('v', 'h')
+    orientation = Enum("v", "h")
 
     def perform(self, event):
-        if ETSConfig.toolkit == 'wx':
+        if ETSConfig.toolkit == "wx":
             self._perform_wx()
-        elif ETSConfig.toolkit == 'qt4':
+        elif ETSConfig.toolkit == "qt4":
             self._perform_qt()
         else:
             pass
@@ -220,12 +228,12 @@ class ExportDataToClipboardButton(ToolbarButton):
         # otherwise go element by element adding the necessary empty strings
         if len(set([len(l) for l in values])) == 1:
             data = [indices[0]] + values
-            if self.orientation == 'v':
+            if self.orientation == "v":
                 data = numpy.array(data).T.tolist()
 
-            data_str = ''
+            data_str = ""
             for row in data:
-                data_str += ','.join(['%f' % v for v in row]) + '\n'
+                data_str += ",".join(["%f" % v for v in row]) + "\n"
             return data_str
 
         else:

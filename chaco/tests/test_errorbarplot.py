@@ -5,8 +5,11 @@ from numpy import alltrue
 
 # Chaco imports
 from chaco.api import (
-    ArrayDataSource, DataRange1D, ErrorBarPlot, LinearMapper,
-    PlotGraphicsContext
+    ArrayDataSource,
+    DataRange1D,
+    ErrorBarPlot,
+    LinearMapper,
+    PlotGraphicsContext,
 )
 
 
@@ -26,7 +29,7 @@ class DrawErrorBarPlotCase(unittest.TestCase):
             value_mapper=LinearMapper(range=DataRange1D(low=0, high=15)),
             value_low=low,
             value_high=high,
-            color='blue',
+            color="blue",
             line_width=3.0,
         )
         errorbar_plot.outer_bounds = list(size)

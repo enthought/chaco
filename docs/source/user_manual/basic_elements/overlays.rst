@@ -1,6 +1,6 @@
-==================================
-Overlays: axis, legend, grid, etc.
-==================================
+##########################
+Overlays: Axis, Grid, etc.
+##########################
 
 Overlays are elements that decorate plots, like for example
 axes, legends, grids, etc.
@@ -11,16 +11,19 @@ of their interface with :ref:`plot renderers <plot_renderers>`
 
 In addition, they have a lightweight interface defined in
 :class:`chaco.abstract_overlay.AbstractOverlay`: the additional
-features are that 1) they keep a reference to the plot they are decorating in
-:attr:`~chaco.abstract_overlay.AbstractOverlay.component`;
-2) the background color
-:attr:`~chaco.abstract_overlay.AbstractOverlay.bgcolor`
-is 'transparent' by default;
-3) they plot :ref:`on the 'overlay' layer <plot_layers>` by default.
+features are that
 
+1. they keep a reference to the plot they are decorating in
+   :attr:`~chaco.abstract_overlay.AbstractOverlay.component`;
+2. the background color :attr:`~chaco.abstract_overlay.AbstractOverlay.bgcolor`
+   is 'transparent' by default;
+3. they plot :ref:`on the 'overlay' layer <plot_layers>` by default.
 
-TODO: explain how to attach an overlay to an existing plot renderer
+.. TODO: explain how to attach an overlay to an existing plot renderer
 
+=============
+Core Overlays
+=============
 
 There are three important classes of overlays defined in Chaco:
 :ref:`axes <axis>`, :ref:`legends <legend>`, and :ref:`grids <grid>`.
@@ -46,11 +49,13 @@ given an X-Y plot renderer, ``plot``, we can define a new x-axis as: ::
         'title_font': 'modern 20',
     }
 
-    x_axis = PlotAxis(orientation='bottom',
-                      title='My x axis',
-                      mapper=plot.x_mapper,
-                      component=plot,
-                      **AXIS_DEFAULTS)
+    x_axis = PlotAxis(
+        orientation='bottom',
+        title='My x axis',
+        mapper=plot.x_mapper,
+        component=plot,
+        **AXIS_DEFAULTS,
+    )
 
 The newly created axis can then be attached to the plot renderer by
 appending it to its underlays layer: ::
@@ -68,15 +73,19 @@ A :class:`~chaco.axis.MinorPlotAxis` should be added along with a
 :class:`~chaco.axis.PlotAxis`. For example, minor axis tick marks can be
 added with: ::
 
-    x_major_axis = PlotAxis(orientation='bottom',
-                      title='My x axis',
-                      mapper=plot.x_mapper,
-                      component=plot)
+    x_major_axis = PlotAxis(
+        orientation='bottom',
+        title='My x axis',
+        mapper=plot.x_mapper,
+        component=plot,
+    )
     plot.underlays.append(x_major_axis)
 
-    x_minor_axis = MinorPlotAxis(orientation='bottom',
-                      mapper=plot.x_mapper,
-                      component=plot)
+    x_minor_axis = MinorPlotAxis(
+        orientation='bottom',
+        mapper=plot.x_mapper,
+        component=plot,
+    )
     plot.underlays.append(x_minor_axis)
 
 Attributes
@@ -84,12 +93,7 @@ Attributes
 
 These attributes control the appearance of the axis:
 
-:attr:`~chaco.axis.PlotAxis.title`,
-:attr:`~chaco.axis.PlotAxis.title_font`,
-:attr:`~chaco.axis.PlotAxis.title_color`,
-:attr:`~chaco.axis.PlotAxis.title_spacing`
-:attr:`~chaco.axis.PlotAxis.title_angle`
-
+:attr:`~chaco.axis.PlotAxis.title`, :attr:`~chaco.axis.PlotAxis.title_font`, :attr:`~chaco.axis.PlotAxis.title_color`, :attr:`~chaco.axis.PlotAxis.title_spacing` :attr:`~chaco.axis.PlotAxis.title_angle`
   Define the axis label. :attr:`title` is a string or unicode object
   that is rendered using the given font and color. :attr:`title_font` is
   a string describing a font (e.g. '12 pt bold italic',
@@ -101,12 +105,7 @@ These attributes control the appearance of the axis:
   wrt horizontal).
 
 
-:attr:`~chaco.axis.PlotAxis.tick_weight`,
-:attr:`~chaco.axis.PlotAxis.tick_color`,
-:attr:`~chaco.axis.PlotAxis.tick_in`,
-:attr:`~chaco.axis.PlotAxis.tick_out`,
-:attr:`~chaco.axis.PlotAxis.tick_visible`,
-
+:attr:`~chaco.axis.PlotAxis.tick_weight`, :attr:`~chaco.axis.PlotAxis.tick_color`, :attr:`~chaco.axis.PlotAxis.tick_in`, :attr:`~chaco.axis.PlotAxis.tick_out`, :attr:`~chaco.axis.PlotAxis.tick_visible`,
   These attributes control the aspect of the ticks on the axis.
   If :attr:`tick_visible` is True, ticks are represented as lines of
   color :attr:`tick_color` (default is black) and thickness
@@ -115,14 +114,7 @@ These attributes control the appearance of the axis:
   :attr:`tick_out` pixels (default is 5).
 
 
-:attr:`~chaco.axis.PlotAxis.tick_label_font`,
-:attr:`~chaco.axis.PlotAxis.tick_label_color`,
-:attr:`~chaco.axis.PlotAxis.tick_label_rotate_angle`,
-:attr:`~chaco.axis.PlotAxis.tick_label_alignment`,
-:attr:`~chaco.axis.PlotAxis.tick_label_margin`,
-:attr:`~chaco.axis.PlotAxis.tick_label_offset`,
-:attr:`~chaco.axis.PlotAxis.tick_label_position`,
-
+:attr:`~chaco.axis.PlotAxis.tick_label_font`, :attr:`~chaco.axis.PlotAxis.tick_label_color`, :attr:`~chaco.axis.PlotAxis.tick_label_rotate_angle`, :attr:`~chaco.axis.PlotAxis.tick_label_alignment`, :attr:`~chaco.axis.PlotAxis.tick_label_margin`, :attr:`~chaco.axis.PlotAxis.tick_label_offset`, :attr:`~chaco.axis.PlotAxis.tick_label_position`,
   These attributes allow to fine-tune the aspect of the tick labels:
   first of all, the font (e.g. '12 pt bold italic') and color of the
   labels. The position and orientation of the label can be also be
@@ -139,7 +131,6 @@ These attributes control the appearance of the axis:
 
 
 :attr:`~chaco.axis.PlotAxis.tick_label_formatter`
-
   By default, tick labels are assumed to be floating point numbers, and are
   displayed as such after removing trailing zeros and the decimal dot if
   necessary (e.g., '10.000' will be displayed as '10', and '21.10' as '21.1').
@@ -148,9 +139,7 @@ These attributes control the appearance of the axis:
   formatted string.
 
 
-:attr:`~chaco.axis.PlotAxis.tick_interval`,
-:attr:`~chaco.axis.PlotAxis.tick_generator`,
-
+:attr:`~chaco.axis.PlotAxis.tick_interval`, :attr:`~chaco.axis.PlotAxis.tick_generator`,
   Locations and distances of ticks are controlled by the attribute
   :attr:`tick_generator`
 
@@ -162,17 +151,58 @@ These attributes control the appearance of the axis:
 Events
 ------
 
-updated
+:attr:`~chaco.axis.PlotAxis.updated`
+  Fired when the axis's range bounds change.
 
-Fired when the axis's range bounds change.
+.. todo:: Fill in the below sections
 
-.. _legend:
+..    .. _legend:
 
-Legend
-======
+..    Legend
+..    ======
 
-.. _grid:
+..    .. _grid:
 
-Grid
-====
+..    Grid
+..    ====
 
+..    ===================
+..    Annotation Overlays
+..    ===================
+
+..    PointMarker
+..    ===========
+
+..    DataBox
+..    =======
+
+.. _tools/text_box_overlay:
+
+TextBoxOverlay
+==============
+The :class:`chaco.overlays.api.TextBoxOverlay` is the base class of
+the overlay component of several inspector type tools (see above). It is
+designed to draw a text box over the plots to display custom information.
+
+The rendering of the text can be customized with the following attributes:
+
+* :attr:`bgcolor` and :attr:`border_visible` to control the styling of the box,
+* :attr:`alpha` to control the transparency of the text box,
+* :attr:`text_color` and :attr:`font` to control how the text looks like,
+* :attr:`align` to control what corner of the plot the text box should appear,
+
+.. note:: The overlay can also be used directly by any custom tool that needs
+          to display information upon an event. It should be done by
+          subclassing the overlay and defining a listener on the inspector's
+          state which will modify the overlay's :attr:`text` (and optionally
+          visibility) attribute(s). After a `text` update, the component's
+          :meth:`request_redraw` should be called. Good examples include
+          :class:`chaco.overlays.api.ImageInspectorOverlay`.
+
+.. todo:: Fill in the below sections
+
+..    ToolTip
+..    =======
+
+..    PlotLabel
+..    =========

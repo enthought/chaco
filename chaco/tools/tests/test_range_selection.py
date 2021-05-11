@@ -3,6 +3,7 @@ import warnings
 
 import numpy as np
 
+from chaco.api import LinearMapper
 from chaco.array_plot_data import ArrayPlotData
 from chaco.plot import Plot
 from chaco.tools.range_selection import RangeSelection
@@ -10,7 +11,6 @@ from enable.testing import EnableTestAssistant
 
 
 class RangeSelectionTestCase(EnableTestAssistant, unittest.TestCase):
-
     def test_selecting_mouse_leave_clipping(self):
         # Regression test for #216.
         plot_data = ArrayPlotData()
@@ -18,17 +18,19 @@ class RangeSelectionTestCase(EnableTestAssistant, unittest.TestCase):
         plot_data.set_data("x", arr)
         plot_data.set_data("y", arr)
 
-        for origin in ('bottom left', 'top left', 'bottom right', 'top right'):
-            for orientation in ('h', 'v'):
-                for axis in ('index', 'value'):
+        for origin in ("bottom left", "top left", "bottom right", "top right"):
+            for orientation in ("h", "v"):
+                for axis in ("index", "value"):
                     plot = Plot(
-                        plot_data, orientation=orientation, origin='top right'
+                        plot_data, orientation=orientation, origin="top right"
                     )
 
-                    renderer = plot.plot(('x', 'y'))[0]
+                    renderer = plot.plot(("x", "y"))[0]
                     renderer.bounds = [10, 20]
                     tool = RangeSelection(
-                        renderer, left_button_selects=True, axis=axis,
+                        renderer,
+                        left_button_selects=True,
+                        axis=axis,
                     )
                     renderer.tools.append(tool)
 
@@ -58,7 +60,7 @@ class RangeSelectionTestCase(EnableTestAssistant, unittest.TestCase):
         plot_data.set_data("x", arr)
         plot_data.set_data("y", arr)
         plot = Plot(plot_data)
-        renderer = plot.plot(('x', 'y'))[0]
+        renderer = plot.plot(("x", "y"))[0]
         tool = RangeSelection(renderer)
         with warnings.catch_warnings(record=True) as w:
             # Ignore warnings coming from any package other than Chaco
@@ -74,3 +76,54 @@ class RangeSelectionTestCase(EnableTestAssistant, unittest.TestCase):
         tool.selection = (1.5, 3.5)
         tool.selection = [1.0, 2.0]
         tool.selection = None
+
+    # regression test for enthought/chaco#597
+    @unittest.mock.patch('chaco.tools.range_selection.RangeSelection.deselect')
+    def test_notifiers_connected(self, mocked_deselect):
+        plot_data = ArrayPlotData()
+        arr = np.arange(4.0)
+        plot_data.set_data("x", arr)
+        plot_data.set_data("y", arr)
+
+        plot = Plot(plot_data)
+
+        renderer = plot.plot(("x", "y"))[0]
+        tool = RangeSelection(renderer)
+        renderer.tools.append(tool)
+
+        # attempt to trigger change handler for the index_mapper trait on the
+        # RangeSelection tool's plot
+        # assign a new mapper with same attrs
+        renderer.index_mapper = LinearMapper(
+            range=renderer.index_mapper.range,
+            stretch_data=renderer.index_mapper.stretch_data
+        )
+
+        mocked_deselect.assert_called_once()
+
+    # regression test for enthought/chaco#597
+    @unittest.mock.patch('chaco.tools.range_selection.RangeSelection.deselect')
+    def test_notifiers_connected_specify_plot(self, mocked_deselect):
+        plot_data = ArrayPlotData()
+        arr = np.arange(4.0)
+        plot_data.set_data("x", arr)
+        plot_data.set_data("y", arr)
+
+        plot = Plot(plot_data)
+
+        renderer = plot.plot(("x", "y"))[0]
+        tool = RangeSelection(renderer)
+        renderer.tools.append(tool)
+
+        new_renderer = plot.plot(("x", "y"), type='scatter')[0]
+        tool.plot = new_renderer
+
+        # attempt to trigger change handler for the index_mapper trait on the
+        # RangeSelection tool's plot
+        # assign a new mapper with same attrs
+        new_renderer.index_mapper = LinearMapper(
+            range=new_renderer.index_mapper.range,
+            stretch_data=new_renderer.index_mapper.stretch_data
+        )
+
+        mocked_deselect.assert_called_once()

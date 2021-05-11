@@ -1,8 +1,6 @@
 """ Defines the ContourLinePlot class.
 """
 
-from __future__ import with_statement
-
 # Major library imports
 from numpy import array, isfinite, meshgrid, transpose
 
@@ -17,15 +15,15 @@ from .contour.contour import Cntr
 
 
 class ContourLinePlot(BaseContourPlot):
-    """ Takes a value data object whose elements are scalars, and renders them
+    """Takes a value data object whose elements are scalars, and renders them
     as a contour plot.
     """
 
     # TODO: Modify ImageData to explicitly support scalar value arrays
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Data-related traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: The thickness(es) of the contour lines.
     #: It can be either a scalar value, valid for all contour lines, or a list
@@ -43,21 +41,21 @@ class ContourLinePlot(BaseContourPlot):
     #: Line style for negative levels.
     negative_style = LineStyle("dash")
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # Are the cached contours valid? If False, new ones need to be computed.
-    _contour_cache_valid = Bool(False)
+    _contour_cache_valid = Bool(False, transient=True)
 
     # Cached collection of traces.
-    _cached_contours = Dict
+    _cached_contours = Dict(transient=True)
 
     # Is the cached width data valid?
-    _widths_cache_valid = Bool(False)
+    _widths_cache_valid = Bool(False, transient=True)
 
     # Is the cached style data valid?
-    _styles_cache_valid = Bool(False)
+    _styles_cache_valid = Bool(False, transient=True)
 
     # Cached list of line widths
     _widths = List
@@ -70,12 +68,12 @@ class ContourLinePlot(BaseContourPlot):
     # converted one at a time.)
     _style_map_trait = LineStyle
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _render(self, gc):
-        """ Actually draws the plot.
+        """Actually draws the plot.
 
         Implements the Base2DPlot interface.
         """
@@ -105,8 +103,8 @@ class ContourLinePlot(BaseContourPlot):
                     if self.orientation == "h":
                         strace = self.index_mapper.map_screen(trace)
                     else:
-                        strace = array(
-                            self.index_mapper.map_screen(trace))[:, ::-1]
+                        rev_strace = self.index_mapper.map_screen(trace)
+                        strace = array(rev_strace)[:, ::-1]
                     gc.begin_path()
                     gc.lines(strace)
                     gc.stroke_path()
@@ -139,14 +137,13 @@ class ContourLinePlot(BaseContourPlot):
 
     def _update_levels(self):
         """ Extends the parent method to also invalidate some other things """
-        super(ContourLinePlot, self)._update_levels()
+        super()._update_levels()
         self._contour_cache_valid = False
         self._widths_cache_valid = False
         self._styles_cache_valid = False
 
     def _update_widths(self):
-        """ Updates the widths cache.
-        """
+        """Updates the widths cache."""
         # If we are given a single width, apply it to all levels
         if isinstance(self.widths, float):
             self._widths = [self.widths] * len(self._levels)
@@ -161,8 +158,7 @@ class ContourLinePlot(BaseContourPlot):
         self._widths_cache_valid = True
 
     def _update_styles(self):
-        """ Updates the styles cache.
-        """
+        """Updates the styles cache."""
         # If the style type is "signed" then assign styles to levels based
         # on their sign
         if self.styles == "signed":
@@ -188,9 +184,9 @@ class ContourLinePlot(BaseContourPlot):
 
         self._styles_cache_valid = True
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Event handlers
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _widths_changed(self):
         if self._level_cache_valid:
