@@ -503,7 +503,7 @@ class Legend(AbstractOverlay):
         "bounds.items",
         "title_at_top",
     ])
-    def _udpate_layout_needed(self, event):
+    def _update_layout_needed(self, event):
         self._layout_needed = True
     
     @observe("color")
