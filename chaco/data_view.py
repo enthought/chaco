@@ -3,7 +3,7 @@ functions.
 """
 from numpy import array, transpose
 
-from traits.api import Bool, Enum, Instance, Property
+from traits.api import Bool, Enum, Instance, Int, observe, Property
 from enable.api import color_table
 
 from .abstract_overlay import AbstractOverlay
@@ -208,10 +208,83 @@ class DataView(OverlayPlotContainer):
     bgcolor = "white"
 
     #: Padding defaults.
-    padding_top = 50
-    padding_bottom = 50
-    padding_left = 50
-    padding_right = 50
+    padding_top = Property(
+        observe='y_axis.[title,orientation], x_axis.[title,orientation]'
+    )
+    padding_bottom = Property(
+        observe='y_axis.[title,orientation], x_axis.[title,orientation]'
+    )
+    padding_left = Property(
+        observe='y_axis.[title,orientation], x_axis.[title,orientation]'
+    )
+    padding_right = Property(
+        observe='y_axis.[title,orientation], x_axis.[title,orientation]'
+    )
+
+    _padding_top = Int(0)
+    _padding_bottom= Int(0)
+    _padding_left = Int(0)
+    _padding_right = Int(0)
+
+    def _get_padding_top(self):
+        if self._padding_top:
+            return self._padding_top
+        else:
+            if self.y_axis:
+                if (self.y_axis.title and self.y_axis.orientation == "top"):
+                    return 80
+            if self.x_axis:
+                if (self.x_axis.title and self.x_axis.orientation == "top"):
+                    return 80
+            return 50
+
+    def _get_padding_bottom(self):
+        if self._padding_bottom:
+            return self._padding_bottom
+        else:
+            if self.y_axis:
+                if (self.y_axis.title and self.y_axis.orientation == "bottom"):
+                    return 80
+            if self.x_axis:
+                if (self.x_axis.title and self.x_axis.orientation == "bottom"):
+                    return 80
+            return 50
+
+    def _get_padding_left(self):
+        if self._padding_left:
+            return self._padding_left
+        else:
+            if self.y_axis:
+                if (self.y_axis.title and self.y_axis.orientation == "left"):
+                    return 80
+            if self.x_axis:
+                if (self.x_axis.title and self.x_axis.orientation == "left"):
+                    return 80
+            return 50
+
+    def _get_padding_right(self):
+        if self._padding_right:
+            return self._padding_right
+        else:
+            if self.y_axis:
+                if (self.y_axis.title and self.y_axis.orientation == "right"):
+                    return 80
+            if self.x_axis:
+                if (self.x_axis.title and self.x_axis.orientation == "right"):
+                    return 80
+            return 50
+    
+    def _set_padding_top(self, value):
+        self._padding_left = value
+
+    def _set_padding_bottom(self, value):
+        self._padding_left = value
+
+    def _set_padding_left(self, value):
+        self._padding_left = value
+
+    def _set_padding_right(self, value):
+        self._padding_left = value
 
     border_visible = True
 
