@@ -226,53 +226,35 @@ class DataView(OverlayPlotContainer):
     _padding_left = Int(0)
     _padding_right = Int(0)
 
-    def _get_padding_top(self):
-        if self._padding_top:
-            return self._padding_top
+    def _find_padding(self, side):
+        MAP = {
+            "top": "_padding_top",
+            "bottom": "_padding_bottom",
+            "left": "_padding_left",
+            "right": "_padding_right",
+        }
+        if getattr(self, MAP[side]):
+            return getattr(self, MAP[side])
         else:
             if self.y_axis:
-                if (self.y_axis.title and self.y_axis.orientation == "top"):
+                if (self.y_axis.title and self.y_axis.orientation == side):
                     return 80
             if self.x_axis:
-                if (self.x_axis.title and self.x_axis.orientation == "top"):
+                if (self.x_axis.title and self.x_axis.orientation == side):
                     return 80
             return 50
+
+    def _get_padding_top(self):
+        return self._find_padding("top")
 
     def _get_padding_bottom(self):
-        if self._padding_bottom:
-            return self._padding_bottom
-        else:
-            if self.y_axis:
-                if (self.y_axis.title and self.y_axis.orientation == "bottom"):
-                    return 80
-            if self.x_axis:
-                if (self.x_axis.title and self.x_axis.orientation == "bottom"):
-                    return 80
-            return 50
+        return self._find_padding("bottom")
 
     def _get_padding_left(self):
-        if self._padding_left:
-            return self._padding_left
-        else:
-            if self.y_axis:
-                if (self.y_axis.title and self.y_axis.orientation == "left"):
-                    return 80
-            if self.x_axis:
-                if (self.x_axis.title and self.x_axis.orientation == "left"):
-                    return 80
-            return 50
+        return self._find_padding("left")
 
     def _get_padding_right(self):
-        if self._padding_right:
-            return self._padding_right
-        else:
-            if self.y_axis:
-                if (self.y_axis.title and self.y_axis.orientation == "right"):
-                    return 80
-            if self.x_axis:
-                if (self.x_axis.title and self.x_axis.orientation == "right"):
-                    return 80
-            return 50
+        return self._find_padding("right")
     
     def _set_padding_top(self, value):
         self._padding_left = value
