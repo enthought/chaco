@@ -11,11 +11,12 @@ from chaco.plot_component import PlotComponent
 
 
 class ContainerOverlay(Container, PlotComponent):
-    """ Container which is also a Chaco plot overlay
+    """Container which is also a Chaco plot overlay
 
     Since this is an Enable container, any Components that it contains will
     be rendered into the overlay layer of the plot.
     """
+
     # XXX this works, but I'm not sure that it's quite right.
 
     # The component that this object overlays. This can be None. By default, if
@@ -38,4 +39,4 @@ class ContainerOverlay(Container, PlotComponent):
     def _request_redraw(self):
         if self.component is not None:
             self.component.request_redraw()
-        super(ContainerOverlay, self)._request_redraw()
+        super()._request_redraw()

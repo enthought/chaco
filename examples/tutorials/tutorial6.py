@@ -2,15 +2,17 @@
 
 We write an interactor tha prints out all the events it receives.
 """
-from __future__ import print_function
+
 
 from chaco.api import AbstractController
 
 from tutorial2 import demo
 
+
 class EventPrinter(AbstractController):
     def dispatch(self, event, suffix):
         print(suffix, "event received at (%d,%d)" % (event.x, event.y))
+
 
 plot = demo.plot
 plot.tools.append(EventPrinter(plot))

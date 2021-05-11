@@ -1,15 +1,17 @@
 """ Defines the ColormappedSelectionOverlay class.
 """
-import six.moves as sm
+import functools
 
 from numpy import logical_and
 
 # Enthought library imports
 from traits.api import Any, Bool, Float, Instance, Property, Enum
+from traits.observation.events import TraitChangeEvent
 
 # Local imports
 from .abstract_overlay import AbstractOverlay
 from .colormapped_scatterplot import ColormappedScatterPlot
+
 
 class ColormappedSelectionOverlay(AbstractOverlay):
     """
@@ -34,7 +36,7 @@ class ColormappedSelectionOverlay(AbstractOverlay):
     unselected_outline_width = Float(0.0)
 
     #: The type of selection used by the data source.
-    selection_type = Enum('range', 'mask')
+    selection_type = Enum("range", "mask")
 
     _plot = Instance(ColormappedScatterPlot)
 
@@ -45,12 +47,11 @@ class ColormappedSelectionOverlay(AbstractOverlay):
     _old_line_width = Float(0.0)
 
     def __init__(self, component=None, **kw):
-        super(ColormappedSelectionOverlay, self).__init__(**kw)
+        super().__init__(**kw)
         self.component = component
-        return
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
-        """ Draws this component overlaid on another component.
+        """Draws this component overlaid on another component.
 
         Implements AbstractOverlay.
         """
@@ -60,7 +61,7 @@ class ColormappedSelectionOverlay(AbstractOverlay):
         plot = self.plot
         datasource = plot.color_data
 
-        if self.selection_type == 'range':
+        if self.selection_type == "range":
             selections = datasource.metadata["selections"]
 
             if selections is not None and len(selections) == 0:
@@ -75,9 +76,11 @@ class ColormappedSelectionOverlay(AbstractOverlay):
             data_pts = datasource.get_data()
             mask = (data_pts >= low) & (data_pts <= high)
 
-        elif self.selection_type == 'mask':
-            mask = sm.reduce(logical_and, datasource.metadata["selection_masks"])
-            if sum(mask)<2:
+        elif self.selection_type == "mask":
+            mask = functools.reduce(
+                logical_and, datasource.metadata["selection_masks"]
+            )
+            if sum(mask) < 2:
                 return
 
         datasource.set_mask(mask)
@@ -92,41 +95,60 @@ class ColormappedSelectionOverlay(AbstractOverlay):
         plot.line_width = self.selected_outline_width
         plot._draw_plot(gc, view_bounds, mode)
 
-
         # Restore the plot's previous color settings and data mask.
         plot.fill_alpha = self.fade_alpha
         plot.outline_color = fade_outline_color
         plot.line_width = self.unselected_outline_width
         datasource.remove_mask()
-        return
 
     def _component_changed(self, old, new):
         if old:
-            old.on_trait_change(self.datasource_change_handler, "color_data", remove=True)
+            old.observe(
+                self.datasource_change_handler, "color_data", remove=True
+            )
         if new:
-            new.on_trait_change(self.datasource_change_handler, "color_data")
+            new.observe(self.datasource_change_handler, "color_data")
             self._old_alpha = new.fill_alpha
             self._old_outline_color = new.outline_color
             self._old_line_width = new.line_width
-            self.datasource_change_handler(new, "color_data", None, new.color_data)
-        return
 
-    def datasource_change_handler(self, obj, name, old, new):
+            self.datasource_change_handler(
+                TraitChangeEvent(
+                    object=new, name="color_data", old=None, new=new.color_data
+                )
+            )
+
+    def datasource_change_handler(self, event):
+        obj, name, old, new = (event.object, event.name, event.old, event.new)
+
         if old:
-            old.on_trait_change(self.selection_change_handler, "metadata_changed", remove=True)
+            old.observe(
+                self.selection_change_handler, "metadata_changed", remove=True
+            )
         if new:
-            new.on_trait_change(self.selection_change_handler, "metadata_changed")
-            self.selection_change_handler(new, "metadata_changed", None, new.metadata)
-        return
+            new.observe(self.selection_change_handler, "metadata_changed")
+            self.selection_change_handler(
+                TraitChangeEvent(
+                    object=new,
+                    name="metadata_changed",
+                    old=None,
+                    new=new.metadata,
+                )
+            )
 
-    def selection_change_handler(self, obj, name, old, new):
-        if self.selection_type == 'range':
-            selection_key = 'selections'
-        elif self.selection_type == 'mask':
-            selection_key = 'selection_masks'
+    def selection_change_handler(self, event):
+        obj, name, old, new = (event.object, event.name, event.old, event.new)
 
-        if type(new) == dict and new.get(selection_key, None) is not None \
-                             and len(new[selection_key]) > 0:
+        if self.selection_type == "range":
+            selection_key = "selections"
+        elif self.selection_type == "mask":
+            selection_key = "selection_masks"
+
+        if (
+            type(new) == dict
+            and new.get(selection_key, None) is not None
+            and len(new[selection_key]) > 0
+        ):
             if not self._visible:
                 # We have a new selection, so replace the colors on the plot with the
                 # faded alpha and colors
@@ -158,7 +180,6 @@ class ColormappedSelectionOverlay(AbstractOverlay):
             self._visible = False
 
         self.plot.request_redraw()
-        return
 
     def _get_plot(self):
         if self._plot is not None:
@@ -168,6 +189,3 @@ class ColormappedSelectionOverlay(AbstractOverlay):
 
     def _set_plot(self, val):
         self._plot = val
-
-
-# EOF

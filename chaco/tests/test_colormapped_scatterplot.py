@@ -4,12 +4,17 @@ from numpy import alltrue, arange
 from enable.compiled_path import CompiledPath
 
 # Chaco imports
-from chaco.api import (ArrayDataSource, ColormappedScatterPlot, DataRange1D,
-                       LinearMapper, PlotGraphicsContext, jet)
+from chaco.api import (
+    ArrayDataSource,
+    ColormappedScatterPlot,
+    DataRange1D,
+    LinearMapper,
+    PlotGraphicsContext,
+    jet,
+)
 
 
 class TestColormappedScatterplot(unittest.TestCase):
-
     def setUp(self):
         self.index = ArrayDataSource(arange(10))
         self.value = ArrayDataSource(arange(10))
@@ -48,17 +53,14 @@ class TestColormappedScatterplot(unittest.TestCase):
 
     def test_scatter_circle(self):
         """ Coverage test to check circles work """
-        self.scatterplot.marker = 'circle'
+        self.scatterplot.marker = "circle"
 
         self.gc.render_component(self.scatterplot)
         actual = self.gc.bmp_array[:, :, :]
         self.assertFalse(alltrue(actual == 255))
 
-    @unittest.skip("Broken; see GH #232.")
     def test_scatter_custom(self):
-        """ Coverage test to check custom markers work...
-
-        XXX ...which apparently they currently don't. See #232.
+        """Coverage test to check custom markers work.
         """
 
         # build path
@@ -70,7 +72,7 @@ class TestColormappedScatterplot(unittest.TestCase):
         path.line_to(5, -5)
         path.line_to(-5, -5)
 
-        self.scatterplot.marker = 'custom'
+        self.scatterplot.marker = "custom"
         self.scatterplot.custom_symbol = path
 
         self.gc.render_component(self.scatterplot)
@@ -82,6 +84,10 @@ class TestColormappedScatterplot(unittest.TestCase):
         self.color_mapper.updated = True
         self.assertFalse(self.scatterplot.draw_valid)
 
+    # regression test for enthought/chaco#425
+    def test_non_kiva_marker(self):
+        self.scatterplot.marker = "star"
 
-if __name__ == "__main__":
-    unittest.main()
+        self.gc.render_component(self.scatterplot)
+        actual = self.gc.bmp_array[:, :, :]
+        self.assertFalse(alltrue(actual == 255))

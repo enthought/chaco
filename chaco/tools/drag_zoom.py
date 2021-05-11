@@ -2,7 +2,7 @@
 """
 
 # Enthought library imports
-from enable.tools.drag_tool import DragTool
+from enable.tools.api import DragTool
 from traits.api import Bool, Enum, Float, Tuple
 
 # Chaco imports
@@ -10,7 +10,7 @@ from .better_zoom import BetterZoom
 
 
 class DragZoom(DragTool, BetterZoom):
-    """ A zoom tool that zooms continuously with a mouse drag movement, instead
+    """A zoom tool that zooms continuously with a mouse drag movement, instead
     of using a zoom box or range.
 
     By default, the tool maintains aspect ratio and zooms the plot's X and Y
@@ -50,9 +50,9 @@ class DragZoom(DragTool, BetterZoom):
 
     zoom_to_mouse = Bool(False)
 
-    #------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
 
     # (x,y) of the point where the mouse button was pressed.
     _original_xy = Tuple()
@@ -71,7 +71,7 @@ class DragZoom(DragTool, BetterZoom):
     _prev_y = Float()
 
     def __init__(self, component=None, *args, **kw):
-        super(DragZoom, self).__init__(component, *args, **kw)
+        super().__init__(component, *args, **kw)
         c = component
         if c is not None:
             self._orig_screen_bounds = ((c.x, c.y), (c.x2, c.y2))
@@ -88,38 +88,37 @@ class DragZoom(DragTool, BetterZoom):
             zoom_y = self._calc_zoom(self._prev_y, event.y)
 
         # invert the zoom so scrolling up zooms in
-        zoom_x = 1.0/zoom_x
-        zoom_y = 1.0/zoom_y
+        zoom_x = 1.0 / zoom_x
+        zoom_y = 1.0 / zoom_y
 
         self.zoom_in_x(zoom_x)
         self.zoom_in_y(zoom_y)
 
-        return
-
     def drag_start(self, event, capture_mouse=True):
         self._original_xy = (event.x, event.y)
         c = self.component
-        self._orig_screen_bounds = ((c.x,c.y), (c.x2,c.y2))
-        self._original_data = (c.x_mapper.map_data(event.x), c.y_mapper.map_data(event.y))
+        self._orig_screen_bounds = ((c.x, c.y), (c.x2, c.y2))
+        self._original_data = (
+            c.x_mapper.map_data(event.x),
+            c.y_mapper.map_data(event.y),
+        )
         self._prev_x = event.x
         self._prev_y = event.y
         if capture_mouse:
             event.window.set_pointer(self.drag_pointer)
             event.window.set_mouse_owner(self, event.net_transform())
         event.handled = True
-        return
 
     def drag_end(self, event):
         event.window.set_pointer("arrow")
         if event.window.mouse_owner == self:
             event.window.set_mouse_owner(None)
         event.handled = True
-        return
 
     def _calc_zoom(self, original, clicked):
-        """ Returns the amount to scale the range based on the original
+        """Returns the amount to scale the range based on the original
         cursor position and a new, updated position.
         """
         # We express the built-in zoom scaling as 0.05/10 to indicate a scaling
         # of 5% every 10 pixels, per the docstring for the 'speed' trait.
-        return 1.0 - self.speed * (clicked - original) * (0.05/10)
+        return 1.0 - self.speed * (clicked - original) * (0.05 / 10)

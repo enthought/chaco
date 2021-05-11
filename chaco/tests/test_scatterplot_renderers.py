@@ -1,7 +1,5 @@
 import unittest
 
-import six.moves as sm
-
 from numpy import alltrue
 from enable.compiled_path import CompiledPath
 
@@ -14,7 +12,7 @@ class DrawScatterplotCase(unittest.TestCase):
         """ Coverage test to check basic case works """
         size = (50, 50)
         scatterplot = create_scatter_plot(
-            data=[list(sm.xrange(10)), list(sm.xrange(10))],
+            data=[list(range(10)), list(range(10))],
             border_visible=False,
         )
         scatterplot.outer_bounds = list(size)
@@ -27,7 +25,7 @@ class DrawScatterplotCase(unittest.TestCase):
         """ Coverage test to check circles work """
         size = (50, 50)
         scatterplot = create_scatter_plot(
-            data=[list(sm.xrange(10)), list(sm.xrange(10))],
+            data=[list(range(10)), list(range(10))],
             marker="circle",
             border_visible=False,
         )
@@ -49,8 +47,8 @@ class DrawScatterplotCase(unittest.TestCase):
 
         size = (50, 50)
         scatterplot = create_scatter_plot(
-            data=[list(sm.xrange(10)), list(sm.xrange(10))],
-            marker='custom',
+            data=[list(range(10)), list(range(10))],
+            marker="custom",
             border_visible=False,
         )
         scatterplot.custom_symbol = path
@@ -64,17 +62,13 @@ class DrawScatterplotCase(unittest.TestCase):
         """ Coverage test to check multiple marker size works """
         size = (50, 50)
         scatterplot = create_scatter_plot(
-            data=[list(sm.xrange(10)), list(sm.xrange(10))],
+            data=[list(range(10)), list(range(10))],
             marker="circle",
             border_visible=False,
-            marker_size=list(sm.xrange(1, 11)),
+            marker_size=list(range(1, 11)),
         )
         scatterplot.outer_bounds = list(size)
         gc = PlotGraphicsContext(size)
         gc.render_component(scatterplot)
         actual = gc.bmp_array[:, :, :]
         self.assertFalse(alltrue(actual == 255))
-
-
-if __name__ == "__main__":
-    unittest.main()

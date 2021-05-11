@@ -227,3 +227,215 @@ Fixes
    axes (PR#150).
  * Fixed a few of failing unit tests (PR#143).
  * Fix sort_order bug (PR#141, issue#119).
+
+
+Chaco 4.2.0 / Chaco 4.3.0
+=========================
+
+Enhancements
+------------
+
+ * AbstractPlotData and subclasses now implement an update_data() method which
+   updates the data whilst firing only one update event.
+
+Fixes
+-----
+
+ * Fixed UnboundLocalError in the Plot class when attempting to create a data
+   source from an array of unsupported shape.
+ * DataRange2D.reset and DataRange2D.refresh now work properly by operating on
+   xrange and yrange, like the other settings operations.
+
+
+Chaco 4.1.0
+===========
+
+Enhancements
+------------
+
+ * chaco.shell supports the Qt backend (works with IPython >= 0.12)
+
+Fixes
+-----
+
+ * chaco.shell package updated to work with IPython >= 0.11
+
+Chaco 3.3.2 (Oct 15, 2010)
+==========================
+
+Enhancements
+------------
+
+ * Adding hold and connectedhold render styles to FilledLinePlot
+ * New FunctionImageData class which is similar to FunctionDataSource
+ * Replacing all gc.save_state()/gc.restore_state() calls in Chaco with
+   the new GraphicsContext context handler, using "with gc:"
+ * New Xray Plot example
+ * Adding Spectrum Waterfall example
+
+Fixes
+-----
+
+ * Fixing some commented-out position traits handlers in BaseXYPlot
+ * Fixing MultiLinePlot's data listener
+
+
+Chaco 3.3.0 (Feb 24, 2010)
+==========================
+
+Enhancements
+------------
+
+There has been a lot of work going on in Chaco since the last release.  While
+there haven't been any big new pieces built out, a lot of things have been
+improved across the board.
+
+ * Added new ToolbarPlot class which is similar to Plot, but provides a toolbar
+ * Added toolbar button to copy plot data to the clipboard to the default plot toolbar
+ * Plot toolbar buttons now can have labels
+ * Added BetterZoom tool which is more feature rich than the SimpleZoom tool, including key bindings and configurable zoom levels.  In the next release, hopefully this will supplant or be merged with the SimpleZoom.
+ * Added BetterSelectingZoom tool, based on the ZoomTool, but allows for the user to draw a zoom region
+ * ScatterPlot now has a Callable attribute for the function which renders the markers. This allows for each point to be rendered differently
+ * Added legend highligher tool which adds a click-to-highlight interaction to the legend
+ * Added range selection tool for use with 2D image plots
+ * Added a legend() command to the Chaco shell.
+ * Added text color support to legends.
+ * Made the PlotEditor toolkit-indepedent
+ * Changed the RangeSelection tool so that the selection_completed event is fired whenever the user drags a completed selection around.
+
+
+Fixes
+-----
+
+There have been a lot of minor fixes on a variety of classes as well.  A
+constant push has been made to reduce the reliance of direct imports on wx,
+so that users on Qt will not get any import warnings or errors.  Some of
+issues that have been fixed are:
+
+ * BarPlot now respects the fillcolor alpha value
+ * FilledLinePlot now draws black lines. Previously lines would be drawn for any color, except black.
+ * Fixed placement of title when orientation='top'
+ * Fixed fencepost issue with generating xbounds and ybounds in Plot.img_plot().  Now xbounds and ybounds are generated with N+1 points along their respective dimension.  If the user supplies an array of xs, ys, then they are expected to have length (N+1).  This may break some existing code, but that's a Good Thing because it means the existing code wasn't quite doing the right thing anyways.
+ * Wrapped a lot of direct imports of wx, so that users with only Qt will not see any import errors.
+ * Fixed a bug in horizontal and vertical plot containers wherein fixed_preferred_size was not being respected during layout.
+ * Fixed the correlation plot example to be more user-friendly.
+ * Fixed incorrect firing of the 'updated' event and the handling of the 'track' setting in the DataRange1D class.
+
+
+One final note is that the "chaco2" legacy backwards compatibility package will
+be removed by the next release.  If you have any code that imports from
+"chaco2" and the DeprecationWarnings haven't been sufficiently
+motivating thus far, please heed them and change your imports to use
+"chaco"!
+
+
+Chaco 3.2.0 (July 15, 2009)
+===========================
+
+Enhancements
+------------
+
+  * Bounded grids - Horizontal and Vertical grid line start and end points can now be set to a fixed value in data space, or to be the return value of an arbitrary callable.  The start and end tick can also be configured via the data_min and data_max traits.
+
+  * Added dictionary interface to ArrayPlotData
+
+  * Added a Traits UI view to the ScalesAxis
+
+  * Added a new chaco.overlays subpackage and a new overlay, the DataBox.
+
+  * Improved appearance of PlotToolbar
+
+  * Changed add_default_axis() in the plot_factory module to take an axis class as a keyword argument.
+
+  * Refactored contour plots into a common base class and implemented proper event handling when their colormaps or data ranges change.
+
+  * Changed default colormap on img_plot() and contour_plot() method of Plot to be Spectral instead of Jet.
+
+  * Added two more color palettes to the auto color palette, and created a default_colors module.
+
+  * Added CandlePlot renderer
+
+  * Changed Plot Labels to able to display inside the plot area, instead of only on the outside
+
+  * Added optional title attribute to plot legends
+
+  * Updated all containers to respect and use the new fixed_preferred_size trait on enable.Component
+
+  * New Examples:
+    * Interval trait editor as a Chaco example (from Stefan van der Walt)
+    * embedding an interactive Chaco plot inside a VTK RenderWindow using the new Enable VTK backend
+    * lasso tool on an image plot
+    * bounded grid
+    * candle plot
+
+Fixes
+-----
+
+  * Fixed call signature of ShowAllTickGenerator.get_ticks()
+
+  * Plot.title_font is now a delegate to the underlying PlotLabel object (from Chris Colbert)
+
+  * Fixed mouse event handling bug in RangeSelection (from Stefan van der Walt)
+
+  * ImagePlots now redraw when their input data changes.
+
+  * Fixed cached image invalidation in colormapped image plots
+
+  * Optimized ScatterPlot.map_index() when index_only is True and the index data is sorted
+
+  * Changed ColormappedScatterPlot to no longer incorrectly apply the fill_alpha to the outline color
+
+  * Improved date ticking heuristics in chaco.scales subpackage, specifically eliminating the bug where all times between, midnight and 1am would be formatted at too course of a time resolution.
+
+  * Cleanup of various examples (titles, appearance)
+
+  * The spectrum.py (audio spectrograph) example now properly closes the audio stream.
+
+
+3.1.0 (March 20, 2009)
+======================
+
+Enhancements
+------------
+
+  * Domain limits - Mappers now can declare the "limits" of their valid domain. PanTool and ZoomTool respect these limits.  (pwang)
+
+  * Adding "hide_grids" parameter to Plot.img_plot() and Plot.contour_plot() so users can override the default behavior of hiding grids.  (pwang)
+
+  * Refactored examples to declare a Demo object so they can be be run with the demo.py example launcher.  (vibha)
+
+  * Adding chaco.overlays package with some canned SVG overlays. (bhendrix)
+
+  * DragZoom now can scale both X and Y axes independently corresponding to the mouse cursor motion along the X and Y axes (similar to the zoom behavior in Matplotlib).  (pwang)
+
+  * New Examples:
+    * world map (bhendrix)
+    * more financial plots (pwang)
+    * scatter_toggle (pwang)
+    * stacked_axis (pwang)
+
+
+Fixes
+-----
+
+  * Fixing the chaco.scales TimeFormatter to use the built-in localtime() instead of the one in the safetime.py module due to Daylight Savings Time issues with timedelta. (r23231, pwang)
+
+  * Improved behavior of ScatterPlot when it doesn't get the type of metadata it expects in its "selections" and "selection_masks" metadata keys (r23121, pwang)
+
+  * Setting the .range2d attribute on GridMapper now properly sets the two DataRange1D instances of its sub-mappers.  (r23119, pwang)
+
+  * ScatterPlot.map_index() now respects the index_only flag (r23060, pwang)
+
+  * Fixed occasional traceback/bug in LinePlot that occurred when data was completely outside the visible range (r23059, pwang)
+
+  * Implementing is_in() on legends to account for padding and alignment (caused by tools that move the legend) (r23052, bhendrix)
+
+  * Legend behaves properly when there are no plots to display (r23012, judah)
+
+  * Fixed LogScale in the chaco.scales package to correctly handle the case when the length of the interval is less than a decade (r22907, warren.weckesser)
+
+  * Fixed traceback when calling copy_traits() on a DataView (r22894, vibha)
+
+  * Scatter plots generated by Plot.plot() now properly use the "auto" coloring feature of Plot. (r22727, pwang)
+
+  * Reduced the size of screenshots in the user manual. (r22720, rkern)

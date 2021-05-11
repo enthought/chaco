@@ -1338,7 +1338,7 @@ build_cntr_list_v(long *np, double *xp, double *yp, int nparts, long ntotal)
 {
     PyObject *point, *all_contours;
     PyArrayObject *xv, *yv;
-    int dims[1];
+    npy_intp dims[1];
     int i;
     long j, k;
 
@@ -1348,8 +1348,8 @@ build_cntr_list_v(long *np, double *xp, double *yp, int nparts, long ntotal)
     for (i = 0; i < nparts; i++)
     {
         dims[0] = np[i];
-        xv = (PyArrayObject *) PyArray_FromDims(1, dims, 'd');
-        yv = (PyArrayObject *) PyArray_FromDims(1, dims, 'd');
+        xv = (PyArrayObject *) PyArray_SimpleNew(1, dims, NPY_DOUBLE);
+        yv = (PyArrayObject *) PyArray_SimpleNew(1, dims, NPY_DOUBLE);
         if (xv == NULL || yv == NULL)  goto error;
         for (j = 0; j < dims[0]; j++)
         {
@@ -1700,19 +1700,14 @@ static PyMethodDef module_methods[] = {
 };
 
 
-#if PY_MAJOR_VERSION >= 3
-    #define MOD_INIT(name) PyMODINIT_FUNC PyInit_##name(void)
-	#define RETURN_MODINIT return m
-#else
-    #define MOD_INIT(name) PyMODINIT_FUNC init##name(void)
-	#define RETURN_MODINIT return
-#endif
+#define MOD_INIT(name) PyMODINIT_FUNC PyInit_##name(void)
+#define RETURN_MODINIT return m
 
 
 MOD_INIT(contour)
 {
     PyObject* m = NULL;
-#if PY_MAJOR_VERSION >= 3    
+  
     static struct PyModuleDef moduledef = {
         PyModuleDef_HEAD_INIT,
         "contour",     /* m_name */
@@ -1724,16 +1719,12 @@ MOD_INIT(contour)
         NULL,                /* m_clear */
         NULL,                /* m_free */
     };
-#endif
+
     if (PyType_Ready(&CntrType) < 0)
         RETURN_MODINIT;
 
-#if PY_MAJOR_VERSION >= 3
+
     m = PyModule_Create(&moduledef);
-#else
-    m = Py_InitModule3("contour", module_methods,
-                       "Contouring engine as an extension type");
-#endif
 
     if (m == NULL)
     	RETURN_MODINIT;

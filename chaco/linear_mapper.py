@@ -4,7 +4,7 @@ into a 1-D output space.
 """
 
 # Major library imports
-from numpy import array, empty, ndarray
+from numpy import array, float64, full_like, ndarray
 
 # Enthought library imports
 from traits.api import Bool, Float
@@ -14,7 +14,7 @@ from .base_1d_mapper import Base1DMapper
 
 
 class LinearMapper(Base1DMapper):
-    """ Maps a 1-D data space to and from screen space by specifying a range in
+    """Maps a 1-D data space to and from screen space by specifying a range in
     data space and a corresponding fixed line in screen space.
 
     This class concerns itself only with metric and not with orientation. So, to
@@ -22,9 +22,9 @@ class LinearMapper(Base1DMapper):
     and **high_pos**.
     """
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # Number of screen space units per data space unit.
     _scale = Float(1.0)
@@ -33,28 +33,26 @@ class LinearMapper(Base1DMapper):
     # Is the range of the data space empty?
     _null_data_range = Bool(False)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Public methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def map_screen(self, data_array):
-        """ map_screen(data_array) -> screen_array
+        """map_screen(data_array) -> screen_array
 
         Overrides AbstractMapper. Maps values from data space into screen space.
         """
         self._compute_scale()
         if self._null_data_range:
             if isinstance(data_array, (tuple, list, ndarray)):
-                x = empty(data_array.shape)
-                x.fill(self.low_pos)
-                return x
+                return full_like(data_array, self.low_pos, dtype=float64)
             else:
                 return array([self.low_pos])
         else:
             return (data_array - self.range.low) * self._scale + self.low_pos
 
     def map_data(self, screen_val):
-        """ map_data(screen_val) -> data_val
+        """map_data(screen_val) -> data_val
 
         Overrides AbstractMapper. Maps values from screen space into data space.
         """
@@ -67,16 +65,16 @@ class LinearMapper(Base1DMapper):
             return (screen_val - self.low_pos) / self._scale + self.range.low
 
     def map_data_array(self, screen_vals):
-        """ map_data_array(screen_vals) -> data_vals
+        """map_data_array(screen_vals) -> data_vals
 
         Overrides AbstractMapper. Maps an array of values from screen space
         into data space.
         """
         return self.map_data(screen_vals)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _compute_scale(self):
         if self._cache_valid:
@@ -104,6 +102,3 @@ class LinearMapper(Base1DMapper):
             self._null_data_range = bool(self._scale == 0.0)
 
         self._cache_valid = True
-        return
-
-# EOF

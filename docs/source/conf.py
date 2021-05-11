@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 # Chaco documentation build configuration file, created by
 # sphinx-quickstart on Mon Jul 21 21:01:40 2008.
 #
@@ -13,8 +11,8 @@
 # All configuration values have a default value; values that are commented out
 # serve to show the default value.
 
-import sys
 import os
+import runpy
 
 # The docset build will use slightly different formatting rules
 
@@ -29,7 +27,14 @@ BUILD_DOCSET = get_build_docset()
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.napoleon', 'traits.util.trait_documenter']
+extensions = [
+  'sphinx.ext.autodoc',
+  'sphinx.ext.napoleon',
+  'sphinx.ext.graphviz',
+  'sphinx.ext.intersphinx',
+  'sphinx.ext.todo',
+  'traits.util.trait_documenter',
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -46,11 +51,16 @@ copyright = '2008-2019, Enthought, Inc.'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
-d = {}
-chaco_version_file = os.path.join('..', '..', 'chaco', '_version.py')
-exec(compile(open(chaco_version_file).read(), chaco_version_file, 'exec'), d)
-release = d['version']
-version = '.'.join(release.split('.',2)[:2])
+base_path = os.path.abspath(os.path.dirname(__file__))
+version_file = os.path.join(base_path, '..', '..', 'chaco', '_version.py')
+if os.path.isfile(version_file):
+    version = release = runpy.run_path(version_file)['full_version']
+else:
+    try:
+        from chaco._version import full_version as version
+        release = version
+    except ImportError:
+        raise RuntimeError("Chaco must be installed before building docs!")
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -87,32 +97,26 @@ pygments_style = 'sphinx'
 # Options for HTML output
 # -----------------------
 
-# When using docset browsers like Dash and Zeal the side bar is redundant.
-if BUILD_DOCSET:
-    html_theme_options = {
-        'nosidebar': 'true'
-    }
-
 # The style sheet to use for HTML and HTML Help pages. A file of that name
 # must exist either in Sphinx' static/ path, or in one of the custom paths
 # given in html_static_path.
-html_style = 'default.css'
+#html_style = 'default.css'
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = "Chaco {}".format(version)
+#html_title = "Chaco {}".format(version)
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #html_short_title = None
 
 # The name of an image file (within the static path) to place at the top of
 # the sidebar.
-html_logo = '_static/e-logo-rev.png'
+#html_logo = '_static/e-logo-rev.png'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
-html_favicon = 'et.ico'
+#html_favicon = 'et.ico'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -157,7 +161,34 @@ html_use_index = BUILD_DOCSET
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'Chacodoc'
 
-html_theme='classic'
+try:
+    import enthought_sphinx_theme
+
+    html_theme_path = [enthought_sphinx_theme.theme_path]
+    html_theme = 'enthought'
+    # When using docset browsers like Dash and Zeal the side bar is redundant.
+    if BUILD_DOCSET:
+        html_theme_options = {
+            'sidebar': 'none'
+        }
+except ImportError as exc:
+    import warnings
+    msg = '''Can't find Enthought Sphinx Theme, using default.
+            Exception was: {}
+            Enthought Sphinx Theme can be downloaded from
+            https://github.com/enthought/enthought-sphinx-theme'''
+    warnings.warn(RuntimeWarning(msg.format(exc)))
+
+    # old defaults
+    html_logo = "e-logo-rev.jpg"
+    html_favicon = "et.png"
+    html_style = 'default.css'
+    html_theme = 'classic'
+    if BUILD_DOCSET:
+        html_theme_options = {
+            'nosidebar': 'true'
+        }
+
 
 # Options for LaTeX output
 # ------------------------
@@ -191,3 +222,8 @@ latex_documents = [
 
 # If false, no module index is generated.
 #latex_use_modindex = True
+
+
+intersphinx_mapping = {
+    'enable': ('http://docs.enthought.com/enable', None)
+}

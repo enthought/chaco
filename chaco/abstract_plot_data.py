@@ -8,20 +8,19 @@ class AbstractPlotData(HasTraits):
     Defines the interface for data providers to Plot.
     """
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Events that consumers of this data should use
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     #: Indicates that some of the data has changed.  The event object must
     #: be a dict with keys "added", "removed", "changed" and values that are
     #: lists of strings. This event is used by consumers of this data.
     data_changed = Event
 
-
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Flags - these determine how downstream consumers of the PlotData objet
     # interact with it.  (Typically "consumers" just refers to Plots.)
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     #: Can consumers (Plots) write data back through this interface using
     #: set_data()?
@@ -30,36 +29,33 @@ class AbstractPlotData(HasTraits):
     #: Can consumers (Plots) set selections?
     selectable = Bool(True)
 
-
     def list_data(self):
-        """ Returns a list of valid names to use for get_data().
+        """Returns a list of valid names to use for get_data().
 
         These names are generally strings but can also be integers or any other
         hashable type.
         """
         raise NotImplementedError
 
-
     def get_data(self, name):
-        """ Returns the data or data source associated with *name*.
+        """Returns the data or data source associated with *name*.
 
         If there is no data or data source associated with the name, this method
         returns None.
         """
         raise NotImplementedError
 
-
     def del_data(self, name):
-        """ Deletes the array specified by *name*, or raises a KeyError if
+        """Deletes the array specified by *name*, or raises a KeyError if
         the named array does not exist.
-        
+
         If the instance is not writable, then this must do nothing.
-        
+
         """
         raise NotImplementedError
 
     def set_data(self, name, new_data, generate_name=False):
-        """ Sets the specified array as the value for either the specified
+        """Sets the specified array as the value for either the specified
         name or a generated name.
 
         If the instance's `writable` attribute is True, then this method sets
@@ -84,19 +80,18 @@ class AbstractPlotData(HasTraits):
         """
         raise NotImplementedError
 
-
     def update_data(self, *args, **kwargs):
         """
         Update a set of data values, firing only one data_changed event.
-        
+
         This function has the same signature as the dictionary update()
         method.
-        
+
         """
         raise NotImplementedError
 
     def set_selection(self, name, selection):
-        """ Sets the selection on the specified data.
+        """Sets the selection on the specified data.
 
         This method informs the class that Chaco has selected a portion of the
         data.
@@ -111,9 +106,9 @@ class AbstractPlotData(HasTraits):
         """
         raise NotImplementedError
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Dictionary Interface
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def __getitem__(self, name):
         return self.arrays.get(name, None)
@@ -126,4 +121,3 @@ class AbstractPlotData(HasTraits):
 
     def update(self, *args, **kwargs):
         self.update_data(*args, **kwargs)
-    

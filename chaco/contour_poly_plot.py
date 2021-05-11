@@ -1,7 +1,6 @@
 """ Defines the ContourPolyPlot class.
 """
 
-from __future__ import with_statement
 
 # Major library imports
 from numpy import array, isfinite, meshgrid, transpose
@@ -15,27 +14,27 @@ from .contour.contour import Cntr
 
 
 class ContourPolyPlot(BaseContourPlot):
-    """ Contour image plot.  Takes a value data object whose elements are
+    """Contour image plot.  Takes a value data object whose elements are
     scalars, and renders them as a contour plot.
     """
 
     # TODO: Modify ImageData to explicitly support scalar value arrays
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # Are the cached contours valid? If False, new ones need to be computed.
-    _poly_cache_valid = Bool(False)
+    _poly_cache_valid = Bool(False, transient=True)
 
     # Cached collection of traces.
-    _cached_polys = Dict
+    _cached_polys = Dict(transient=True)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _render(self, gc):
-        """ Actually draws the plot.
+        """Actually draws the plot.
 
         Implements the Base2DPlot interface.
         """
@@ -53,16 +52,16 @@ class ContourPolyPlot(BaseContourPlot):
             gc.set_line_width(0)
             gc.set_alpha(self.alpha)
 
-            for i in range(len(self._levels)-1):
+            for i in range(len(self._levels) - 1):
                 gc.set_fill_color(self._colors[i])
                 gc.set_stroke_color(self._colors[i])
-                key = (self._levels[i], self._levels[i+1])
+                key = (self._levels[i], self._levels[i + 1])
                 for poly in self._cached_polys[key]:
                     if self.orientation == "h":
                         spoly = self.index_mapper.map_screen(poly)
                     else:
-                        spoly = array(
-                            self.index_mapper.map_screen(poly))[:, ::-1]
+                        rev_spoly = self.index_mapper.map_screen(poly)
+                        spoly = array(rev_spoly)[:, ::-1]
                     gc.lines(spoly)
                     gc.close_path()
                     gc.draw_path()
@@ -86,8 +85,8 @@ class ContourPolyPlot(BaseContourPlot):
         c = Cntr(xg, yg, data, ~mask)
 
         self._cached_contours = {}
-        for i in range(len(self._levels)-1):
-            key = (self._levels[i], self._levels[i+1])
+        for i in range(len(self._levels) - 1):
+            key = (self._levels[i], self._levels[i + 1])
             self._cached_polys[key] = []
             polys = c.trace(*key)
             for poly in polys:
@@ -96,7 +95,7 @@ class ContourPolyPlot(BaseContourPlot):
 
     def _update_levels(self):
         """ Extends the parent method to also invalidate some other things """
-        super(ContourPolyPlot, self)._update_levels()
+        super()._update_levels()
         self._poly_cache_valid = False
 
     def _update_colors(self):

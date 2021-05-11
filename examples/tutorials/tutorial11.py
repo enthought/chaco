@@ -22,16 +22,43 @@ class PlotExample4(PlotExample3):
         rplot.y_axis.mapper = rplot.index_mapper
         rplot.x_axis.mapper = rplot.value_mapper
 
+        lplot.overlays.append(
+            LineInspector(
+                component=lplot,
+                axis="value",
+                write_metadata=True,
+                is_listener=True,
+                color="blue",
+            )
+        )
+        lplot.overlays.append(
+            LineInspector(
+                component=lplot,
+                axis="value",
+                write_metadata=True,
+                is_listener=True,
+                color="blue",
+            )
+        )
 
-        lplot.overlays.append(LineInspector(component=lplot,
-             axis="value", write_metadata=True, is_listener=True, color="blue"))
-        lplot.overlays.append(LineInspector(component=lplot,
-             axis="value", write_metadata=True, is_listener=True, color="blue"))
-
-        rplot.overlays.append(LineInspector(component=rplot,
-             axis="value", write_metadata=True, is_listener=True, color="blue"))
-        rplot.overlays.append(LineInspector(component=rplot,
-             axis="value", write_metadata=True, is_listener=True, color="blue"))
+        rplot.overlays.append(
+            LineInspector(
+                component=rplot,
+                axis="value",
+                write_metadata=True,
+                is_listener=True,
+                color="blue",
+            )
+        )
+        rplot.overlays.append(
+            LineInspector(
+                component=rplot,
+                axis="value",
+                write_metadata=True,
+                is_listener=True,
+                color="blue",
+            )
+        )
 
         return container
 
