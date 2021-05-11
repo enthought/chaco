@@ -503,11 +503,11 @@ class Legend(AbstractOverlay):
         "bounds.items",
         "title_at_top",
     ])
-    def _update_layout_needed(self, event):
+    def _invalidate_existing_layout(self, event):
         self._layout_needed = True
     
     @observe("color")
-    def _get_preferred_size_on_color_change(self, event):
+    def _update_caches(self, event):
         self.get_preferred_size()
 
     def _plots_changed(self):
