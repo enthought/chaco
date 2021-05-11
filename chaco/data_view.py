@@ -257,16 +257,16 @@ class DataView(OverlayPlotContainer):
         return self._find_padding("right")
     
     def _set_padding_top(self, value):
-        self._padding_left = value
+        self._padding_top = value
 
     def _set_padding_bottom(self, value):
-        self._padding_left = value
+        self._padding_bottom = value
 
     def _set_padding_left(self, value):
         self._padding_left = value
 
     def _set_padding_right(self, value):
-        self._padding_left = value
+        self._padding_right = value
 
     border_visible = True
 
