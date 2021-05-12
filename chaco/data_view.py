@@ -3,7 +3,7 @@ functions.
 """
 from numpy import array, transpose
 
-from traits.api import Bool, Enum, Instance, Int, observe, Property
+from traits.api import Bool, Enum, Instance, Int, observe, Property, Union
 from enable.api import color_table
 
 from .abstract_overlay import AbstractOverlay
@@ -221,10 +221,10 @@ class DataView(OverlayPlotContainer):
         observe='y_axis.[title,orientation], x_axis.[title,orientation]'
     )
 
-    _padding_top = Int(0)
-    _padding_bottom= Int(0)
-    _padding_left = Int(0)
-    _padding_right = Int(0)
+    _padding_top = Union(None, Int())
+    _padding_bottom= Union(None, Int())
+    _padding_left = Union(None, Int())
+    _padding_right = Union(None, Int())
 
     def _find_padding(self, side):
         MAP = {
@@ -233,7 +233,7 @@ class DataView(OverlayPlotContainer):
             "left": "_padding_left",
             "right": "_padding_right",
         }
-        if getattr(self, MAP[side]):
+        if getattr(self, MAP[side]) is not None:
             return getattr(self, MAP[side])
         else:
             if self.y_axis:
