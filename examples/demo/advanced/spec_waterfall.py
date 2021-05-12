@@ -77,7 +77,6 @@ class WaterfallRenderer(LinePlot):
         mapping data_array with y2_mapper.  If data_offset is not
         provided, then y2_mapper is used.
         """
-        print(data_array.shape)
         if len(data_array) == 0:
             return empty(shape=(0,2))
         x_ary, y_ary = transpose(data_array)
