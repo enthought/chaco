@@ -11,7 +11,7 @@ from kiva.api import points_in_polygon
 from traits.api import Enum, Float, Tuple, Property, cached_property, observe
 
 # Local imports.
-from .base_xy_plot import BaseXYPlot
+from chaco.base_xy_plot import BaseXYPlot
 
 
 class PolygonPlot(BaseXYPlot):

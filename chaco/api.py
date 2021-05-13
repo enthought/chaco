@@ -291,7 +291,7 @@ from .linear_mapper import LinearMapper
 from .color_mapper import ColorMapper, ColorMapTemplate
 from .discrete_color_mapper import DiscreteColorMapper
 from .transform_color_mapper import TransformColorMapper
-from .horizon_plot import BandedMapper
+from .plots.horizon_plot import BandedMapper
 from .polar_mapper import PolarMapper
 
 # Visual components
@@ -324,37 +324,37 @@ from .legend import Legend
 from .tooltip import ToolTip
 from .data_label import DataLabel
 from .lasso_overlay import LassoOverlay
-from .color_bar import ColorBar
+from .plots.color_bar import ColorBar
 from .text_box_overlay import TextBoxOverlay
 from .scatter_inspector_overlay import ScatterInspectorOverlay
 from .colormapped_selection_overlay import ColormappedSelectionOverlay
 
 # Renderers
-from .barplot import BarPlot
+from .plots.barplot import BarPlot
 from .base_1d_plot import Base1DPlot
 from .base_2d_plot import Base2DPlot
 from .base_xy_plot import BaseXYPlot
-from .scatterplot import ScatterPlot, render_markers
-from .image_plot import ImagePlot
-from .cmap_image_plot import CMapImagePlot
-from .contour_line_plot import ContourLinePlot
-from .contour_poly_plot import ContourPolyPlot
-from .lineplot import LinePlot
-from .colormapped_scatterplot import ColormappedScatterPlot
-from .polygon_plot import PolygonPlot
-from .errorbar_plot import ErrorBarPlot
-from .filled_line_plot import FilledLinePlot
-from .quiverplot import QuiverPlot
-from .candle_plot import CandlePlot
-from .multi_line_plot import MultiLinePlot
-from .jitterplot import JitterPlot
-from .horizon_plot import HorizonPlot
-from .scatterplot_1d import ScatterPlot1D
-from .line_scatterplot_1d import LineScatterPlot1D
-from .text_plot_1d import TextPlot1D
-from .segment_plot import SegmentPlot
-from .text_plot import TextPlot
-from .polar_line_renderer import PolarLineRenderer
+from .plots.scatterplot import ScatterPlot, render_markers
+from .plots.image_plot import ImagePlot
+from .plots.cmap_image_plot import CMapImagePlot
+from .plots.contour_line_plot import ContourLinePlot
+from .plots.contour_poly_plot import ContourPolyPlot
+from .plots.lineplot import LinePlot
+from .plots.colormapped_scatterplot import ColormappedScatterPlot
+from .plots.polygon_plot import PolygonPlot
+from .plots.errorbar_plot import ErrorBarPlot
+from .plots.filled_line_plot import FilledLinePlot
+from .plots.quiverplot import QuiverPlot
+from .plots.candle_plot import CandlePlot
+from .plots.multi_line_plot import MultiLinePlot
+from .plots.jitterplot import JitterPlot
+from .plots.horizon_plot import HorizonPlot
+from .plots.scatterplot_1d import ScatterPlot1D
+from .plots.line_scatterplot_1d import LineScatterPlot1D
+from .plots.text_plot_1d import TextPlot1D
+from .plots.segment_plot import SegmentPlot
+from .plots.text_plot import TextPlot
+from .plots.polar_line_renderer import PolarLineRenderer
 
 # Plot factories
 from .plot_factory import (

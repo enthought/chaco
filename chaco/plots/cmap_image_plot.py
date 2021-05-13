@@ -12,9 +12,9 @@ from numpy import zeros
 from traits.api import Any, Bool, Float, Instance, Property, Tuple
 
 # Local relative imports
-from .image_plot import ImagePlot
-from .abstract_colormap import AbstractColormap
-from .speedups import apply_selection_fade
+from chaco.plots.image_plot import ImagePlot
+from chaco.abstract_colormap import AbstractColormap
+from chaco.speedups import apply_selection_fade
 
 
 class CMapImagePlot(ImagePlot):

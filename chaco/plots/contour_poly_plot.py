@@ -9,8 +9,8 @@ from numpy import array, isfinite, meshgrid, transpose
 from traits.api import Bool, Dict
 
 # Local relative imports
-from .base_contour_plot import BaseContourPlot
-from .contour.contour import Cntr
+from chaco.base_contour_plot import BaseContourPlot
+from chaco.plots.contour.contour import Cntr
 
 
 class ContourPolyPlot(BaseContourPlot):

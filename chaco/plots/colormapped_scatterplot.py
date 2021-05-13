@@ -22,10 +22,10 @@ from traits.api import Dict, Enum, Float, Instance, observe
 from traitsui.api import Item, RangeEditor
 
 # Local, relative imports
-from .array_data_source import ArrayDataSource
-from .base import left_shift, right_shift
-from .abstract_colormap import AbstractColormap
-from .scatterplot import ScatterPlot, ScatterPlotView
+from chaco.array_data_source import ArrayDataSource
+from chaco.base import left_shift, right_shift
+from chaco.abstract_colormap import AbstractColormap
+from chaco.plots.scatterplot import ScatterPlot, ScatterPlotView
 
 
 class ColormappedScatterPlotView(ScatterPlotView):

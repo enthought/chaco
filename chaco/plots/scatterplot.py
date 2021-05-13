@@ -46,9 +46,9 @@ from traits.api import (
 from traitsui.api import View, VGroup, Item
 
 # Local relative imports
-from .base_xy_plot import BaseXYPlot
-from .speedups import scatterplot_gather_points
-from .base import reverse_map_1d
+from chaco.base_xy_plot import BaseXYPlot
+from chaco.speedups import scatterplot_gather_points
+from chaco.base import reverse_map_1d
 
 # ------------------------------------------------------------------------------
 # TraitsUI View for customizing a scatter plot.

@@ -9,7 +9,7 @@ from chaco.api import (
     LinearMapper,
     PlotGraphicsContext,
 )
-from chaco.text_plot import TextPlot
+from chaco.plots.text_plot import TextPlot
 
 
 class TextPlotTest(unittest.TestCase):

@@ -12,9 +12,9 @@ from kiva.trait_defs.kiva_font_trait import KivaFont
 from traits.api import Bool, Enum, Float, Int, Instance, List, Tuple, observe
 
 # local imports
-from .array_data_source import ArrayDataSource
-from .label import Label
-from .base_xy_plot import BaseXYPlot
+from chaco.array_data_source import ArrayDataSource
+from chaco.label import Label
+from chaco.base_xy_plot import BaseXYPlot
 
 
 class TextPlot(BaseXYPlot):

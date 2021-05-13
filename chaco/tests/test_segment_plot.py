@@ -11,7 +11,7 @@ from chaco.api import (
     PlotGraphicsContext,
 )
 from chaco.base import rgba_dtype
-from chaco.segment_plot import SegmentPlot
+from chaco.plots.segment_plot import SegmentPlot
 from chaco.default_colormaps import viridis
 
 

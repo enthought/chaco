@@ -18,9 +18,9 @@ from chaco.api import (
     ArrayDataSource,
     DataRange1D,
     PlotAxis,
+    MultiArrayDataSource,
+    MultiLinePlot
 )
-from chaco.multi_array_data_source import MultiArrayDataSource
-from chaco.multi_line_plot import MultiLinePlot
 
 
 class DataModel(HasTraits):

@@ -26,9 +26,9 @@ from traits.api import (
 )
 from traitsui.api import Item, View, ScrubberEditor, HGroup
 
-from .array_data_source import ArrayDataSource
-from .base import arg_find_runs, bin_search
-from .base_xy_plot import BaseXYPlot
+from chaco.array_data_source import ArrayDataSource
+from chaco.base import arg_find_runs, bin_search
+from chaco.base_xy_plot import BaseXYPlot
 
 
 class MultiLinePlot(BaseXYPlot):

@@ -11,7 +11,7 @@ from enable.api import black_color_trait, ColorTrait, LineStyle
 from traits.api import Any, Bool, Float, Str
 
 # local imports
-from .base_1d_plot import Base1DPlot
+from chaco.base_1d_plot import Base1DPlot
 
 
 class LineScatterPlot1D(Base1DPlot):

@@ -5,8 +5,8 @@ from numpy import array, compress, concatenate, searchsorted
 from traits.api import Instance, Property
 
 # Chaco imports
-from .abstract_data_source import AbstractDataSource
-from .base_candle_plot import BaseCandlePlot
+from chaco.abstract_data_source import AbstractDataSource
+from chaco.base_candle_plot import BaseCandlePlot
 
 
 def broaden(mask):

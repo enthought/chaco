@@ -10,8 +10,8 @@ from enable.api import black_color_trait, ColorTrait, MarkerTrait
 from traits.api import Any, Bool, Callable, Enum, Float, Str
 
 # local imports
-from .base_1d_plot import Base1DPlot
-from .scatterplot import render_markers
+from chaco.base_1d_plot import Base1DPlot
+from chaco.plots.scatterplot import render_markers
 
 
 class ScatterPlot1D(Base1DPlot):

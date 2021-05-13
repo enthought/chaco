@@ -4,8 +4,8 @@ import numpy as np
 
 from traits.api import Any, Int
 
-from .scatterplot_1d import ScatterPlot1D
-from .base import reverse_map_1d
+from chaco.plots.scatterplot_1d import ScatterPlot1D
+from chaco.base import reverse_map_1d
 
 
 class JitterPlot(ScatterPlot1D):

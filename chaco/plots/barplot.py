@@ -26,10 +26,10 @@ from enable.api import black_color_trait
 from kiva.constants import FILL_STROKE
 
 # Local relative imports
-from .abstract_plot_renderer import AbstractPlotRenderer
-from .abstract_mapper import AbstractMapper
-from .array_data_source import ArrayDataSource
-from .base import reverse_map_1d
+from chaco.abstract_plot_renderer import AbstractPlotRenderer
+from chaco.abstract_mapper import AbstractMapper
+from chaco.array_data_source import ArrayDataSource
+from chaco.base import reverse_map_1d
 
 
 logger = logging.getLogger(__name__)

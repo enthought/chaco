@@ -28,8 +28,8 @@ from traits.api import Enum, Float, List, Str, Property, Tuple, cached_property
 from traitsui.api import Item, View
 
 # Local relative imports
-from .base import arg_find_runs, arg_true_runs, reverse_map_1d, intersect_range
-from .base_xy_plot import BaseXYPlot
+from chaco.base import arg_find_runs, arg_true_runs, reverse_map_1d, intersect_range
+from chaco.base_xy_plot import BaseXYPlot
 
 
 class LinePlot(BaseXYPlot):

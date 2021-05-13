@@ -32,8 +32,8 @@ from traits.api import (
 from kiva.agg import GraphicsContextArray
 
 # Local relative imports
-from .base_2d_plot import Base2DPlot
-from .image_utils import trim_screen_rect
+from chaco.base_2d_plot import Base2DPlot
+from chaco.image_utils import trim_screen_rect
 
 try:
     # InterpolationQuality required for Quartz backend only (requires OSX).

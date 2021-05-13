@@ -12,7 +12,7 @@ from chaco.api import (
     LinearMapper,
     PlotGraphicsContext,
 )
-from chaco.text_plot_1d import TextPlot1D
+from chaco.plots.text_plot_1d import TextPlot1D
 
 
 class TextPlot1DTest(UnittestTools, unittest.TestCase):

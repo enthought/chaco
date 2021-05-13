@@ -13,7 +13,7 @@ from chaco.api import (
     LinearMapper,
     PlotGraphicsContext,
 )
-from chaco.scatterplot_1d import ScatterPlot1D
+from chaco.plots.scatterplot_1d import ScatterPlot1D
 
 
 class Scatterplot1DTest(UnittestTools, unittest.TestCase):

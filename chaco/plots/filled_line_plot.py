@@ -2,8 +2,8 @@ from numpy import empty
 from traits.api import Property, Enum
 
 # Local imports
-from .lineplot import LinePlot
-from .polygon_plot import PolygonPlot
+from chaco.plots.lineplot import LinePlot
+from chaco.plots.polygon_plot import PolygonPlot
 
 
 def Alias(name):

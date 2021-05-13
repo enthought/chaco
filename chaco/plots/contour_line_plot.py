@@ -10,8 +10,8 @@ from kiva import constants
 from traits.api import Bool, Dict, Float, List, Str, Trait
 
 # Local relative imports
-from .base_contour_plot import BaseContourPlot
-from .contour.contour import Cntr
+from chaco.base_contour_plot import BaseContourPlot
+from chaco.plots.contour.contour import Cntr
 
 
 class ContourLinePlot(BaseContourPlot):
