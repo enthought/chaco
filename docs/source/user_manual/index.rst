@@ -27,3 +27,4 @@ User Guide
     how_do_i.rst
     faq.rst
     matplotlib_to_chaco.rst
+    tool_reorg.rst
