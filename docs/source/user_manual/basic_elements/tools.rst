@@ -28,7 +28,7 @@ Tools
 ..    PanTool
 ..    =======
 
-..    ZoomTool
+..    SelectingZoomTool
 ..    ========
 
 ..    RectZoom

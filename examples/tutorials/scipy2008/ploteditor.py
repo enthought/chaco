@@ -1,7 +1,7 @@
 from numpy import linspace, sin
 
 from chaco.api import ArrayPlotData, Plot
-from chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool,SelectingZoomTool
 from enable.api import ComponentEditor
 from traits.api import Enum, HasTraits, Instance
 from traitsui.api import Item, Group, View

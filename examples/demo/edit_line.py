@@ -34,7 +34,7 @@ from chaco.api import (
     PlotLabel,
     ScatterPlot,
 )
-from chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool,SelectingZoomTool
 
 
 class PointDraggingTool(DragTool):
@@ -172,9 +172,9 @@ def _create_plot_component():
 
     scatter.tools.append(PanTool(scatter, drag_button="right"))
 
-    # The ZoomTool tool is stateful and allows drawing a zoom
+    # TheSelectingZoomTool tool is stateful and allows drawing a zoom
     # box to select a zoom region.
-    zoom = ZoomTool(scatter, tool_mode="box", always_on=False)
+    zoom =SelectingZoomTool(scatter, tool_mode="box", always_on=False)
     scatter.overlays.append(zoom)
 
     scatter.tools.append(PointDraggingTool(scatter))

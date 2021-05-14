@@ -14,7 +14,7 @@ from traitsui.api import Item, Group, HGroup, View, TextEditor
 
 # Chaco imports
 from chaco.api import ScatterPlot, DataView, LinePlot
-from chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool,SelectingZoomTool
 from chaco.function_data_source import FunctionDataSource
 
 

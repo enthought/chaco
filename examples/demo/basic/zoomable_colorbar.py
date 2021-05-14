@@ -30,7 +30,7 @@ from chaco.api import (
     Plot,
     gist_earth,
 )
-from chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool,SelectingZoomTool
 
 # ===============================================================================
 # # Create the Chaco plot.
@@ -74,7 +74,7 @@ def _create_plot_component():
 
     # Add pan and zoom to the plot
     plot.tools.append(PanTool(plot, constrain_key="shift"))
-    zoom = ZoomTool(plot)
+    zoom =SelectingZoomTool(plot)
     plot.overlays.append(zoom)
 
     # Create the colorbar, handing in the appropriate range and colormap
@@ -94,7 +94,7 @@ def _create_plot_component():
     colorbar.tools.append(
         PanTool(colorbar, constrain_direction="y", constrain=True)
     )
-    zoom_overlay = ZoomTool(
+    zoom_overlay =SelectingZoomTool(
         colorbar,
         axis="index",
         tool_mode="range",

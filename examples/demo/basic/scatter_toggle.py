@@ -30,7 +30,7 @@ from chaco.api import (
     Plot,
     ScatterInspectorOverlay,
 )
-from chaco.tools.api import ScatterInspector, PanTool, ZoomTool
+from chaco.tools.api import ScatterInspector, PanTool,SelectingZoomTool
 
 # ===============================================================================
 # # Create the Chaco plot.

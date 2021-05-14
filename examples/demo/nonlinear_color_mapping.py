@@ -35,7 +35,7 @@ from chaco.api import (
     TransformColorMapper,
     viridis,
 )
-from chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool,SelectingZoomTool
 
 
 class DataGrid(HasTraits):
@@ -149,7 +149,7 @@ def _create_plot_component(model):
     colorbar.tools.append(
         PanTool(colorbar, constrain_direction="y", constrain=True)
     )
-    zoom_overlay = ZoomTool(
+    zoom_overlay =SelectingZoomTool(
         colorbar,
         axis="index",
         tool_mode="range",

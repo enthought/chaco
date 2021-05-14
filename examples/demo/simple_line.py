@@ -36,7 +36,7 @@ from chaco.api import (
     create_scatter_plot,
     Legend,
 )
-from chaco.tools.api import PanTool, ZoomTool, LegendTool, TraitsTool, DragZoom
+from chaco.tools.api import PanTool,SelectingZoomTool, LegendTool, TraitsTool, DragZoom
 
 
 class OverlappingPlotContainer(OverlayPlotContainer):
@@ -113,9 +113,9 @@ class OverlappingPlotContainer(OverlayPlotContainer):
         # The PanTool allows panning around the plot
         plot.tools.append(PanTool(plot))
 
-        # The ZoomTool tool is stateful and allows drawing a zoom
+        # TheSelectingZoomTool tool is stateful and allows drawing a zoom
         # box to select a zoom region.
-        zoom = ZoomTool(plot, tool_mode="box", always_on=False)
+        zoom =SelectingZoomTool(plot, tool_mode="box", always_on=False)
         plot.overlays.append(zoom)
 
         # The DragZoom tool just zooms in and out as the user drags

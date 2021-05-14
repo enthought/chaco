@@ -11,7 +11,7 @@ from traitsui.api import Item, View
 # Chaco imports
 from chaco.api import ArrayPlotData, Plot, DataRange1D, PlotGraphicsContext
 from chaco.default_colormaps import viridis
-from chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool, SelectingZoomTool
 
 
 def is_qt4():
@@ -125,7 +125,7 @@ class EmptyLinePlot(HasTraits):
         plot = Plot(ArrayPlotData(x=self.x, y=self.y))
         plot.plot(("x", "y"), type="line", color="blue")
         plot.tools.append(PanTool(plot))
-        plot.overlays.append(ZoomTool(plot, zoom_factor=1.1))
+        plot.overlays.append(SelectingZoomTool(plot, zoom_factor=1.1))
         return plot
 
 

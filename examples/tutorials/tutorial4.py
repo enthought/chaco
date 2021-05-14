@@ -1,10 +1,10 @@
 """Tutorial 4. Adding a zoom tool
 
-The ZoomTool tool has a visual component, so it needs to be added to the
+TheSelectingZoomTool tool has a visual component, so it needs to be added to the
 list of overlays instead of the list of bare tools.
 """
 
-from chaco.tools.api import ZoomTool
+from chaco.tools.api importSelectingZoomTool
 
 from tutorial2 import demo
 

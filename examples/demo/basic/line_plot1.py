@@ -20,7 +20,7 @@ from traitsui.api import Item, Group, View
 
 # Chaco imports
 from chaco.api import ArrayPlotData, HPlotContainer, Plot
-from chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool,SelectingZoomTool
 
 # ===============================================================================
 # # Create the Chaco plot.
@@ -42,7 +42,7 @@ def _create_plot_component():
 
     # Attach some tools to the plot
     plot1.tools.append(PanTool(plot1))
-    zoom = ZoomTool(component=plot1, tool_mode="box", always_on=False)
+    zoom =SelectingZoomTool(component=plot1, tool_mode="box", always_on=False)
     plot1.overlays.append(zoom)
 
     # Create a second scatter plot of one of the datasets, linking its

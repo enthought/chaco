@@ -15,7 +15,7 @@ from pyface.util.guisupport import get_app_qt4, start_event_loop_qt4
 from enable.api import Window
 
 from chaco.api import ArrayPlotData, Plot
-from chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool,SelectingZoomTool
 
 
 def create_chaco_plot(parent):
@@ -32,7 +32,7 @@ def create_chaco_plot(parent):
 
     # Attach some tools to the plot
     plot.tools.append(PanTool(plot))
-    zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
+    zoom =SelectingZoomTool(component=plot, tool_mode="box", always_on=False)
     plot.overlays.append(zoom)
 
     # This Window object bridges the Enable and Qt4 worlds, and handles events

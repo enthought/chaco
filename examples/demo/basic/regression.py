@@ -23,7 +23,7 @@ from traitsui.api import Item, Group, View
 from chaco.api import ArrayPlotData, Plot
 from chaco.tools.api import (
     PanTool,
-    ZoomTool,
+   SelectingZoomTool,
     RegressionLasso,
     RegressionOverlay,
 )

@@ -29,7 +29,7 @@ from traitsui.api import Item, Group, View
 
 # Chaco imports
 from chaco.api import ArrayPlotData, Plot
-from chaco.tools.api import LineSegmentTool, PanTool, ZoomTool
+from chaco.tools.api import LineSegmentTool, PanTool,SelectingZoomTool
 
 
 class MyLineDrawer(LineSegmentTool):
@@ -81,7 +81,7 @@ def _create_plot_component():
     # Attach some tools to the plot
     pan = PanTool(plot, drag_button="right", constrain_key="shift")
     plot.tools.append(pan)
-    zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
+    zoom =SelectingZoomTool(component=plot, tool_mode="box", always_on=False)
     plot.overlays.append(zoom)
     plot.overlays.append(MyLineDrawer(plot))
     return plot

@@ -25,7 +25,7 @@ from chaco.api import (
     add_default_grids,
     PlotLabel,
 )
-from chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool,SelectingZoomTool
 
 
 from chaco.scales.api import CalendarScaleSystem
@@ -105,7 +105,7 @@ def _create_plot_component():
         )
     )
     price_plot.overlays.append(
-        ZoomTool(
+       SelectingZoomTool(
             price_plot,
             drag_button="right",
             always_on=True,

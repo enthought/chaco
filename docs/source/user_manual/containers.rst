@@ -339,7 +339,7 @@ full data: ::
             )
 
             # Attach tools to the plot
-            zoom = ZoomTool(
+            zoom = SelectingZoomTool(
                 component=zoomable_plot,
                 tool_mode="box",
                 always_on=False,

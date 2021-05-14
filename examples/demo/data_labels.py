@@ -33,7 +33,7 @@ from chaco.api import (
     OverlayPlotContainer,
     DataLabel,
 )
-from chaco.tools.api import PanTool, ZoomTool, DataLabelTool
+from chaco.tools.api import PanTool,SelectingZoomTool, DataLabelTool
 
 
 class PlotExample(HasTraits):
@@ -76,7 +76,7 @@ class PlotExample(HasTraits):
 
         # Add some tools
         plot.tools.append(PanTool(plot))
-        zoom = ZoomTool(plot, tool_mode="box", always_on=False)
+        zoom =SelectingZoomTool(plot, tool_mode="box", always_on=False)
         plot.overlays.append(zoom)
 
         # Add a dynamic label.  This can be dragged and moved around using the

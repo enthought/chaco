@@ -31,7 +31,7 @@ from chaco.api import (
     LinePlot,
     LinearMapper,
 )
-from chaco.tools.api import PanTool, ZoomTool, LegendTool
+from chaco.tools.api import PanTool,SelectingZoomTool, LegendTool
 
 # Canvas imports
 from chaco.plot_canvas import PlotCanvas
@@ -75,7 +75,7 @@ DATA = {
 def add_basic_tools(plot):
     plot.tools.append(PanTool(plot))
     plot.tools.append(MoveTool(plot, drag_button="right"))
-    zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
+    zoom =SelectingZoomTool(component=plot, tool_mode="box", always_on=False)
     plot.overlays.append(zoom)
 
 
@@ -270,12 +270,12 @@ def clone_plot(clonetool, drop_position):
         newplot.tools.append(newtool)
 
         for tool in oldplot.tools:
-            if isinstance(tool, ZoomTool):
+            if isinstance(tool,SelectingZoomTool):
                 newtool = tool.clone_traits(zoom_traits)
                 newtool.component = newplot
                 break
         else:
-            newtool = ZoomTool(newplot)
+            newtool =SelectingZoomTool(newplot)
         newplot.tools.append(newtool)
 
     else:
@@ -346,7 +346,7 @@ def make_toolbar(canvas):
                 )
             )
             plot.tools.append(
-                ZoomTool(
+               SelectingZoomTool(
                     plot, tool_mode="range", axis="index", always_on=False
                 )
             )

@@ -16,7 +16,7 @@ from traitsui.api import Item, Group, View
 # Chaco imports
 from chaco.api import ArrayPlotData, Plot
 from chaco.base import n_gon
-from chaco.tools.api import PanTool, ZoomTool, DragTool
+from chaco.tools.api import PanTool,SelectingZoomTool, DragTool
 
 
 class DataspaceMoveTool(DragTool):
@@ -98,7 +98,7 @@ def _create_plot_component():
 
     # Attach some tools to the plot
     polyplot.tools.append(PanTool(polyplot))
-    zoom = ZoomTool(polyplot, tool_mode="box", always_on=False)
+    zoom =SelectingZoomTool(polyplot, tool_mode="box", always_on=False)
     polyplot.overlays.append(zoom)
 
     return polyplot

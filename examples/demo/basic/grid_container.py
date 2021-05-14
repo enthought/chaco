@@ -29,7 +29,7 @@ from traitsui.api import Item, Group, View
 from chaco.api import (
     ArrayPlotData, GridContainer, Plot, PlotLabel, cbrewer as COLOR_PALETTE,
 )
-from chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool,SelectingZoomTool
 
 
 # ===============================================================================
@@ -69,7 +69,7 @@ def _create_plot_component():
 
         # Attach some tools to the plot
         plot.tools.append(PanTool(plot))
-        zoom = ZoomTool(plot, tool_mode="box", always_on=False)
+        zoom =SelectingZoomTool(plot, tool_mode="box", always_on=False)
         plot.overlays.append(zoom)
 
         # Add to the grid container (

@@ -7,8 +7,8 @@ class DataBox(AbstractOverlay):
     """
     An overlay that is a box defined by data space coordinates.  This can be
     used as a base class for various kinds of zoom boxes.  Unlike the
-    "momentary" zoom box drawn for the ZoomTool, a ZoomBox is a more permanent
-    visual component.
+    "momentary" zoom box drawn for the SelectingZoomTool, a ZoomBox is a more
+    permanent visual component.
     """
 
     data_position = Property
@@ -18,8 +18,9 @@ class DataBox(AbstractOverlay):
     # component moves underneath it?
     # TODO: This basically works, but the problem is that it responds to both
     # changes in X and Y independently.  The DataRange2D needs to be updated
-    # to reflect changes from its two DataRange1Ds.  The PanTool and ZoomTool
-    # need to be improved that they change both dimensions at once.
+    # to reflect changes from its two DataRange1Ds.  The PanTool and
+    # SelectingZoomTool need to be improved that they change both dimensions at
+    # once.
     affinity = Enum("image", "screen")
 
     # -------------------------------------------------------------------------

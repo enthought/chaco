@@ -237,9 +237,9 @@ first in Chaco, and then moved into Enable.
 
 *Subclasses*:
 
-* :class:`~.BetterZoom`
+* :class:`~.BaseZoomTool`
 
-  * :class:`~.BetterSelectingZoom`
+  * :class:`~.SelectingZoomTool`
   
     * :class:`~.RectZoomTool`
     * :class:`~.TrackingZoom`

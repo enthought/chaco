@@ -4,11 +4,11 @@ from chaco.abstract_overlay import AbstractOverlay
 from enable.api import ColorTrait, KeySpec
 from traits.api import Bool, Enum, Trait, Int, Float, Tuple, Instance, Property
 
-from .better_zoom import BetterZoom
+from .base_zoom_tool import BaseZoomTool
 from .tool_states import SelectedZoomState
 
 
-class BetterSelectingZoom(AbstractOverlay, BetterZoom):
+class SelectingZoomTool(AbstractOverlay, BaseZoomTool):
     """Zooming tool which allows the user to draw a box which defines the
     desired region to zoom in to
     """
@@ -94,7 +94,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         # Since this class uses multiple inheritance (eek!), lets be
         # explicit about the order of the parent class constructors
         AbstractOverlay.__init__(self, component, *args, **kw)
-        BetterZoom.__init__(self, component, *args, **kw)
+        BaseZoomTool.__init__(self, component, *args, **kw)
         # Store the original range settings
         x_range = self._get_x_mapper().range
         y_range = self._get_y_mapper().range
@@ -108,7 +108,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         self._screen_end = None
 
     # --------------------------------------------------------------------------
-    #  BetterZoom interface
+    #  BaseZoomTool interface
     # --------------------------------------------------------------------------
 
     def normal_key_pressed(self, event):

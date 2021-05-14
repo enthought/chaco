@@ -172,7 +172,7 @@ At the highest level, Chaco consists of:
   :class:`GridDataSource`, :class:`LinearMapper`)
 
 * Tools that handle keyboard or mouse events and modify other
-  components (e.g., :class:`PanTool`, :class:`ZoomTool`, 
+  components (e.g., :class:`PanTool`, :class:`SelectingZoomTool`, 
   :class:`ScatterInspector`)
 
 Every Chaco plot is composed of these elements.  One can think of them

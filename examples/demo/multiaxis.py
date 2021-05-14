@@ -37,7 +37,7 @@ from chaco.tools.api import (
     LegendHighlighter,
     TraitsTool,
     BroadcasterTool,
-    ZoomTool,
+   SelectingZoomTool,
 )
 
 # =============================================================================
@@ -83,7 +83,7 @@ def _create_plot_component():
             pan = PanTool(component=plot)
             broadcaster.tools.append(pan)
 
-            zoom = ZoomTool(component=plot)
+            zoom =SelectingZoomTool(component=plot)
             broadcaster.tools.append(zoom)
 
         container.add(plot)
@@ -97,7 +97,7 @@ def _create_plot_component():
     axis.title = "Bessel j1"
 
     # Add the broadcast tool to one of the renderers: adding it to the
-    # container instead breaks the box mode of the ZoomTool:
+    # container instead breaks the box mode of theSelectingZoomTool:
     plot0 = plots["Bessel j_0"]
     plot0.tools.append(broadcaster)
 

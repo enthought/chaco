@@ -29,7 +29,7 @@ from chaco.api import (
     DataRange1D,
 )
 from chaco.default_colormaps import *
-from chaco.tools.api import LineInspector, ZoomTool
+from chaco.tools.api import LineInspector,SelectingZoomTool
 from enable.example_support import DemoFrame, demo_main
 from enable.api import BaseTool, Window
 from traits.api import (
@@ -315,10 +315,10 @@ class PlotFrame(DemoFrame):
         return container
 
     def _add_plot_tools(self, imgplot, token):
-        """ Add LineInspectors, ImageIndexTool, and ZoomTool to the image plots. """
+        """ Add LineInspectors, ImageIndexTool, andSelectingZoomTool to the image plots. """
 
         imgplot.overlays.append(
-            ZoomTool(
+           SelectingZoomTool(
                 component=imgplot,
                 tool_mode="box",
                 enable_wheel=False,

@@ -19,7 +19,7 @@ from traitsui.api import View, HGroup, UItem
 from enable.api import ComponentEditor
 
 from chaco.api import Plot, ArrayPlotData
-from chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool, SelectingZoomTool
 from chaco.overlays.coordinate_line_overlay import CoordinateLineOverlay
 
 
@@ -97,7 +97,9 @@ class PlotExample(HasTraits):
 
         time_plot.tools.append(PanTool(time_plot))
 
-        zoomtool = ZoomTool(time_plot, drag_button="right", always_on=True)
+        zoomtool = SelectingZoomTool(
+            time_plot, drag_button="right", always_on=True
+        )
         time_plot.overlays.append(zoomtool)
 
         lines1 = CoordinateLineOverlay(

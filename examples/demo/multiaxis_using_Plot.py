@@ -26,7 +26,7 @@ from chaco.api import (
     create_line_plot,
     Plot,
 )
-from chaco.tools.api import BroadcasterTool, PanTool, ZoomTool
+from chaco.tools.api import BroadcasterTool, PanTool,SelectingZoomTool
 
 # ===============================================================================
 # # Create the Chaco plot.
@@ -65,7 +65,7 @@ def _create_plot_component():
     broadcaster.tools.append(PanTool(foreign_plot))
 
     for c in (plot1, foreign_plot):
-        zoom = ZoomTool(component=c, tool_mode="box", always_on=False)
+        zoom =SelectingZoomTool(component=c, tool_mode="box", always_on=False)
         broadcaster.tools.append(zoom)
 
     plot1.tools.append(broadcaster)

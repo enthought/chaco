@@ -23,7 +23,7 @@ from chaco.api import (
     add_default_grids,
     PlotLabel,
 )
-from chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool,SelectingZoomTool
 
 # ===============================================================================
 # # Create the Chaco plot.
@@ -63,7 +63,7 @@ def _create_plot_component():
         PanTool(price_plot, constrain=True, constrain_direction="x")
     )
     price_plot.overlays.append(
-        ZoomTool(
+       SelectingZoomTool(
             price_plot,
             drag_button="right",
             always_on=True,

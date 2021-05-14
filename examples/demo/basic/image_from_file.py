@@ -32,7 +32,7 @@ from traitsui.api import (
 # Chaco imports
 from chaco.api import ArrayPlotData, ImageData, Plot, PlotGraphicsContext
 from enable.api import ComponentEditor
-from chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool,SelectingZoomTool
 
 
 # -------------------------------------------------------------------------------
@@ -127,7 +127,7 @@ class DemoView(HasTraits):
         plot.padding = 50
         plot.padding_top = 75
         plot.tools.append(PanTool(plot))
-        zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
+        zoom =SelectingZoomTool(component=plot, tool_mode="box", always_on=False)
         plot.overlays.append(zoom)
 
         # Load the default image

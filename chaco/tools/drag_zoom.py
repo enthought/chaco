@@ -6,10 +6,10 @@ from enable.tools.api import DragTool
 from traits.api import Bool, Enum, Float, Tuple
 
 # Chaco imports
-from .better_zoom import BetterZoom
+from .base_zoom_tool import BaseZoomTool
 
 
-class DragZoom(DragTool, BetterZoom):
+class DragZoom(DragTool, BaseZoomTool):
     """A zoom tool that zooms continuously with a mouse drag movement, instead
     of using a zoom box or range.
 
