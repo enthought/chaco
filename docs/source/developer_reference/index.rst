@@ -16,4 +16,5 @@ to use, refer to the Chaco :ref:`API documentation <api_reference>`.
 
     fundamentals.rst
     architecture_overview
+    tool_reorg.rst
 

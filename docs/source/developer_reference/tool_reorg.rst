@@ -54,10 +54,20 @@ obvious what tool you want if you want zoom functionality
 (you want the ``ZoomTool``!) and it can be confiugred to your needs.
 
 The current `BetterZoom` class can be renamed as ``BaseZoomTool``. The way things
-currently are (with ``ZoomTool`` an alias for ``BetterSelectingZoom``), the "defaultt"
+currently are (with ``ZoomTool`` an alias for ``BetterSelectingZoom``), the "default"
 zoom tool has selecting functionality. There are situations like ``DragZoom``
 where you don't want this.  AFAICT, users are not expected to use ``BetterZoom``
 directly. As such, it makes sense to make it an explicit base class.
+
+In enable, I do not really see why ``BaseZoomTool`` needs to be its own class.
+It is only used by ``ViewportZoomTool``, and is not exposed in any api module.
+Further, from what I can tell, enable zoom functionality iss only possible via
+a ``Canvas`` with a ``Viewport``.  So only having a ``ViewportZoomTool`` seems
+reasonable.
+
+Additionally, either ``pan_tool.PanTool`` or ``pan_tool2.Pantool`` should be
+removed. (I still need to investigate the feature disparity / advantages of one
+over the other, if any exist)
 
 The following is a proposal for a new class heirarchy:
 
@@ -74,11 +84,9 @@ The following is a proposal for a new class heirarchy:
         BaseZoomTool -> DragZoom;
         DragTool [fillcolor=red, style=filled];
         DragTool -> DragZoom;
-        BaseZoomTool2 [fillcolor=red, style=filled];
         ViewportZoomTool [fillcolor=red, style=filled];
         ViewportPanTool [fillcolor=red, style=filled];
         DragTool -> ViewportPanTool;
-        BaseZoomTool2 -> ViewportZoomTool;
         PanTool;
         PanTool2 [
             label=<PanTool2<BR /><FONT POINT-SIZE="14">Not in chaco.tools.api, very rarely used.<BR />However, seems to have been intended as improvement over PanTool.</FONT>>
