@@ -20,8 +20,8 @@ from .base_xy_plot import BaseXYPlot
 from .plots.barplot import BarPlot
 from .plots.candle_plot import CandlePlot
 from .plots.colormapped_scatterplot import ColormappedScatterPlot
-from .plots.contour_line_plot import ContourLinePlot
-from .plots.contour_poly_plot import ContourPolyPlot
+from .plots.contour.contour_line_plot import ContourLinePlot
+from .plots.contour.contour_poly_plot import ContourPolyPlot
 from .plots.cmap_image_plot import CMapImagePlot
 from .data_range_1d import DataRange1D
 from .data_view import DataView

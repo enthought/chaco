@@ -337,8 +337,8 @@ from .base_xy_plot import BaseXYPlot
 from .plots.scatterplot import ScatterPlot, render_markers
 from .plots.image_plot import ImagePlot
 from .plots.cmap_image_plot import CMapImagePlot
-from .plots.contour_line_plot import ContourLinePlot
-from .plots.contour_poly_plot import ContourPolyPlot
+from .plots.contour.contour_line_plot import ContourLinePlot
+from .plots.contour.contour_poly_plot import ContourPolyPlot
 from .plots.lineplot import LinePlot
 from .plots.colormapped_scatterplot import ColormappedScatterPlot
 from .plots.polygon_plot import PolygonPlot

@@ -495,17 +495,17 @@ Contour Line Plot
 
 Draw a contour plots as a set of lines. In addition to the attributes
 in :class:`~chaco.base_countour_plot.BaseContourPlot`,
-:class:`~chaco.plots.contour_line_plot.ContourLinePlot` defines the following
+:class:`~chaco.plots.contour.contour_line_plot.ContourLinePlot` defines the following
 parameters:
 
-:attr:`~chaco.plots.countour_line_plot.ContourLinePlot.widths`
+:attr:`~chaco.plots.contour.countour_line_plot.ContourLinePlot.widths`
   The thickness of the contour lines.
   It can be either a scalar value, valid for all contour lines, or a list
   of widths. If the list is too short with respect to the number of
   contour lines, the values are repeated from the beginning of the list.
   Widths are associated with levels of increasing value.
 
-:attr:`~chaco.plots.countour_line_plot.ContourLinePlot.styles`
+:attr:`~chaco.plots.contour.countour_line_plot.ContourLinePlot.styles`
   The style of the lines. It can either be a string that specifies the
   style for all lines (allowed styles are 'solid', 'dot dash', 'dash', 'dot',
   or 'long dash'), or a list of styles, one for each line.
@@ -513,10 +513,10 @@ parameters:
   contour lines, the values are repeated from the beginning of the list.
   The default, 'signed', sets all lines corresponding to positive values to the
   style given by the attribute
-  :attr:`~chaco.plots.countour_line_plot.ContourLinePlot.positive_style` (default
+  :attr:`~chaco.plot.contour.countour_line_plot.ContourLinePlot.positive_style` (default
   is 'solid'), and all lines corresponding to negative values to
   the style given by
-  :attr:`~chaco.plots.countour_line_plot.ContourLinePlot.negative_style`
+  :attr:`~chaco.plots.contour.countour_line_plot.ContourLinePlot.negative_style`
   (default is 'dash').
 
 .. image:: images/user_guide/contour_line_plot.png
@@ -526,7 +526,7 @@ Filled contour Plot
 -------------------
 
 Draw a contour plot as a 2D image divided in regions of the same color.
-The class :class:`~chaco.plots.countour_poly_plot.ContourPolyPlot` inherits
+The class :class:`~chaco.plots.contour.countour_poly_plot.ContourPolyPlot` inherits
 all attributes from :class:`~chaco.base_countour_plot.BaseContourPlot`.
 
 .. image:: images/user_guide/contour_poly_plot.png
