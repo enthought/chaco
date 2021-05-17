@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import Mock
 
 import numpy
 
@@ -36,7 +37,7 @@ class TestCMapImagePlot(unittest.TestCase):
             value=color_source,
             value_mapper=color_mapper,
         )
-        cmap_plot._window = window = unittest.mock.Mock(spec=AbstractWindow)
+        cmap_plot._window = window = Mock(spec=AbstractWindow)
 
         # when
         cmap_plot.color_mapper.updated = True
