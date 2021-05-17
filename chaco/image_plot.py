@@ -10,9 +10,10 @@
 """ Defines the ImagePlot class.
 """
 import warnings
+
+from chaco.plots.image_plot import ImagePlot  # noqa: F401
+
 warnings.warn(
     "This module has been deprecated, please import from chaco.api instead",
     DeprecationWarning
 )
-
-from chaco.plots.image_plot import ImagePlot

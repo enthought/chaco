@@ -11,9 +11,10 @@
 chaco/plots and as a result, importing BarPlot from this module is deprecated.
 """
 import warnings
+
+from chaco.plots.barplot import BarPlot  # noqa: F401
+
 warnings.warn(
     "This module has been deprecated, please import from chaco.api instead",
     DeprecationWarning
 )
-
-from chaco.plots.barplot import BarPlot

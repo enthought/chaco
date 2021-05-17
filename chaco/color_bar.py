@@ -10,9 +10,10 @@
 """ Defines the ColorBar class.
 """
 import warnings
+
+from chaco.plots.color_bar import ColorBar  # noqa: F401
+
 warnings.warn(
     "This module has been deprecated, please import from chaco.api instead",
     DeprecationWarning
 )
-
-from chaco.plots.color_bar import ColorBar

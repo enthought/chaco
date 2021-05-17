@@ -10,9 +10,10 @@
 """ Defines the PolygonPlot class.
 """
 import warnings
+
+from chaco.plots.polygon_plot import PolygonPlot  # noqa: F401
+
 warnings.warn(
     "This module has been deprecated, please import from chaco.api instead",
     DeprecationWarning
 )
-
-from chaco.plots.polygon_plot import PolygonPlot

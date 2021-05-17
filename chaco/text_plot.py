@@ -11,9 +11,10 @@
 A plot that renders text values in two dimensions
 """
 import warnings
+
+from chaco.plots.text_plot import TextPlot  # noqa: F401
+
 warnings.warn(
     "This module has been deprecated, please import from chaco.api instead",
     DeprecationWarning
 )
-
-from chaco.plots.text_plot import TextPlot

@@ -8,9 +8,10 @@
 #
 # Thanks for using Enthought open source!
 import warnings
+
+from chaco.plots.jitterplot import JitterPlot  # noqa: F401
+
 warnings.warn(
     "This module has been deprecated, please import from chaco.api instead",
     DeprecationWarning
 )
-
-from chaco.plots.jitterplot import JitterPlot

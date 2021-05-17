@@ -10,9 +10,10 @@
 """ Defines the ContourLinePlot class.
 """
 import warnings
+
+from chaco.plots.contour.contour_line_plot import ContourLinePlot  # noqa: F401
+
 warnings.warn(
     "This module has been deprecated, please import from chaco.api instead",
     DeprecationWarning
 )
-
-from chaco.plots.contour.contour_line_plot import ContourLinePlot

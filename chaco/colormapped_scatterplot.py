@@ -10,11 +10,12 @@
 """ Defines the ColormappedScatterPlot and ColormappedScatterPlotView classes.
 """
 import warnings
+
+from chaco.plots.colormapped_scatterplot import (  # noqa: F401
+    ColormappedScatterPlot, ColormappedScatterPlotView
+)
+
 warnings.warn(
     "This module has been deprecated, please import from chaco.api instead",
     DeprecationWarning
-)
-
-from chaco.plots.colormapped_scatterplot import (
-    ColormappedScatterPlot, ColormappedScatterPlotView
 )

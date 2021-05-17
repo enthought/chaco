@@ -10,9 +10,10 @@
 #
 # Thanks for using Enthought open source!
 import warnings
+
+from chaco.plots.contour.contour_poly_plot import ContourPolyPlot  # noqa: F401
+
 warnings.warn(
     "This module has been deprecated, please import from chaco.api instead",
     DeprecationWarning
 )
-
-from chaco.plots.contour.contour_poly_plot import ContourPolyPlot

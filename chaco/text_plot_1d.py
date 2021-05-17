@@ -11,9 +11,10 @@
 A plot that renders text values along one dimension
 """
 import warnings
+
+from chaco.plots.text_plot_1d import TextPlot1D  # noqa: F401
+
 warnings.warn(
     "This module has been deprecated, please import from chaco.api instead",
     DeprecationWarning
 )
-
-from chaco.plots.text_plot_1d import TextPlot1D

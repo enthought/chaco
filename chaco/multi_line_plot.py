@@ -10,9 +10,10 @@
 """ Defines the MultiLinePlot class.
 """
 import warnings
+
+from chaco.plots.multi_line_plot import MultiLinePlot  # noqa: F401
+
 warnings.warn(
     "This module has been deprecated, please import from chaco.api instead",
     DeprecationWarning
 )
-
-from chaco.plots.multi_line_plot import MultiLinePlot

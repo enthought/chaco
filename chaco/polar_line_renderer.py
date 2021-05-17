@@ -10,9 +10,10 @@
 """ Defines the PolarLineRenderer class.
 """
 import warnings
+
+from chaco.plots.polar_line_renderer import PolarLineRenderer  # noqa: F401
+
 warnings.warn(
     "This module has been deprecated, please import from chaco.api instead",
     DeprecationWarning
 )
-
-from chaco.plots.polar_line_renderer import PolarLineRenderer

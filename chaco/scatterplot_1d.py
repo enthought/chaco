@@ -12,9 +12,10 @@ Scatterplot in one dimension only
 """
 
 import warnings
+
+from chaco.plots.scatterplot_1d import ScatterPlot1D  # noqa: F401
+
 warnings.warn(
     "This module has been deprecated, please import from chaco.api instead",
     DeprecationWarning
 )
-
-from chaco.plots.scatterplot_1d import ScatterPlot1D

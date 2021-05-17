@@ -11,9 +11,10 @@
 A 1D scatterplot that draws lines across the renderer at the index values
 """
 import warnings
+
+from chaco.plots.line_scatterplot_1d import LineScatterPlot1D  # noqa: F401
+
 warnings.warn(
     "This module has been deprecated, please import from chaco.api instead",
     DeprecationWarning
 )
-
-from chaco.plots.line_scatterplot_1d import LineScatterPlot1D
