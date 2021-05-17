@@ -39,8 +39,10 @@ This is the current starte of Pan and Zoom tools accross Chaco and Enable
     }
 
 Until recently, there had also been a ``BaseZoomTool`` and ``SimpleZoom``
-living in chaco. These were moved to enable (with minor modifications) and are
-now the ``BaseZoomTool`` and ``ViewportZoomTool`` above.
+living in chaco. These now exist in enable (with some trimming / modifications)
+and are the ``BaseZoomTool`` and ``ViewportZoomTool`` above.  Additionally,
+we recently removed the duplicate of the enable ``DragTool`` which was living
+in chaco.
 
 ``RectZoom`` and ``TrackingZoom`` are intended as convenience classes but end
 up clouding the api.  Instead we should simply have a ``ZoomTool`` class (which
@@ -63,7 +65,8 @@ In enable, I do not really see why ``BaseZoomTool`` needs to be its own class.
 It is only used by ``ViewportZoomTool``, and is not exposed in any api module.
 Further, from what I can tell, enable zoom functionality iss only possible via
 a ``Canvas`` with a ``Viewport``.  So only having a ``ViewportZoomTool`` seems
-reasonable.
+reasonable.  However, if the class is anticipated to be used as a base class
+for other zoom tool variants, ``BaseZoomTool`` can easily stay.
 
 Additionally, either ``pan_tool.PanTool`` or ``pan_tool2.Pantool`` should be
 removed. (I still need to investigate the feature disparity / advantages of one
@@ -98,4 +101,12 @@ The following is a proposal for a new class heirarchy:
 
 Migration Steps:
 
-1) 
+1) Rename ``BetterZoom`` as ``BaseZoomTool``
+2) Copy ``BetterSelectingZoom`` into ``ZoomTool`` and delete old
+3) ``BetterSelectingZoom``, or delete old ``ZoomTool`` and rename
+   ``BetterSelectingZoom`` as ``ZoomTool``
+4) Decide on means for replacing ``RectZoom`` and ``TrackingZoom`` and with
+   functionality on ``ZoomTool``
+5) Chose one of ``pan_tool.PanTool`` and ``pan_tool2.PanTool`` to be the go-to
+   PanTool moving forawd.  Delete the other.
+6) Decide fate of ``BaseZoomTool`` in enable.
