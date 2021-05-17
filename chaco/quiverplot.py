@@ -12,6 +12,8 @@ import warnings
 from chaco.plots.quiverplot import QuiverPlot  # noqa: F401
 
 warnings.warn(
-    "This module has been deprecated, please import from chaco.api instead",
+    "This module has been moved to sit in chaco/plots and this stub module has"
+    " been kept for backwards compatibility. Importing from this module is"
+    " deprecated, please import needed objects from chaco.api instead",
     DeprecationWarning
 )
