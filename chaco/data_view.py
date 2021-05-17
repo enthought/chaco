@@ -227,14 +227,14 @@ class DataView(OverlayPlotContainer):
     _padding_right = Union(None, Int())
 
     def _find_padding(self, side):
-        MAP = {
+        SIDE_TO_TRAIT_MAP = {
             "top": "_padding_top",
             "bottom": "_padding_bottom",
             "left": "_padding_left",
             "right": "_padding_right",
         }
-        if getattr(self, MAP[side]) is not None:
-            return getattr(self, MAP[side])
+        if getattr(self, SIDE_TO_TRAIT_MAP[side]) is not None:
+            return getattr(self, SIDE_TO_TRAIT_MAP[side])
         else:
             if self.y_axis:
                 if (self.y_axis.title and self.y_axis.orientation == side):
