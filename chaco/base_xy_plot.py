@@ -475,7 +475,7 @@ class BaseXYPlot(AbstractPlotRenderer):
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
         """Draws the 'plot' layer."""
         pts = self.get_screen_points()
-        self._render(gc, pts)   
+        self._render(gc, pts)
 
     def _draw_default_axes(self, gc):
         if not self.origin_axis_visible:
