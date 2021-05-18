@@ -114,8 +114,6 @@ class StatusLayer(AbstractOverlay):
 
             self.document.render(gc)
 
-            self._draw_component(gc, view_bounds, mode)
-
     def fade_out(self):
         interval = self.fade_out_time / self.fade_out_steps
         self.timer = Timer(interval, self._fade_out_step)
