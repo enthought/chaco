@@ -49,8 +49,8 @@ up clouding the api.  Instead we should simply have a ``ZoomTool`` class (which
 is actually ``BetterSelectingZoom``, but that code can be copied over and
 ``BetterSelectingZoom`` removed).  This is the "default" / go-to zoom tool most
 users will use. If they want the current ``RectZoom`` or ``TrackingZoom``
-functionality, there should simply be a simple way to configure a ``ZoomTool``
-to do so.  Either by setting a trait like ``rect=True`` or ``traicking=True``,
+functionality, there should simply be an easy way to configure a ``ZoomTool``
+to do so.  Either by setting a trait like ``rect=True`` or ``tracking=True``,
 or perhaps with some class method on ``ZoomTool``.  This way it will be more
 obvious what tool you want if you want zoom functionality
 (you want the ``ZoomTool``!) and it can be confiugred to your needs.
@@ -63,7 +63,7 @@ directly. As such, it makes sense to make it an explicit base class.
 
 In enable, I do not really see why ``BaseZoomTool`` needs to be its own class.
 It is only used by ``ViewportZoomTool``, and is not exposed in any api module.
-Further, from what I can tell, enable zoom functionality iss only possible via
+Further, from what I can tell, enable zoom functionality is only possible via
 a ``Canvas`` with a ``Viewport``.  So only having a ``ViewportZoomTool`` seems
 reasonable.  However, if the class is anticipated to be used as a base class
 for other zoom tool variants, ``BaseZoomTool`` can easily stay.
@@ -103,10 +103,10 @@ Migration Steps:
 
 1) Rename ``BetterZoom`` as ``BaseZoomTool``
 2) Copy ``BetterSelectingZoom`` into ``ZoomTool`` and delete old
-3) ``BetterSelectingZoom``, or delete old ``ZoomTool`` and rename
+   ``BetterSelectingZoom``, or delete old ``ZoomTool`` and rename
    ``BetterSelectingZoom`` as ``ZoomTool``
-4) Decide on means for replacing ``RectZoom`` and ``TrackingZoom`` and with
+3) Decide on means for replacing ``RectZoom`` and ``TrackingZoom`` and with
    functionality on ``ZoomTool``
-5) Chose one of ``pan_tool.PanTool`` and ``pan_tool2.PanTool`` to be the go-to
+4) Chose one of ``pan_tool.PanTool`` and ``pan_tool2.PanTool`` to be the go-to
    PanTool moving forawd.  Delete the other.
-6) Decide fate of ``BaseZoomTool`` in enable.
+5) Decide fate of ``BaseZoomTool`` in enable.
