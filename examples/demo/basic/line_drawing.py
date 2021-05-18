@@ -91,7 +91,7 @@ def _create_plot_component():
 # Attributes to use for the plot view.
 size = (650, 650)
 title = "Line drawing example"
-bg_color = "lightgray"
+bgcolor = "lightgray"
 
 # ===============================================================================
 # # Demo class that is used by the demo.py application.
@@ -103,7 +103,7 @@ class Demo(HasTraits):
         Group(
             Item(
                 "plot",
-                editor=ComponentEditor(size=size, bgcolor=bg_color),
+                editor=ComponentEditor(size=size, bgcolor=bgcolor),
                 show_label=False,
             ),
             orientation="vertical",
