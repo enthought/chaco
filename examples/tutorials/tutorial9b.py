@@ -1,7 +1,7 @@
 """Tutorial 9b. Synchronize the Y data space as well,and add some tools."""
 
 
-from chaco.tools.api importSelectingZoomTool
+from chaco.tools.api import ZoomTool
 
 from tutorial8 import PlotExample
 
@@ -15,10 +15,10 @@ class PlotExample2(PlotExample):
         rplot.value_mapper.range = lplot.value_mapper.range
 
         lplot.overlays.append(
-           SelectingZoomTool(lplot, tool_mode="box", always_on=False)
+            ZoomTool(lplot, tool_mode="box", always_on=False)
         )
         rplot.overlays.append(
-           SelectingZoomTool(rplot, tool_mode="box", always_on=False)
+            ZoomTool(rplot, tool_mode="box", always_on=False)
         )
 
         return container

@@ -12,7 +12,7 @@ from chaco.api import (
     LinePlot,
     LinearMapper,
 )
-from chaco.tools.api import PanTool,SelectingZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import UItem, View

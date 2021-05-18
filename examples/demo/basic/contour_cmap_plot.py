@@ -24,7 +24,7 @@ from chaco.api import (
     LinearMapper,
     Plot,
 )
-from chaco.tools.api import PanTool,SelectingZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 
 
 # ===============================================================================
@@ -66,7 +66,7 @@ def _create_plot_component():
     lplot.fill_padding = True
 
     # Add some tools to the plot
-    zoom =SelectingZoomTool(lplot, tool_mode="box", always_on=False)
+    zoom = ZoomTool(lplot, tool_mode="box", always_on=False)
     lplot.overlays.append(zoom)
     lplot.tools.append(PanTool(lplot, constrain_key="shift"))
 
@@ -103,7 +103,7 @@ def _create_plot_component():
     )
 
     # Add some tools to the plot
-    zoom =SelectingZoomTool(rplot, tool_mode="box", always_on=False)
+    zoom = ZoomTool(rplot, tool_mode="box", always_on=False)
     rplot.overlays.append(zoom)
     rplot.tools.append(PanTool(rplot, constrain_key="shift"))
 

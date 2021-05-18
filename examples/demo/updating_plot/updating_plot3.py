@@ -16,7 +16,7 @@ from pyface.timer.api import Timer
 
 # Chaco imports
 from chaco.api import create_line_plot, OverlayPlotContainer, ArrayDataSource
-from chaco.tools.api import MoveTool, PanTool,SelectingZoomTool
+from chaco.tools.api import MoveTool, PanTool, ZoomTool
 
 
 COLOR_PALETTE = (

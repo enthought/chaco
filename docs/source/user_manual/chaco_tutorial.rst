@@ -799,7 +799,7 @@ space region. This is the full code::
     from traits.api import HasTraits, Instance
     from traitsui.api import Item, View
     from chaco.api import ArrayPlotData, Plot, HPlotContainer
-    from chaco.tools.api import PanTool, SelectingZoomTool
+    from chaco.tools.api import PanTool, ZoomTool
     from enable.api import ComponentEditor
 
     class ConnectedRange(HasTraits):
@@ -828,10 +828,10 @@ space region. This is the full code::
             container = HPlotContainer(scatter, line)
 
             scatter.tools.append(PanTool(scatter))
-            scatter.tools.append(SelectingZoomTool(scatter))
+            scatter.tools.append(ZoomTool(scatter))
 
             line.tools.append(PanTool(line))
-            line.tools.append(SelectingZoomTool(line))
+            line.tools.append(ZoomTool(line))
 
             scatter.range2d = line.range2d
             return container
@@ -936,7 +936,7 @@ This is the full code that we will analyze step by step below ::
     from traits.api import Enum, HasTraits, Instance
     from traitsui.api import Item, View
     from chaco.api import ArrayPlotData, Plot
-    from chaco.tools.api import PanTool, SelectingZoomTool
+    from chaco.tools.api import PanTool, ZoomTool
     from enable.api import ComponentEditor
 
     class PlotEditor(HasTraits):
@@ -965,7 +965,7 @@ This is the full code that we will analyze step by step below ::
             plot.plot(("x", "y"), type=self.plot_type, color="blue")
 
             plot.tools.append(PanTool(plot))
-            plot.tools.append(SelectingZoomTool(plot))
+            plot.tools.append(ZoomTool(plot))
             return plot
 
         def _orientation_changed(self):
@@ -1060,7 +1060,7 @@ the :ref:`LinePlot example <line_plot_example>` so that we can pan and zoom. ::
     from traits.api import HasTraits, Instance
     from traitsui.api import Item, View
     from chaco.api import ArrayPlotData, Plot
-    from chaco.tools.api import DragZoom, PanTool, SelectingZoomTool
+    from chaco.tools.api import DragZoom, PanTool, ZoomTool
     from enable.api import ComponentEditor
 
     class ToolsExample(HasTraits):
@@ -1084,7 +1084,7 @@ the :ref:`LinePlot example <line_plot_example>` so that we can pan and zoom. ::
 
             # append tools to pan, zoom, and drag
             plot.tools.append(PanTool(plot))
-            plot.tools.append(SelectingZoomTool(plot))
+            plot.tools.append(ZoomTool(plot))
             plot.tools.append(DragZoom(plot, drag_button="right"))
             return plot
     if __name__ == "__main__":
@@ -1128,7 +1128,7 @@ strings, and not the tool classes themselves.
     from traits.api import HasTraits, Instance
     from traitsui.api import CheckListEditor, Item, View
     from chaco.api import ArrayPlotData, Plot
-    from chaco.tools.api import DragZoom, PanTool, SelectingZoomTool
+    from chaco.tools.api import DragZoom, PanTool, ZoomTool
     from enable.api import ComponentEditor
 
     class ToolsExample2(HasTraits):
@@ -1137,7 +1137,7 @@ strings, and not the tool classes themselves.
 
         tools = List(
             editor=CheckListEditor(
-                values = ["PanTool", "SelectingZoomTool", "DragZoom"],
+                values = ["PanTool", "ZoomTool", "DragZoom"],
             )
         )
 

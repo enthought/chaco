@@ -2,10 +2,10 @@
 """
 
 # Chaco imports
-from .selecting_zoom_tool import SelectingZoomTool
+from .zoom_tool import ZoomTool
 
 
-class TrackingZoom(SelectingZoomTool):
+class TrackingZoom(ZoomTool):
     """Allows the user to zoom in or out on a plot that is using tracking.
 
     The **default_state** of the data range determines the tracking behavior.
@@ -19,7 +19,7 @@ class TrackingZoom(SelectingZoomTool):
         """Handles the mouse wheel being used when the tool is in the 'normal'
         state.
 
-        Overrides SelectingZoomTool
+        Overrides ZoomTool
         """
         if self.enable_wheel and event.mouse_wheel != 0:
             if event.mouse_wheel > 0:

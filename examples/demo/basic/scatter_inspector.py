@@ -17,7 +17,7 @@ from traitsui.api import Item, Group, View
 
 # Chaco imports
 from chaco.api import ArrayPlotData, Plot, ScatterInspectorOverlay
-from chaco.tools.api import PanTool,SelectingZoomTool, ScatterInspector
+from chaco.tools.api import PanTool, ZoomTool, ScatterInspector
 
 # ===============================================================================
 # # Create the Chaco plot.

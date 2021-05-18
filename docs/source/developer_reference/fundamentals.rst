@@ -169,7 +169,7 @@ Pan and Zoom
     are commonly initated via Tools.
 
     Examples: :py:class:`~chaco.tools.pan_tool.PanTool`,
-    :py:class:`~chaco.tools.selecting_zoom_tool.SelectingZoomTool`.
+    :py:class:`~chaco.tools.zoom_tool.ZoomTool`.
 
 Data Flow Examples
 ~~~~~~~~~~~~~~~~~~

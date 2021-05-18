@@ -22,7 +22,7 @@ from traitsui.api import UItem, Group, View
 
 # Chaco imports
 from chaco.api import ArrayPlotData, GridContainer, Plot
-from chaco.tools.api import PanTool,SelectingZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 
 
 class Demo(HasTraits):
@@ -66,7 +66,7 @@ class Demo(HasTraits):
 
             # Attach some tools to the plot
             plot.tools.append(PanTool(plot))
-            zoom =SelectingZoomTool(plot, tool_mode="box", always_on=False)
+            zoom = ZoomTool(plot, tool_mode="box", always_on=False)
             plot.overlays.append(zoom)
 
             title = "{0}, {1}"

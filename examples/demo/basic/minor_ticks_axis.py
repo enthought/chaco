@@ -1,7 +1,7 @@
 import numpy as np
 
 from chaco.api import ArrayPlotData, MinorPlotAxis, Plot
-from chaco.tools.api import PanTool,SelectingZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 from enable.api import ComponentEditor
 from traits.api import Instance, HasTraits
 from traitsui.api import UItem, View

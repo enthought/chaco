@@ -14,12 +14,12 @@ from traitsui.api import Item, Group, View
 
 # Chaco imports
 from chaco.api import ArrayPlotData, HPlotContainer, Plot
-from chaco.tools.api import PanTool,SelectingZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 
 
 def attach_tools(plot):
     plot.tools.append(PanTool(plot))
-    zoom =SelectingZoomTool(component=plot, tool_mode="box", always_on=False)
+    zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
     plot.overlays.append(zoom)
 
 

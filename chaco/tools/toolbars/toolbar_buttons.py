@@ -2,7 +2,7 @@ import numpy
 
 from traits.etsconfig.api import ETSConfig
 from enable.tools.toolbars.toolbar_buttons import Button
-from chaco.tools.selecting_zoom_tool import SelectingZoomTool
+from chaco.tools.zoom_tool import ZoomTool
 from chaco.plot_graphics_context import PlotGraphicsContext
 from kiva.image import Image
 from pyface.image_resource import ImageResource
@@ -109,7 +109,7 @@ class ZoomResetButton(ToolbarButton):
         plot_component = self.container.component
 
         for overlay in plot_component.overlays:
-            if isinstance(overlay, SelectingZoomTool):
+            if isinstance(overlay, ZoomTool):
                 overlay._reset_state_pressed()
 
         self.container.request_redraw()

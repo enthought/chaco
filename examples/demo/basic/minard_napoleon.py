@@ -13,7 +13,7 @@ http://www.datavis.ca/gallery/minard/minard.txt
 import numpy as np
 
 from chaco.api import ArrayPlotData, Plot, VPlotContainer, viridis
-from chaco.tools.api import PanTool,SelectingZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, View
@@ -183,7 +183,7 @@ def _create_plot_component():
     map_plot.tools.extend(
         [
             PanTool(map_plot),
-           SelectingZoomTool(map_plot),
+            ZoomTool(map_plot),
         ]
     )
 

@@ -25,7 +25,7 @@ from pyface.timer.api import Timer
 
 # Chaco imports
 from chaco.api import create_line_plot, add_default_axes, add_default_grids
-from chaco.tools.api import PanTool,SelectingZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 
 
 class PlotFrame(DemoFrame):
@@ -59,7 +59,7 @@ class PlotFrame(DemoFrame):
         self.plot = plot
         plot.tools.append(PanTool(component=plot))
         plot.overlays.append(
-           SelectingZoomTool(component=plot, tool_mode="box", always_on=False)
+            ZoomTool(component=plot, tool_mode="box", always_on=False)
         )
 
         self.timer = Timer(50.0, self.onTimer)

@@ -5,7 +5,7 @@ We can add multiple tools on the sample plot
 
 from tutorial2 import demo
 
-from chaco.tools.api import PanTool,SelectingZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 
 plot = demo.plot
 plot.tools.append(PanTool(plot))

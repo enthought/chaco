@@ -19,7 +19,7 @@ import numpy
 
 # ETS imports
 from chaco.api import Plot, ArrayPlotData, ImageData
-from chaco.tools.api importSelectingZoomTool
+from chaco.tools.api import ZoomTool
 from enable.api import ComponentEditor
 from traits.api import HasTraits, Instance, Str
 from traitsui.api import Item, View
@@ -104,7 +104,7 @@ class WorldMapPlot(HasTraits):
         loc_plot.y_mapper.range.low = -0
 
         # set up any tools, in this case just the zoom tool
-        zoom =SelectingZoomTool(component=self.plot, tool_mode="box", always_on=False)
+        zoom = ZoomTool(component=self.plot, tool_mode="box", always_on=False)
         self.plot.overlays.append(zoom)
 
     # ---------------------------------------------------------------------------

@@ -37,7 +37,7 @@ from chaco.api import (
 )
 from chaco import default_colormaps
 from enable.api import ComponentEditor
-from chaco.tools.api import LineInspector, PanTool,SelectingZoomTool
+from chaco.tools.api import LineInspector, PanTool, ZoomTool
 from traits.api import (
     Array,
     Callable,
@@ -266,7 +266,7 @@ class PlotUI(HasTraits):
             PanTool(self.polyplot, constrain_key="shift")
         )
         self.polyplot.overlays.append(
-           SelectingZoomTool(component=self.polyplot, tool_mode="box", always_on=False)
+            ZoomTool(component=self.polyplot, tool_mode="box", always_on=False)
         )
         self.polyplot.overlays.append(
             LineInspector(

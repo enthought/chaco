@@ -17,7 +17,7 @@ from .tool_history_mixin import ToolHistoryMixin
 from .tool_states import ZoomState, PanState, GroupedToolState, ToolState
 
 
-class BaseZoomTool(BaseTool, ToolHistoryMixin):
+class BetterZoom(BaseTool, ToolHistoryMixin):
 
     #: Keys to zoom in/out
     zoom_in_key = Instance(KeySpec, args=("+",), kw={"ignore": ["shift"]})

@@ -28,7 +28,7 @@ from chaco.scales.api import CalendarScaleSystem
 from chaco.scales_tick_generator import ScalesTickGenerator
 from chaco.tools.api import (
     PanTool,
-   SelectingZoomTool,
+    ZoomTool,
     RangeSelection,
     RangeSelectionOverlay,
     LegendTool,
@@ -130,7 +130,7 @@ class PlotApp(HasTraits):
             )
         )
         plot.overlays.append(
-           SelectingZoomTool(
+            ZoomTool(
                 plot,
                 tool_mode="range",
                 max_zoom_out=1.0,

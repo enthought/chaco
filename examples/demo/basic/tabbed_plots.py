@@ -24,7 +24,7 @@ from traits.api import HasTraits, Instance
 from traitsui.api import UItem, Tabbed, View, VGroup
 
 from chaco.api import Plot, AbstractPlotData, ArrayPlotData
-from chaco.tools.api import PanTool,SelectingZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 from enable.api import ComponentEditor
 
 

@@ -36,7 +36,7 @@ from chaco.api import (
     Legend,
     PlotGrid,
 )
-from chaco.tools.api import PanTool,SelectingZoomTool, LegendTool, TraitsTool
+from chaco.tools.api import PanTool, ZoomTool, LegendTool, TraitsTool
 
 from chaco.scales.api import CalendarScaleSystem
 from chaco.scales_tick_generator import ScalesTickGenerator
@@ -157,7 +157,7 @@ def _create_plot_component():
 
         if i == 0:
             plot.tools.append(PanTool(plot))
-            zoom =SelectingZoomTool(plot, tool_mode="box", always_on=False)
+            zoom = ZoomTool(plot, tool_mode="box", always_on=False)
             plot.overlays.append(zoom)
             # Add a legend in the upper right corner, and make it relocatable
             legend = Legend(component=plot, padding=10, align="ur")

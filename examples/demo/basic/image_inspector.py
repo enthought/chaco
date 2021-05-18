@@ -23,7 +23,7 @@ from traitsui.api import Item, Group, View
 
 # Chaco imports
 from chaco.api import ArrayPlotData, viridis, Plot
-from chaco.tools.api import PanTool,SelectingZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 from chaco.tools.image_inspector_tool import (
     ImageInspectorTool,
     ImageInspectorOverlay,
@@ -56,7 +56,7 @@ def _create_plot_component():  # Create a scalar field to colormap
 
     # Attach some tools to the plot
     plot.tools.append(PanTool(plot))
-    zoom =SelectingZoomTool(component=plot, tool_mode="box", always_on=False)
+    zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
     plot.overlays.append(zoom)
     imgtool = ImageInspectorTool(component=img_plot)
     img_plot.tools.append(imgtool)

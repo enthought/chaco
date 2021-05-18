@@ -21,7 +21,7 @@ from traitsui.api import Item, HGroup, VGroup, View
 
 # Chaco imports
 from chaco.api import ArrayPlotData, Plot
-from chaco.tools.api import PanTool, SelectingZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 
 
 class AspectRatio(BaseFloat):
@@ -76,7 +76,7 @@ class MyPlot(HasTraits):
         plot = Plot(plotdata)
         plot.plot(("x", "y"), type="scatter")
         plot.tools.append(PanTool(plot))
-        plot.overlays.append(SelectingZoomTool(plot))
+        plot.overlays.append(ZoomTool(plot))
         return plot
 
     def _screen_enabled_changed(self):

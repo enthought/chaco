@@ -4,14 +4,14 @@ import mock
 import numpy
 
 from chaco.api import create_line_plot
-from chaco.tools.api import SelectingZoomTool
+from chaco.tools.api import BetterSelectingZoom
 from enable.testing import EnableTestAssistant
 
 
 class BackgroundColorTestCase(EnableTestAssistant, TestCase):
-    """Regression tests for SelectingZoomTool issue with background alpha.
+    """Regression tests for BetterSelectingZoom issue with background alpha.
 
-    The SelectingZoomTool overlay would override any user-specified value for
+    The BetterSelectingZoom overlay would override any user-specified value for
     the alpha channel of the selection plot, causing the selected region to
     appear completely opaque. This issue was reported (and fixed) in GH #309.
 
@@ -22,7 +22,7 @@ class BackgroundColorTestCase(EnableTestAssistant, TestCase):
         self.plot = create_line_plot((values, values))
         self.plot.bounds = [100, 100]
         self.plot._window = self.create_mock_window()
-        self.tool = SelectingZoomTool(component=self.plot, always_on=True)
+        self.tool = BetterSelectingZoom(component=self.plot, always_on=True)
         self.plot.active_tool = self.tool
         self.plot.do_layout()
 

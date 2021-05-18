@@ -25,7 +25,7 @@ from chaco.api import (
     Plot,
     OverlayPlotContainer,
 )
-from chaco.tools.api import PanTool,SelectingZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 
 
 class PlotExample(HasTraits):
@@ -60,7 +60,7 @@ class PlotExample(HasTraits):
 
         # Attach some tools to the plot
         quiverplot.tools.append(PanTool(quiverplot, constrain_key="shift"))
-        zoom =SelectingZoomTool(quiverplot)
+        zoom = ZoomTool(quiverplot)
         quiverplot.overlays.append(zoom)
 
         container = OverlayPlotContainer(quiverplot, padding=50)

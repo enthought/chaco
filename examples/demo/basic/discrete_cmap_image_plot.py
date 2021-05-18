@@ -19,7 +19,7 @@ from traitsui.api import Item, Group, View
 
 # Chaco imports
 from chaco.api import ArrayPlotData, viridis, Plot
-from chaco.tools.api import PanTool,SelectingZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 
 # ===============================================================================
 # # Create the Chaco plot.
@@ -47,7 +47,7 @@ def _create_plot_component():
 
     # Attach some tools to the plot
     plot.tools.append(PanTool(plot))
-    zoom =SelectingZoomTool(component=img_plot, tool_mode="box", always_on=False)
+    zoom = ZoomTool(component=img_plot, tool_mode="box", always_on=False)
     img_plot.overlays.append(zoom)
     return plot
 

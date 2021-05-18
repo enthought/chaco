@@ -2,7 +2,7 @@ from numpy import linspace
 from scipy.special import jn
 
 from chaco.api import ArrayPlotData, Plot, OverlayPlotContainer
-from chaco.tools.api importSelectingZoomTool, PanTool
+from chaco.tools.api import ZoomTool, PanTool
 from enable.api import ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, View
@@ -31,7 +31,7 @@ class OverlayContainerExample(HasTraits):
         )
 
         # Attach tools to the plot
-        zoom =SelectingZoomTool(
+        zoom = ZoomTool(
             component=zoomable_plot, tool_mode="box", always_on=False
         )
         zoomable_plot.overlays.append(zoom)

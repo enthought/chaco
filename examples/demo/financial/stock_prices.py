@@ -33,7 +33,7 @@ from chaco.api import (
 )
 from chaco.tools.api import (
     PanTool,
-   SelectingZoomTool,
+    ZoomTool,
     RangeSelection,
     RangeSelectionOverlay,
 )
@@ -91,7 +91,7 @@ class PlotFrame(DemoFrame):
             )
         )
         price_plot.overlays.append(
-           SelectingZoomTool(
+            ZoomTool(
                 price_plot,
                 drag_button="right",
                 always_on=True,

@@ -9,26 +9,26 @@
 #
 # Author: Enthought, Inc.
 
-""" Tests for the BaseZoomTool Chaco tool """
+""" Tests for the BetterZoom Chaco tool """
 
 import unittest
 
 import numpy
 
 from chaco.api import create_line_plot
-from chaco.tools.api import BaseZoomTool
+from chaco.tools.api import BetterZoom
 from enable.testing import EnableTestAssistant
 
 
-class TestBaseZoomTool(EnableTestAssistant, unittest.TestCase):
-    """ Tests for the BaseZoomTool Chaco tool """
+class TestBetterZoomTool(EnableTestAssistant, unittest.TestCase):
+    """ Tests for the BetterZoom Chaco tool """
 
     def setUp(self):
         values = numpy.arange(10)
         self.plot = create_line_plot((values, values))
         self.plot.bounds = [100, 100]
         self.plot._window = self.create_mock_window()
-        self.tool = BaseZoomTool(component=self.plot)
+        self.tool = BetterZoom(component=self.plot)
         self.plot.active_tool = self.tool
         self.plot.do_layout()
 

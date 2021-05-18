@@ -27,9 +27,7 @@ from chaco.api import (
     add_default_axes,
     add_default_grids,
 )
-from chaco.tools.api import (
-    RangeSelection, RangeSelectionOverlay, SelectingZoomTool
-)
+from chaco.tools.api import RangeSelection, RangeSelectionOverlay, ZoomTool
 
 # ===============================================================================
 # # Create the Chaco plot.
@@ -81,7 +79,7 @@ def _create_plot_component(use_downsampling=True):
 
     selection_overlay = RangeSelectionOverlay(component=plot)
     plot.tools.append(RangeSelection(plot))
-    zoom = SelectingZoomTool(plot, tool_mode="box", always_on=False)
+    zoom = ZoomTool(plot, tool_mode="box", always_on=False)
     plot.overlays.append(selection_overlay)
     plot.overlays.append(zoom)
 

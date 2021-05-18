@@ -1,4 +1,5 @@
-from .base_zoom_tool import BaseZoomTool
+from .better_zoom import BetterZoom
+from .better_selecting_zoom import BetterSelectingZoom
 from .broadcaster import BroadcasterTool
 from .dataprinter import DataPrinter
 from .data_label_tool import DataLabelTool
@@ -23,7 +24,6 @@ from .regression_lasso import RegressionLasso, RegressionOverlay
 from .save_tool import SaveTool
 from .scatter_inspector import ScatterInspector
 from .select_tool import SelectTool
-from .selecting_zoom_tool import SelectingZoomTool
 from .simple_inspector import SimpleInspectorTool
 from .tool_states import (
     ZoomState,
@@ -34,3 +34,4 @@ from .tool_states import (
 from .tracking_pan_tool import TrackingPanTool
 from .tracking_zoom import TrackingZoom
 from .traits_tool import TraitsTool
+from .zoom_tool import ZoomTool

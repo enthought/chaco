@@ -11,7 +11,7 @@ from traitsui.api import Item, Group, View
 
 # Chaco imports
 from chaco.api import HPlotContainer, ArrayPlotData, Plot
-from chaco.tools.api import LineInspector,SelectingZoomTool, PanTool
+from chaco.tools.api import LineInspector, ZoomTool, PanTool
 
 
 # ==============================================================================

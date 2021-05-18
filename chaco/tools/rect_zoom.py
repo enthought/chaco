@@ -1,19 +1,19 @@
 """ Defines the RectZoomTool class.
 """
-from .selecting_zoom_tool import SelectingZoomTool
+from .zoom_tool import ZoomTool
 
 
-class RectZoomTool(SelectingZoomTool):
+class RectZoomTool(ZoomTool):
     """
     Allows the user to drag a zoom box around a region of the plot.
 
-    This is a subclass of SelectingZoomTool, with different default values for
-    some traits.
+    This is a subclass of ZoomTool, with different default values for some
+    traits.
     """
 
-    #: Selects a box in two dimensions (overrides SelectingZoomTool).
+    #: Selects a box in two dimensions (overrides ZoomTool).
     tool_mode = "box"
 
     #: The tool is always on; left-clicking initiates a zoom (overrides
-    #: SelectingZoomTool).
+    #: ZoomTool).
     always_on = True

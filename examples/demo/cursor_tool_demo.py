@@ -21,7 +21,7 @@ from chaco.api import (
     ArrayPlotData,
     viridis,
 )
-from chaco.tools.api import PanTool,SelectingZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 from chaco.tools.cursor_tool import CursorTool, BaseCursorTool
 from enable.api import ComponentEditor
 from traits.api import HasTraits, Instance, DelegatesTo
