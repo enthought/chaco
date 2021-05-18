@@ -93,6 +93,7 @@ dependencies = {
     "enable",
     # Needed to install enable from source
     "swig",
+    "traits_futures"
 }
 
 # Dependencies we install from source for cron tests

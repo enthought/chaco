@@ -14,6 +14,7 @@
 from math import ceil, floor, pi
 from contextlib import contextmanager
 
+# Enthought library imports.
 import numpy as np
 
 # Enthought library imports.
@@ -28,7 +29,9 @@ from traits.api import (
     Tuple,
     Property,
     cached_property,
+    on_trait_change,
 )
+from traits_futures.api import CallFuture, TraitsExecutor
 from kiva.agg import GraphicsContextArray
 
 # Local relative imports
@@ -71,6 +74,13 @@ class ImagePlot(Base2DPlot):
     #: Bool indicating whether y-axis is flipped.
     y_axis_is_flipped = Property(observe=["orientation", "origin"])
 
+    #: Does the plot use downsampling?
+    use_downsampling = Bool(False)
+
+    #: The Traits executor for the background jobs.
+    #: Required if **use_downsampling** is True.
+    traits_executor = Either(None, TraitsExecutor)
+
     # ------------------------------------------------------------------------
     # Private traits
     # ------------------------------------------------------------------------
@@ -88,6 +98,9 @@ class ImagePlot(Base2DPlot):
     # Bool indicating whether the origin is top-left or bottom-right.
     # The name "principal diagonal" is borrowed from linear algebra.
     _origin_on_principal_diagonal = Property(observe="origin")
+
+    #: Submitted job. Only keeping track of the last submitted one.
+    _future = Instance(CallFuture)
 
     # ------------------------------------------------------------------------
     # Properties
@@ -121,6 +134,30 @@ class ImagePlot(Base2DPlot):
         self._image_cache_valid = False
         self.request_redraw()
 
+    @on_trait_change("index_mapper:updated, bounds[]")
+    def _update_lod_cache_image(self):
+        if not self.use_downsampling:
+            return
+        if self.traits_executor is None:
+            msg = "A traits_futures.TraitsExecutor is required to update" \
+                  "the plot at higher resolutions as a background job."
+            raise RuntimeError(msg)
+        lod = self._calculate_necessary_lod()
+        # Only keep the most recent job as bounds have been changed
+        # FIXME: call a public method of TraitExecutor to clean previous jobs
+        for future in self.traits_executor._futures:
+            if future.cancellable:
+                future.cancel()
+        self._future = self.traits_executor.submit_call(
+            self._compute_cached_image, lod=lod
+        )
+
+    @on_trait_change("_future:done", dispatch='ui')
+    def _handle_lod_cached_image(self):
+        self._cached_image, self._cached_dest_rect = self._future.result
+        self._image_cache_valid = True
+        self.request_redraw()
+
     # ------------------------------------------------------------------------
     # Base2DPlot interface
     # ------------------------------------------------------------------------
@@ -131,7 +168,9 @@ class ImagePlot(Base2DPlot):
         Implements the Base2DPlot interface.
         """
         if not self._image_cache_valid:
-            self._compute_cached_image()
+            self._cached_image, self._cached_dest_rect = \
+                self._compute_cached_image()
+            self._image_cache_valid = True
 
         scale_x = -1 if self.x_axis_is_flipped else 1
         scale_y = 1 if self.y_axis_is_flipped else -1
@@ -250,31 +289,46 @@ class ImagePlot(Base2DPlot):
         y_min += 0.5
         return [x_min, y_min, virtual_x_size, virtual_y_size]
 
-    def _compute_cached_image(self, data=None, mapper=None):
-        """Computes the correct screen coordinates and renders an image into
-        `self._cached_image`.
+    def _compute_cached_image(self, mapper=None, lod=None):
+        """ Computes the correct screen coordinates and and renders an image
+        into `self._cached_image`.
 
         Parameters
         ----------
-        data : array
-            Image data. If None, image is derived from the `value` attribute.
         mapper : function
             Allows subclasses to transform the displayed values for the visible
             region. This may be used to adapt grayscale images to RGB(A)
             images.
+        lod : int
+            Level of detail for cached image. If None, use the in-memory part
+            `self.value._data`.
+
+        Returns
+        -------
+        cache_image : `kiva.agg.GraphicsContextArray`
+            Computed cache image.
+        cache_dest_rect : 4-tuple
+            (x, y, width, height) rectangle describing the pixels bounds where
+            the image will be rendered in the plot
         """
-        if data is None:
-            data = self.value.data
+        # Not to transpose the full matrix ahead in case it is too large
+        data = self.value.get_data(lod=lod, transpose_inplace=False)
 
         virtual_rect = self._calc_virtual_screen_bbox()
-        index_bounds, screen_rect = self._calc_zoom_coords(virtual_rect)
+        index_bounds, screen_rect = self._calc_zoom_coords(virtual_rect,
+                                                           lod=lod)
         col_min, col_max, row_min, row_max = index_bounds
 
         view_rect = self.position + self.bounds
         sub_array_size = (col_max - col_min, row_max - row_min)
         screen_rect = trim_screen_rect(screen_rect, view_rect, sub_array_size)
 
-        data = data[row_min:row_max, col_min:col_max]
+        if self.value.transposed:
+            # Swap after slicing to avoid transposing the whole matrix
+            data = data[col_min:col_max, row_min:row_max]
+            data = data.swapaxes(0, 1)
+        else:
+            data = data[row_min:row_max, col_min:col_max]
 
         if mapper is not None:
             data = mapper(data)
@@ -282,10 +336,9 @@ class ImagePlot(Base2DPlot):
         if len(data.shape) != 3:
             raise RuntimeError("`ImagePlot` requires color images.")
 
-        # Update cached image and rectangle.
-        self._cached_image = self._kiva_array_from_numpy_array(data)
-        self._cached_dest_rect = screen_rect
-        self._image_cache_valid = True
+        cached_image = self._kiva_array_from_numpy_array(data)
+        cached_dest_rect = screen_rect
+        return cached_image, cached_dest_rect
 
     def _kiva_array_from_numpy_array(self, data):
         if data.shape[2] not in KIVA_DEPTH_MAP:
@@ -297,8 +350,8 @@ class ImagePlot(Base2DPlot):
         data = np.ascontiguousarray(data)
         return GraphicsContextArray(data, pix_format=kiva_depth)
 
-    def _calc_zoom_coords(self, image_rect):
-        """Calculates the coordinates of a zoomed sub-image.
+    def _calc_zoom_coords(self, image_rect, lod=None):
+        """ Calculates the coordinates of a zoomed sub-image.
 
         Because of floating point limitations, it is not advisable to request a
         extreme level of zoom, e.g., idx or idy > 10^10.
@@ -323,12 +376,12 @@ class ImagePlot(Base2DPlot):
         if 0 in (image_width, image_height) or 0 in self.bounds:
             return ((0, 0, 0, 0), (0, 0, 0, 0))
 
-        array_bounds = self._array_bounds_from_screen_rect(image_rect)
+        array_bounds = self._array_bounds_from_screen_rect(image_rect, lod=lod)
         col_min, col_max, row_min, row_max = array_bounds
         # Convert array indices back into screen coordinates after its been
         # clipped to fit within the bounds.
-        array_width = self.value.get_width()
-        array_height = self.value.get_height()
+        array_width = self.value.get_width(lod=lod)
+        array_height = self.value.get_height(lod=lod)
         x_min = float(col_min) / array_width * image_width + ix
         x_max = float(col_max) / array_width * image_width + ix
         y_min = float(row_min) / array_height * image_height + iy
@@ -349,8 +402,8 @@ class ImagePlot(Base2DPlot):
         screen_rect = [x_min, y_min, x_max - x_min, y_max - y_min]
         return index_bounds, screen_rect
 
-    def _array_bounds_from_screen_rect(self, image_rect):
-        """Transform virtual-image rectangle into array indices.
+    def _array_bounds_from_screen_rect(self, image_rect, lod=None):
+        """ Transform virtual-image rectangle into array indices.
 
         The virtual-image rectangle is in screen coordinates and can be outside
         the plot bounds. This method converts the rectangle into array indices
@@ -373,8 +426,8 @@ class ImagePlot(Base2DPlot):
         x_max = x_min + plot_width
         y_max = y_min + plot_height
 
-        array_width = self.value.get_width()
-        array_height = self.value.get_height()
+        array_width = self.value.get_width(lod=lod)
+        array_height = self.value.get_height(lod=lod)
         # Convert screen coordinates to array indexes
         col_min = floor(float(x_min) / image_width * array_width)
         col_max = ceil(float(x_max) / image_width * array_width)
@@ -388,3 +441,18 @@ class ImagePlot(Base2DPlot):
         row_max = min(row_max, array_height)
 
         return col_min, col_max, row_min, row_max
+
+    def _calculate_necessary_lod(self):
+        """ Computes the necessary lod so that array has more pixels than
+        the screen rectangle.
+        """
+        virtual_rect = self._calc_virtual_screen_bbox()
+        # NOTE: LOD numbers are assumed to be continuous integers
+        # starting from 0
+        for lod in range(len(self.value.lod_data_entry))[::-1]:
+            index_bounds, screen_rect = self._calc_zoom_coords(virtual_rect, lod=lod)
+            array_width = index_bounds[1] - index_bounds[0]
+            array_height = index_bounds[3] - index_bounds[2]
+            if (array_width >= screen_rect[2]) and (array_height >= screen_rect[3]):
+                break
+        return lod

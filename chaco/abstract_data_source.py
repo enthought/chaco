@@ -57,7 +57,7 @@ class AbstractDataSource(HasTraits):
     # Abstract methods
     # ------------------------------------------------------------------------
 
-    def get_data(self):
+    def get_data(self, lod=None):
         """get_data() -> data_array
 
         Returns a data array of the dimensions of the data source. This data
@@ -66,6 +66,12 @@ class AbstractDataSource(HasTraits):
 
         In the case of structured (gridded) 2-D data, this method may return
         two 1-D ArrayDataSources as an optimization.
+
+        Parameters
+        ----------
+        lod : int
+            Level of detail for data to retrieve. if None, then return the
+            orignal data without downsampling.
         """
         raise NotImplementedError
 
