@@ -7,7 +7,7 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 """
-Defines the publicly accessible overlays in Chaco.
+Defines the publicly accessible PlotRenderers in Chaco.
 
 - :class:`~.BarPlot`
 - :class:`~.CandlePlot`
