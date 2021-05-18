@@ -96,7 +96,6 @@ def _create_plot_component():
 # Attributes to use for the plot view.
 size = (650, 650)
 title = "Scatter plot with selection"
-bg_color = "lightgray"
 
 
 # ===============================================================================

@@ -62,7 +62,7 @@ def _create_plot_component():
     # Tweak some of the plot properties
     lplot.title = "Colormap and contours"
     lplot.padding = 20
-    lplot.bg_color = "white"
+    lplot.bgcolor = "white"
     lplot.fill_padding = True
 
     # Add some tools to the plot
@@ -110,7 +110,7 @@ def _create_plot_component():
     # Tweak some of the plot properties
     rplot.title = "Varying contour lines"
     rplot.padding = 20
-    rplot.bg_color = "white"
+    rplot.bgcolor = "white"
     rplot.fill_padding = True
 
     # Create a container and add our plots
@@ -127,7 +127,7 @@ def _create_plot_component():
 # Attributes to use for the plot view.
 size = (950, 650)
 title = "Some contour plots"
-bg_color = "lightgray"
+bgcolor = "lightgray"
 
 # ===============================================================================
 # # Demo class that is used by the demo.py application.
@@ -139,7 +139,7 @@ class Demo(HasTraits):
         Group(
             Item(
                 "plot",
-                editor=ComponentEditor(size=size, bgcolor=bg_color),
+                editor=ComponentEditor(size=size, bgcolor=bgcolor),
                 show_label=False,
             ),
             orientation="vertical",
