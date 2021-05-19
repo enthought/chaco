@@ -96,7 +96,7 @@ def _create_plot_component():
 # Attributes to use for the plot view.
 size = (650, 650)
 title = "Scatter plot with selection"
-bg_color = "lightgray"
+bgcolor = "lightgray"
 
 
 # ===============================================================================
@@ -107,7 +107,11 @@ class Demo(HasTraits):
 
     traits_view = View(
         Group(
-            Item("plot", editor=ComponentEditor(size=size), show_label=False),
+            Item(
+                "plot",
+                editor=ComponentEditor(size=size, bgcolor=bgcolor),
+                show_label=False
+            ),
             orientation="vertical",
         ),
         resizable=True,
