@@ -11,7 +11,7 @@
 """
 import warnings
 
-from chaco.overlays.data_label import DataLabel, draw_arrow, find_region,
+from chaco.overlays.data_label import DataLabel, draw_arrow, find_region
 
 warnings.warn(
     "This module has been moved to sit in chaco/overlays and this stub module"
