@@ -117,13 +117,13 @@ def find_region(px, py, x, y, x2, y2):
     rectangle, respectively.  (px, py) is classified as "left", "right",
     "top", "bottom" or "inside", according to the following diagram:
 
-            \     top      /
-             \            /
-              +----------+
-         left |  inside  | right
-              +----------+
-             /            \ 
-            /    bottom    \ 
+            \     top      /  # noqa
+             \            /  # noqa
+              +----------+  # noqa
+         left |  inside  | right  # noqa
+              +----------+  # noqa
+             /            \  # noqa 
+            /    bottom    \  # noqa 
 
     """
     if px < x:
@@ -173,8 +173,8 @@ class DataLabel(ToolTip):
     #: data space values.
     label_format = Str("(%(x)f, %(y)f)")
 
-    #: The text to show on the label, or above the coordinates for the label, if
-    #: show_label_coords is True
+    #: The text to show on the label, or above the coordinates for the label,
+    #: if show_label_coords is True
     label_text = Str
 
     #: Flag whether to show coordinates with the label or not.
@@ -198,9 +198,9 @@ class DataLabel(ToolTip):
     #: arrow_size, arrow_color, arrow_root, and arrow_max_length.
     label_style = Enum('box', 'bubble')
 
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
     # Marker traits
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
 
     #: Mark the point on the data that this label refers to?
     marker_visible = Bool(True)
@@ -223,9 +223,9 @@ class DataLabel(ToolTip):
     #: The color out of the border drawn around the marker.
     marker_line_color = ColorTrait("black")
 
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
     # Arrow traits
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
 
     #: Draw an arrow from the label to the data point?  Only
     #: used if **data_point** is not None.
@@ -253,16 +253,16 @@ class DataLabel(ToolTip):
     #: the arrow will be drawn regardless of how long it is.
     arrow_max_length = Float(inf)
 
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
     # Bubble traits
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
 
-    #: The radius (in screen coordinates) of the curved corners of the "bubble".
+    #: The radius (in screen coordinates) of the curved corners of the "bubble"
     corner_radius = Float(10)
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Private traits
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     # Tuple (sx, sy) of the mapped screen coordinates of **data_point**.
     _screen_coords = Any
@@ -335,26 +335,35 @@ class DataLabel(ToolTip):
                     else:
                         arrow_root = self.arrow_root
                     pos = self._position_root_map.get(arrow_root, "DUMMY")
-                    ox, oy = self._root_positions.get(pos,
-                                        (self.x + self.width / 2,
-                                         self.y + self.height / 2))
+                    ox, oy = self._root_positions.get(
+                        pos,
+                        (self.x + self.width / 2, self.y + self.height / 2)
+                    )
 
                 if type(ox) == str:
                     ox = getattr(self, ox)
                     oy = getattr(self, oy)
-                self._cached_arrow = draw_arrow(gc, (ox, oy),
-                                            self._screen_coords,
-                                            self.arrow_color_,
-                                            arrowhead_size=self.arrow_size,
-                                            offset1=3,
-                                            offset2=self.marker_size + 3,
-                                            minlen=self.arrow_min_length,
-                                            maxlen=self.arrow_max_length)
+                self._cached_arrow = draw_arrow(
+                    gc,
+                    (ox, oy),
+                    self._screen_coords,
+                    self.arrow_color_,
+                    arrowhead_size=self.arrow_size,
+                    offset1=3,
+                    offset2=self.marker_size + 3,
+                    minlen=self.arrow_min_length,
+                    maxlen=self.arrow_max_length
+                )
             else:
-                draw_arrow(gc, None, None, self.arrow_color_,
-                           arrow=self._cached_arrow,
-                           minlen=self.arrow_min_length,
-                           maxlen=self.arrow_max_length)
+                draw_arrow(
+                    gc,
+                    None,
+                    None,
+                    self.arrow_color_,
+                    arrow=self._cached_arrow,
+                    minlen=self.arrow_min_length,
+                    maxlen=self.arrow_max_length
+                )
 
         # layout and render the label itself
         ToolTip.overlay(self, component, gc, view_bounds, mode)

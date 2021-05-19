@@ -35,8 +35,8 @@ class ColormappedSelectionOverlay(AbstractOverlay):
     #: The amount to fade the unselected points.
     fade_alpha = Float(0.15)
 
-    #: The minimum difference, in float percent, between the starting and ending
-    #: selection values, if range selection mode is enabled
+    #: The minimum difference, in float percent, between the starting and
+    #: ending selection values, if range selection mode is enabled
     minimum_delta = Float(0.01)
 
     #: Outline width for selected points.
@@ -128,7 +128,7 @@ class ColormappedSelectionOverlay(AbstractOverlay):
             )
 
     def datasource_change_handler(self, event):
-        obj, name, old, new = (event.object, event.name, event.old, event.new)
+        old, new = (event.old, event.new)
 
         if old:
             old.observe(
@@ -146,7 +146,7 @@ class ColormappedSelectionOverlay(AbstractOverlay):
             )
 
     def selection_change_handler(self, event):
-        obj, name, old, new = (event.object, event.name, event.old, event.new)
+        new = event.new
 
         if self.selection_type == "range":
             selection_key = "selections"
@@ -159,11 +159,12 @@ class ColormappedSelectionOverlay(AbstractOverlay):
             and len(new[selection_key]) > 0
         ):
             if not self._visible:
-                # We have a new selection, so replace the colors on the plot with the
-                # faded alpha and colors
+                # We have a new selection, so replace the colors on the plot
+                # with the faded alpha and colors
                 plot = self.plot
 
-                # Save the line width and set it to zero for the unselected points
+                # Save the line width and set it to zero for the unselected
+                # points
                 self._old_line_width = plot.line_width
                 plot.line_width = self.unselected_outline_width
                 # Save the outline color and set it to the faded version

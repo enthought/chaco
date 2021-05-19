@@ -34,7 +34,7 @@ class SvgRangeSelectionOverlay(StatusLayer):
     plot = Property(observe="component")
 
     # The mapper (and associated range) that drive this RangeSelectionOverlay.
-    # By default, this is the mapper on self.plot that corresponds to self.axis.
+    # By default, this is the mapper on self.plot that corresponds to self.axis
     mapper = Property(observe="plot")
 
     # The name of the metadata to look at for dataspace bounds. The metadata

@@ -48,7 +48,9 @@ class ScatterInspectorOverlay(AbstractOverlay):
     # For now, implement the equivalent of this Traits 3 feature manually
     # using a series of trait change handlers (defined at the end of the
     # class)
-    # @on_trait_change('component.index.metadata_changed,component.value.metadata_changed')
+    # @on_trait_change(
+    #     'component.index.metadata_changed,component.value.metadata_changed'
+    # )
     def metadata_updated(self, event):
         if self.component is not None:
             self.component.request_redraw()
@@ -63,8 +65,9 @@ class ScatterInspectorOverlay(AbstractOverlay):
             self.selection_metadata_name,
         ):
             if inspect_type in plot.index.metadata:
-                # if hasattr(plot,"value") and not inspect_type in plot.value.metadata:
-                #    continue
+                # if hasattr(plot,"value") and \
+                #         not inspect_type in plot.value.metadata:
+                #     continue
                 index = plot.index.metadata.get(inspect_type, None)
 
                 if index is not None and len(index) > 0:

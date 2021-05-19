@@ -103,7 +103,7 @@ class Legend(AbstractOverlay):
     #: The background color of the legend (overrides AbstractOverlay).
     bgcolor = white_color_trait
 
-    #: The position of the legend with respect to its overlaid component.  (This
+    #: The position of the legend with respect to its overlaid component. (This
     #: attribute applies only if the legend is used as an overlay.)
     #:
     #: * ur = Upper Right
@@ -121,8 +121,9 @@ class Legend(AbstractOverlay):
     #: Amount of spacing between each label and its icon.
     icon_spacing = Int(5)
 
-    #: Map of labels (strings) to plot instances or lists of plot instances.  The
-    #: Legend determines the appropriate rendering of each plot's marker/line.
+    #: Map of labels (strings) to plot instances or lists of plot instances.
+    #: The Legend determines the appropriate rendering of each plot's
+    #: marker/line.
     plots = Dict
 
     #: The list of labels to show and the order to show them in.  If this
@@ -131,16 +132,16 @@ class Legend(AbstractOverlay):
     #: list are drawn in the legend.  Labels are ordered from top to bottom.
     labels = List
 
-    #: Whether or not to hide plots that are not visible.  (This is checked during
-    #: layout.)  This option *will* filter out the items in **labels** above, so
-    #: if you absolutely, positively want to set the items that will always
-    #: display in the legend, regardless of anything else, then you should turn
-    #: this option off.  Otherwise, it usually makes sense that a plot renderer
-    #: that is not visible will also not be in the legend.
+    #: Whether or not to hide plots that are not visible. (This is checked
+    #: during layout.) This option *will* filter out the items in **labels**
+    #: above, so if you absolutely, positively want to set the items that will
+    #: always display in the legend, regardless of anything else, then you
+    #: should turn this option off. Otherwise, it usually makes sense that a
+    #: plot renderer that is not visible will also not be in the legend.
     hide_invisible_plots = Bool(True)
 
-    #: If hide_invisible_plots is False, we can still choose to render the names
-    #: of invisible plots with an alpha.
+    #: If hide_invisible_plots is False, we can still choose to render the
+    #: names of invisible plots with an alpha.
     invisible_plot_alpha = Float(0.33)
 
     #: The renderer that draws the icons for the legend.
@@ -300,7 +301,8 @@ class Legend(AbstractOverlay):
                         # visible or not?  For now, just look at the first one
                         # and assume that applies to all of them
                         if not plots[0].visible:
-                            # TODO: the get_alpha() method isn't supported on the Mac kiva backend
+                            # TODO: the get_alpha() method isn't supported on
+                            # the Mac kiva backend
                             # old_alpha = gc.get_alpha()
                             old_alpha = 1.0
                             gc.set_alpha(self.invisible_plot_alpha)
@@ -325,7 +327,7 @@ class Legend(AbstractOverlay):
                         old_alpha = None  # Or maybe 1.0?
 
                     icon_drawn = True
-                except:
+                except BaseException:
                     icon_drawn = self._render_error(*render_args)
 
                 if icon_drawn:
@@ -361,8 +363,8 @@ class Legend(AbstractOverlay):
 
     def get_preferred_size(self):
         """
-        Computes the size and position of the legend based on the maximum size of
-        the labels, the alignment, and position of the component to overlay.
+        Computes the size and position of the legend based on the maximum size
+        of the labels, the alignment, and position of the component to overlay.
         """
         # Gather the names of all the labels we will create
         if len(self.plots) == 0:
@@ -391,15 +393,15 @@ class Legend(AbstractOverlay):
                 # so ensure that each name is actually in the plots dict.
                 if name in self.plots:
                     val = self.plots[name]
-                    # Rather than checking for a list/TraitListObject/etc., we just check
-                    # for the attribute first
+                    # Rather than checking for a list/TraitListObject/etc., we
+                    # just check for the attribute first
                     if hasattr(val, "visible"):
                         if val.visible:
                             visible_labels.append(name)
                             visible_plots.append(val)
                     else:
-                        # If we have a list of renderers, add the name if any of them are
-                        # visible
+                        # If we have a list of renderers, add the name if any
+                        # of them are visible
                         for renderer in val:
                             if renderer.visible:
                                 visible_labels.append(name)
@@ -495,7 +497,7 @@ class Legend(AbstractOverlay):
     def _composite_icon_renderer_default(self):
         return CompositeIconRenderer()
 
-    # -- trait handlers --------------------------------------------------------
+    # -- trait handlers -------------------------------------------------------
     def _anytrait_changed(self, name, old, new):
         if name in (
             "font",
@@ -530,11 +532,11 @@ class Legend(AbstractOverlay):
 
     def _title_at_top_changed(self, old, new):
         """ Trait handler for when self.title_at_top changes. """
-        if old == True:
+        if old is True:
             indx = 0
         else:
             indx = -1
-        if old != None:
+        if old is not None:
             self._cached_labels.pop(indx)
             self._cached_label_names.pop(indx)
             self._cached_visible_plots.pop(indx)

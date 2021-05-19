@@ -24,7 +24,7 @@ from chaco.label import Label
 class TextBoxOverlay(AbstractOverlay):
     """Draws a box with text in it."""
 
-    #### Configuration traits #################################################
+    # Configuration traits ####################################################
 
     #: The text to display in the box.
     text = Str
@@ -71,7 +71,7 @@ class TextBoxOverlay(AbstractOverlay):
     #: of the text box.  Must be a sequence of length 2.
     alternate_position = Any
 
-    #### Public 'AbstractOverlay' interface ###################################
+    # Public 'AbstractOverlay' interface ######################################
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         """Draws the box overlaid on another component.

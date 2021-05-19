@@ -11,7 +11,7 @@
 """
 import warnings
 
-from chaco.overlays.tooltip import ToolTip
+from chaco.overlays.tooltip import ToolTip  # noqa: F401
 
 warnings.warn(
     "This module has been moved to sit in chaco/overlays and this stub module"

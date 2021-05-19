@@ -76,9 +76,9 @@ class StatusLayer(AbstractOverlay):
             origin_y = self.component.padding_top
 
             # zoom percentage, use the scale_factor as a % of the plot size.
-            # base the size on the smaller aspect - if the plot is tall and narrow
-            # the overlay should be 50% of the width, if the plot is short and wide
-            # the overlay should be 50% of the height.
+            # base the size on the smaller aspect - if the plot is tall and
+            # narrow the overlay should be 50% of the width, if the plot is
+            # short and wide the overlay should be 50% of the height.
             if gc.height() < gc.width():
                 scale = (plot_height / self.doc_height) * self.scale_factor
             else:
@@ -87,7 +87,8 @@ class StatusLayer(AbstractOverlay):
             scale_width = scale * self.doc_width
             scale_height = scale * self.doc_height
 
-            # Set up the transforms to align the graphic to the desired position
+            # Set up the transforms to align the graphic to the desired
+            # position
             if self.align == "ur":
                 gc.translate_ctm(
                     origin_x + (plot_width - scale_width),

@@ -75,8 +75,8 @@ class LassoOverlay(AbstractOverlay):
         Overrides PlotComponent.
         """
         with gc:
-            # We may need to make map_screen more flexible in the number of dimensions
-            # it accepts for ths to work well.
+            # We may need to make map_screen more flexible in the number of
+            # dimensions it accepts for ths to work well.
             for selection in self.lasso_selection.disjoint_selections:
                 points = self.component.map_screen(selection)
                 if len(points) == 0:
