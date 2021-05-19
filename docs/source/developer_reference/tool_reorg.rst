@@ -72,6 +72,16 @@ Additionally, either ``pan_tool.PanTool`` or ``pan_tool2.Pantool`` should be
 removed. (I still need to investigate the feature disparity / advantages of one
 over the other, if any exist)
 
+After some initial investigation it is clear much of the code is copy pasted.
+However, some obvious differences include:
+- PanTool1 subclasses ``BaseTool`` whereas PanTool2 subclasses ``DragTool``
+- PanTool1 has ``pan_{right/left/up/down}_key`` traits, PanTool2 does not
+- PanTool1 also allows "middle" for ``drag_button``, PanTool2 (inheriting
+  ``drag_button`` from enable ``DragTool``) only allows "left" or "right"
+- PanTool1 sets event state to "panning" and defines "panning" specific methods
+  whereas PanTool2 overrides methods on DragTool (e.g. ``dragging``,
+  ``drag_cancel``, ``drag_end``)
+
 The following is a proposal for a new class heirarchy:
 
 .. graphviz::
