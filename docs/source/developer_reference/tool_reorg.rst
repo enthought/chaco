@@ -58,7 +58,7 @@ to do so.  Either by setting a trait like ``rect=True`` or ``tracking=True``,
 or perhaps with some class method on ``ZoomTool``.  This way it will be more
 obvious what tool you want if you want zoom functionality
 (you want the ``ZoomTool``!) and it can be confiugred to your needs.
-Similar logic applies to ``TrackingPanTool`` and either of the ``PanTool``s.
+Similar logic applies to ``TrackingPanTool`` and either ``PanTool``.
 Although currently, ``TrackingPanTool`` subclasses ``PanTool1``.
 
 The current ``BetterZoom`` class can be renamed as ``BaseZoomTool``. The way things
