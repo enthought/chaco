@@ -21,7 +21,7 @@ This is the current starte of Pan and Zoom tools accross Chaco and Enable
         ];
         ZoomTool -> RectZoom;
         TrackingZoom [
-            label=<RectZoom<BR /><FONT POINT-SIZE="14">Overrides one method on ZoomTool</FONT>>
+            label=<RectZoom<BR /><FONT POINT-SIZE="14">Defines one additional method on ZoomTool</FONT>>
         ];
         ZoomTool -> TrackingZoom;
         DragTool [fillcolor=red, style=filled];
@@ -32,6 +32,10 @@ This is the current starte of Pan and Zoom tools accross Chaco and Enable
         DragTool -> ViewportPanTool;
         BaseZoomTool -> ViewportZoomTool;
         PanTool;
+        TrackingPanTool [
+            label=<TrackingPanTool<BR /><FONT POINT-SIZE="14">Defines one additional method on PanTool</FONT>>
+        ];
+        PanTool -> TrackingPanTool;
         PanTool2 [
             label=<PanTool2<BR /><FONT POINT-SIZE="14">Not in chaco.tools.api, very rarely used.<BR />However, seems to have been intended as improvement over PanTool.</FONT>>
         ];
@@ -54,8 +58,10 @@ to do so.  Either by setting a trait like ``rect=True`` or ``tracking=True``,
 or perhaps with some class method on ``ZoomTool``.  This way it will be more
 obvious what tool you want if you want zoom functionality
 (you want the ``ZoomTool``!) and it can be confiugred to your needs.
+Similar logic applies to ``TrackingPanTool`` and either of the ``PanTool``s.
+Although currently, ``TrackingPanTool`` subclasses ``PanTool1``.
 
-The current `BetterZoom` class can be renamed as ``BaseZoomTool``. The way things
+The current ``BetterZoom`` class can be renamed as ``BaseZoomTool``. The way things
 currently are (with ``ZoomTool`` an alias for ``BetterSelectingZoom``), the "default"
 zoom tool has selecting functionality. There are situations like ``DragZoom``
 where you don't want this.  AFAICT, users are not expected to use ``BetterZoom``
@@ -74,13 +80,16 @@ over the other, if any exist)
 
 After some initial investigation it is clear much of the code is copy pasted.
 However, some obvious differences include:
-- PanTool1 subclasses ``BaseTool`` whereas PanTool2 subclasses ``DragTool``
-- PanTool1 has ``pan_{right/left/up/down}_key`` traits, PanTool2 does not
-- PanTool1 also allows "middle" for ``drag_button``, PanTool2 (inheriting
+
+* PanTool1 subclasses ``BaseTool`` whereas PanTool2 subclasses ``DragTool``
+* PanTool1 has ``pan_{right/left/up/down}_key`` traits, PanTool2 does not
+* PanTool1 also allows "middle" for ``drag_button``, PanTool2 (inheriting
   ``drag_button`` from enable ``DragTool``) only allows "left" or "right"
-- PanTool1 sets event state to "panning" and defines "panning" specific methods
+* PanTool1 sets event state to "panning" and defines "panning" specific methods
   whereas PanTool2 overrides methods on DragTool (e.g. ``dragging``,
   ``drag_cancel``, ``drag_end``)
+
+Potentially relevant issues include enthought/chaco#519, and enthought/enable#90.
 
 The following is a proposal for a new class heirarchy:
 
@@ -100,9 +109,10 @@ The following is a proposal for a new class heirarchy:
         ViewportZoomTool [fillcolor=red, style=filled];
         ViewportPanTool [fillcolor=red, style=filled];
         DragTool -> ViewportPanTool;
-        PanTool;
+        PanTool [style="dotted"];
         PanTool2 [
-            label=<PanTool2<BR /><FONT POINT-SIZE="14">Not in chaco.tools.api, very rarely used.<BR />However, seems to have been intended as improvement over PanTool.</FONT>>
+            label=<PanTool2<BR /><FONT POINT-SIZE="14">Not in chaco.tools.api, very rarely used.<BR />However, seems to have been intended as improvement over PanTool.</FONT>>,
+            style="dotted"
         ];
         DragTool -> PanTool2;
     }
@@ -111,12 +121,20 @@ The following is a proposal for a new class heirarchy:
 
 Migration Steps:
 
-1) Rename ``BetterZoom`` as ``BaseZoomTool``
-2) Copy ``BetterSelectingZoom`` into ``ZoomTool`` and delete old
+#. Rename ``BetterZoom`` as ``BaseZoomTool``
+#. Copy ``BetterSelectingZoom`` into ``ZoomTool`` and delete old
    ``BetterSelectingZoom``, or delete old ``ZoomTool`` and rename
    ``BetterSelectingZoom`` as ``ZoomTool``
-3) Decide on means for replacing ``RectZoom`` and ``TrackingZoom`` and with
+#. Decide on means for replacing ``RectZoom`` and ``TrackingZoom`` and with
    functionality on ``ZoomTool``
-4) Chose one of ``pan_tool.PanTool`` and ``pan_tool2.PanTool`` to be the go-to
-   PanTool moving forawd.  Delete the other.
-5) Decide fate of ``BaseZoomTool`` in enable.
+
+      * ``RectZoom`` currently just subclasses ``ZoomTool`` (aka
+        ``BetterSelectingZoom``) and sets ``tool_mode = "box"`` / ``always_on = True``
+      * ``TrackingZoom`` currently just subclasses ``ZoomTool`` (aka
+        ``BetterSelectingZoom``) and defines a ``normal_mouse_wheel`` method.
+
+#. Do the same for ``TrackingPanTool`` (which just subclasses ``PanTool`` and
+   overrides ``_end_pan``).
+#. Chose one of ``pan_tool.PanTool`` and ``pan_tool2.PanTool`` to be the go-to
+   PanTool moving forawd. Update as needed / Delete the other.
+#. Decide fate of ``BaseZoomTool`` in enable.
