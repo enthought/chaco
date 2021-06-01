@@ -125,6 +125,7 @@ Renderers
 - :class:`~.SegmentPlot`
 - :class:`~.TextPlot`
 - :class:`~.PolarLineRenderer`
+- :class:`~.ScalyPlot`
 
 Plot Factories
 --------------
@@ -388,6 +389,7 @@ from .text_plot_1d import TextPlot1D
 from .segment_plot import SegmentPlot
 from .text_plot import TextPlot
 from .polar_line_renderer import PolarLineRenderer
+from .scaly_plot import ScalyPlot
 
 # Plot factories
 from .plot_factory import (

@@ -82,7 +82,6 @@ supported_combinations = {
 
 dependencies = {
     "coverage",
-    "mock",
     "numpy",
     "pandas",
     "pyface",
