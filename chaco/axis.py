@@ -280,10 +280,7 @@ class PlotAxis(AbstractOverlay):
             return
 
         if not self._cache_valid:
-            if component is not None:
-                self._calculate_geometry_overlay(component)
-            else:
-                self._calculate_geometry()
+            self._calculate_geometry()
             self._compute_tick_positions(gc, component)
             self._compute_labels(gc)
 
