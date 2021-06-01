@@ -71,7 +71,7 @@ class BaseContourPlot(Base2DPlot):
     _color_map_trait = ColorTrait
 
     def __init__(self, *args, **kwargs):
-        super(BaseContourPlot, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         if self.color_mapper:
             self.color_mapper.observe(self._update_color_mapper, "updated")
 

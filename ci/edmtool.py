@@ -36,6 +36,12 @@ the install performs a ``python setup.py install`` rather than a ``develop``,
 so changes in your code will not be automatically mirrored in the test
 environment.  You can update with a command like::
     edm run --environment ... -- python setup.py install
+
+If you need to make frequent changes to the source, it is often convenient
+to instead specifically install the source in editable mode::
+
+    python edmtool.py install --editable --runtime=... --toolkit=...
+
 You can run all three tasks at once with::
     python edmtool.py test_clean --runtime=... --toolkit=...
 which will create, install, run tests, and then clean-up the environment.  And
@@ -75,7 +81,7 @@ supported_combinations = {
 }
 
 dependencies = {
-    "mock",
+    "coverage",
     "numpy",
     "pandas",
     "pyface",
@@ -115,7 +121,6 @@ doc_dependencies = {
 
 doc_ignore = {
     "*/tests",
-    "chaco/tests_with_backend/*"
 }
 
 environment_vars = {
@@ -144,11 +149,16 @@ def cli():
 @click.option('--toolkit', default='null')
 @click.option('--environment', default=None)
 @click.option(
+    "--editable/--not-editable",
+    default=False,
+    help="Install main package in 'editable' mode?  [default: --not-editable]",
+)
+@click.option(
     "--source/--no-source",
     default=False,
     help="Install ETS packages from source",
 )
-def install(runtime, toolkit, environment, source):
+def install(runtime, toolkit, environment, editable, source):
     """ Install project and dependencies into a clean EDM environment.
     """
     parameters = get_parameters(runtime, toolkit, environment)
@@ -159,14 +169,14 @@ def install(runtime, toolkit, environment, source):
     )
 
     if toolkit == "pyside2":
-        additional_repositories = "--add-repository enthought/lgpl"
+        addn_repositories = "--add-repository enthought/lgpl"
     else:
-        additional_repositories = ""
+        addn_repositories = ""
 
     # edm commands to setup the development environment
     commands = [
         "edm environments create {environment} --force --version={runtime}",
-        "edm install -y -e {environment} {packages} " + additional_repositories,
+        "edm install -y -e {environment} {packages} " + addn_repositories,
         ("edm run -e {environment} -- pip install -r ci/requirements.txt"
          " --no-dependencies"),
     ]
@@ -200,8 +210,11 @@ def install(runtime, toolkit, environment, source):
     # to mitigate risk of testing against a distributed release.
     install_local = (
         "edm run -e {environment} -- "
-        "pip install --force-reinstall --no-dependencies ."
+        "pip install --force-reinstall --no-dependencies "
     )
+    if editable:
+        install_local += "--editable "
+    install_local += "."
     execute([install_local], parameters)
 
     click.echo('Done install')
@@ -222,8 +235,6 @@ def test(runtime, toolkit, environment):
         "edm run -e {environment} -- python -W default -m "
         "coverage run -m unittest discover -v chaco"
     ]
-
-    cwd = os.getcwd()
 
     # We run in a tempdir to avoid accidentally picking up wrong traitsui
     # code from a local dir.  We need to ensure a good .coveragerc is in
@@ -321,7 +332,8 @@ def docs(runtime, toolkit, environment):
         "Regenerating API docs in  '{environment}'".format(**parameters)
     )
     commands = [
-        "edm run -e {environment} -- python -m sphinx.ext.apidoc -e --no-toc -o "
+        "edm run -e {environment} -- "
+        + "python -m sphinx.ext.apidoc -e --no-toc -o "
         + api_path
         + " -t {templates_dir}"
         + " chaco "

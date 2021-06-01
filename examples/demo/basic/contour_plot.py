@@ -57,7 +57,7 @@ def _create_plot_component():
     # Tweak some of the plot properties
     plot.title = "My First Contour Plot"
     plot.padding = 50
-    plot.bg_color = "white"
+    plot.bgcolor = "white"
     plot.fill_padding = True
 
     # Attach some tools to the plot

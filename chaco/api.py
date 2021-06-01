@@ -54,6 +54,7 @@ Mappers
 - :class:`~.DiscreteColorMapper`
 - :class:`~.TransformColorMapper`
 - :class:`~.BandedMapper`
+- :class:`~.PolarMapper`
 
 Visual Components
 -----------------
@@ -61,10 +62,7 @@ Visual Components
 - :class:`~.AbstractPlotRenderer`
 - :class:`~.AbstractOverlay`
 - :class:`~.BasePlotContainer`
-- :class:`~.BasePlotFrame`
-- :class:`~.CrossPlotFrame`
 - :class:`~.DataView`
-- :class:`~.SimplePlotFrame`
 - :class:`~.PlotComponent`
 - :class:`~.PlotGraphicsContext`
 - :class:`~.PlotGraphicsContextMixin`
@@ -105,13 +103,13 @@ Renderers
 - :class:`~.CandlePlot`
 - :class:`~.MultiLinePlot`
 - :class:`~.JitterPlot`
-- :class:`~.VariableSizeScatterPlot`
 - :class:`~.HorizonPlot`
 - :class:`~.ScatterPlot1D`
 - :class:`~.LineScatterPlot1D`
 - :class:`~.TextPlot1D`
 - :class:`~.SegmentPlot`
 - :class:`~.TextPlot`
+- :class:`~.PolarLineRenderer`
 
 Plot Factories
 --------------
@@ -294,15 +292,13 @@ from .color_mapper import ColorMapper, ColorMapTemplate
 from .discrete_color_mapper import DiscreteColorMapper
 from .transform_color_mapper import TransformColorMapper
 from .horizon_plot import BandedMapper
+from .polar_mapper import PolarMapper
 
 # Visual components
 from .abstract_plot_renderer import AbstractPlotRenderer
 from .abstract_overlay import AbstractOverlay
 from .base_plot_container import BasePlotContainer
-from .base_plot_frame import BasePlotFrame
-from .cross_plot_frame import CrossPlotFrame
 from .data_view import DataView
-from .simple_plot_frame import SimplePlotFrame
 from .plot_component import PlotComponent
 from .plot_graphics_context import (
     PlotGraphicsContext,
@@ -352,13 +348,13 @@ from .quiverplot import QuiverPlot
 from .candle_plot import CandlePlot
 from .multi_line_plot import MultiLinePlot
 from .jitterplot import JitterPlot
-from .variable_size_scatterplot import VariableSizeScatterPlot
 from .horizon_plot import HorizonPlot
 from .scatterplot_1d import ScatterPlot1D
 from .line_scatterplot_1d import LineScatterPlot1D
 from .text_plot_1d import TextPlot1D
 from .segment_plot import SegmentPlot
 from .text_plot import TextPlot
+from .polar_line_renderer import PolarLineRenderer
 
 # Plot factories
 from .plot_factory import (
@@ -481,8 +477,3 @@ from .default_colormaps import (
     Set3,
 )
 from .default_colors import cbrewer, palette11, palette14, PALETTES
-
-# Importing various symbols into the Chaco namespace for backwards
-# compatibility.  New code should directly import from Enable.
-from enable.base_tool import BaseTool, KeySpec
-from enable.markers import marker_trait

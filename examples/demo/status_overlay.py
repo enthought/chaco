@@ -22,25 +22,16 @@ class MyPlot(HasTraits):
     warn_button = Button("Warning")
     no_problem_button = Button("No problem")
 
-    traits_view = View(
-        HGroup(
-            UItem("error_button"),
-            UItem("warn_button"),
-            UItem("no_problem_button"),
-        ),
-        UItem("plot", editor=ComponentEditor()),
-        width=700,
-        height=600,
-        resizable=True,
-    )
-
-    def __init__(self, index, data_series, **kw):
-        super(MyPlot, self).__init__(**kw)
+    def _plot_default(self):
+        index = numpy.array([1, 2, 3, 4, 5])
+        data_series = index ** 2
 
         plot_data = ArrayPlotData(index=index)
         plot_data.set_data("data_series", data_series)
-        self.plot = Plot(plot_data)
-        self.plot.plot(("index", "data_series"))
+        plot = Plot(plot_data)
+        plot.plot(("index", "data_series"))
+
+        return plot
 
     def _error_button_fired(self, event):
         """removes the old overlay and replaces it with
@@ -78,9 +69,18 @@ class MyPlot(HasTraits):
             # fade_out will remove the overlay when its done
             self.status_overlay.fade_out()
 
+    traits_view = View(
+        HGroup(
+            UItem("error_button"),
+            UItem("warn_button"),
+            UItem("no_problem_button"),
+        ),
+        UItem("plot", editor=ComponentEditor()),
+        width=700,
+        height=600,
+        resizable=True,
+    )
 
-index = numpy.array([1, 2, 3, 4, 5])
-data_series = index ** 2
 
-my_plot = MyPlot(index, data_series)
+my_plot = MyPlot()
 my_plot.configure_traits()

@@ -61,7 +61,7 @@ class RegressionOverlay(LassoOverlay):
     )
 
     def _draw_component(self, gc, view_bounds=None, mode="normal"):
-        LassoOverlay._draw_component(self, gc, view_bounds, mode)
+        super()._draw_component(gc, view_bounds, mode)
         selection = self.lasso_selection
 
         if selection.fit_params is not None:

@@ -17,6 +17,27 @@ class ExamplePlotApp(HasTraits):
 
     plot = Instance(Plot)
 
+    def _plot_default(self):
+        index = numpy.arange(1.0, 10.0, 0.01)
+        series1 = (100.0 + index) / (100.0 - 20 * index ** 2 + 5.0 * index**4)
+        series2 = (100.0 + index) / (100.0 - 20 * index ** 2 + 5.0 * index**3)
+
+        plot_data = ArrayPlotData(index=index)
+        plot_data.set_data("series1", series1)
+        plot_data.set_data("series2", series2)
+
+        plot = ToolbarPlot(plot_data)
+        line_plot = plot.plot(("index", "series1"), color="auto")[0]
+
+        # Add pan and zoom tools
+        line_plot.tools.append(PanTool(line_plot))
+        line_plot.tools.append(ZoomTool(line_plot))
+
+        # Set the domain_limits
+        line_plot.index_mapper.domain_limits = (3.3, 6.6)
+
+        return plot
+
     traits_view = View(
         Item(
             "plot",
@@ -28,27 +49,8 @@ class ExamplePlotApp(HasTraits):
         resizable=True,
     )
 
-    def __init__(self, index, series1, series2, **kw):
-        super(ExamplePlotApp, self).__init__(**kw)
-        plot_data = ArrayPlotData(index=index)
-        plot_data.set_data("series1", series1)
-        plot_data.set_data("series2", series2)
 
-        self.plot = ToolbarPlot(plot_data)
-        line_plot = self.plot.plot(("index", "series1"), color="auto")[0]
-
-        # Add pan and zoom tools
-        line_plot.tools.append(PanTool(line_plot))
-        line_plot.tools.append(ZoomTool(line_plot))
-
-        # Set the domain_limits
-        line_plot.index_mapper.domain_limits = (3.3, 6.6)
-
-
-index = numpy.arange(1.0, 10.0, 0.01)
-series1 = (100.0 + index) / (100.0 - 20 * index ** 2 + 5.0 * index ** 4)
-series2 = (100.0 + index) / (100.0 - 20 * index ** 2 + 5.0 * index ** 3)
-demo = ExamplePlotApp(index, series1, series2)
+demo = ExamplePlotApp()
 
 if __name__ == "__main__":
     demo.configure_traits()

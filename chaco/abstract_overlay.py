@@ -33,7 +33,7 @@ class AbstractOverlay(PlotComponent):
     def __init__(self, component=None, *args, **kw):
         if component is not None:
             self.component = component
-        super(AbstractOverlay, self).__init__(*args, **kw)
+        super().__init__(*args, **kw)
 
     def overlay(self, other_component, gc, view_bounds=None, mode="normal"):
         """Draws this component overlaid on another component."""
@@ -49,10 +49,10 @@ class AbstractOverlay(PlotComponent):
         if self.component is not None:
             self.overlay(self.component, gc, view_bounds, mode)
         else:
-            super(AbstractOverlay, self)._draw(gc, view_bounds, mode)
+            super()._draw(gc, view_bounds, mode)
 
     def _request_redraw(self):
         """Overrides Enable Component."""
         if self.component is not None:
             self.component.request_redraw()
-        super(AbstractOverlay, self)._request_redraw()
+        super()._request_redraw()

@@ -83,7 +83,7 @@ class TestImageInspectorToolGray(BaseImageInspectorTool, TestCase):
     def setUp(self):
         values = np.arange(4).reshape(2, 2)
         self.plot = create_image_plot(values)
-        super(TestImageInspectorToolGray, self).setUp()
+        BaseImageInspectorTool.setUp(self)
 
     def test_mouse_move_collect_image_info(self):
         tool = self.tool
@@ -145,7 +145,7 @@ class TestImageInspectorToolRGB(BaseImageInspectorTool, TestCase):
     def setUp(self):
         values = np.arange(12).reshape(2, 2, 3)
         self.plot = create_image_plot(values)
-        super(TestImageInspectorToolRGB, self).setUp()
+        BaseImageInspectorTool.setUp(self)
 
     def test_mouse_move_collect_image_info(self):
         tool = self.tool

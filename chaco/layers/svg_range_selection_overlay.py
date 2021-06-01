@@ -84,8 +84,6 @@ class SvgRangeSelectionOverlay(StatusLayer):
 
             self.document.render(gc)
 
-            self._draw_component(gc, view_bounds, mode)
-
     def _get_selection_screencoords(self):
         """Returns a tuple of (x1, x2) screen space coordinates of the start
         and end selection points.

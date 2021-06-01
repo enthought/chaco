@@ -32,6 +32,7 @@ extensions = [
   'sphinx.ext.napoleon',
   'sphinx.ext.graphviz',
   'sphinx.ext.intersphinx',
+  'sphinx.ext.todo',
   'traits.util.trait_documenter',
 ]
 

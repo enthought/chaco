@@ -98,7 +98,7 @@ class ColorBar(AbstractPlotRenderer):
         grid_visible = kw.pop("grid_visible", True)
         axis_visible = kw.pop("axis_visible", True)
 
-        super(ColorBar, self).__init__(*args, **kw)
+        super().__init__(*args, **kw)
 
         if self.orientation == "h":
             if self.direction == "normal":
@@ -212,19 +212,19 @@ class ColorBar(AbstractPlotRenderer):
         self.index_mapper.range = self.color_mapper.range
 
     def _bounds_changed(self, old, new):
-        super(ColorBar, self)._bounds_changed(old, new)
+        super()._bounds_changed(old, new)
         self._update_mappers()
 
     def _bounds_items_changed(self, event):
-        super(ColorBar, self)._bounds_items_changed(event)
+        super()._bounds_items_changed(event)
         self._update_mappers()
 
     def _position_changed(self, old, new):
-        super(ColorBar, self)._position_changed(old, new)
+        super()._position_changed(old, new)
         self._update_mappers()
 
     def _position_items_changed(self, event):
-        super(ColorBar, self)._position_items_changed(event)
+        super()._position_items_changed(event)
         self._update_mappers()
 
     def _updated_changed_for_index_mapper(self):

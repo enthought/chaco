@@ -155,7 +155,10 @@ class ArrayDataSource(AbstractDataSource):
         Implements AbstractDataSource.
         """
         if self._cached_mask is None:
-            return self._data, ones(len(self._data), dtype=bool)
+            if self._data is None:
+                return self._data, ones(0, dtype=bool)
+            else:
+                return self._data, ones(len(self._data), dtype=bool)
         else:
             return self._data, self._cached_mask
 
@@ -294,7 +297,7 @@ class ArrayDataSource(AbstractDataSource):
     # ------------------------------------------------------------------------
 
     def __getstate__(self):
-        state = super(ArrayDataSource, self).__getstate__()
+        state = super().__getstate__()
         if not self.persist_data:
             state.pop("_data", None)
             state.pop("_cached_mask", None)
@@ -304,6 +307,6 @@ class ArrayDataSource(AbstractDataSource):
         return state
 
     def _post_load(self):
-        super(ArrayDataSource, self)._post_load()
+        super()._post_load()
         self._cached_bounds = ()
         self._cached_mask = None

@@ -17,7 +17,7 @@ from numpy import (
 )
 
 # Enthought library imports
-from kiva.constants import STROKE
+from kiva.api import NO_MARKER, STROKE
 from traits.api import Dict, Enum, Float, Instance, observe
 from traitsui.api import Item, RangeEditor
 
@@ -32,7 +32,7 @@ class ColormappedScatterPlotView(ScatterPlotView):
     """TraitsUI View for customizing a color-mapped scatter plot."""
 
     def __init__(self):
-        super(ColormappedScatterPlotView, self).__init__()
+        super().__init__()
         vgroup = self.content
         vgroup.content[0].content.append(
             Item(
@@ -106,7 +106,7 @@ class ColormappedScatterPlot(ScatterPlot):
         if len(data_array) > 0:
             if data_array.shape[1] == 3:
                 data_array = data_array[:, :2]
-        return super(ColormappedScatterPlot, self).map_screen(data_array)
+        return super().map_screen(data_array)
 
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
         """Draws the 'plot' layer.
@@ -121,9 +121,7 @@ class ColormappedScatterPlot(ScatterPlot):
             # Take into account fill_alpha even if we are rendering with only two values
             old_color = self.color
             self.color = tuple(self.fill_alpha * array(self.color_))
-            super(ColormappedScatterPlot, self)._draw_component(
-                gc, view_bounds, mode
-            )
+            super()._draw_component(gc, view_bounds, mode)
             self.color = old_color
         else:
             colors = self._cached_data_pts[:, 2]
@@ -188,7 +186,7 @@ class ColormappedScatterPlot(ScatterPlot):
         """
         # If we don't have a color data set, then use the base class to render
         if (self.color_mapper is None) or (self.color_data is None):
-            return super(ColormappedScatterPlot, self)._render(gc, points)
+            return super()._render(gc, points)
 
         # If the GC doesn't have draw_*_at_points, then use bruteforce
         if hasattr(gc, "draw_marker_at_points") or hasattr(
@@ -315,11 +313,8 @@ class ColormappedScatterPlot(ScatterPlot):
 
         cmap = self.color_mapper
 
-        if hasattr(gc, "draw_marker_at_points") and self.marker not in (
-            "custom",
-            "circle",
-            "diamond",
-        ):
+        if hasattr(gc, "draw_marker_at_points") and \
+                (marker.kiva_marker != NO_MARKER):
             # This is the fastest method: we use one of the built-in markers.
             color_bands = cmap.color_bands
             # Initial setup of drawing parameters
@@ -393,14 +388,10 @@ class ColormappedScatterPlot(ScatterPlot):
                 marker_size = marker_size[self._cached_point_mask]
             mode = marker_cls.draw_mode
 
-            if marker_cls != "custom":
+            if self.marker != "custom":
                 if hasattr(
                     gc, "draw_marker_at_points"
-                ) and self.marker not in (
-                    "custom",
-                    "circle",
-                    "diamond",
-                ):
+                ) and marker_cls.kiva_marker != NO_MARKER:
                     draw_func = lambda x, y, size: gc.draw_marker_at_points(
                         [[x, y]], size, marker_cls.kiva_marker
                     )
@@ -434,7 +425,7 @@ class ColormappedScatterPlot(ScatterPlot):
                     draw_func(x[i], y[i], size)
 
             else:
-                path = marker_cls.custom_symbol
+                path = self.custom_symbol
                 for i in range(len(x)):
                     gc.set_fill_color(colors[i])
                     gc.draw_path_at_points([[x[i], y[i]]], path, STROKE)

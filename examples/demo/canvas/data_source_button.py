@@ -1,7 +1,6 @@
 from random import choice
 from traits.api import Any, Enum, HasTraits, Instance, Int, List, Str
-from chaco.example_support import COLOR_PALETTE
-from chaco.api import Plot
+from chaco.api import Plot, cbrewer as COLOR_PALETTE
 from chaco.plot_canvas_toolbar import PlotToolbarButton
 
 DEBUG = False

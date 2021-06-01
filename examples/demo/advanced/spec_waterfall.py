@@ -102,7 +102,7 @@ def _create_plot_component(obj):
     # Setup the spectrum plot
     frequencies = linspace(0.0, float(SAMPLING_RATE) / 2, num=NUM_SAMPLES / 2)
     obj.spectrum_data = ArrayPlotData(frequency=frequencies)
-    empty_amplitude = zeros(NUM_SAMPLES / 2)
+    empty_amplitude = zeros(NUM_SAMPLES // 2)
     obj.spectrum_data.set_data("amplitude", empty_amplitude)
 
     obj.spectrum_plot = Plot(obj.spectrum_data)
@@ -135,7 +135,7 @@ def _create_plot_component(obj):
     time_range.high = 0.2
 
     # Spectrogram plot
-    values = [zeros(NUM_SAMPLES / 2) for i in range(SPECTROGRAM_LENGTH)]
+    values = [zeros(NUM_SAMPLES // 2) for i in range(SPECTROGRAM_LENGTH)]
     p = WaterfallRenderer(
         index=spec_renderer.index,
         values=values,
@@ -178,7 +178,7 @@ def get_audio_data():
     audio_data = fromstring(stream.read(NUM_SAMPLES), dtype=short)
     stream.close()
     normalized_data = audio_data / 32768.0
-    return (abs(fft(normalized_data))[: NUM_SAMPLES / 2], normalized_data)
+    return (abs(fft(normalized_data))[: NUM_SAMPLES // 2], normalized_data)
 
 
 # HasTraits class that supplies the callable for the timer event.
@@ -231,9 +231,8 @@ class Demo(HasTraits):
         handler=DemoHandler,
     )
 
-    def __init__(self, **traits):
-        super(Demo, self).__init__(**traits)
-        self.plot = _create_plot_component(self.controller)
+    def _plot_default(self):
+        return _create_plot_component(self.controller)
 
     def edit_traits(self, *args, **kws):
         # Start up the timer! We should do this only when the demo actually

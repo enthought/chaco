@@ -26,13 +26,12 @@ from chaco.api import (
     ArrayPlotData,
     Plot,
     GridPlotContainer,
-    BaseTool,
     DataRange1D,
 )
 from chaco.default_colormaps import *
 from chaco.tools.api import LineInspector, ZoomTool
 from enable.example_support import DemoFrame, demo_main
-from enable.api import Window
+from enable.api import BaseTool, Window
 from traits.api import (
     Any,
     Array,

@@ -330,19 +330,19 @@ class Base1DPlot(AbstractPlotRenderer):
         self._screen_cache_valid = False
 
     def _bounds_changed(self, old, new):
-        super(Base1DPlot, self)._bounds_changed(old, new)
+        super()._bounds_changed(old, new)
         self._update_mappers()
 
     def _bounds_items_changed(self, event):
-        super(Base1DPlot, self)._bounds_items_changed(event)
+        super()._bounds_items_changed(event)
         self._update_mappers()
 
     def _position_changed(self, old, new):
-        super(Base1DPlot, self)._position_changed(old, new)
+        super()._position_changed(old, new)
         self._update_mappers()
 
     def _position_items_changed(self, event):
-        super(Base1DPlot, self)._position_items_changed(event)
+        super()._position_items_changed(event)
         self._update_mappers()
 
     def _updated_changed_for_index_mapper(self):

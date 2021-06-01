@@ -46,7 +46,7 @@ class StatusLayer(AbstractOverlay):
     fade_out_steps = Int(10)
 
     def __init__(self, component, *args, **kw):
-        super(StatusLayer, self).__init__(component, *args, **kw)
+        super().__init__(component, *args, **kw)
 
         if self.document is None:
             if self.filename == "":
@@ -113,8 +113,6 @@ class StatusLayer(AbstractOverlay):
             gc.scale_ctm(scale, -scale)
 
             self.document.render(gc)
-
-            self._draw_component(gc, view_bounds, mode)
 
     def fade_out(self):
         interval = self.fade_out_time / self.fade_out_steps

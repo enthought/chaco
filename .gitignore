@@ -2,7 +2,6 @@
 *.pyc
 *.pyd
 *.so
-*.enamlc
 *~
 .DS_Store
 

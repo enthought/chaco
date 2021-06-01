@@ -28,7 +28,7 @@ class PlotGraphicsContextMixin(object):
                 size_or_ary[1] * scale + 1,
             )
 
-        super(PlotGraphicsContextMixin, self).__init__(
+        super().__init__(
             size_or_ary, *args, **kw
         )
         self.translate_ctm(0.5, 0.5)
@@ -70,7 +70,7 @@ class PlotGraphicsContextMixin(object):
 
         Overrides Kiva GraphicsContext.
         """
-        super(PlotGraphicsContextMixin, self).clip_to_rect(
+        super().clip_to_rect(
             x - 0.5, y - 0.5, width + 1, height + 1
         )
 

@@ -76,7 +76,7 @@ class PointDataSource(ArrayDataSource):
                 + str(shape)
                 + " instead."
             )
-        super(PointDataSource, self).__init__(data, **kw)
+        super().__init__(data, **kw)
 
     def get_data(self):
         """Returns the data for this data source, or (0.0, 0.0) if it has no

@@ -34,8 +34,13 @@ from numpy import arange, searchsorted, where, array, vstack, linspace
 from scipy.special import jn
 
 # Chaco imports
-from chaco.api import ArrayPlotData, Plot, PlotGraphicsContext, LinePlot
-from chaco.example_support import COLOR_PALETTE
+from chaco.api import (
+    ArrayPlotData,
+    Plot,
+    PlotGraphicsContext,
+    LinePlot,
+    cbrewer as COLOR_PALETTE,
+)
 
 
 # -- Constants -----------------------------------------------------------------
@@ -531,11 +536,11 @@ def make_palettized_png_str(gc):
     format = gc.format()[:-2].upper()
     if format != "RGBA":
         gc = gc.convert_pixel_format("rgba32")
-    img = Image.fromstring(
+    img = Image.frombytes(
         "RGBA", (gc.width(), gc.height()), gc.bmp_array.tostring()
     )
     img2 = img.convert("P")
-    output_buf = io.StringIO()
+    output_buf = io.BytesIO()
     img2.save(output_buf, "png")
     output = encodestring(output_buf.getvalue())
     output_buf.close()

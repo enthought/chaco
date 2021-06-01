@@ -43,14 +43,13 @@ give a good overview of the capabilities of Chaco:
 
 * :ref:`Sample Plot Gallery <examples>`
 * :ref:`Tutorial: Interactive plotting with Chaco <tutorial>`
-* :ref:`Tutorial: Using Chaco from IPython <tutorial_ipython>`
 * Examples:
 
   - :ref:`Modeling Van del Waal's Equations <tutorial_van_der_waal>`
   - :ref:`Creating an interactive Hyetograph <tutorial_hyetograph>`
 
-There is also a :ref:`FAQ <faq>` which provides answers to issues and common
-tricks that help when building Chaco applications.
+There is also a :ref:`How Do I...? <how_do_i>` page which provides answers to
+issues and common tricks that help when building Chaco applications.
 
 For comprehensive documentation, we have:
 

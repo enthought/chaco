@@ -28,14 +28,3 @@ def store_exceptions_on_all_threads():
         if len(exceptions) > 0:
             raise exceptions[0]
         sys.excepthook = sys.__excepthook__
-
-
-@contextmanager
-def assert_raises(ExceptionClass):
-    try:
-        yield
-    except ExceptionClass:
-        pass
-    else:
-        msg = "Test should have failed with {}."
-        raise Exception(msg.format(ExceptionClass.__name__))

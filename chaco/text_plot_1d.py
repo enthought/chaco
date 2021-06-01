@@ -177,19 +177,19 @@ class TextPlot1D(Base1DPlot):
         self._label_cache_valid = False
 
     def _bounds_changed(self, old, new):
-        super(TextPlot1D, self)._bounds_changed(old, new)
+        super()._bounds_changed(old, new)
         self._text_position = self._get_text_position()
 
     def _bounds_items_changed(self, event):
-        super(TextPlot1D, self)._bounds_items_changed(event)
+        super()._bounds_items_changed(event)
         self._text_position = self._get_text_position()
 
     def _orientation_changed(self):
-        super(TextPlot1D, self)._orientation_changed()
+        super()._orientation_changed()
         self._text_position = self._get_text_position()
 
     def _direction_changed(self):
-        super(TextPlot1D, self)._direction_changed()
+        super()._direction_changed()
         self._text_position = self._get_text_position()
 
     def _alignment_changed(self):

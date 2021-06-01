@@ -59,7 +59,7 @@ class ArrayPlotData(AbstractPlotData):
         conventions, but was it chosen for convenience, since the raison d'etre
         of this class is convenience.
         """
-        super(AbstractPlotData, self).__init__()
+        super().__init__()
         self._update_data(kw)
         data = dict(zip(self._generate_names(len(data)), data))
         self._update_data(data)

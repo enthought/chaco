@@ -27,9 +27,6 @@ class Box(Component):
 
     resizable = ""
 
-    def __init__(self, *args, **kw):
-        Component.__init__(self, *args, **kw)
-
     def _draw_mainlayer(self, gc, view_bounds=None, mode="default"):
         with gc:
             gc.set_fill_color(self.fill_color)
@@ -70,7 +67,7 @@ class Box(Component):
 
 
 class MainFrame(DemoFrame):
-    def _create_window(self):
+    def _create_component(self):
         a = Box(bounds=[75, 75], position=[50, 50], fill_color=(1, 0, 0, 1))
         b = Box(bounds=[75, 75], position=[200, 50], fill_color=(0, 1, 0, 1))
         c = Box(bounds=[75, 75], position=[50, 200], fill_color=(0, 0, 1, 1))
@@ -90,7 +87,7 @@ class MainFrame(DemoFrame):
         cont.tools.append(MoveTool(cont, drag_button="left"))
         cont2.tools.append(MoveTool(cont2, drag_button="left"))
         outer = Container(cont, cont2, fit_window=True)
-        return Window(self, -1, component=outer)
+        return outer
 
 
 if __name__ == "__main__":

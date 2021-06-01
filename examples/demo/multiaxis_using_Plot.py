@@ -13,17 +13,20 @@ Draws some x-y line and scatter plots. On the left hand plot:
 from numpy import linspace
 from scipy.special import jn
 
-from chaco.example_support import COLOR_PALETTE
-
 # Enthought library imports
 from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from chaco.api import ArrayPlotData, Plot
+from chaco.api import (
+    add_default_axes,
+    ArrayPlotData,
+    cbrewer as COLOR_PALETTE,
+    create_line_plot,
+    Plot,
+)
 from chaco.tools.api import BroadcasterTool, PanTool, ZoomTool
-from chaco.api import create_line_plot, add_default_axes
 
 # ===============================================================================
 # # Create the Chaco plot.

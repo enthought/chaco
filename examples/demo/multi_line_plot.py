@@ -19,15 +19,13 @@ class MyPlot(HasTraits):
 
     plot = Instance(Plot)
 
-    traits_view = View(
-        UItem("plot", editor=ComponentEditor()),
-        width=700,
-        height=600,
-        resizable=True,
-    )
-
-    def __init__(self, x_index, y_index, data, **kw):
-        super(MyPlot, self).__init__(**kw)
+    def _plot_default(self):
+        x_index = np.arange(0, 100, 1)
+        y_index = np.arange(0, 1000, 10)
+        data = np.sin(np.arange(0, x_index.size * y_index.size))
+        # add a random chunk of nan values
+        data[1532:1588] = np.nan
+        data = data.reshape(x_index.size, y_index.size)
 
         # Create the data source for the MultiLinePlot.
         ds = MultiArrayDataSource(data=data)
@@ -48,19 +46,20 @@ class MyPlot(HasTraits):
             value=ds,
             global_max=np.nanmax(data),
             global_min=np.nanmin(data),
-            **kw
         )
 
-        self.plot = Plot()
-        self.plot.add(mlp)
+        plot = Plot()
+        plot.add(mlp)
+
+        return plot
+
+    traits_view = View(
+        UItem("plot", editor=ComponentEditor()),
+        width=700,
+        height=600,
+        resizable=True,
+    )
 
 
-x_index = np.arange(0, 100, 1)
-y_index = np.arange(0, 1000, 10)
-data = np.sin(np.arange(0, x_index.size * y_index.size))
-# add a random chunk of nan values
-data[1532:1588] = np.nan
-data = data.reshape(x_index.size, y_index.size)
-
-my_plot = MyPlot(x_index, y_index, data)
+my_plot = MyPlot()
 my_plot.configure_traits()

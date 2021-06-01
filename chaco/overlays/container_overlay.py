@@ -39,4 +39,4 @@ class ContainerOverlay(Container, PlotComponent):
     def _request_redraw(self):
         if self.component is not None:
             self.component.request_redraw()
-        super(ContainerOverlay, self)._request_redraw()
+        super()._request_redraw()

@@ -56,7 +56,7 @@ class DataBox(AbstractOverlay):
     _updating = Bool(False)
 
     def __init__(self, *args, **kw):
-        super(DataBox, self).__init__(*args, **kw)
+        super().__init__(*args, **kw)
         if hasattr(self.component, "range2d"):
             self.component.range2d._xrange.observe(
                 self.my_component_moved, "updated"

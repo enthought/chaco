@@ -427,7 +427,7 @@ class CalendarScaleSystem(ScaleSystem):
         """
         if len(scales) == 0:
             scales = HMSScales + MDYScales
-        super(CalendarScaleSystem, self).__init__(*scales, **kw)
+        super().__init__(*scales, **kw)
 
     def _get_scale(self, start, end, numticks):
         if len(self.scales) == 0:

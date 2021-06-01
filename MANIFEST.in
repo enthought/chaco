@@ -1,10 +1,7 @@
 include chaco/*.h
-include chaco/tests/data/PngSuite/*.png
-include chaco/tests/data/PngSuite/LICENSE.txt
-include chaco/tools/toolbars/images*.png
-include chaco/tools/toolbars/images*.svg
-include chaco/tools/toolbars/images*.txt
 include chaco/layers/data/*.svg
+include chaco/tests/data/PngSuite/*.png
+include chaco/tools/toolbars/images*.png
 recursive-include chaco *.pyx
 graft examples
 recursive-exclude examples *.pyc
@@ -12,4 +9,4 @@ include README.rst
 include CHANGES.txt
 include LICENSE.txt
 include image_LICENSE.txt
-include dev_requirements.txt
+include image_LICENSE_PngSuite.txt
