@@ -19,6 +19,7 @@ from traits.api import (
     Instance,
     Int,
     List,
+    observe,
     Str,
 )
 
@@ -487,29 +488,27 @@ class Legend(AbstractOverlay):
         return CompositeIconRenderer()
 
     # -- trait handlers --------------------------------------------------------
-    def _anytrait_changed(self, name, old, new):
-        if name in (
-            "font",
-            "border_padding",
-            "padding",
-            "line_spacing",
-            "icon_bounds",
-            "icon_spacing",
-            "labels",
-            "plots",
-            "plots_items",
-            "labels_items",
-            "border_width",
-            "align",
-            "position",
-            "position_items",
-            "bounds",
-            "bounds_items",
-            "label_at_top",
-        ):
-            self._layout_needed = True
-        if name == "color":
-            self.get_preferred_size()
+    @observe([
+        "font",
+        "border_padding",
+        "padding",
+        "line_spacing",
+        "icon_bounds",
+        "icon_spacing",
+        "labels.items",
+        "plots.items",
+        "border_width",
+        "align",
+        "position.items",
+        "bounds.items",
+        "title_at_top",
+    ])
+    def _invalidate_existing_layout(self, event):
+        self._layout_needed = True
+    
+    @observe("color")
+    def _update_caches(self, event):
+        self.get_preferred_size()
 
     def _plots_changed(self):
         """Invalidate the caches."""

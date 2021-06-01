@@ -110,6 +110,7 @@ Renderers
 - :class:`~.SegmentPlot`
 - :class:`~.TextPlot`
 - :class:`~.TextPlot1D`
+- :class:`~.ScalyPlot`
 
 Plot Factories
 --------------
@@ -333,6 +334,7 @@ from .colormapped_selection_overlay import ColormappedSelectionOverlay
 from .base_1d_plot import Base1DPlot
 from .base_2d_plot import Base2DPlot
 from .base_xy_plot import BaseXYPlot
+
 from chaco.plots.api import (
     BarPlot,
     CandlePlot,
@@ -358,6 +360,9 @@ from chaco.plots.api import (
     TextPlot,
     TextPlot1D,
 )
+
+from .scaly_plot import ScalyPlot
+
 
 # Plot factories
 from .plot_factory import (
