@@ -92,6 +92,9 @@ Visual Components / Overlays
 - :class:`~.TextGridOverlay`
 - :class:`~.ToolTip`
 - :class:`~.ImageInspectorOverlay`
+- :class:`~.ErrorLayer`
+- :class:`~.StatusLayer`
+- :class:`~.WarningLayer`
 
 Renderers
 ---------
@@ -353,7 +356,10 @@ from chaco.overlays.api import (
     TextBoxOverlay,
     TextGridOverlay,
     ToolTip,
-    ImageInspectorOverlay
+    ImageInspectorOverlay,
+    ErrorLayer,
+    StatusLayer,
+    WarningLayer,
 )
 
 # Renderers
