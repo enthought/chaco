@@ -8,4 +8,4 @@ try:
 except ImportError:
     __version__ = "not-built"
 
-__requires__ = ["traits", "traitsui", "pyface", "numpy", "enable @ git+http://github.com/enthought/enable.git#egg=enable"]  # noqa
+__requires__ = ["traits", "traitsui", "pyface", "numpy", "enable"]
