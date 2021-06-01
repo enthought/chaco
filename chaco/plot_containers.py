@@ -111,46 +111,6 @@ class HPlotContainer(HStackedContainer):
 
     _cached_preferred_size = Tuple(transient=True)
 
-    def get_preferred_size(self, components=None):
-        """Returns the size (width,height) that is preferred for this component.
-
-        Overrides PlotComponent.
-        """
-        if self.fixed_preferred_size is not None:
-            self._cached_preferred_size = self.fixed_preferred_size
-            return self.fixed_preferred_size
-
-        if self.resizable == "":
-            self._cached_preferred_size = self.outer_bounds[:]
-            return self.outer_bounds
-
-        return stacked_preferred_size(self, components=components)
-
-    def _do_layout(self):
-        """Actually performs a layout (called by do_layout())."""
-        if self.stack_order == "left_to_right":
-            components = self.components
-        else:
-            components = self.components[::-1]
-
-        if self.valign == "bottom":
-            align = "min"
-        elif self.valign == "center":
-            align = "center"
-        else:
-            align = "max"
-
-        return stack_layout(self, components=components, align=align)
-
-    ### Persistence ###########################################################
-
-    # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
-    def __getstate__(self):
-        state = super(HStackedContainer, self).__getstate__()
-        if "stack_index" in state:
-            del state["stack_index"]
-        return state
-
 
 class VPlotContainer(VStackedContainer):
     """
@@ -166,30 +126,6 @@ class VPlotContainer(VStackedContainer):
 
     #: Redefine the draw order
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
-
-    def get_preferred_size(self, components=None):
-        """Returns the size (width,height) that is preferred for this component.
-
-        Overrides PlotComponent.
-        """
-        if self.fixed_preferred_size is not None:
-            self._cached_preferred_size = self.fixed_preferred_size
-            return self.fixed_preferred_size
-
-        if self.resizable == "":
-            self._cached_preferred_size = self.outer_bounds[:]
-            return self.outer_bounds
-
-        return stacked_preferred_size(self, components=components)
-
-    ### Persistence ###########################################################
-
-    # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
-    def __getstate__(self):
-        state = super(VStackedContainer, self).__getstate__()
-        if "stack_index" in state:
-            del state["stack_index"]
-        return state
 
 
 class GridPlotContainer(Container):
