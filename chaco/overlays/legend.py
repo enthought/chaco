@@ -489,7 +489,7 @@ class Legend(AbstractOverlay):
     def _composite_icon_renderer_default(self):
         return CompositeIconRenderer()
 
-    # -- trait handlers --------------------------------------------------------
+    # -- trait handlers -------------------------------------------------------
     @observe([
         "font",
         "border_padding",
@@ -507,7 +507,7 @@ class Legend(AbstractOverlay):
     ])
     def _invalidate_existing_layout(self, event):
         self._layout_needed = True
-    
+
     @observe("color")
     def _update_caches(self, event):
         self.get_preferred_size()
