@@ -30,7 +30,9 @@ Defines the publicly accessible overlays in Chaco.
 - :class:`~.TextGridOverlay`
 - :class:`~.ToolTip`
 - :class:`~.ImageInspectorOverlay`
-
+- :class:`~.ErrorLayer`
+- :class:`~.StatusLayer`
+- :class:`~.WarningLayer`
 
 """
 from .aligned_container_overlay import AlignedContainerOverlay
@@ -56,3 +58,9 @@ from .text_box_overlay import TextBoxOverlay
 from .text_grid_overlay import TextGridOverlay
 from .tooltip import ToolTip
 from ..tools.image_inspector_tool import ImageInspectorOverlay
+
+from chaco.overlays.layers.api import (
+    ErrorLayer,
+    StatusLayer,
+    WarningLayer,
+)
