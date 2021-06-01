@@ -1,12 +1,3 @@
-# (C) Copyright 2006-2021 Enthought, Inc., Austin, TX
-# All rights reserved.
-#
-# This software is provided without warranty under the terms of the BSD
-# license included in LICENSE.txt and may be redistributed only under
-# the conditions described in the aforementioned license. The license
-# is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-# Thanks for using Enthought open source!
 """ Defines the Legend, AbstractCompositeIconRenderer, and
 CompositeIconRenderer classes.
 """
@@ -28,6 +19,7 @@ from traits.api import (
     Instance,
     Int,
     List,
+    observe,
     Str,
 )
 
@@ -497,30 +489,28 @@ class Legend(AbstractOverlay):
     def _composite_icon_renderer_default(self):
         return CompositeIconRenderer()
 
-    # -- trait handlers -------------------------------------------------------
-    def _anytrait_changed(self, name, old, new):
-        if name in (
-            "font",
-            "border_padding",
-            "padding",
-            "line_spacing",
-            "icon_bounds",
-            "icon_spacing",
-            "labels",
-            "plots",
-            "plots_items",
-            "labels_items",
-            "border_width",
-            "align",
-            "position",
-            "position_items",
-            "bounds",
-            "bounds_items",
-            "label_at_top",
-        ):
-            self._layout_needed = True
-        if name == "color":
-            self.get_preferred_size()
+    # -- trait handlers --------------------------------------------------------
+    @observe([
+        "font",
+        "border_padding",
+        "padding",
+        "line_spacing",
+        "icon_bounds",
+        "icon_spacing",
+        "labels.items",
+        "plots.items",
+        "border_width",
+        "align",
+        "position.items",
+        "bounds.items",
+        "title_at_top",
+    ])
+    def _invalidate_existing_layout(self, event):
+        self._layout_needed = True
+    
+    @observe("color")
+    def _update_caches(self, event):
+        self.get_preferred_size()
 
     def _plots_changed(self):
         """Invalidate the caches."""

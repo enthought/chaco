@@ -63,7 +63,6 @@ class StatusLayer(AbstractOverlay):
 
     def overlay(self, other_component, gc, view_bounds=None, mode="normal"):
         """Draws this component overlaid on another component.
-
         Implements AbstractOverlay.
         """
         with gc:
@@ -114,8 +113,6 @@ class StatusLayer(AbstractOverlay):
             gc.scale_ctm(scale, -scale)
 
             self.document.render(gc)
-
-            self._draw_component(gc, view_bounds, mode)
 
     def fade_out(self):
         interval = self.fade_out_time / self.fade_out_steps
