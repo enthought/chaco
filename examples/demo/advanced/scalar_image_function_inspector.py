@@ -152,17 +152,11 @@ class Model(HasTraits):
             self.model_changed = True
             self._function = self.function
 
-    def _anytrait_changed(self, name, value):
-        if name in [
-            "function",
-            "npts_x",
-            "npts_y",
-            "min_x",
-            "max_x",
-            "min_y",
-            "max_y",
-        ]:
-            self.compute_model()
+    @observe(
+        ["function", "npts_x", "npts_y", "min_x", "max_x", "min_y", "max_y"]
+    )
+    def _compute_model_on_trait_update(self, event):
+        self.compute_model()
 
 
 class PlotUI(HasTraits):
