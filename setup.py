@@ -9,9 +9,9 @@ from numpy import get_include
 from setuptools import setup, Extension, find_packages
 from Cython.Build import cythonize
 
-MAJOR = 4
-MINOR = 8
-MICRO = 1
+MAJOR = 5
+MINOR = 1
+MICRO = 0
 PRERELEASE = ""
 IS_RELEASED = False
 
