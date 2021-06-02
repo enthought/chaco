@@ -10,10 +10,13 @@
 Defines the publicly accessible PlotRenderers in Chaco.
 
 - :class:`~.BarPlot`
+- :class:`~.BandedMapper`
 - :class:`~.CandlePlot`
 - :class:`~.CMapImagePlot`
 - :class:`~.ColorBar`
 - :class:`~.ColormappedScatterPlot`
+- :class:`~.ColormappedScatterPlotView`
+- :class:`~.ColormappedSegmentPlot`
 - :class:`~.ContourLinePlot`
 - :class:`~.ContourPolyPlot`
 - :class:`~.ErrorBarPlot`
@@ -29,6 +32,7 @@ Defines the publicly accessible PlotRenderers in Chaco.
 - :class:`~.QuiverPlot`
 - :func:`~.render_markers`
 - :class:`~.ScatterPlot`
+- :class:`~.ScatterPlotView`
 - :class:`~.ScatterPlot1D`
 - :class:`~.SegmentPlot`
 - :class:`~.TextPlot`

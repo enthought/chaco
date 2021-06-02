@@ -80,6 +80,8 @@ Visual Components
 - :class:`~.TextBoxOverlay`
 - :class:`~.ScatterInspectorOverlay`
 - :class:`~.ColormappedSelectionOverlay`
+- :class:`~.ColormappedScatterPlotView`
+- :class:`~.ScatterPlotView`
 
 Renderers
 ---------
@@ -91,6 +93,7 @@ Renderers
 - :class:`~.CandlePlot`
 - :class:`~.CMapImagePlot`
 - :class:`~.ColormappedScatterPlot`
+- :class:`~.ColormappedSegmentPlot`
 - :class:`~.ContourLinePlot`
 - :class:`~.ContourPolyPlot`
 - :class:`~.ErrorBarPlot`
