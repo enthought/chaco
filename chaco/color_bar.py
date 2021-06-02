@@ -13,7 +13,7 @@ from chaco.plots.color_bar import ColorBar  # noqa: F401
 
 warnings.warn(
     "Importing ColorBar from this module is deprecated. Please use chaco.api"
-	" or chaco.plots.api instead. This module will be removed in the next "
+    " or chaco.plots.api instead. This module will be removed in the next "
     "major release.",
     DeprecationWarning,
     stacklevel=2,

@@ -13,8 +13,8 @@ from chaco.plots.barplot import BarPlot  # noqa: F401
 
 warnings.warn(
     "Importing BarPlot from this module is deprecated. Please use chaco.api "
-	"or chaco.plots.api instead. This module will be removed in the next major"
-	" release.",
+    "or chaco.plots.api instead. This module will be removed in the next major"
+    " release.",
     DeprecationWarning,
     stacklevel=2,
 )

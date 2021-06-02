@@ -132,7 +132,7 @@ doc_ignore = {
     "chaco/filled_line_plot.py",
     "chaco/horizon_plot.py",
     "chaco/image_plot.py",
-    "chaco/jitterplot.py", 
+    "chaco/jitterplot.py",
     "chaco/line_scatterplot_1d.py",
     "chaco/lineplot.py",
     "chaco/multi_line_plot.py",

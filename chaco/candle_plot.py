@@ -13,7 +13,7 @@ from chaco.plots.candle_plot import CandlePlot  # noqa: F401
 
 warnings.warn(
     "Importing CandlePlot from this module is deprecated. Please use chaco.api"
-	" or chaco.plots.api instead. This module will be removed in the next "
+    " or chaco.plots.api instead. This module will be removed in the next "
     "major release.",
     DeprecationWarning,
     stacklevel=2,
