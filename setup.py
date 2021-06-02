@@ -333,7 +333,7 @@ if __name__ == "__main__":
             """.splitlines() if len(c.strip()) > 0],
         package_data={
             'chaco': [
-                'layers/data/*.svg',
+                'overlays/layers/data/*.svg',
                 'tests/data/PngSuite/*.png',
                 'tools/toolbars/images/*.png',
             ]

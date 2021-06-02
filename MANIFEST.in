@@ -1,5 +1,5 @@
 include chaco/*.h
-include chaco/layers/data/*.svg
+include chaco/overlays/layers/data/*.svg
 include chaco/tests/data/PngSuite/*.png
 include chaco/tools/toolbars/images*.png
 recursive-include chaco *.pyx
