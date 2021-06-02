@@ -199,11 +199,11 @@ class TestResultImage(unittest.TestCase):
         # itself.
         screen_pt = renderer.map_screen([(0, 0)])
         self.assertEqual(type(screen_pt), np.ndarray)
-        self.assertEqual(screen_pt.shape, (1,2))
+        self.assertEqual(screen_pt.shape, (1, 2))
 
         screen_pt = renderer.map_screen([])
         self.assertEqual(type(screen_pt), np.ndarray)
-        self.assertEqual(screen_pt.shape, (0,2))
+        self.assertEqual(screen_pt.shape, (0, 2))
 
     # regression test for enthought/chaco#528
     @unittest.skipIf(is_null or is_qt4(), "Skip on 'null' or 'qt4' toolkit")

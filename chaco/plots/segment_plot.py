@@ -152,7 +152,7 @@ class SegmentPlot(BaseXYPlot):
             return np.transpose(np.array((sx, sy)))
         else:
             return np.transpose(np.array((sy, sx)))
-    
+
     def _gather_points(self):
         """Collects the data points that are within the bounds of the plot and
         caches them.
