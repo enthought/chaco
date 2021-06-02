@@ -17,7 +17,7 @@ from traits.observation.events import TraitChangeEvent
 
 # Local, relative imports
 from chaco.abstract_overlay import AbstractOverlay
-from chaco.scatterplot import render_markers
+from chaco.plots.scatterplot import render_markers
 
 
 class ScatterInspectorOverlay(AbstractOverlay):

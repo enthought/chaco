@@ -19,7 +19,7 @@ from traits.observation.events import TraitChangeEvent
 
 # Local imports
 from chaco.abstract_overlay import AbstractOverlay
-from chaco.colormapped_scatterplot import ColormappedScatterPlot
+from chaco.plots.colormapped_scatterplot import ColormappedScatterPlot
 
 
 class ColormappedSelectionOverlay(AbstractOverlay):

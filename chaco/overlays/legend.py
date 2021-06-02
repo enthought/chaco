@@ -26,9 +26,9 @@ from traits.api import (
 # Local relative imports
 from chaco.abstract_overlay import AbstractOverlay
 from chaco.label import Label
-from chaco.lineplot import LinePlot
 from chaco.plot_component import PlotComponent
-from chaco.scatterplot import ScatterPlot
+from chaco.plots.lineplot import LinePlot
+from chaco.plots.scatterplot import ScatterPlot
 
 
 class AbstractCompositeIconRenderer(HasTraits):

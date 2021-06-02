@@ -11,8 +11,8 @@ from traits.api import Any, ArrayOrNone, Bool, Enum, Float, Int, List, \
 from enable.api import ColorTrait, MarkerTrait
 
 # Local, relative imports
-from chaco.scatterplot import render_markers
 from chaco.overlays.tooltip import ToolTip
+from chaco.plots.scatterplot import render_markers
 
 
 # Specifies the position of a label relative to its target.  This can
