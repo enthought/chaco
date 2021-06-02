@@ -121,6 +121,15 @@ doc_dependencies = {
 
 doc_ignore = {
     "*/tests",
+    "chaco/colormapped_selection_overlay.py",
+    "chaco/data_label.py",
+    "chaco/lasso_overlay.py",
+    "chaco/layers/*",
+    "chaco/legend.py",
+    "chaco/plot_label.py",
+    "chaco/scatter_inspector_overlay.py",
+    "chaco/text_box_overlay.py",
+    "chaco/tooltip.py",
 }
 
 environment_vars = {
