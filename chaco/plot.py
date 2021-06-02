@@ -17,34 +17,34 @@ from .abstract_plot_data import AbstractPlotData
 from .array_data_source import ArrayDataSource
 from .array_plot_data import ArrayPlotData
 from .base_xy_plot import BaseXYPlot
-from .plots.barplot import BarPlot
-from .plots.candle_plot import CandlePlot
-from .plots.colormapped_scatterplot import ColormappedScatterPlot
-from .plots.contour.contour_line_plot import ContourLinePlot
-from .plots.contour.contour_poly_plot import ContourPolyPlot
-from .plots.cmap_image_plot import CMapImagePlot
 from .data_range_1d import DataRange1D
 from .data_view import DataView
 from .default_colormaps import Spectral
 from .grid_data_source import GridDataSource
 from .grid_mapper import GridMapper
 from .image_data import ImageData
-from .plots.image_plot import ImagePlot
 from .legend import Legend
-from .plots.lineplot import LinePlot
-from .plots.line_scatterplot_1d import LineScatterPlot1D
 from .linear_mapper import LinearMapper
 from .log_mapper import LogMapper
+from .plots.barplot import BarPlot
+from .plots.candle_plot import CandlePlot
+from .plots.colormapped_scatterplot import ColormappedScatterPlot
+from .plots.contour.contour_line_plot import ContourLinePlot
+from .plots.contour.contour_poly_plot import ContourPolyPlot
+from .plots.cmap_image_plot import CMapImagePlot
+from .plots.filled_line_plot import FilledLinePlot
+from .plots.image_plot import ImagePlot
+from .plots.jitterplot import JitterPlot
 from .plot_label import PlotLabel
+from .plots.lineplot import LinePlot
+from .plots.line_scatterplot_1d import LineScatterPlot1D
 from .plots.polygon_plot import PolygonPlot
 from .plots.scatterplot import ScatterPlot
 from .plots.scatterplot_1d import ScatterPlot1D
 from .plots.segment_plot import ColormappedSegmentPlot, SegmentPlot
 from .plots.text_plot import TextPlot
 from .plots.text_plot_1d import TextPlot1D
-from .plots.filled_line_plot import FilledLinePlot
 from .plots.quiverplot import QuiverPlot
-from .plots.jitterplot import JitterPlot
 
 
 # -----------------------------------------------------------------------------
