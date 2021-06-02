@@ -80,36 +80,39 @@ Visual Components
 - :class:`~.TextBoxOverlay`
 - :class:`~.ScatterInspectorOverlay`
 - :class:`~.ColormappedSelectionOverlay`
+- :class:`~.ColormappedScatterPlotView`
+- :class:`~.ScatterPlotView`
 
 Renderers
 ---------
 
-- :class:`~.BarPlot`
 - :class:`~.Base1DPlot`
 - :class:`~.Base2DPlot`
 - :class:`~.BaseXYPlot`
-- :class:`~.ScatterPlot`
-- :func:`~.render_markers`
-- :class:`~.ImagePlot`
+- :class:`~.BarPlot`
+- :class:`~.CandlePlot`
 - :class:`~.CMapImagePlot`
+- :class:`~.ColormappedScatterPlot`
+- :class:`~.ColormappedSegmentPlot`
 - :class:`~.ContourLinePlot`
 - :class:`~.ContourPolyPlot`
-- :class:`~.LinePlot`
-- :class:`~.ColormappedScatterPlot`
-- :class:`~.PolygonPlot`
 - :class:`~.ErrorBarPlot`
 - :class:`~.FilledLinePlot`
-- :class:`~.QuiverPlot`
-- :class:`~.CandlePlot`
-- :class:`~.MultiLinePlot`
-- :class:`~.JitterPlot`
 - :class:`~.HorizonPlot`
-- :class:`~.ScatterPlot1D`
+- :class:`~.ImagePlot`
+- :class:`~.JitterPlot`
 - :class:`~.LineScatterPlot1D`
-- :class:`~.TextPlot1D`
+- :class:`~.LinePlot`
+- :class:`~.MultiLinePlot`
+- :class:`~.PolarLineRenderer`
+- :class:`~.PolygonPlot`
+- :class:`~.QuiverPlot`
+- :func:`~.render_markers`
+- :class:`~.ScatterPlot`
+- :class:`~.ScatterPlot1D`
 - :class:`~.SegmentPlot`
 - :class:`~.TextPlot`
-- :class:`~.PolarLineRenderer`
+- :class:`~.TextPlot1D`
 - :class:`~.ScalyPlot`
 
 Plot Factories
@@ -292,7 +295,7 @@ from .linear_mapper import LinearMapper
 from .color_mapper import ColorMapper, ColorMapTemplate
 from .discrete_color_mapper import DiscreteColorMapper
 from .transform_color_mapper import TransformColorMapper
-from .horizon_plot import BandedMapper
+from .plots.horizon_plot import BandedMapper
 from .polar_mapper import PolarMapper
 
 # Visual components
@@ -325,38 +328,47 @@ from .legend import Legend
 from .tooltip import ToolTip
 from .data_label import DataLabel
 from .lasso_overlay import LassoOverlay
-from .color_bar import ColorBar
+from .plots.color_bar import ColorBar
 from .text_box_overlay import TextBoxOverlay
 from .scatter_inspector_overlay import ScatterInspectorOverlay
 from .colormapped_selection_overlay import ColormappedSelectionOverlay
 
 # Renderers
-from .barplot import BarPlot
 from .base_1d_plot import Base1DPlot
 from .base_2d_plot import Base2DPlot
 from .base_xy_plot import BaseXYPlot
-from .scatterplot import ScatterPlot, render_markers
-from .image_plot import ImagePlot
-from .cmap_image_plot import CMapImagePlot
-from .contour_line_plot import ContourLinePlot
-from .contour_poly_plot import ContourPolyPlot
-from .lineplot import LinePlot
-from .colormapped_scatterplot import ColormappedScatterPlot
-from .polygon_plot import PolygonPlot
-from .errorbar_plot import ErrorBarPlot
-from .filled_line_plot import FilledLinePlot
-from .quiverplot import QuiverPlot
-from .candle_plot import CandlePlot
-from .multi_line_plot import MultiLinePlot
-from .jitterplot import JitterPlot
-from .horizon_plot import HorizonPlot
-from .scatterplot_1d import ScatterPlot1D
-from .line_scatterplot_1d import LineScatterPlot1D
-from .text_plot_1d import TextPlot1D
-from .segment_plot import SegmentPlot
-from .text_plot import TextPlot
-from .polar_line_renderer import PolarLineRenderer
+
+from chaco.plots.api import (
+    BarPlot,
+    CandlePlot,
+    CMapImagePlot,
+    ColormappedScatterPlot,
+    ColormappedScatterPlotView,
+    ColormappedSegmentPlot,
+    ContourLinePlot,
+    ContourPolyPlot,
+    ErrorBarPlot,
+    FilledLinePlot,
+    HorizonPlot,
+    ImagePlot,
+    JitterPlot,
+    LineScatterPlot1D,
+    LinePlot,
+    MultiLinePlot,
+    PolarLineRenderer,
+    PolygonPlot,
+    QuiverPlot,
+    render_markers,
+    ScatterPlot,
+    ScatterPlotView,
+    ScatterPlot1D,
+    SegmentPlot,
+    TextPlot,
+    TextPlot1D,
+)
+
 from .scaly_plot import ScalyPlot
+
 
 # Plot factories
 from .plot_factory import (

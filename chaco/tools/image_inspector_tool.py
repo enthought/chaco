@@ -7,7 +7,7 @@ from traits.api import Any, Bool, Enum, Event, Tuple
 
 # Chaco imports
 from chaco.abstract_overlay import AbstractOverlay
-from chaco.image_plot import ImagePlot
+from chaco.plots.image_plot import ImagePlot
 from chaco.text_box_overlay import TextBoxOverlay
 
 

@@ -8,7 +8,7 @@ from traits.observation.events import TraitChangeEvent
 
 # Local, relative imports
 from .abstract_overlay import AbstractOverlay
-from .scatterplot import render_markers
+from .plots.scatterplot import render_markers
 
 
 class ScatterInspectorOverlay(AbstractOverlay):

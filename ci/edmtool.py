@@ -121,6 +121,31 @@ doc_dependencies = {
 
 doc_ignore = {
     "*/tests",
+    # The following stub modules were kept for backwards compatibility but
+    # will be removed in the next major relaese. Ref: enthought/chaco#748
+    "chaco/barplot.py",
+    "chaco/candle_plot.py",
+    "chaco/cmap_image_plot.py",
+    "chaco/color_bar.py",
+    "chaco/colormapped_scatterplot.py",
+    "chaco/contour_line_plot.py",
+    "chaco/contour_poly_plot.py",
+    "chaco/errorbar_plot.py",
+    "chaco/filled_line_plot.py",
+    "chaco/horizon_plot.py",
+    "chaco/image_plot.py",
+    "chaco/jitterplot.py",
+    "chaco/line_scatterplot_1d.py",
+    "chaco/lineplot.py",
+    "chaco/multi_line_plot.py",
+    "chaco/polar_line_renderer.py",
+    "chaco/polygon_plot.py",
+    "chaco/quiverplot.py",
+    "chaco/scatterplot.py",
+    "chaco/scatterplot_1d.py",
+    "chaco/segment_plot.py",
+    "chaco/text_plot.py",
+    "chaco/text_plot_1d.py",
 }
 
 environment_vars = {

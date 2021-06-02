@@ -8,8 +8,8 @@ from chaco.api import (
     DataRange1D,
     LinearMapper,
     PlotGraphicsContext,
+    TextPlot,
 )
-from chaco.text_plot import TextPlot
 
 
 class TextPlotTest(unittest.TestCase):
