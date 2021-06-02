@@ -40,12 +40,12 @@ from chaco.plots.barplot import BarPlot
 from chaco.plots.candle_plot import CandlePlot
 from chaco.plots.cmap_image_plot import CMapImagePlot
 from chaco.plots.color_bar import ColorBar
-from chaco.plots.colormapped_scatterplot import ColormappedScatterPlot
+from chaco.plots.colormapped_scatterplot import ColormappedScatterPlot, ColormappedScatterPlotView
 from chaco.plots.contour.contour_line_plot import ContourLinePlot
 from chaco.plots.contour.contour_poly_plot import ContourPolyPlot
 from chaco.plots.errorbar_plot import ErrorBarPlot
 from chaco.plots.filled_line_plot import FilledLinePlot
-from chaco.plots.horizon_plot import HorizonPlot
+from chaco.plots.horizon_plot import BandedMapper, HorizonPlot
 from chaco.plots.image_plot import ImagePlot
 from chaco.plots.jitterplot import JitterPlot
 from chaco.plots.line_scatterplot_1d import LineScatterPlot1D
@@ -54,8 +54,8 @@ from chaco.plots.multi_line_plot import MultiLinePlot
 from chaco.plots.polar_line_renderer import PolarLineRenderer
 from chaco.plots.polygon_plot import PolygonPlot
 from chaco.plots.quiverplot import QuiverPlot
-from chaco.plots.scatterplot import render_markers, ScatterPlot
+from chaco.plots.scatterplot import render_markers, ScatterPlot, ScatterPlotView
 from chaco.plots.scatterplot_1d import ScatterPlot1D
-from chaco.plots.segment_plot import SegmentPlot
+from chaco.plots.segment_plot import ColormappedSegmentPlot, SegmentPlot
 from chaco.plots.text_plot import TextPlot
 from chaco.plots.text_plot_1d import TextPlot1D
