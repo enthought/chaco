@@ -11,8 +11,8 @@ from chaco.api import (
     DataRange1D,
     LinearMapper,
     PlotGraphicsContext,
+    TextPlot1D,
 )
-from chaco.text_plot_1d import TextPlot1D
 
 
 class TextPlot1DTest(UnittestTools, unittest.TestCase):

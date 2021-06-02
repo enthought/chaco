@@ -33,6 +33,7 @@ from traits.api import (
     Enum,
     Callable,
     ArrayOrNone,
+    observe
 )
 
 # Local relative imports
@@ -778,42 +779,38 @@ class PlotAxis(AbstractOverlay):
         if self.component:
             self.component.invalidate_draw()
 
-    def _anytrait_changed(self, name, old, new):
-        """For every trait that defines a visual attribute
-        we just call _invalidate() when a change is made.
-        """
-        invalidate_traits = [
-            "title_font",
-            "title_spacing",
-            "title_color",
-            "title_angle",
-            "tick_weight",
-            "tick_color",
-            "tick_label_font",
-            "tick_label_color",
-            "tick_label_rotate_angle",
-            "tick_label_alignment",
-            "tick_label_margin",
-            "tick_label_offset",
-            "tick_label_position",
-            "tick_label_formatter",
-            "tick_in",
-            "tick_out",
-            "tick_visible",
-            "tick_interval",
-            "tick_generator",
-            "orientation",
-            "origin",
-            "axis_line_visible",
-            "axis_line_color",
-            "axis_line_weight",
-            "axis_line_style",
-            "small_haxis_style",
-            "ensure_labels_bounded",
-            "ensure_ticks_bounded",
-        ]
-        if name in invalidate_traits:
-            self._invalidate()
+    @observe([
+        "title_font",
+        "title_spacing",
+        "title_color",
+        "title_angle",
+        "tick_weight",
+        "tick_color",
+        "tick_label_font",
+        "tick_label_color",
+        "tick_label_rotate_angle",
+        "tick_label_alignment",
+        "tick_label_margin",
+        "tick_label_offset",
+        "tick_label_position",
+        "tick_label_formatter",
+        "tick_in",
+        "tick_out",
+        "tick_visible",
+        "tick_interval",
+        "tick_generator",
+        "orientation",
+        "origin",
+        "axis_line_visible",
+        "axis_line_color",
+        "axis_line_weight",
+        "axis_line_style",
+        "small_haxis_style",
+        "ensure_labels_bounded",
+        "ensure_ticks_bounded",
+    ])
+    def _invalidate_on_changed_visual_attr(self, event):
+        self._invalidate()
 
     # ------------------------------------------------------------------------
     # Initialization-related methods

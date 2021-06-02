@@ -31,11 +31,11 @@ from chaco.api import (
     PlotAxis,
     PlotGraphicsContext,
     PlotGrid,
+    PolarLineRenderer,
     PolygonPlot,
     QuiverPlot,
     ScatterPlot,
 )
-from chaco.polar_line_renderer import PolarLineRenderer
 from chaco.polar_mapper import PolarMapper
 import chaco.default_colormaps as dc
 from enable.api import color_table

@@ -8,10 +8,10 @@ from enable.compiled_path import CompiledPath
 from chaco.api import (
     ArrayDataSource,
     DataRange1D,
+    JitterPlot,
     LinearMapper,
     PlotGraphicsContext,
 )
-from chaco.jitterplot import JitterPlot
 
 
 class Jitterplot1DTest(unittest.TestCase):

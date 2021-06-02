@@ -1,6 +1,6 @@
 from unittest import TestCase
+from unittest.mock import call
 
-import mock
 import numpy
 
 from chaco.api import create_line_plot
@@ -44,7 +44,7 @@ class BackgroundColorTestCase(EnableTestAssistant, TestCase):
         tool.overlay(self.plot, gc)
 
         self.assertEqual(
-            gc.set_fill_color.call_args, mock.call([1.0, 0.0, 0.0, 0.3])
+            gc.set_fill_color.call_args, call([1.0, 0.0, 0.0, 0.3])
         )
 
     def test_rgba_background_range(self):
@@ -61,5 +61,5 @@ class BackgroundColorTestCase(EnableTestAssistant, TestCase):
         tool.overlay(self.plot, gc)
 
         self.assertEqual(
-            gc.set_fill_color.call_args, mock.call([1.0, 0.0, 0.0, 0.3])
+            gc.set_fill_color.call_args, call([1.0, 0.0, 0.0, 0.3])
         )

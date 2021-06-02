@@ -9,14 +9,14 @@ from numpy import array, ndarray, transpose, cos, sin
 from .abstract_data_source import AbstractDataSource
 from .array_data_source import ArrayDataSource
 from .axis import PlotAxis
-from .barplot import BarPlot
+from .plots.barplot import BarPlot
 from .data_range_1d import DataRange1D
 from .grid import PlotGrid
 from .linear_mapper import LinearMapper
-from .scatterplot import ScatterPlot
+from .plots.scatterplot import ScatterPlot
 from .polar_mapper import PolarMapper
-from .lineplot import LinePlot
-from .polar_line_renderer import PolarLineRenderer
+from .plots.lineplot import LinePlot
+from .plots.polar_line_renderer import PolarLineRenderer
 
 
 def _create_data_sources(data, index_sort="none"):
