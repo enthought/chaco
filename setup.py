@@ -335,8 +335,8 @@ if __name__ == "__main__":
         entry_points={
             "etsdemo_data": [
                 "chaco_examples = chaco.examples._etsdemo_info:info",
-            'chaco.examples': ['demo/*', 'demo/*/*'],
-            ]
+            ],
+            "chaco.examples": ["demo/*", "demo/*/*"],
         },
         package_data={
             'chaco': [
