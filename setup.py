@@ -280,6 +280,7 @@ if __name__ == "__main__":
     __version__, _ = resolve_version()
     data = read_module('__init__')
     __requires__ = data['__requires__']
+    __extras_require__ = data['__extras_require__']
 
     numpy_include_dir = get_include()
 
@@ -331,6 +332,12 @@ if __name__ == "__main__":
             Topic :: Software Development
             Topic :: Software Development :: Libraries
             """.splitlines() if len(c.strip()) > 0],
+        entry_points={
+            "etsdemo_data": [
+                "chaco_examples = chaco.examples._etsdemo_info:info",
+            'chaco.examples': ['demo/*', 'demo/*/*'],
+            ]
+        },
         package_data={
             'chaco': [
                 'overlays/layers/data/*.svg',
@@ -343,6 +350,7 @@ if __name__ == "__main__":
         ext_modules=extensions,
         include_package_data=True,
         install_requires=__requires__,
+        extras_require=__extras_require__,
         license='BSD',
         packages=find_packages(),
         platforms=["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
