@@ -343,9 +343,13 @@ class BaseXYPlot(AbstractPlotRenderer):
 
         Implements the AbstractPlotRenderer interface.
         """
-        # ensure data_array is an Nx2 ndarray
+        # ensure data_array is an N1 x ... Nk x 2 ndarray for some k >= 1
         data_array = array(data_array)
-        data_array = data_array.reshape(-1, 2)
+
+        if data_array.ndim == 1:
+            data_array = data_array.reshape(-1, 2)
+        if data_array.shape[-1] != 2:
+            raise ValueError("Input to map_screen must have shape (..., 2)")
 
         # data_array is Nx2 array
         if len(data_array) == 0:
