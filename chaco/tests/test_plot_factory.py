@@ -7,8 +7,9 @@ from chaco.plot_factory import (
     create_polar_plot,
     create_scatter_plot,
 )
-from chaco.api import BarPlot, LinePlot, PlotAxis, PlotGrid, ScatterPlot
-from chaco.polar_line_renderer import PolarLineRenderer
+from chaco.api import (
+    BarPlot, LinePlot, PlotAxis, PlotGrid, PolarLineRenderer, ScatterPlot
+)
 
 x = np.array([1, 2, 3, 4])
 

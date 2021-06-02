@@ -9,10 +9,10 @@ from chaco.api import (
     DataRange1D,
     LinearMapper,
     PlotGraphicsContext,
+    SegmentPlot,
+    viridis,
 )
 from chaco.base import rgba_dtype
-from chaco.segment_plot import SegmentPlot
-from chaco.default_colormaps import viridis
 
 
 class SegmentPlotTest(unittest.TestCase):

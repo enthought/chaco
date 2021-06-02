@@ -26,9 +26,9 @@ from traits.api import (
 # Local relative imports
 from .abstract_overlay import AbstractOverlay
 from .label import Label
-from .lineplot import LinePlot
+from .plots.lineplot import LinePlot
 from .plot_component import PlotComponent
-from .scatterplot import ScatterPlot
+from .plots.scatterplot import ScatterPlot
 
 
 class AbstractCompositeIconRenderer(HasTraits):

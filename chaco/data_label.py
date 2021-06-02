@@ -11,7 +11,7 @@ from traits.api import Any, ArrayOrNone, Bool, Enum, Float, Int, List, \
 from enable.api import ColorTrait, MarkerTrait
 
 # Local, relative imports
-from .scatterplot import render_markers
+from .plots.scatterplot import render_markers
 from .tooltip import ToolTip
 
 

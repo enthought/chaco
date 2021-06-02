@@ -10,7 +10,7 @@ from traits.observation.events import TraitChangeEvent
 
 # Local imports
 from .abstract_overlay import AbstractOverlay
-from .colormapped_scatterplot import ColormappedScatterPlot
+from .plots.colormapped_scatterplot import ColormappedScatterPlot
 
 
 class ColormappedSelectionOverlay(AbstractOverlay):
