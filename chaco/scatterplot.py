@@ -9,12 +9,14 @@
 # Thanks for using Enthought open source!
 import warnings
 
-from chaco.plots.scatterplot import ScatterPlot  # noqa: F401
+from chaco.plots.scatterplot import (  # noqa: F401
+    render_markers, ScatterPlot, ScatterPlotView
+)
 
 warnings.warn(
-    "This module has been moved to sit in chaco/plots and this stub module has"
-    " been kept for backwards compatibility. Importing from this module is"
-    " deprecated, please import needed objects from chaco.api instead",
+    "Importing render_markers, ScatterPlot, or ScatterPlotView from this "
+    "module is deprecated. Please use chaco.api or chaco.plots.api instead. "
+    "This module will be removed in the next major release.",
     DeprecationWarning,
     stacklevel=2,
 )

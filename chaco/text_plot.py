@@ -15,9 +15,9 @@ import warnings
 from chaco.plots.text_plot import TextPlot  # noqa: F401
 
 warnings.warn(
-    "This module has been moved to sit in chaco/plots and this stub module has"
-    " been kept for backwards compatibility. Importing from this module is"
-    " deprecated, please import needed objects from chaco.api instead",
+    "Importing TextPlot from this module is deprecated. Please use chaco.api "
+    "or chaco.plots.api instead. This module will be removed in the next major"
+    " release.",
     DeprecationWarning,
     stacklevel=2,
 )

@@ -7,17 +7,14 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-"""
-A 1D scatterplot that draws lines across the renderer at the index values
-"""
 import warnings
 
 from chaco.plots.line_scatterplot_1d import LineScatterPlot1D  # noqa: F401
 
 warnings.warn(
-    "This module has been moved to sit in chaco/plots and this stub module has"
-    " been kept for backwards compatibility. Importing from this module is"
-    " deprecated, please import needed objects from chaco.api instead",
+    "Importing LineScatterPlot1D from this module is deprecated. Please use "
+    "chaco.api or chaco.plots.api instead. This module will be removed in the "
+    "next major release.",
     DeprecationWarning,
     stacklevel=2,
 )

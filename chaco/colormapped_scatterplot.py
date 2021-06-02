@@ -7,8 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-""" Defines the ColormappedScatterPlot and ColormappedScatterPlotView classes.
-"""
 import warnings
 
 from chaco.plots.colormapped_scatterplot import (  # noqa: F401
@@ -16,9 +14,9 @@ from chaco.plots.colormapped_scatterplot import (  # noqa: F401
 )
 
 warnings.warn(
-    "This module has been moved to sit in chaco/plots and this stub module has"
-    " been kept for backwards compatibility. Importing from this module is"
-    " deprecated, please import needed objects from chaco.api instead",
+    "Importing ColormappedScatterPlot or ColormappedScatterPlotView from this "
+    "module is deprecated. Please use chaco.api or chaco.plots.api instead. "
+    "This module will be removed in the next major release.",
     DeprecationWarning,
     stacklevel=2,
 )

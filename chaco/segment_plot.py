@@ -9,12 +9,14 @@
 # Thanks for using Enthought open source!
 import warnings
 
-from chaco.plots.segment_plot import SegmentPlot  # noqa: F401
+from chaco.plots.segment_plot import (  # noqa: F401
+    ColormappedSegmentPlot, SegmentPlot
+)
 
 warnings.warn(
-    "This module has been moved to sit in chaco/plots and this stub module has"
-    " been kept for backwards compatibility. Importing from this module is"
-    " deprecated, please import needed objects from chaco.api instead",
+    "Importing ColormappedSegmentPlot or SegmentPlot from this module is "
+    "deprecated. Please use chaco.api or chaco.plots.api instead. This module "
+    "will be removed in the next major release.",
     DeprecationWarning,
     stacklevel=2,
 )
