@@ -7,9 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-""" Defines the Legend, AbstractCompositeIconRenderer, and
-CompositeIconRenderer classes.
-"""
 import warnings
 
 from chaco.overlays.legend import (  # noqa: F401
@@ -17,9 +14,10 @@ from chaco.overlays.legend import (  # noqa: F401
 )
 
 warnings.warn(
-    "This module has been moved to sit in chaco/overlays and this stub module"
-    " has been kept for backwards compatibility. Importing from this module is"
-    " deprecated, please import needed objects from chaco.api instead",
+    "Importing AbstractCompositeIconRenderer, CompositeIconRenderer, or Legend"
+    " from this module is deprecated. Please use chaco.api or "
+    "chaco.overlays.api instead. This module will be removed in the next major"
+    " release.",
     DeprecationWarning,
     stacklevel=2,
 )

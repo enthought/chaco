@@ -14,9 +14,9 @@ from chaco.overlays.scatter_inspector_overlay import (  # noqa: F401
 )
 
 warnings.warn(
-    "This module has been moved to sit in chaco/overlays and this stub module"
-    " has been kept for backwards compatibility. Importing from this module is"
-    " deprecated, please import needed objects from chaco.api instead",
+    "Importing ScatterInspectorOverlay from this module is deprecated. "
+    "Please use chaco.api or chaco.overlays.api instead. This module will be "
+    "removed in the next major release.",
     DeprecationWarning,
     stacklevel=2,
 )
