@@ -17,7 +17,7 @@ examples/basic:
                         capitol.jpg | Peter Wang
                             cat.jpg | Peter Wang
 
-chaco/layers/data:
+chaco/overlays/layers/data:
                    Dialog-error.svg | Tango, CC 2.5, modified to remove gradients
                  Dialog-warning.svg | Tango, CC 2.5, modified to remove gradients
 

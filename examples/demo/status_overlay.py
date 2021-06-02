@@ -4,7 +4,7 @@ Displays a plot with a few buttons to control which overlay to display
 import numpy
 
 from chaco.api import Plot, ArrayPlotData
-from chaco.layers.api import ErrorLayer, WarningLayer, StatusLayer
+from chaco.overlays.api import ErrorLayer, WarningLayer, StatusLayer
 from enable.api import ComponentEditor
 from traits.api import HasTraits, Instance, Button
 from traitsui.api import UItem, View, HGroup

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-""" Plot with pan-zoom interaction.
+""" Plot with scroll and pan-zoom interaction.
 
-Draws some x-y line and scatter plots. On the left hand plot:
+Draws some x-y line and scatter plots. On the plot:
+ - Scroll by dragging the scrollbar above the plot
  - Left-drag pans the plot.
  - Mousewheel up and down zooms the plot in and out.
  - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
@@ -50,6 +51,8 @@ def _create_plot_component():
         component=plot1, axis="index", resizable="h", height=15
     )
     plot1.padding_top = 0
+    # NOTE: scrollbar fails to display with index_range covering full range
+    plot1.index_range.high_setting = 1
     hscrollbar.force_data_update()
 
     # Create a container and add our plots

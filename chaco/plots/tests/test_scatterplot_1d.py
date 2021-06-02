@@ -12,8 +12,8 @@ from chaco.api import (
     DataRange1D,
     LinearMapper,
     PlotGraphicsContext,
+    ScatterPlot1D,
 )
-from chaco.scatterplot_1d import ScatterPlot1D
 
 
 class Scatterplot1DTest(UnittestTools, unittest.TestCase):

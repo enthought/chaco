@@ -285,8 +285,8 @@ if __name__ == "__main__":
 
     # Register Python extensions
     contour = Extension(
-        'chaco.contour.contour',
-        sources=['chaco/contour/cntr.c'],
+        'chaco.plots.contour.contour',
+        sources=['chaco/plots/contour/cntr.c'],
         include_dirs=[numpy_include_dir],
         define_macros=[('NUMPY', None)],
     )
@@ -333,7 +333,7 @@ if __name__ == "__main__":
             """.splitlines() if len(c.strip()) > 0],
         package_data={
             'chaco': [
-                'layers/data/*.svg',
+                'overlays/layers/data/*.svg',
                 'tests/data/PngSuite/*.png',
                 'tools/toolbars/images/*.png',
             ]
