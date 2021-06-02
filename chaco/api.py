@@ -349,6 +349,7 @@ from chaco.overlays.api import (
     LassoOverlay,
     AbstractCompositeIconRenderer,
     CompositeIconRenderer,
+    Legend,
     PlotLabel,
     ScatterInspectorOverlay,
     basic_formatter,
@@ -365,7 +366,6 @@ from chaco.overlays.api import (
     WarningLayer,
 )
 
-from .legend import Legend
 from .plots.color_bar import ColorBar
 
 # Renderers
