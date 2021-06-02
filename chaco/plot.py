@@ -26,6 +26,7 @@ from .image_data import ImageData
 from .legend import Legend
 from .linear_mapper import LinearMapper
 from .log_mapper import LogMapper
+from .plot_label import PlotLabel
 from .plots.barplot import BarPlot
 from .plots.candle_plot import CandlePlot
 from .plots.colormapped_scatterplot import ColormappedScatterPlot
@@ -35,7 +36,6 @@ from .plots.cmap_image_plot import CMapImagePlot
 from .plots.filled_line_plot import FilledLinePlot
 from .plots.image_plot import ImagePlot
 from .plots.jitterplot import JitterPlot
-from .plot_label import PlotLabel
 from .plots.lineplot import LinePlot
 from .plots.line_scatterplot_1d import LineScatterPlot1D
 from .plots.polygon_plot import PolygonPlot

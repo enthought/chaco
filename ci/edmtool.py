@@ -121,6 +121,8 @@ doc_dependencies = {
 
 doc_ignore = {
     "*/tests",
+    # The following stub modules were kept for backwards compatibility but
+    # will be removed in the next major relaese. Ref: enthought/chaco#748
     "chaco/barplot.py",
     "chaco/candle_plot.py",
     "chaco/cmap_image_plot.py",
