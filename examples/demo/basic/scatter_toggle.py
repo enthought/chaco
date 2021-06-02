@@ -97,7 +97,7 @@ def _create_plot_component():
 # Attributes to use for the plot view.
 size = (650, 650)
 title = "Scatter plot with selection"
-bg_color = "lightgray"
+bgcolor = "lightgray"
 
 # ===============================================================================
 # # Demo class that is used by the demo.py application.
@@ -110,7 +110,7 @@ class Demo(HasTraits):
             HGroup(spring, Label("Click point to select/unselect"), spring),
             Item(
                 "plot",
-                editor=ComponentEditor(size=size, bgcolor=bg_color),
+                editor=ComponentEditor(size=size, bgcolor=bgcolor),
                 show_label=False,
             ),
             orientation="vertical",
