@@ -34,6 +34,7 @@ TRIM_RENDERED = (slice(1, -1), slice(1, -1), 0)
 
 is_null = ETSConfig.toolkit == "null"
 
+
 def is_qt4():
     if not ETSConfig.toolkit.startswith('qt'):
         return False
@@ -179,8 +180,8 @@ class TestResultImage(unittest.TestCase):
         )
 
     def test_vertical_bottom_right(self):
-        # Vertical orientation with bottom right origin renders transposed image
-        # that is flipped vertically and horizontally.
+        # Vertical orientation with bottom right origin renders transposed
+        # image that is flipped vertically and horizontally.
         self.verify_result_image(
             RGB, (IMAGE.T)[::-1, ::-1], origin="bottom right", orientation="v"
         )
@@ -211,5 +212,5 @@ class TestResultImage(unittest.TestCase):
         tester = UITester()
 
         # should not fail
-        with tester.create_ui(test_obj) as ui:
+        with tester.create_ui(test_obj):
             pass

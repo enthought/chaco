@@ -41,14 +41,14 @@ Line Plot
 Standard line plot implementation. The aspect of the line is controlled by the
 parameters
 
-:attr:`~chaco.lineplot.LinePlot.line_width`
+:attr:`~chaco.plots.lineplot.LinePlot.line_width`
   The width of the line (default is 1.0)
 
-:attr:`~chaco.lineplot.LinePlot.line_style`
+:attr:`~chaco.plots.lineplot.LinePlot.line_style`
   The style of the line, one of 'solid' (default), 'dot dash', 'dash', 'dot',
   or 'long dash'.
 
-:attr:`~chaco.lineplot.LinePlot.render_style`
+:attr:`~chaco.plots.lineplot.LinePlot.render_style`
   The rendering style of the line plot, one of
   'connectedpoints' (default), 'hold', or 'connectedhold'
 
@@ -78,27 +78,27 @@ Scatter Plot
 Standard scatter plot implementation. The aspect of the markers is controlled
 by the parameters
 
-:attr:`~chaco.scatterplot.ScatterPlot.marker`
+:attr:`~chaco.plots.scatterplot.ScatterPlot.marker`
   The marker type, one of 'square'(default), 'circle', 'triangle',
   'inverted_triangle', 'plus', 'cross', 'diamond', 'dot', or 'pixel'.
   One can also define a new marker shape by setting this parameter to 'custom',
-  and set the :attr:`~chaco.scatterplot.custom_symbol` parameter to
+  and set the :attr:`~chaco.plots.scatterplot.custom_symbol` parameter to
   a :class:`CompiledPath` instance (see the file
   ``demo/basic/scatter_custom_marker.py`` in the Chaco examples directory).
 
-:attr:`~chaco.scatterplot.ScatterPlot.marker_size`
+:attr:`~chaco.plots.scatterplot.ScatterPlot.marker_size`
   Size of the marker in pixels, not including the outline. This can be
   either a scalar (default is 4.0), or an array with one size per data
   point.
 
-:attr:`~chaco.scatterplot.ScatterPlot.line_width`
+:attr:`~chaco.plots.scatterplot.ScatterPlot.line_width`
   Width of the outline around the markers (default is 1.0). If this is 0.0,
   no outline is drawn.
 
-:attr:`~chaco.scatterplot.ScatterPlot.color`
+:attr:`~chaco.plots.scatterplot.ScatterPlot.color`
     The fill color of the marker (default is black).
 
-:attr:`~chaco.scatterplot.ScatterPlot.outline_color`
+:attr:`~chaco.plots.scatterplot.ScatterPlot.outline_color`
     The color of the outline to draw around the marker (default is black).
 
 This is an example with fixed point size:
@@ -119,9 +119,9 @@ Colormapped scatter plot. Additional information can be added to each point
 by setting a different color.
 
 The color information is controlled by the
-:attr:`~chaco.colormapped_scatterplot.ColormappedScatterPlot.color_data`
+:attr:`~chaco.plots.colormapped_scatterplot.ColormappedScatterPlot.color_data`
 data source, and the
-:attr:`~chaco.colormapped_scatterplot.ColormappedScatterPlot.color_mapper`
+:attr:`~chaco.plots.colormapped_scatterplot.ColormappedScatterPlot.color_mapper`
 mapper. A large number of ready-to-use color maps are defined in the
 module :mod:`chaco.default_colormaps`, including discrete color maps.
 
@@ -129,10 +129,10 @@ In addition to the parameters supported by a
 :ref:`scatter plot <scatter_plot>`, a colormapped scatter plot defines
 these attributes:
 
-:attr:`~chaco.colormapped_scatterplot.ColormappedScatterPlot.fill_alpha`
+:attr:`~chaco.plots.colormapped_scatterplot.ColormappedScatterPlot.fill_alpha`
   Set the alpha value of the points.
 
-:attr:`~chaco.colormapped_scatterplot.ColormappedScatterPlot.render_method`
+:attr:`~chaco.plots.colormapped_scatterplot.ColormappedScatterPlot.render_method`
   Set the sequence in which the points are drawn. It is one of
 
   'banded'
@@ -173,39 +173,39 @@ and two stems (usually indicating the maximum and minimum values).
 The positions of the centers, and of the extrema of the bar and stems are
 set with the following data sources
 
-:attr:`~chaco.candle_plot.CandlePlot.center_values`
+:attr:`~chaco.plots.candle_plot.CandlePlot.center_values`
   Value of the centers. It can be set to ``None``, in which case the center is
   not plotted.
 
-:attr:`~chaco.candle_plot.CandlePlot.bar_min` and :attr:`~chaco.candle_plot.CandlePlot.bar_max`
+:attr:`~chaco.plots.candle_plot.CandlePlot.bar_min` and :attr:`~chaco.plots.candle_plot.CandlePlot.bar_max`
   Lower and upper values of the bar.
 
-:attr:`~chaco.candle_plot.CandlePlot.min_values` and :attr:`~chaco.candle_plot.CandlePlot.max_values`
+:attr:`~chaco.plots.candle_plot.CandlePlot.min_values` and :attr:`~chaco.plots.candle_plot.CandlePlot.max_values`
   Lower and upper values of the stem. They can be set to ``None``, in
   which case the stems are not plotted.
 
 It is possible to customize the appearance of the candle plot with
 these parameters
 
-:attr:`~chaco.candle_plot.CandlePlot.bar_color` (alias of :attr:`~chaco.candle_plot.CandlePlot.color`)
+:attr:`~chaco.plots.candle_plot.CandlePlot.bar_color` (alias of :attr:`~chaco.plots.candle_plot.CandlePlot.color`)
   Fill color of the bar (default is black).
 
-:attr:`~chaco.candle_plot.CandlePlot.bar_line_color` (alias of :attr:`~chaco.candle_plot.CandlePlot.outline_color`)
+:attr:`~chaco.plots.candle_plot.CandlePlot.bar_line_color` (alias of :attr:`~chaco.plots.candle_plot.CandlePlot.outline_color`)
   Color of the box forming the bar (default is black).
 
-:attr:`~chaco.candle_plot.CandlePlot.center_color`
+:attr:`~chaco.plots.candle_plot.CandlePlot.center_color`
   Color of the line indicating the center. If ``None``, it defaults to
-  :attr:`~chaco.candle_plot.CandlePlot.bar_line_color`.
+  :attr:`~chaco.plots.candle_plot.CandlePlot.bar_line_color`.
 
-:attr:`~chaco.candle_plot.CandlePlot.stem_color`
+:attr:`~chaco.plots.candle_plot.CandlePlot.stem_color`
   Color of the stems and endcaps. If ``None``, it defaults to
-  :attr:`~chaco.candle_plot.CandlePlot.bar_line_color`.
+  :attr:`~chaco.plots.candle_plot.CandlePlot.bar_line_color`.
 
-:attr:`~chaco.candle_plot.CandlePlot.line_width`, :attr:`~chaco.candle_plot.CandlePlot.center_width`, and :attr:`~chaco.candle_plot.CandlePlot.stem_width`
+:attr:`~chaco.plots.candle_plot.CandlePlot.line_width`, :attr:`~chaco.plots.candle_plot.CandlePlot.center_width`, and :attr:`~chaco.plots.candle_plot.CandlePlot.stem_width`
   Thickness in pixels of the lines drawing the corresponding elements.
-  If ``None``, they default to :attr:`~chaco.candle_plot.CandlePlot.line_width`.
+  If ``None``, they default to :attr:`~chaco.plots.candle_plot.CandlePlot.line_width`.
 
-:attr:`~chaco.candle_plot.CandlePlot.end_cap`
+:attr:`~chaco.plots.candle_plot.CandlePlot.end_cap`
   If ``False``, the end caps are not plotted (default is ``True``).
 
 
@@ -219,23 +219,23 @@ and end caps.
 Errorbar Plot
 =============
 
-A plot with error bars. Note that :class:`~chacho.errorbar_plot.ErrorBarPlot`
+A plot with error bars. Note that :class:`~chacho.plots.errorbar_plot.ErrorBarPlot`
 only plots the error bars, and needs to be combined with a
-:class:`~chacho.errorbar_plot.LinePlot` if one would like to have
+:class:`~chacho.plots.errorbar_plot.LinePlot` if one would like to have
 a line connecting the central values.
 
 The positions of the extrema of the bars are set by the data sources
-:attr:`~chaco.errorbar_plot.value_low` and
-:attr:`~chaco.errorbar_plot.value_high`.
+:attr:`~chaco.plots.errorbar_plot.value_low` and
+:attr:`~chaco.plots.errorbar_plot.value_high`.
 
 In addition to the parameters supported by a
 :ref:`line plot <line_plot>`, an errorbar plot defines
 these attributes:
 
-:attr:`~chaco.errorbar_plot.endcap_size`
+:attr:`~chaco.plots.errorbar_plot.endcap_size`
   The width of the endcap bars in pixels.
 
-:attr:`~chaco.errorbar_plot.endcap_style`
+:attr:`~chaco.plots.errorbar_plot.endcap_style`
   Either 'bar' (default) or 'none', in which case no endcap bars are plotted.
 
 .. image:: images/user_guide/errorbar_plot.png
@@ -247,26 +247,26 @@ Filled Line Plot
 
 A line plot filled with color to the axis.
 
-:class:`~chacho.filled_line_plot.FilledLinePlot` defines
+:class:`~chacho.plots.filled_line_plot.FilledLinePlot` defines
 the following parameters:
 
-:attr:`~chaco.filled_line_plot.FilledLinePlot.fill_color`
+:attr:`~chaco.plots.filled_line_plot.FilledLinePlot.fill_color`
   The color used to fill the plot.
 
-:attr:`~chaco.filled_line_plot.FilledLinePlot.fill_direction`
+:attr:`~chaco.plots.filled_line_plot.FilledLinePlot.fill_direction`
   Fill the plot toward the origin ('down', default) ot towards the axis
   maximum ('up').
 
-:attr:`~chaco.lineplot.LinePlot.render_style`
+:attr:`~chaco.plots.lineplot.LinePlot.render_style`
   The rendering style of the line plot, one of
   'connectedpoints' (default), 'hold', or 'connectedhold' (see
   :ref:`line plot <line_plot>` for a description of the different
   rendering styles).
 
-:attr:`~chaco.filled_line_plot.FilledLinePlot` is a subclass of
-:attr:`~chaco.filled_line_plot.PolygonPlot`, so to set the thickness of the
+:attr:`~chaco.plots.filled_line_plot.FilledLinePlot` is a subclass of
+:attr:`~chaco.plots.filled_line_plot.PolygonPlot`, so to set the thickness of the
 plot line one should use the parameter
-:attr:`~chaco.filled_line_plot.PolygonPlot.edge_width` instead of
+:attr:`~chaco.plots.filled_line_plot.PolygonPlot.edge_width` instead of
 :attr:`line_width`.
 
 .. image:: images/user_guide/filled_line_plot.png
@@ -284,18 +284,18 @@ and displaced vertically so that they can be compared without
 crossing each other.
 
 The relative displacement and rescaling of the lines is controlled
-by these attributes of :class:`~chaco.multi_line_plot.MultiLinePlot`:
+by these attributes of :class:`~chaco.plots.multi_line_plot.MultiLinePlot`:
 
-:attr:`~chaco.multi_line_plot.MultiLinePlot.index`
+:attr:`~chaco.plots.multi_line_plot.MultiLinePlot.index`
   The usual array data source for the index data.
 
-:attr:`~chaco.multi_line_plot.MultiLinePlot.yindex`
+:attr:`~chaco.plots.multi_line_plot.MultiLinePlot.yindex`
   Array data source for the starting point of each line. Typically, this
   is set to ``numpy.arange(n_lines)``, so that each line is displaced
   by one unit from the others (the other default parameters are set to
   work well with this arrangement).
 
-:attr:`~chaco.multi_line_plot.MultiLinePlot.use_global_bounds`, :attr:`~chaco.multi_line_plot.MultiLinePlot.global_min`, :attr:`~chaco.multi_line_plot.MultiLinePlot.global_max`,
+:attr:`~chaco.plots.multi_line_plot.MultiLinePlot.use_global_bounds`, :attr:`~chaco.plots.multi_line_plot.MultiLinePlot.global_min`, :attr:`~chaco.plots.multi_line_plot.MultiLinePlot.global_max`,
   These attributes are used to compute an "amplitude scale" which that
   the largest trace deviation from its base y-coordinate will be equal
   to the y-coordinate spacing.
@@ -309,27 +309,27 @@ by these attributes of :class:`~chaco.multi_line_plot.MultiLinePlot`:
   :attr:`global_min` and :attr:`global_max` to 0.0, which means that one
   of these value has to be set to create a meaningful plot.
 
-:attr:`~chaco.multi_line_plot.MultiLinePlot.scale`, :attr:`~chaco.multi_line_plot.MultiLinePlot.offset`, :attr:`~chaco.multi_line_plot.MultiLinePlot.normalized_amplitude`
+:attr:`~chaco.plots.multi_line_plot.MultiLinePlot.scale`, :attr:`~chaco.plots.multi_line_plot.MultiLinePlot.offset`, :attr:`~chaco.plots.multi_line_plot.MultiLinePlot.normalized_amplitude`
   In addition to the rescaling done using the global bounds (see above),
   each line is individually scaled by :attr:`normalized_amplitude`
   (by default this is -0.5, but is normally it should be something like 1.0).
   Finally, all the lines are moved by :attr:`offset` and multiplied by
   :attr:`scale` (default are 0.0 and 1.0, respectively).
 
-:class:`~chaco.multi_line_plot.MultiLinePlot` also defines the following
+:class:`~chaco.plots.multi_line_plot.MultiLinePlot` also defines the following
 parameters:
 
-:attr:`~chaco.multi_line_plot.MultiLinePlot.line_width`, :attr:`~chaco.multi_line_plot.MultiLinePlot.line_style`
+:attr:`~chaco.plots.multi_line_plot.MultiLinePlot.line_width`, :attr:`~chaco.plots.multi_line_plot.MultiLinePlot.line_style`
   Control the thickness and style of the lines, as for
   :ref:`line plots <line_plot>`.
 
-:attr:`~chaco.multi_line_plot.MultiLinePlot.color`, :attr:`~chaco.multi_line_plot.MultiLinePlot.color_func`
+:attr:`~chaco.plots.multi_line_plot.MultiLinePlot.color`, :attr:`~chaco.plots.multi_line_plot.MultiLinePlot.color_func`
   If :attr:`color_func` is None, all lines have the color defined
   in :attr:`color`. Otherwise, :attr:`color_func` is a function
   (or, more in general, a callable) that accept a single argument corresponding
   to the index of the line and returns a RGBA 4-tuple.
 
-:attr:`~chaco.multi_line_plot.MultiLinePlot.fast_clip`
+:attr:`~chaco.plots.multi_line_plot.MultiLinePlot.fast_clip`
   If True, traces whose *base* y-coordinate is outside the value axis range
   are not plotted, even if some of the data in the curve extends into the plot
   region. (Default is False)
@@ -361,7 +361,7 @@ Plot image data, provided as RGB or RGBA color information. If you need to
 plot a 2D array as an image, use a :ref:`colormapped scalar plot
 <colormapped_scalar_plot>`
 
-In an :class:`~chaco.base_2d_plot.ImagePlot`, the :attr:`index` attribute
+In an :class:`~chaco.plots.image_plot.ImagePlot`, the :attr:`index` attribute
 corresponds to the data coordinates of the pixels (often a
 :class:`~chaco.grid_data_source.GridDataSource`). The
 :attr:`index_mapper` maps the data coordinates to
@@ -412,7 +412,7 @@ array; the scalar values in the 2D array are mapped to colors using a color
 map.
 
 The basic class for colormapped scalar plots is
-:class:`~chaco.cmap_image_plot.CMapImagePlot`.
+:class:`~chaco.plots.cmap_image_plot.CMapImagePlot`.
 As in :ref:`image plots <image_plot>`, the :attr:`index` attribute
 corresponds to the data coordinates of the pixels (a
 :class:`~chaco.grid_data_source.GridDataSource`), and the
@@ -495,17 +495,17 @@ Contour Line Plot
 
 Draw a contour plots as a set of lines. In addition to the attributes
 in :class:`~chaco.base_countour_plot.BaseContourPlot`,
-:class:`~chaco.base_countour_plot.ContourLinePlot` defines the following
+:class:`~chaco.plots.contour.contour_line_plot.ContourLinePlot` defines the following
 parameters:
 
-:attr:`~chaco.base_countour_plot.ContourLinePlot.widths`
+:attr:`~chaco.plots.contour.countour_line_plot.ContourLinePlot.widths`
   The thickness of the contour lines.
   It can be either a scalar value, valid for all contour lines, or a list
   of widths. If the list is too short with respect to the number of
   contour lines, the values are repeated from the beginning of the list.
   Widths are associated with levels of increasing value.
 
-:attr:`~chaco.base_countour_plot.ContourLinePlot.styles`
+:attr:`~chaco.plots.contour.countour_line_plot.ContourLinePlot.styles`
   The style of the lines. It can either be a string that specifies the
   style for all lines (allowed styles are 'solid', 'dot dash', 'dash', 'dot',
   or 'long dash'), or a list of styles, one for each line.
@@ -513,10 +513,10 @@ parameters:
   contour lines, the values are repeated from the beginning of the list.
   The default, 'signed', sets all lines corresponding to positive values to the
   style given by the attribute
-  :attr:`~chaco.base_countour_plot.ContourLinePlot.positive_style` (default
+  :attr:`~chaco.plot.contour.countour_line_plot.ContourLinePlot.positive_style` (default
   is 'solid'), and all lines corresponding to negative values to
   the style given by
-  :attr:`~chaco.base_countour_plot.ContourLinePlot.negative_style`
+  :attr:`~chaco.plots.contour.countour_line_plot.ContourLinePlot.negative_style`
   (default is 'dash').
 
 .. image:: images/user_guide/contour_line_plot.png
@@ -526,7 +526,7 @@ Filled contour Plot
 -------------------
 
 Draw a contour plot as a 2D image divided in regions of the same color.
-The class :class:`~chaco.base_countour_plot.ContourPolyPlot` inherits
+The class :class:`~chaco.plots.contour.countour_poly_plot.ContourPolyPlot` inherits
 all attributes from :class:`~chaco.base_countour_plot.BaseContourPlot`.
 
 .. image:: images/user_guide/contour_poly_plot.png
@@ -543,20 +543,20 @@ and the y-coordinate as the :attr:`value` data source. As usual, their values
 are mapped to screen coordinates by :attr:`index_mapper` and
 :attr:`value_mapper`.
 
-In addition, the class :class:`~chaco.base_countour_plot.PolygonPlot` defines
+In addition, the class :class:`~chaco.plots.polygon_plot.PolygonPlot` defines
 these parameters:
 
-:attr:`~chaco.base_countour_plot.PolygonPlot.edge_color`
+:attr:`~chaco.plots.polygon_plot.PolygonPlot.edge_color`
     The color of the line on the edge of the polygon (default is black).
 
-:attr:`~chaco.base_countour_plot.PolygonPlot.edge_width`
+:attr:`~chaco.plots.polygon_plot.PolygonPlot.edge_width`
     The thickness of the edge of the polygon (default is 1.0).
 
-:attr:`~chaco.base_countour_plot.PolygonPlot.edge_style`
+:attr:`~chaco.plots.polygon_plot.PolygonPlot.edge_style`
     The line dash style for the edge of the polygon, one of 'solid'
     (default), 'dot dash', 'dash', 'dot', or 'long dash'.
 
-:attr:`~chaco.base_countour_plot.PolygonPlot.face_color`
+:attr:`~chaco.plots.polygon_plot.PolygonPlot.face_color`
     The color of the face of the polygon (default is transparent).
 
 .. image:: images/user_guide/polygon_plot.png
@@ -576,24 +576,24 @@ Bar Plot
 
 Draws a set of rectangular bars, mostly used to plot histograms.
 
-The class :class:`~chaco.barplot.BarPlot` defines the attributes of
+The class :class:`~chaco.plots.barplot.BarPlot` defines the attributes of
 regular X-Y plots, plus the following parameters:
 
-:attr:`~chaco.barplot.BarPlot.starting_value`
-  While :attr:`~chaco.barplot.BarPlot.value` is a data source defining
-  the upper limit of the bars, :attr:`~chaco.barplot.BarPlot.starting_value`
+:attr:`~chaco.plots.barplot.BarPlot.starting_value`
+  While :attr:`~chaco.plots.barplot.BarPlot.value` is a data source defining
+  the upper limit of the bars, :attr:`~chaco.plots.barplot.BarPlot.starting_value`
   can be used to define their bottom limit. Default is 0.
   (Note: "upper" and "bottom" assume a horizontal layout for the plot.)
 
-:attr:`~chaco.barplot.BarPlot.bar_width_type`
+:attr:`~chaco.plots.barplot.BarPlot.bar_width_type`
   Determines how to interpret the :attr:`bar_width` parameter.
   If 'data' (default', the width is given in the units along the index
   dimension of the data space. If 'screen', the width is given in pixels.
 
-:attr:`~chaco.barplot.BarPlot.bar_width`
+:attr:`~chaco.plots.barplot.BarPlot.bar_width`
   The width of the bars (see :attr:`bar_width_type`).
 
-:attr:`~chaco.barplot.BarPlot.fill_color`
+:attr:`~chaco.plots.barplot.BarPlot.fill_color`
   The color of the bars.
 
 .. image:: images/user_guide/bar_plot.png
@@ -608,20 +608,20 @@ This is a kind of :ref:`scatter plot <scatter_plot>` which draws
 an arrow at every point. It can be used to visualize 2D vector fields.
 
 The information about the vector sizes is given through the data source
-:attr:`~chaco.quiverplot.QuiverPlot.vectors`, which returns an Nx2 array.
+:attr:`~chaco.plots.quiverplot.QuiverPlot.vectors`, which returns an Nx2 array.
 Usually, :attr:`vectors` is an instance of
 :class:`~chaco.multi_array_data_source.MultiArrayDataSource`.
 
-:class:`~chaco.quiverplot.QuiverPlot` defines these parameters:
+:class:`~chaco.plots.quiverplot.QuiverPlot` defines these parameters:
 
 
-:attr:`~chaco.quiverplot.QuiverPlot.line_width`
+:attr:`~chaco.plots.quiverplot.QuiverPlot.line_width`
   Width of the lines that trace the arrows (default is 1.0).
 
-:attr:`~chaco.quiverplot.QuiverPlot.line_color`
+:attr:`~chaco.plots.quiverplot.QuiverPlot.line_color`
   The color of the arrows (default is black).
 
-:attr:`~chaco.quiverplot.QuiverPlot.arrow_size`
+:attr:`~chaco.plots.quiverplot.QuiverPlot.arrow_size`
   The length of the arrowheads in pixels.
 
 
@@ -635,7 +635,7 @@ Polar Plot
 Display a line plot in polar coordinates.
 
 The implementation at the moment is at a proof-of-concept stage.
-The class :class:`~chaco.polar_line_renderer.PolarLineRenderer` relies
+The class :class:`~chaco.plots.polar_line_renderer.PolarLineRenderer` relies
 on :class:`~chaco.polar_mapper.PolarMapper` to map polar to cartesian
 coordinates, and adds circular polar coordinate axes.
 
@@ -647,27 +647,27 @@ coordinates, and adds circular polar coordinate axes.
 
 The aspect of the polar plot can be controlled with these parameters:
 
-:attr:`~chaco.polar_line_renderer.PolarLineRenderer.line_width`
+:attr:`~chaco.plots.polar_line_renderer.PolarLineRenderer.line_width`
   Width of the polar plot line (default is 1.0).
 
-:attr:`~chaco.polar_line_renderer.PolarLineRenderer.line_style`
+:attr:`~chaco.plots.polar_line_renderer.PolarLineRenderer.line_style`
   The style of the line, one of 'solid' (default), 'dot dash', 'dash', 'dot',
   or 'long dash'.
 
-:attr:`~chaco.polar_line_renderer.PolarLineRenderer.color`
+:attr:`~chaco.plots.polar_line_renderer.PolarLineRenderer.color`
   The color of the line.
 
-:attr:`~chaco.polar_line_renderer.PolarLineRenderer.grid_style`
+:attr:`~chaco.plots.polar_line_renderer.PolarLineRenderer.grid_style`
   The style of the lines composing the axis, one of 'solid','dot dash',
   'dash', 'dot' (default), or 'long dash'.
 
-:attr:`~chaco.polar_line_renderer.PolarLineRenderer.grid_visible`
+:attr:`~chaco.plots.polar_line_renderer.PolarLineRenderer.grid_visible`
   If True (default), the circular part of the axes is drawn.
 
-:attr:`~chaco.polar_line_renderer.PolarLineRenderer.origin_axis_visible`
+:attr:`~chaco.plots.polar_line_renderer.PolarLineRenderer.origin_axis_visible`
   If True (default), the radial part of the axes is drawn.
 
-:attr:`~chaco.polar_line_renderer.PolarLineRenderer.origin_axis_width`
+:attr:`~chaco.plots.polar_line_renderer.PolarLineRenderer.origin_axis_width`
   Width of the radial axis in pixels (default is 2.0).
 
 .. image:: images/user_guide/polar_plot.png
@@ -680,32 +680,32 @@ Jitter Plot
 
 A plot showing 1D data by adding a random jitter around the main axis.
 It can be useful for visualizing dense collections of points.
-This plot has got a single mapper, called :attr:`~chaco.jitterplot.JitterPlot.mapper`.
+This plot has got a single mapper, called :attr:`~chaco.plots.jitterplot.JitterPlot.mapper`.
 
 Useful parameters are:
 
-:attr:`~chaco.jitterplot.JitterPlot.jitter_width`
+:attr:`~chaco.plots.jitterplot.JitterPlot.jitter_width`
   The size, in pixels, of the random jitter around the axis.
 
-:attr:`~chaco.jitterplot.JitterPlot.marker`
+:attr:`~chaco.plots.jitterplot.JitterPlot.marker`
   The marker type, one of 'square'(default), 'circle', 'triangle',
   'inverted_triangle', 'plus', 'cross', 'diamond', 'dot', or 'pixel'.
   One can also define a new marker shape by setting this parameter to 'custom',
-  and set the :attr:`~chaco.scatterplot.custom_symbol` parameter to
+  and set the :attr:`~chaco.plots.scatterplot.custom_symbol` parameter to
   a :class:`CompiledPath` instance (see the file
   ``demo/basic/scatter_custom_marker.py`` in the Chaco examples directory).
 
-:attr:`~chaco.jitterplot.JitterPlot.marker_size`
+:attr:`~chaco.plots.jitterplot.JitterPlot.marker_size`
   Size of the marker in pixels, not including the outline (default is 4.0).
 
-:attr:`~chaco.jitterplot.JitterPlot.line_width`
+:attr:`~chaco.plots.jitterplot.JitterPlot.line_width`
   Width of the outline around the markers (default is 1.0). If this is 0.0,
   no outline is drawn.
 
-:attr:`~chaco.jitterplot.JitterPlot.color`
+:attr:`~chaco.plots.jitterplot.JitterPlot.color`
     The fill color of the marker (default is black).
 
-:attr:`~chaco.jitterplot.JitterPlot.outline_color`
+:attr:`~chaco.plots.jitterplot.JitterPlot.outline_color`
     The color of the outline to draw around the marker (default is black).
 
 .. image:: images/user_guide/jitter_plot.png

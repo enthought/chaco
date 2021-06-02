@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 import numpy.testing as nptest
 
-from chaco.contour.contour import Cntr
+from chaco.plots.contour.contour import Cntr
 
 
 class TestContour(unittest.TestCase):

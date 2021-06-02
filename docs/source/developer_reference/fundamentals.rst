@@ -147,10 +147,10 @@ Renderers
     are displaying changes, or the mapping from data space to screen space
     changes.
 
-    Examples: :py:class:`~chaco.lineplot.LinePlot`,
-    :py:class:`~chaco.scatterplot.ScatterPlot`,
-    :py:class:`~chaco.cmap_image_plot.CMapImagePlot`,
-    :py:class:`~chaco.text_plot_1d.TextPlot1D`.
+    Examples: :py:class:`~chaco.plots.lineplot.LinePlot`,
+    :py:class:`~chaco.plots.scatterplot.ScatterPlot`,
+    :py:class:`~chaco.plots.cmap_image_plot.CMapImagePlot`,
+    :py:class:`~chaco.plots.text_plot_1d.TextPlot1D`.
 
 Axes and Grids
     These are the objects responsible for drawing axes ticks and grid lines,

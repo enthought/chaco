@@ -7,7 +7,7 @@ from traits.api import List, Dict, Str
 
 # Chaco imports
 from chaco.axis import PlotAxis
-from chaco.color_bar import ColorBar
+from chaco.plots.color_bar import ColorBar
 
 
 class Fifo(object):

@@ -10,7 +10,7 @@ from chaco.data_range_1d import DataRange1D
 from chaco.label_axis import LabelAxis
 from chaco.legend import Legend
 from chaco.linear_mapper import LinearMapper
-from chaco.scatterplot import ScatterPlot
+from chaco.plots.scatterplot import ScatterPlot
 
 
 class TestArrayOrNone(unittest.TestCase):

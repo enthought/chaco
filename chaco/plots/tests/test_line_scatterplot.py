@@ -10,9 +10,9 @@ from chaco.api import (
     ArrayDataSource,
     DataRange1D,
     LinearMapper,
+    LineScatterPlot1D,
     PlotGraphicsContext,
 )
-from chaco.line_scatterplot_1d import LineScatterPlot1D
 
 
 class LineScatterPlot1DTest(UnittestTools, unittest.TestCase):
