@@ -56,8 +56,8 @@ Mappers
 - :class:`~.BandedMapper`
 - :class:`~.PolarMapper`
 
-Visual Components
------------------
+Visual Components / Overlays
+----------------------------
 
 - :class:`~.AbstractPlotRenderer`
 - :class:`~.AbstractOverlay`
@@ -71,15 +71,30 @@ Visual Components
 - :class:`~.VPlotContainer`
 - :class:`~.GridPlotContainer`
 - :class:`~.Label`
-- :class:`~.PlotLabel`
-- :class:`~.Legend`
-- :class:`~.ToolTip`
+- :class:`~.ColorBar`
+- :class:`~.AlignedContainerOverlay`
+- :class:`~.ColormappedSelectionOverlay`
+- :class:`~.ContainerOverlay`
+- :class:`~.CoordinateLineOverlay`
+- :class:`~.DataBox`
 - :class:`~.DataLabel`
 - :class:`~.LassoOverlay`
-- :class:`~.ColorBar`
-- :class:`~.TextBoxOverlay`
+- :class:`~.AbstractCompositeIconRenderer`
+- :class:`~.CompositeIconRenderer`
+- :class:`~.PlotLabel`
 - :class:`~.ScatterInspectorOverlay`
-- :class:`~.ColormappedSelectionOverlay`
+- :func:`~.basic_formatter`
+- :func:`~.datetime_formatter`
+- :func:`~.date_formatter`
+- :class:`~.SimpleInspectorOverlay`
+- :func:`~.time_formatter`
+- :class:`~.TextBoxOverlay`
+- :class:`~.TextGridOverlay`
+- :class:`~.ToolTip`
+- :class:`~.ImageInspectorOverlay`
+- :class:`~.ErrorLayer`
+- :class:`~.StatusLayer`
+- :class:`~.WarningLayer`
 - :class:`~.ColormappedScatterPlotView`
 - :class:`~.ScatterPlotView`
 
@@ -298,7 +313,7 @@ from .transform_color_mapper import TransformColorMapper
 from .plots.horizon_plot import BandedMapper
 from .polar_mapper import PolarMapper
 
-# Visual components
+# Visual components / Overlays
 from .abstract_plot_renderer import AbstractPlotRenderer
 from .abstract_overlay import AbstractOverlay
 from .base_plot_container import BasePlotContainer
@@ -323,15 +338,35 @@ except ImportError:
     pass
 
 from .label import Label
-from .plot_label import PlotLabel
-from .legend import Legend
-from .tooltip import ToolTip
-from .data_label import DataLabel
-from .lasso_overlay import LassoOverlay
+
+from chaco.overlays.api import (
+    AlignedContainerOverlay,
+    ColormappedSelectionOverlay,
+    ContainerOverlay,
+    CoordinateLineOverlay,
+    DataBox,
+    DataLabel,
+    LassoOverlay,
+    AbstractCompositeIconRenderer,
+    CompositeIconRenderer,
+    Legend,
+    PlotLabel,
+    ScatterInspectorOverlay,
+    basic_formatter,
+    datetime_formatter,
+    date_formatter,
+    SimpleInspectorOverlay,
+    time_formatter,
+    TextBoxOverlay,
+    TextGridOverlay,
+    ToolTip,
+    ImageInspectorOverlay,
+    ErrorLayer,
+    StatusLayer,
+    WarningLayer,
+)
+
 from .plots.color_bar import ColorBar
-from .text_box_overlay import TextBoxOverlay
-from .scatter_inspector_overlay import ScatterInspectorOverlay
-from .colormapped_selection_overlay import ColormappedSelectionOverlay
 
 # Renderers
 from .base_1d_plot import Base1DPlot
