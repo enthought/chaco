@@ -1,6 +1,4 @@
-""" Defines the ContourPolyPlot class.
-"""
-# (C) Copyright 2006-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -9,6 +7,10 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
+
+""" Defines the ContourPolyPlot class.
+"""
+
 import warnings
 
 from chaco.plots.contour.contour_poly_plot import ContourPolyPlot  # noqa: F401
