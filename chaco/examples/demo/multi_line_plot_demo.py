@@ -138,23 +138,25 @@ class MultiLinePlotDemo(HasTraits):
         self.multi_line_plot_renderer._amplitude_changed()
 
 
+# Sample rate.
+fs = 500
+# Total time.
+T = 5.0
+num_samples = fs * T
+t = np.arange(num_samples) / fs
+
+channels = np.arange(12)
+# Frequencies of the sine functions in each channel.
+freqs = 3 * (channels[:, None] + 1)
+y = np.sin(freqs * t)
+
+# Create an instance of DataModel.  This is the data to
+# be plotted with a MultiLinePlot.
+data = DataModel(x_index=t, y_index=channels, data=y)
+
+# Create the demo class, and show it.
+demo = MultiLinePlotDemo(model=data)
+
+
 if __name__ == "__main__":
-    # Sample rate.
-    fs = 500
-    # Total time.
-    T = 5.0
-    num_samples = fs * T
-    t = np.arange(num_samples) / fs
-
-    channels = np.arange(12)
-    # Frequencies of the sine functions in each channel.
-    freqs = 3 * (channels[:, None] + 1)
-    y = np.sin(freqs * t)
-
-    # Create an instance of DataModel.  This is the data to
-    # be plotted with a MultiLinePlot.
-    data = DataModel(x_index=t, y_index=channels, data=y)
-
-    # Create the demo class, and show it.
-    demo = MultiLinePlotDemo(model=data)
     demo.configure_traits()

@@ -3,10 +3,11 @@ Demonstration of altering a plot's origin and orientation.
 
 The origin parameter sets a plot's default origin to the specified corner
 of the plot window. These positions has the following behavior:
-    * 'left' : index increases left to right
-    * 'right' : index increases right to left
-    * 'top' : index increases top to bottom
-    * 'bottom' : index increases bottom to top
+
+* 'left' : index increases left to right
+* 'right' : index increases right to left
+* 'top' : index increases top to bottom
+* 'bottom' : index increases bottom to top
 
 The orientation parameter switches the x- and y-axes. Alternatively, you can
 think of this as a transpose about the origin.
