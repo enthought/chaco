@@ -11,6 +11,30 @@ New features/Improvements
 * Add missing property index_range to 1D plots (#491)
 * Support renderer traits (#514)
 
+Removals/Deprecations
+
+* Remove uses of PyArray_FromDims (#503)
+* Remove unused _speedups module (#504)
+* Remove SelectableOverlayPlotContainer and references to it (#574)
+* Remove chaco.datamapper and subdivision code (#577)
+* Remove serializable module and its tests (#598)
+* Delete codecov yaml configuration file (#622)
+* Remove examples for the vtk backend in chaco (#645)
+* Kill chaco.shell and related code (#667)
+* Remove objects/modules which explicitly raised a deprecation warning (#670)
+* Remove "chaco.scatter_markers" module (#677)
+* Delete "chaco.chaco_version" (#678)
+* Remove deprecated "ColorMapper._map" method (#684)
+* Delete sample_template.plt (#685)
+* Remove ChacoPlotItem / ChacoPlotEditor (#688)
+* Delete scalar_image_function_inspector_old.py (#689)
+* Officially deprecated VariableSizeScatterPlot (#691)
+* Remove PlotFrames (#692)
+* Delete "test_style.pss" (#697)
+* Remove plot_template.py (#702)
+* Remove a couple redundant old files (#711)
+* Delete PopupablePlot (#717)
+
 Fixes
 
 * Fix typo in the error name (#484)
@@ -103,30 +127,6 @@ Maintenance
 * Consolidate overlays into "chaco.overlays" (#741)
 * Replace bg_color with bgcolor (#742)
 * Revive ScalyPlot (#744)
-
-Removals/Deprecations
-
-* Remove uses of PyArray_FromDims (#503)
-* Remove unused _speedups module (#504)
-* Remove SelectableOverlayPlotContainer and references to it (#574)
-* Remove chaco.datamapper and subdivision code (#577)
-* Remove serializable module and its tests (#598)
-* Delete codecov yaml configuration file (#622)
-* Remove examples for the vtk backend in chaco (#645)
-* Kill chaco.shell and related code (#667)
-* Remove objects/modules which explicitly raised a deprecation warning (#670)
-* Remove "chaco.scatter_markers" module (#677)
-* Delete "chaco.chaco_version" (#678)
-* Remove deprecated "ColorMapper._map" method (#684)
-* Delete sample_template.plt (#685)
-* Remove ChacoPlotItem / ChacoPlotEditor (#688)
-* Delete scalar_image_function_inspector_old.py (#689)
-* Officially deprecated VariableSizeScatterPlot (#691)
-* Remove PlotFrames (#692)
-* Delete "test_style.pss" (#697)
-* Remove plot_template.py (#702)
-* Remove a couple redundant old files (#711)
-* Delete PopupablePlot (#717)
 
 Build/CI
 
