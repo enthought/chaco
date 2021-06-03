@@ -60,7 +60,7 @@ def create_dates(numpoints, units="days"):
     return dates
 
 
-class PlotFrame(DemoFrame):
+class Demo(DemoFrame):
     def _create_price_plots(self, times, prices, mini_height=75):
         """Creates the two plots of prices and returns them.  One of the
         plots can be zoomed and panned, and the other plot (smaller) always
@@ -221,5 +221,5 @@ if __name__ == "__main__":
     # Save demo so that it doesn't get garbage collected when run within
     # existing event loop (i.e. from ipython).
     demo = demo_main(
-        PlotFrame, size=(800, 600), title="Stock price and volume"
+        Demo, size=(800, 600), title="Stock price and volume"
     )

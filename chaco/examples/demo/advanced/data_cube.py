@@ -192,7 +192,7 @@ class ImageIndexTool(BaseTool):
             self.wheel_cb(self, event.mouse_wheel)
 
 
-class PlotFrame(DemoFrame):
+class Demo(DemoFrame):
 
     # These are the indices into the cube that each of the image plot views
     # will show; the default values are non-zero just to make it a little
@@ -466,6 +466,6 @@ def cleanup_data():
 if __name__ == "__main__":
     # Save demo so that it doesn't get garbage collected when run within
     # existing event loop (i.e. from ipython).
-    demo = demo_main(PlotFrame, size=(800, 700), title="Cube analyzer")
+    demo = demo_main(Demo, size=(800, 700), title="Cube analyzer")
     if run_cleanup:
         cleanup_data()
