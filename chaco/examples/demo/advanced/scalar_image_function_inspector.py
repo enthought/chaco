@@ -621,12 +621,8 @@ class ModelView(HasTraits):
         return super(ModelView, self).configure_traits(*args, **kws)
 
 
-def show_plot(**kwargs):
-    model = Model(**kwargs)
-    view = PlotUI(**kwargs)
-    modelview = ModelView(model=model, view=view)
-    modelview.configure_traits()
+demo = ModelView(model=Model(), view=PlotUI())
 
 
 if __name__ == "__main__":
-    show_plot()
+    demo.configure_traits()
