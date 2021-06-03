@@ -11,5 +11,5 @@ except ImportError:
 __requires__ = ["traits", "traitsui", "pyface", "numpy", "enable"]
 
 __extras_require__ = {
-    'examples': ['encore', 'scipy', 'mayavi']
+    'examples': ['encore', 'scipy']
 }
