@@ -9,5 +9,5 @@ except ImportError:
     __version__ = "not-built"
 
 __requires__ = [
-    "traits>=6.2.0", "traitsui", "pyface>=7.2.0", "numpy", "enable>=5.2.0"
+    "traits>=6.2.0", "traitsui", "pyface>=7.2.0", "numpy", "enable"
 ]
