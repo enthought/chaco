@@ -12,8 +12,8 @@ from Cython.Build import cythonize
 MAJOR = 5
 MINOR = 0
 MICRO = 0
-PRERELEASE = "rc1"
-IS_RELEASED = True
+PRERELEASE = "rc2"
+IS_RELEASED = False
 
 # If this file is part of a Git export (for example created with "git archive",
 # or downloaded from GitHub), ARCHIVE_COMMIT_HASH gives the full hash of the
