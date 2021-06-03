@@ -12,7 +12,7 @@ from Cython.Build import cythonize
 MAJOR = 5
 MINOR = 0
 MICRO = 0
-PRERELEASE = "rc1"
+PRERELEASE = "rc2"
 IS_RELEASED = False
 
 # If this file is part of a Git export (for example created with "git archive",
