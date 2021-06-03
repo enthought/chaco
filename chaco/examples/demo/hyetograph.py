@@ -144,6 +144,8 @@ class Hyetograph(HasTraits):
     )
 
 
+demo = Hyetograph()
+
+
 if __name__ == "__main__":
-    hyetograph = Hyetograph()
-    hyetograph.start()
+    demo.start()
