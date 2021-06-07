@@ -156,6 +156,11 @@ class HPlotContainer(StackedPlotContainer):
     **components** list.
     """
 
+    # The index into obj.position and obj.bounds that corresponds to
+    # **stack_dimension**.  This is a class-level and not an instance-level
+    # attribute.
+    stack_index = 0
+
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
     #: The order in which components in the plot container are laid out.
@@ -185,6 +190,15 @@ class HPlotContainer(StackedPlotContainer):
 
         return self._do_stack_layout(components, align)
 
+    ### Persistence ###########################################################
+
+    # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
+    def __getstate__(self):
+        state = super().__getstate__()
+        if "stack_index" in state:
+            del state["stack_index"]
+        return state
+
 
 class VPlotContainer(StackedPlotContainer):
     """
@@ -197,7 +211,10 @@ class VPlotContainer(StackedPlotContainer):
     stack_dimension = "v"
     #: Overrides StackedPlotContainer.
     other_dimension = "h"
-    #: Overrides StackedPlotContainer.
+
+    # The index into obj.position and obj.bounds that corresponds to
+    # **stack_dimension**.  This is a class-level and not an instance-level
+    # attribute.
     stack_index = 1
 
     # VPlotContainer attributes
@@ -225,6 +242,15 @@ class VPlotContainer(StackedPlotContainer):
             align = "max"
 
         return self._do_stack_layout(components, align)
+
+    ### Persistence ###########################################################
+
+    # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
+    def __getstate__(self):
+        state = super().__getstate__()
+        if "stack_index" in state:
+            del state["stack_index"]
+        return state
 
 
 class GridPlotContainer(BasePlotContainer):
