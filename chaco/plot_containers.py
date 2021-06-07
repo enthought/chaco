@@ -174,6 +174,17 @@ class HPlotContainer(StackedPlotContainer):
 
     _cached_preferred_size = Tuple(transient=True)
 
+    def get_preferred_size(self, components=None):
+        """Returns the size (width,height) that is preferred for this component.
+
+        Overrides PlotComponent.
+        """
+        return stacked_preferred_size(container=self, components=components)
+
+    def _do_stack_layout(self, components, align):
+        """Helper method that does the actual work of layout."""
+        stack_layout(container=self, components=components, align=align)
+
     def _do_layout(self):
         """Actually performs a layout (called by do_layout())."""
         if self.stack_order == "left_to_right":
@@ -227,6 +238,17 @@ class VPlotContainer(StackedPlotContainer):
 
     #: The amount of space to put between components.
     spacing = Float(0.0)
+
+    def get_preferred_size(self, components=None):
+        """Returns the size (width,height) that is preferred for this component.
+
+        Overrides PlotComponent.
+        """
+        return stacked_preferred_size(container=self, components=components)
+
+    def _do_stack_layout(self, components, align):
+        """Helper method that does the actual work of layout."""
+        stack_layout(container=self, components=components, align=align)
 
     def _do_layout(self):
         """Actually performs a layout (called by do_layout())."""
