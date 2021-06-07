@@ -148,6 +148,8 @@ class VPlotContainer(VStackedContainer):
 
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
+    _cached_preferred_size = Tuple(transient=True)
+
     ### Persistence ###########################################################
 
     # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
