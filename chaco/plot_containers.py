@@ -33,15 +33,13 @@ from traits.api import (
     Instance,
     List,
     Property,
+    Str,
     String,
     Trait,
     Tuple,
     Int,
 )
-from enable.simple_layout import (
-    simple_container_get_preferred_size,
-    simple_container_do_layout,
-)
+from enable.api import OverlayContainer
 
 try:
     from enable.api import ConstraintsContainer
@@ -88,7 +86,7 @@ if ConstraintsContainer is not None:
     __all__.append("ConstraintsPlotContainer")
 
 
-class OverlayPlotContainer(BasePlotContainer):
+class OverlayPlotContainer(OverlayContainer):
     """
     A plot container that stretches all its components to fit within its
     space.  All of its components must therefore be resizable.
@@ -102,16 +100,11 @@ class OverlayPlotContainer(BasePlotContainer):
     # Cache (width, height) of the container's preferred size.
     _cached_preferred_size = Tuple
 
-    def get_preferred_size(self, components=None):
-        """Returns the size (width,height) that is preferred for this component.
+    #: Redefine the container layers to name the main layer as "plot" instead
+    #: of the Enable default of "mainlayer"
+    container_under_layers = Tuple("background", "image", "underlay", "plot")
 
-        Overrides PlotComponent
-        """
-        return simple_container_get_preferred_size(self, components=components)
-
-    def _do_layout(self):
-        """Actually performs a layout (called by do_layout())."""
-        simple_container_do_layout(self)
+    draw_layer = Str("plot")
 
 
 class StackedPlotContainer(BasePlotContainer):
