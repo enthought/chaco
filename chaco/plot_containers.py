@@ -39,7 +39,8 @@ from traits.api import (
     Tuple,
     Int,
 )
-from enable.api import HStackedContainer, OverlayContainer, VStackedContainer
+from enable.api import OverlayContainer
+from enable.stacked_container import HStackedContainer, VStackedContainer
 
 try:
     from enable.api import ConstraintsContainer
