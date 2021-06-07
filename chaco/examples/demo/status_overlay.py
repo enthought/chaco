@@ -82,5 +82,8 @@ class MyPlot(HasTraits):
     )
 
 
-my_plot = MyPlot()
-my_plot.configure_traits()
+demo = MyPlot()
+
+
+if __name__ == '__main__':
+    demo.configure_traits()

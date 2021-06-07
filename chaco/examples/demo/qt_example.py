@@ -2,6 +2,9 @@
 Example of how to directly embed Chaco into Qt widgets.
 
 The actual plot being created is drawn from the basic/line_plot1.py code.
+
+This demo is intended to be run standalone and will not work within the etsdemo
+application.
 """
 from traits.etsconfig.etsconfig import ETSConfig
 

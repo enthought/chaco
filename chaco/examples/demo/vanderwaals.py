@@ -97,6 +97,8 @@ class Data(HasTraits):
     )
 
 
+popup = Data()
+
+
 if __name__ == '__main__':
-    viewer = Data()
-    viewer.configure_traits()
+    popup.configure_traits()
