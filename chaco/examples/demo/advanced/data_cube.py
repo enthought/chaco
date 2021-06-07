@@ -6,13 +6,6 @@ Click or click-drag in any data window to set the slice to view.
 
 import warnings
 
-# Outstanding TODOs:
-#  - need to add line inspectors to side and bottom plots, and synchronize
-#    with center plot
-#  - need to set the various image plots to use the same colormap instance,
-#    and that colormap's range needs to be set to min/max of the entire cube
-#  - refactor create_window() so there is less code duplication
-#  - try to eliminate the use of model.xs, ys, zs in favor of bounds tuples
 from numpy import amin, amax, zeros, fromfile, transpose, uint8
 
 # Standard library imports
