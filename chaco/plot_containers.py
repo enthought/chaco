@@ -40,10 +40,6 @@ from traits.api import (
     Int,
 )
 from enable.api import OverlayContainer
-from enable.simple_layout import (
-    simple_container_get_preferred_size,
-    simple_container_do_layout,
-)
 from enable.stacked_layout import stack_layout, stacked_preferred_size
 
 try:
