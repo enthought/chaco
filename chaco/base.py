@@ -191,12 +191,16 @@ def reverse_map_1d(data, pt, sort_order, floor_only=False):
 # These are taken from Chaco 1.0's datamapper and subdivision_cells modules.
 # TODO: Write unit tests for these!
 def right_shift(ary, newval):
-    "Returns a right-shifted version of *ary* with *newval* inserted on the left."
+    """Returns a right-shifted version of *ary* with *newval* inserted on the
+    left.
+    """
     return concatenate([[newval], ary[:-1]])
 
 
 def left_shift(ary, newval):
-    "Returns a left-shifted version of *ary* with *newval* inserted on the right."
+    """Returns a left-shifted version of *ary* with *newval* inserted on the
+    right.
+    """
     return concatenate([ary[1:], [newval]])
 
 
@@ -215,10 +219,12 @@ def sort_points(points, index=0):
 
 def find_runs(int_array, order="ascending"):
     """
-    find_runs(int_array, order=<'ascending'|'flat'|'descending'>) -> list_of_int_arrays
+    find_runs(int_array, order=<'ascending'|'flat'|'descending'>)
+    -> list_of_int_arrays
 
     Given an integer array sorted in ascending/descending order or flat order,
-    returns a list of continuous runs of integers inside the list.  for example::
+    returns a list of continuous runs of integers inside the list.
+    For example::
 
         find_runs([1,2,3,6,7,8,9,10,11,15])
 

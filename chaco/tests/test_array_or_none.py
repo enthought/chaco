@@ -16,10 +16,8 @@ import numpy as np
 from chaco.array_data_source import ArrayDataSource
 from chaco.axis import PlotAxis
 from chaco.data_label import DataLabel
-from chaco.data_range_1d import DataRange1D
 from chaco.label_axis import LabelAxis
 from chaco.legend import Legend
-from chaco.linear_mapper import LinearMapper
 from chaco.plots.scatterplot import ScatterPlot
 
 
@@ -32,7 +30,7 @@ class TestArrayOrNone(unittest.TestCase):
 
     def test_array_data_source(self):
         with warnings.catch_warnings(record=True) as w:
-            src = ArrayDataSource(np.arange(5))
+            ArrayDataSource(np.arange(5))
         self.assertEqual(w, [])
 
     def test_scatter_plot(self):

@@ -65,7 +65,8 @@ class Label(HasTraits):
     #: The font of the label text.
     font = KivaFont("modern 10")
 
-    #: Number of pixels of margin around the label, for both X and Y dimensions.
+    #: Number of pixels of margin around the label, for both X and Y
+    #: dimensions.
     margin = Int(2)
 
     #: Number of pixels of spacing between lines of text.
@@ -102,7 +103,8 @@ class Label(HasTraits):
         return width, height
 
     def get_bounding_box(self, gc):
-        """Returns a rectangular bounding box for the Label as (width,height)."""
+        """Returns a rectangular bounding box for the Label as (width,height).
+        """
         width, height = self.get_width_height(gc)
         if self.rotate_angle in (90.0, 270.0):
             return (height, width)

@@ -11,7 +11,6 @@
 from numpy import array, float64, full_like, ndarray, transpose
 from traits.api import Instance, DelegatesTo, Bool, Int
 
-from enable.api import transparent_color_trait
 from chaco.color_mapper import ColorMapper
 from chaco.base_xy_plot import BaseXYPlot
 from chaco.linear_mapper import LinearMapper
@@ -97,7 +96,7 @@ class HorizonPlot(BaseXYPlot):
             # draw positive bands
             inc = -1 * array([0, y_plus_height])
             if self.negative_bands:
-                render_bands = bands[self.bands + 1 :]
+                render_bands = bands[self.bands + 1:]
             else:
                 render_bands = bands[1:]
             for i, col in enumerate(render_bands):
@@ -112,7 +111,7 @@ class HorizonPlot(BaseXYPlot):
                     points[:, 1] += y_plus_height
                     inc *= -1
                     zeroy = int(yhigh) + 2
-                for i, col in enumerate(bands[self.bands - 1 :: -1]):
+                for i, col in enumerate(bands[self.bands - 1:: -1]):
                     self._render_fill(gc, col, points + i * inc, ox, zeroy)
 
             gc.set_stroke_color((0.75, 0.75, 0.75))

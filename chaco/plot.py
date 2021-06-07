@@ -355,7 +355,8 @@ class Plot(DataView):
 
         Returns
         -------
-        [renderers] -> list of renderers created in response to this call to plot()
+        [renderers] -> list of renderers created in response to this call to
+        plot()
         """
         if len(data) == 0:
             return
@@ -569,11 +570,13 @@ class Plot(DataView):
         elif plot_type in ("cmap_scatter", "cmap_segment"):
             if plot_type == "cmap_scatter" and len(data) != 3:
                 raise ValueError(
-                    "Colormapped scatter plots require (index, value, color) data"
+                    "Colormapped scatter plots require (index, value, color) "
+                    "data"
                 )
             elif len(data) > 4 or len(data) < 3:
                 raise ValueError(
-                    "Colormapped segment plots require (index, value, color) or (index, value, color, width) data"
+                    "Colormapped segment plots require (index, value, color) "
+                    "or (index, value, color, width) data"
                 )
 
             index = self._get_or_create_datasource(data[0])
@@ -688,8 +691,8 @@ class Plot(DataView):
     ):
         """Adds image plots to this Plot object.
 
-        If *data* has shape (N, M, 3) or (N, M, 4), then it is treated as RGB or
-        RGBA (respectively) and *colormap* is ignored.
+        If *data* has shape (N, M, 3) or (N, M, 4), then it is treated as RGB
+        or RGBA (respectively) and *colormap* is ignored.
 
         If *data* is an array of floating-point data, then a colormap can
         be provided via the *colormap* argument, or the default of 'Spectral'
@@ -1216,7 +1219,8 @@ class Plot(DataView):
 
         Returns
         -------
-        [renderers] -> list of renderers created in response to this call to plot()
+        [renderers] -> list of renderers created in response to this call to
+        plot()
         """
 
         if len(data) == 0:
@@ -1327,8 +1331,9 @@ class Plot(DataView):
     def delplot(self, *names):
         """ Removes the named sub-plots. """
 
-        # This process involves removing the plots, then checking the index range
-        # and value range for leftover datasources, and removing those if necessary.
+        # This process involves removing the plots, then checking the index
+        # range and value range for leftover datasources, and removing those if
+        # necessary.
 
         # Remove all the renderers from us (container) and create a set of the
         # datasources that we might have to remove from the ranges
@@ -1340,7 +1345,8 @@ class Plot(DataView):
             deleted_sources.add(renderer.index)
             deleted_sources.add(renderer.value)
 
-        # Cull the candidate list of sources to remove by checking the other plots
+        # Cull the candidate list of sources to remove by checking the other
+        # plots
         sources_in_use = set()
         for p in itertools.chain(*list(self.plots.values())):
             sources_in_use.add(p.index)

@@ -22,10 +22,10 @@ whitepoint as one of its standard interchange color spaces.
 """
 
 import numpy as np
-from numpy.linalg import inv, solve
+from numpy.linalg import inv
 
 
-#### Utilities ################################################################
+# Utilities ################################################################
 
 
 def convert(matrix, TTT, axis=-1):
@@ -117,7 +117,7 @@ def triwhite(x, y):
     return [X, Y, Z]
 
 
-#### Data #####################################################################
+# Data #####################################################################
 
 # From the sRGB specification.
 xyz_from_rgb = np.array(
@@ -144,7 +144,7 @@ whitepoints = {
 }
 
 
-#### Conversion routines ######################################################
+# Conversion routines ######################################################
 
 
 def xyz2lab(xyz, axis=-1, wp=whitepoints["D65"][-1]):

@@ -19,7 +19,7 @@ class DataViewTestCase(unittest.TestCase):
         self.assertTrue(dv.orientation == "h")
         self.assertTrue(dv.index_scale == "linear")
         self.assertTrue(dv.bgcolor == "white")
-        self.assertTrue(dv.overlay_border == True)
+        self.assertTrue(dv.overlay_border)
 
         self.assertTrue(dv.range2d.x_range == dv.index_range)
         self.assertTrue(dv.range2d.y_range == dv.value_range)

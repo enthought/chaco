@@ -43,10 +43,10 @@ class AbstractDataSource(HasTraits):
     #: the right default value.
     index_dimension = DimensionTrait(transient=True)
 
-    #: A dictionary keyed on strings.  In general, it maps to indices (or tuples
-    #: of indices, depending on **value_dimension**), as in the case of
-    #: selections and annotations.  Applications and renderers can add their own
-    #: custom metadata, but must avoid using keys that might result in name
+    #: A dictionary keyed on strings.  In general, it maps to indices (or
+    #: tuples of indices, depending on **value_dimension**), as in the case of
+    #: selections and annotations.  Applications and renderers can add their
+    #: own custom metadata, but must avoid using keys that might result in name
     #: collision.
     metadata = Dict
 
@@ -123,8 +123,6 @@ class AbstractDataSource(HasTraits):
         If data is the empty set, then the min and max vals are 0.0.
         """
         raise NotImplementedError
-
-    ### Persistence ###########################################################
 
     def _metadata_default(self):
         return {"selections": [], "annotations": []}

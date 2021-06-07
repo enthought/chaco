@@ -11,6 +11,7 @@
 import os
 import numpy
 
+from chaco.base import arg_find_runs
 from chaco.grid_mapper import GridMapper
 from traits.api import Property, Enum, Str, cached_property
 

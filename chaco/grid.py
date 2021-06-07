@@ -144,10 +144,10 @@ class PlotGrid(AbstractOverlay):
     #:              for each grid point or a single tuple (low, high)
     transverse_bounds = Trait(None, Tuple, Callable)
 
-    #: Mapper in the direction corresponding to self.orientation, i.e. transverse
-    #: to the direction of self.mapper.  This is used to compute the screen
-    #: position of transverse_bounds.  If this is not specified, then
-    #: transverse_bounds has no effect, and vice versa.
+    #: Mapper in the direction corresponding to self.orientation, i.e.
+    #: transverse to the direction of self.mapper.  This is used to compute
+    #: the screen position of transverse_bounds.  If this is not specified,
+    #: then transverse_bounds has no effect, and vice versa.
     transverse_mapper = Instance(AbstractMapper)
 
     #: Dimensions that the grid is resizable in (overrides PlotComponent).
@@ -428,9 +428,8 @@ class PlotGrid(AbstractOverlay):
     def _bounds_items_changed_for_component(self):
         self.invalidate()
 
-    # ------------------------------------------------------------------------
-    # Event handlers for visual attributes.  These mostly just call request_redraw()
-    # ------------------------------------------------------------------------
+    # Event handlers for visual attributes.
+    # These mostly just call request_redraw()
 
     @observe("visible,line_color,line_style,line_weight")
     def visual_attr_changed(self, event=None):
@@ -452,7 +451,7 @@ class PlotGrid(AbstractOverlay):
         self.invalidate()
         self.visual_attr_changed()
 
-    ### Persistence ###########################################################
+    # Persistence ###########################################################
 
     def _post_load(self):
         super()._post_load()

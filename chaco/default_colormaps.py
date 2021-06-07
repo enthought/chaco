@@ -74,11 +74,11 @@ def reverse(func):
 def center(func, center=0.0):
     """Modify the range of a colormap to be centered around the given value.
 
-    For example, when passed a DataRange1D(low=-0.5, high=1.0), a colormap would
-    usually have its lowest color at -0.5 and its highest at 1.0. Some colormaps
-    are designed such that the middle color is special. Using this modifier, the
-    example range would be modified to -1.0 and 1.0 to make 0.0 correspond with
-    the middle color.
+    For example, when passed a DataRange1D(low=-0.5, high=1.0), a colormap
+    would usually have its lowest color at -0.5 and its highest at 1.0. Some
+    colormaps are designed such that the middle color is special. Using this
+    modifier, the example range would be modified to -1.0 and 1.0 to make 0.0
+    correspond with the middle color.
 
     Parameters
     ----------
@@ -8924,7 +8924,7 @@ color_map_functions = [
     YlGn,
     YlGnBu,
     YlOrBr,
-    YlOrRd,  
+    YlOrRd,
     gist_earth,
     gist_gray,
     gist_heat,

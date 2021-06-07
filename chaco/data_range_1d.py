@@ -37,18 +37,18 @@ class DataRange1D(BaseDataRange):
     #: AbstractDataRange). To set it, use **high_setting**.
     high = Property
 
-    #: Property for the lower bound of this range (overrides AbstractDataRange).
+    #: Property for the lower bound of this range (overrides AbstractDataRange)
     #:
     #: * 'auto': The lower bound is automatically set at or below the minimum
     #:   of the data.
-    #: * 'track': The lower bound tracks the upper bound by **tracking_amount**.
+    #: * 'track': The lower bound tracks the upper bound by **tracking_amount**
     #: * CFloat: An explicit value for the lower bound
     low_setting = Property(Trait("auto", "auto", "track", CFloat))
-    #: Property for the upper bound of this range (overrides AbstractDataRange).
+    #: Property for the upper bound of this range (overrides AbstractDataRange)
     #:
     #: * 'auto': The upper bound is automatically set at or above the maximum
     #:   of the data.
-    #: * 'track': The upper bound tracks the lower bound by **tracking_amount**.
+    #: * 'track': The upper bound tracks the lower bound by **tracking_amount**
     #: * CFloat: An explicit value for the upper bound
     high_setting = Property(Trait("auto", "auto", "track", CFloat))
 
@@ -162,7 +162,8 @@ class DataRange1D(BaseDataRange):
             self.updated = result
 
     def scale_tracking_amount(self, multiplier):
-        """Sets the **tracking_amount** to a new value, scaled by *multiplier*."""
+        """Sets the **tracking_amount** to a new value, scaled by *multiplier*.
+        """
         self.tracking_amount = self.tracking_amount * multiplier
         self._do_track()
 
@@ -224,9 +225,9 @@ class DataRange1D(BaseDataRange):
         """
         Returns
         -------
-        If fire_event is False and the change would have fired an event, returns
-        the tuple of the new low and high values.  Otherwise returns None.  In
-        particular, if fire_event is True, it always returns None.
+        If fire_event is False and the change would have fired an event,
+        returns the tuple of the new low and high values.  Otherwise returns
+        None.  In particular, if fire_event is True, it always returns None.
         """
         new_values = None
         if self._low_setting != val:
@@ -278,9 +279,9 @@ class DataRange1D(BaseDataRange):
         """
         Returns
         -------
-        If fire_event is False and the change would have fired an event, returns
-        the tuple of the new low and high values.  Otherwise returns None.  In
-        particular, if fire_event is True, it always returns None.
+        If fire_event is False and the change would have fired an event,
+        returns the tuple of the new low and high values.  Otherwise returns
+        None.  In particular, if fire_event is True, it always returns None.
         """
         new_values = None
         if self._high_setting != val:
@@ -335,8 +336,8 @@ class DataRange1D(BaseDataRange):
 
         if null_bounds:
             # If we have no sources and our settings are "auto", then reset our
-            # bounds to infinity; otherwise, set the _value to the corresponding
-            # setting.
+            # bounds to infinity; otherwise, set the _value to the
+            # corresponding setting.
             if self._low_setting in ("auto", "track"):
                 self._low_value = -inf
             else:
@@ -407,7 +408,7 @@ class DataRange1D(BaseDataRange):
         self._sources_changed(None, self.sources)
 
 
-###### method to calculate bounds for a given 1-dimensional set of data
+# method to calculate bounds for a given 1-dimensional set of data
 def calc_bounds(
     low_set,
     high_set,

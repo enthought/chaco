@@ -12,7 +12,7 @@ import numpy
 
 from chaco.abstract_overlay import AbstractOverlay
 from enable.api import ColorTrait, KeySpec
-from traits.api import Bool, Enum, Trait, Int, Float, Tuple, Instance, Property
+from traits.api import Bool, Enum, Trait, Int, Float, Tuple, Instance
 
 from .better_zoom import BetterZoom
 from .tool_states import SelectedZoomState
@@ -32,7 +32,8 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     tool_mode = Enum("box", "range")
 
     #: Is the tool always "on"? If True, left-clicking always initiates
-    #: a zoom operation; if False, the user must press a key to enter zoom mode.
+    #: a zoom operation; if False, the user must press a key to enter zoom
+    # mode.
     always_on = Bool(False)
 
     #: Defines a meta-key, that works with always_on to set the zoom mode. This
@@ -47,12 +48,12 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     #: the tool to actually take effect.
     minimum_screen_delta = Int(10)
 
-    #: The key press to enter zoom mode, if **always_on** is False.  Has no effect
-    #: if **always_on** is True.
+    #: The key press to enter zoom mode, if **always_on** is False.  Has no
+    #: effect if **always_on** is True.
     enter_zoom_key = Instance(KeySpec, args=("z",))
 
-    #: The key press to leave zoom mode, if **always_on** is False.  Has no effect
-    #: if **always_on** is True.
+    #: The key press to leave zoom mode, if **always_on** is False.  Has no
+    #: effect if **always_on** is True.
     exit_zoom_key = Instance(KeySpec, args=("z",))
 
     # -------------------------------------------------------------------------

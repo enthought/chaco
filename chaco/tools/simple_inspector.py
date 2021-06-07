@@ -94,8 +94,8 @@ class SimpleInspectorTool(BaseTool):
                 (event.x, event.y), outside_returns_none=False
             )
 
-            # FIXME: off-by-one error. The size of the index is +1 to the size of
-            # the image array
+            # FIXME: off-by-one error. The size of the index is +1 to the size
+            # of the image array
             if y_ndx == self.component.value.data.shape[0]:
                 y_ndx -= 1
             if x_ndx == self.component.value.data.shape[1]:

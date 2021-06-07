@@ -43,10 +43,10 @@ class PointDataSource(ArrayDataSource):
     #: ArrayDataSource).
     value_dimension = ReadOnly("point")
 
-    #: The sort order of the data. Although sort order is less common with point
-    #: data, it can be useful in case where the value data is sorted along some
-    #: axis.  Note that **sort_index** is used only if **sort_order** is not
-    #: 'none'.
+    #: The sort order of the data. Although sort order is less common with
+    #: point data, it can be useful in case where the value data is sorted
+    #: along some axis.  Note that **sort_index** is used only if
+    #: **sort_order** is not 'none'.
     sort_order = SortOrderTrait
 
     #: Which of the value axes the **sort_order** refers to.
@@ -82,9 +82,8 @@ class PointDataSource(ArrayDataSource):
         shape = data.shape
         if (len(shape) != 2) or (shape[1] != 2):
             raise RuntimeError(
-                "PointDataSource constructor requires Nx2 array, but got array of shape "
-                + str(shape)
-                + " instead."
+                "PointDataSource constructor requires Nx2 array, but got "
+                "array of shape " + str(shape) + " instead."
             )
         super().__init__(data, **kw)
 
@@ -127,7 +126,7 @@ class PointDataSource(ArrayDataSource):
         if index != 0 and index != 1:
             raise ValueError("Index must be 0 or 1.")
 
-        # This basically reduces to a scalar data search along self.data[index].
+        # This basically reduces to a scalar data search along self.data[index]
         lowerleft, upperright = self._cached_bounds
         min_val = lowerleft[index]
         max_val = upperright[index]

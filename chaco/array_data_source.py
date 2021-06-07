@@ -15,7 +15,7 @@ from numpy import array, empty, isfinite, ones, ndarray
 import numpy as np
 
 # Enthought library imports
-from traits.api import Any, Constant, Int, Tuple
+from traits.api import Any, Constant, Tuple
 
 # Chaco imports
 from .base import NumericalSequenceTrait, reverse_map_1d, SortOrderTrait

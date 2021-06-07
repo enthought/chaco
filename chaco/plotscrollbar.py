@@ -135,8 +135,9 @@ class PlotScrollBar(NativeScrollBar):
     # ----------------------------------------------------------------------
 
     def _component_changed(self, old, new):
-        # Check to see if we're currently overriding the value of self.component
-        # in self.plot.  If so, then don't change the event listeners.
+        # Check to see if we're currently overriding the value of
+        # self.component in self.plot.  If so, then don't change the event
+        # listeners.
         if self._plot is not None:
             return
         if old is not None:

@@ -64,9 +64,9 @@ class LegendTool(DragTool):
         Implements DragTool. Moves the legend by aligning it to a corner of its
         overlay component.
         """
-        # To properly move a legend (which aligns itself to a corner of its overlay
-        # component), we need to modify the padding amounts as opposed to modifying
-        # the position directly.
+        # To properly move a legend (which aligns itself to a corner of its
+        # overlay component), we need to modify the padding amounts as opposed
+        # to modifying the position directly.
         if self.component:
             legend = self.component
             valign, halign = legend.align

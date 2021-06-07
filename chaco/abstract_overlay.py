@@ -29,8 +29,9 @@ class AbstractOverlay(PlotComponent):
     containment-ownership relationship.
     """
 
-    #: The component that this object overlays. This can be None. By default, if
-    #: this object is called to draw(), it tries to render onto this component.
+    #: The component that this object overlays. This can be None. By default,
+    #: if this object is called to draw(), it tries to render onto this
+    #: component.
     component = Instance(Component)
 
     #: The default layer that this component draws into.

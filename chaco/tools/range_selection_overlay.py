@@ -39,7 +39,8 @@ class RangeSelectionOverlay(AbstractOverlay):
     plot = Property(observe="component")
 
     #: The mapper (and associated range) that drive this RangeSelectionOverlay.
-    #: By default, this is the mapper on self.plot that corresponds to self.axis.
+    #: By default, this is the mapper on self.plot that corresponds to
+    #: self.axis.
     mapper = Instance(AbstractMapper)
 
     #: The element of an (x,y) tuple that corresponds to the axis index.
@@ -48,8 +49,8 @@ class RangeSelectionOverlay(AbstractOverlay):
     axis_index = Property
 
     #: The name of the metadata to look at for dataspace bounds. The metadata
-    #: can be either a tuple (dataspace_start, dataspace_end) in "selections" or
-    #: a boolean array mask of seleted dataspace points with any other name
+    #: can be either a tuple (dataspace_start, dataspace_end) in "selections"
+    #: or a boolean array mask of seleted dataspace points with any other name
     metadata_name = Str("selections")
 
     # ------------------------------------------------------------------------

@@ -178,8 +178,8 @@ class DataBox(AbstractOverlay):
 
     def my_component_moved(self, event=None):
         if self.affinity == "screen":
-            # If we have screen affinity, then we need to take our current position
-            # and map that back down into data coords
+            # If we have screen affinity, then we need to take our current
+            # position and map that back down into data coords
             self._update_position()
             self._update_bounds()
         self._bounds_valid = False

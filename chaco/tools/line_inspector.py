@@ -36,7 +36,8 @@ class LineInspector(BaseTool):
     #: space:
     #:    The tool maps from screen space into the data space of the plot.
     #: indexed:
-    #:    The tool maps from screen space to an index into the plot's index array.
+    #:    The tool maps from screen space to an index into the plot's index
+    #:    array.
     inspect_mode = Enum("space", "indexed")
 
     #: Respond to user mouse events?
@@ -46,8 +47,8 @@ class LineInspector(BaseTool):
     #: and update its own position?
     is_listener = Bool(False)
 
-    #: If interactive, does the line inspector write the current data space point
-    #: to the appropriate data source's metadata?
+    #: If interactive, does the line inspector write the current data space
+    #: point to the appropriate data source's metadata?
     write_metadata = Bool(False)
 
     #: The name of the metadata field to listen or write to.

@@ -52,21 +52,22 @@ class ImageData(AbstractDataSource):
     #: must be of type uint8.
     #:
     #: NOTE: If this ImageData was constructed with a transposed data array,
-    #: then internally it is still transposed (i.e., the x-axis is the first axis
-    #: and the y-axis is the second), and the **data** array property might not be
-    #: contiguous.  If contiguousness is required and calling copy() is too
-    #: expensive, use the **raw_value** attribute. Also note that setting this
-    #: trait does not change the value of **transposed**,
+    #: then internally it is still transposed (i.e., the x-axis is the first
+    #: axis and the y-axis is the second), and the **data** array property
+    #: might not be contiguous.  If contiguousness is required and calling
+    #: copy() is too expensive, use the **raw_value** attribute. Also note that
+    #:  setting this trait does not change the value of **transposed**,
     #: so be sure to set it to its proper value when using the same ImageData
     #: instance interchangeably to store transposed and non-transposed data.
     data = Property(ImageTrait)
 
     #: Is **raw_value**, the actual underlying image data
-    #: array, transposed from **data**? (I.e., does the first axis correspond to
-    #: the x-direction and the second axis correspond to the y-direction?)
+    #: array, transposed from **data**? (I.e., does the first axis correspond
+    #: to the x-direction and the second axis correspond to the y-direction?)
     #:
     #: Rather than transposing or swapping axes on the data and destroying
-    #: continuity, this class exposes the data as both **data** and **raw_value**.
+    #: continuity, this class exposes the data as both **data** and
+    #: **raw_value**.
     transposed = Bool(False)
 
     #: A read-only attribute that exposes the underlying array.
@@ -127,7 +128,8 @@ class ImageData(AbstractDataSource):
             return self._data.shape[0]
 
     def get_array_bounds(self):
-        """Always returns ((0, width), (0, height)) for x-bounds and y-bounds."""
+        """Always returns ((0, width), (0, height)) for x-bounds and y-bounds.
+        """
         if self.transposed:
             b = ((0, self._data.shape[0]), (0, self._data.shape[1]))
         else:

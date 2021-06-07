@@ -50,8 +50,8 @@ class ColorBar(AbstractPlotRenderer):
     #: Optional index data source for generic tools to attach metadata to.
     index = Property
 
-    #: Optional color-mapped plot that this color bar references.  If specified,
-    #: the plot must have a **color_mapper** attribute.
+    #: Optional color-mapped plot that this color bar references.  If
+    #: specified, the plot must have a **color_mapper** attribute.
     plot = Any
 
     #: Is there a visible grid on the colorbar?
@@ -75,7 +75,8 @@ class ColorBar(AbstractPlotRenderer):
     border_visible = True
     #: The orientation of the index axis.
     orientation = Enum("v", "h")
-    #: Should the bar go left-to-right or bottom-to-top (normal) or the reverse?
+    #: Should the bar go left-to-right or bottom-to-top (normal) or the
+    #: reverse?
     direction = Enum("normal", "flipped")
     #: Overrides the default background color trait in PlotComponent.
     bgcolor = "transparent"
@@ -148,10 +149,8 @@ class ColorBar(AbstractPlotRenderer):
         with gc:
             if self.orientation == "h":
                 perpendicular_dim = 1
-                axis_dim = 0
             else:
                 perpendicular_dim = 0
-                axis_dim = 1
 
             mapper = self.index_mapper
 
@@ -163,8 +162,8 @@ class ColorBar(AbstractPlotRenderer):
 
             # Get the data values associated with the list of screen points.
             if mapper.range.low == mapper.range.high:
-                # LogMapper.map_data() returns something unexpected if low==high,
-                # so we'll handle that case here.
+                # LogMapper.map_data() returns something unexpected if
+                # low==high, so we'll handle that case here.
                 data_points = array([mapper.range.high])
             else:
                 data_points = mapper.map_data(scrn_points)

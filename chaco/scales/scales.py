@@ -100,7 +100,8 @@ class AbstractScale(object):
             The total character width available for labelling the interval.
 
         One of *numlabels* or *char_width* must be provided. If both are
-        provided, then both are considered when picking label density and format.
+        provided, then both are considered when picking label density and
+        format.
         """
         ticks = self.ticks(start, end, numlabels)
         labels = self.formatter.format(ticks, numlabels, char_width)
@@ -313,9 +314,10 @@ class LogScale(AbstractScale):
             formatter = BasicFormatter()
         self.formatter = formatter
 
-    # In the following utility functions, "irep" stands for "integer representation".
-    # For a given base interval size i (i.e. "magic number"), there is a one-to-one
-    # mapping between the nice tick values and the integers.
+    # In the following utility functions, "irep" stands for "integer
+    # representation". For a given base interval size i (i.e. "magic number"),
+    # there is a one-to-one mapping between the nice tick values and the
+    # integers.
 
     def _irep_to_value(self, n, i):
         """For a given "magic number" i (i.e. spacing of the evenly spaced ticks
@@ -349,17 +351,19 @@ class LogScale(AbstractScale):
 
     def _logtickceil_as_irep(self, x, i):
         """For a given "magic number" i (i.e. spacing of the evenly spaced ticks
-        in the decade [1,10]), compute the integer representation of the smallest
-        tick not less than x."""
+        in the decade [1,10]), compute the integer representation of the
+        smallest tick not less than x.
+        """
         j, b = self._power_and_interval(x, i)
         k = int(ceil(float(x) / b))
         n = self._power_and_index_to_irep(j, k, i)
         return n
 
     def _logtickfloor_as_irep(self, x, i):
-        """For a given "magic number" i (i.e. spacing of the evenly spaced ticks
-        in the decade [1,10]), compute the integer representation of the largest
-        tick not greater than x."""
+        """For a given "magic number" i (i.e. spacing of the evenly spaced
+        ticks in the decade [1,10]), compute the integer representation of the
+        largest tick not greater than x.
+        """
         j, b = self._power_and_interval(x, i)
         k = int(floor(float(x) / b))
         n = self._power_and_index_to_irep(j, k, i)
@@ -447,7 +451,8 @@ class ScaleSystem(object):
         self.default_scale = kw.get("default_scale", DefaultScale())
 
         # Heuristics for picking labels
-        # The ratio of total label character count to the available character width
+        # The ratio of total label character count to the available character
+        # width
         self.fill_ratio = 0.3
         self.default_numticks = 8
 
@@ -496,7 +501,8 @@ class ScaleSystem(object):
             The total character width available for labelling the interval.
 
         One of *numlabels* or *char_width* must be provided.  If both are
-        provided, then both are considered when picking label density and format.
+        provided, then both are considered when picking label density and
+        format.
 
         Returns
         -------
@@ -571,9 +577,9 @@ class ScaleSystem(object):
             closest_scale = self._get_scale_np(start, end, numticks)
 
             if self.default_scale is not None:
-                # Handle the edge cases and see if there is a major discrepancy between
-                # what the scales offer and the desired number of ticks; if so, revert
-                # to using the default scale
+                # Handle the edge cases and see if there is a major discrepancy
+                # between what the scales offer and the desired number of
+                # ticks; if so, revert to using the default scale
                 approx_ticks = closest_scale.num_ticks(start, end, numticks)
                 if (
                     (approx_ticks == 0)

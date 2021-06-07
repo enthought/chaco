@@ -12,7 +12,7 @@
 Classes for formatting labels for values or times.
 """
 
-from math import ceil, floor, fmod, log10
+from math import ceil, floor, log10
 
 from numpy import abs, all, array, asarray, amax, amin
 from .safetime import strftime, time, safe_fromtimestamp, localtime
@@ -33,7 +33,8 @@ class NullFormatter(object):
     """Formatter for empty labels."""
 
     def format(ticks, numlabels=None, char_width=None):
-        """Returns a list containing an empty label for each item in *ticks*."""
+        """Returns a list containing an empty label for each item in *ticks*.
+        """
         return [""] * len(ticks)
 
     def estimate_width(start, end, numlabels=None, char_width=None):
@@ -44,7 +45,8 @@ class NullFormatter(object):
 class BasicFormatter(object):
     """Formatter for numeric labels."""
 
-    # This is a class-level default that is related to the algorithm in format()
+    # This is a class-level default that is related to the algorithm in
+    # format()
     avg_label_width = 7.0
 
     # Toggles whether or not to use scientific notation when the values exceed
@@ -141,7 +143,8 @@ class BasicFormatter(object):
                 emax = len(exp_oom)
 
                 if chars_per_label < emax:
-                    # We're sort of hosed.  Use a minimum 3 chars for the mantissa.
+                    # We're sort of hosed.  Use a minimum 3 chars for the
+                    # mantissa.
                     mmax = 3
                 else:
                     mmax = chars_per_label - emax - 1
@@ -214,7 +217,8 @@ class BasicFormatter(object):
         ticker=None,
     ):
         """Returns an estimate of the total number of characters used by the
-        the labels for the given set of inputs, as well as the number of labels.
+        the labels for the given set of inputs, as well as the number of
+        labels.
 
         Parameters
         ----------
@@ -319,7 +323,6 @@ class OffsetFormatter(BasicFormatter):
     offset = None
 
     def _compute_offset(self, ticks):
-        first, last = ticks[0], ticks[-1]
         data_range = ticks[-1] - ticks[0]
         range_oom = int(ceil(log10(data_range)))
         pow_of_ten = 10 ** range_oom
@@ -418,7 +421,8 @@ def strftimeEx(fmt, t, timetuple=None):
     - ``%(ms_)``: milliseconds (uses floor())
     - ``%(us)``:  microseconds (uses round())
 
-    The format may also be a callable which will bypass time.strftime() entirely.
+    The format may also be a callable which will bypass time.strftime()
+    entirely.
     """
     if callable(fmt):
         return fmt(t)
@@ -472,7 +476,7 @@ class TimeFormatter(object):
         "seconds": (":%S", "%Ss"),
         "minsec": ("%M:%S",),  # '%Mm%S', '%Mm%Ss'),
         "minutes": ("%Mm",),
-        "hourmin": ("%H:%M",),  #'%Hh%M', '%Hh%Mm', '%H:%M:%S','%Hh %Mm %Ss'),
+        "hourmin": ("%H:%M",),  # '%Hh%M', '%Hh%Mm', '%H:%M:%S','%Hh %Mm %Ss'),
         "hours": ("%Hh", "%H:%M"),
         "days": ("%m/%d", "%a%d"),
         "months": ("%m/%Y", "%b%y"),
@@ -600,11 +604,12 @@ class TimeFormatter(object):
         labels = []
         resol_ndx = self.format_order.index(resol)
 
-        # This dictionary maps the name of a time resolution (in self.format_order)
-        # to its index in a time.localtime() timetuple.  The default is to map
-        # everything to index 0, which is year.  This is not ideal; it might cause
-        # a problem with the tick at midnight, january 1st, 0 a.d. being incorrectly
-        # promoted at certain tick resolutions.
+        # This dictionary maps the name of a time resolution
+        # (in self.format_order) to its index in a time.localtime() timetuple.
+        # The default is to map everything to index 0, which is year.  This is
+        # not ideal; it might cause a problem with the tick at midnight,
+        # january 1st, 0 a.d. being incorrectly promoted at certain tick
+        # resolutions.
         time_tuple_ndx_for_resol = dict.fromkeys(self.format_order, 0)
         time_tuple_ndx_for_resol.update(
             {
@@ -625,7 +630,7 @@ class TimeFormatter(object):
             try:
                 tm = localtime(t)
                 s = strftimeEx(format, t, tm)
-            except ValueError as e:
+            except ValueError:
                 warnings.warn("Unable to convert tick for timestamp " + str(t))
                 labels.append("ERR")
                 continue
@@ -635,8 +640,9 @@ class TimeFormatter(object):
 
             # The way to check that we are at the boundary of the next unit of
             # time is by checking that we have 0 units of the resolution, i.e.
-            # we are at zero minutes, so display hours, or we are at zero seconds,
-            # so display minutes (and if that is zero as well, then display hours).
+            # we are at zero minutes, so display hours, or we are at zero
+            # seconds, so display minutes (and if that is zero as well, then
+            # display hours).
             while (
                 tm[time_tuple_ndx_for_resol[self.format_order[next_ndx]]] == 0
             ):
@@ -683,7 +689,8 @@ class TimeFormatter(object):
         ticker=None,
     ):
         """Returns an estimate of the total number of characters used by the
-        the labels for the given set of inputs, as well as the number of labels.
+        the labels for the given set of inputs, as well as the number of
+        labels.
 
         Parameters
         ----------

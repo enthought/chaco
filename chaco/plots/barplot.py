@@ -146,10 +146,10 @@ class BarPlot(AbstractPlotRenderer):
     # Indicates whether or not the data cache is valid
     _cache_valid = Bool(False)
 
-    # Cached data values from the datasources.  If **bar_width_type** is "data",
-    # then this is an Nx4 array of (bar_left, bar_right, start, end) for a
-    # bar plot in normal orientation.  If **bar_width_type** is "screen", then
-    # this is an Nx3 array of (bar_center, start, end).
+    # Cached data values from the datasources.  If **bar_width_type** is
+    # "data", then this is an Nx4 array of (bar_left, bar_right, start, end)
+    # for a bar plot in normal orientation.  If **bar_width_type** is "screen",
+    # then this is an Nx3 array of (bar_center, start, end).
     _cached_data_pts = Any
 
     # ------------------------------------------------------------------------
@@ -323,8 +323,8 @@ class BarPlot(AbstractPlotRenderer):
                 upper_right_pts = self.map_screen(data[:, (1, 3)])
             else:
                 half_width = self.bar_width / 2.0
-                # map the bar centers into screen space and then compute the bar
-                # start and end positions
+                # map the bar centers into screen space and then compute the
+                # bar start and end positions
                 lower_left_pts = self.map_screen(data[:, (0, 1)])
                 upper_right_pts = self.map_screen(data[:, (0, 2)])
                 lower_left_pts[:, 0] -= half_width

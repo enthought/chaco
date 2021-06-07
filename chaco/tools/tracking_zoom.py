@@ -40,8 +40,8 @@ class TrackingZoom(ZoomTool):
                 zoom = (1 + self.zoom_factor) / 2
 
             # We'll determine the current position of the cursor in dataspace,
-            # then zoom in while trying to maintain the mouse screen coordinates
-            # in the new range.
+            # then zoom in while trying to maintain the mouse screen
+            # coordinates in the new range.
             c = self.component
             low_pt, high_pt = self._map_coordinate_box(
                 (c.x, c.y), (c.x2, c.y2)

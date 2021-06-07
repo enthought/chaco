@@ -27,9 +27,11 @@ from .lasso_selection import LassoSelection
 
 
 class RegressionLasso(LassoSelection):
-    """A controller for "lassoing" a selection of points in a regression plot."""
+    """A controller for "lassoing" a selection of points in a regression plot.
+    """
 
-    #: The regression updates as more points are added (overrides LassoSelection).
+    #: The regression updates as more points are added
+    #: (overrides LassoSelection).
     incremental_select = True
 
     #: Tuple (slope, intercept) of the line that fits the data.

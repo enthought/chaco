@@ -174,7 +174,8 @@ class TimeScaleTestCase(TicksTestCase):
 
     def test_microsecond(self):
         # This test is dicey, because the values being tested are close to
-        # machine precision. See the comment in TRangeTestCase.test_microseconds().
+        # machine precision. See the comment in
+        # TRangeTestCase.test_microseconds().
         ts = TimeScale(microseconds=1)
         base = DTS(1975, 3, 15, 10, 45, 10)
         start = base + 2.8e-6
@@ -191,7 +192,7 @@ class CalendarScaleSystemTestCase(TicksTestCase):
     # within a single ScaleSystem.
 
     def test_hourly_scales(self):
-        scales = (
+        (
             [TimeScale(seconds=dt) for dt in (1, 5, 15, 30)]
             + [TimeScale(minutes=dt) for dt in (1, 5, 15, 30)]
             + [TimeScale(hours=dt) for dt in (1, 2, 3, 4, 6, 12)]
@@ -220,7 +221,7 @@ class CalendarScaleSystemTestCase(TicksTestCase):
 
 class TimeFormatterTestCase(TicksTestCase):
     def test_widths(self):
-        fmt = TimeFormatter()
+        TimeFormatter()
         scale = TimeScale(minutes=5)
         test_intervals = ([(2005, 3, 15, 10, 30), (2005, 3, 15, 10, 50), 50],)
         expected = (4.0, 12.0)
@@ -231,7 +232,7 @@ class TimeFormatterTestCase(TicksTestCase):
             self.assertEqual(est_width, expected)
 
     def test_labels(self):
-        fmt = TimeFormatter()
+        TimeFormatter()
         scale = ScaleSystem(*HMSScales)
         expected_labels = ["{}m".format(m) for m in range(30, 51)]
 

@@ -76,14 +76,14 @@ class ColormappedScatterPlot(ScatterPlot):
     #: Determines what drawing approach to use:
     #:
     #: banded:
-    #:     Draw the points color-band by color-band, thus reducing the number of
-    #:     set_stroke_color() calls. Disadvantage is that some colors will
+    #:     Draw the points color-band by color-band, thus reducing the number
+    #:     of set_stroke_color() calls. Disadvantage is that some colors will
     #:     appear more prominently than others if there are a lot of
     #:     overlapping points.
     #: bruteforce:
-    #:     Set the stroke color before drawing each marker.  Slower, but doesn't
-    #:     produce the banding effect that puts some colors on top of others;
-    #:     useful if there is a lot of overlap of the data.
+    #:     Set the stroke color before drawing each marker.  Slower, but
+    #:     doesn't produce the banding effect that puts some colors on top of
+    #:     others; useful if there is a lot of overlap of the data.
     #: auto:
     #:     Determines which render method to use based on the number of points
     #:
@@ -128,7 +128,8 @@ class ColormappedScatterPlot(ScatterPlot):
         if len(self._cached_data_pts) == 0:
             pass
         elif self._cached_data_pts.shape[1] == 2:
-            # Take into account fill_alpha even if we are rendering with only two values
+            # Take into account fill_alpha even if we are rendering with only
+            # two values
             old_color = self.color
             self.color = tuple(self.fill_alpha * array(self.color_))
             super()._draw_component(gc, view_bounds, mode)
@@ -141,7 +142,8 @@ class ColormappedScatterPlot(ScatterPlot):
 
     def _gather_points(self):
         """
-        Collects the data points that are within the plot bounds and caches them
+        Collects the data points that are within the plot bounds and caches
+        them
         """
         if self._cache_valid:
             return
@@ -255,8 +257,9 @@ class ColormappedScatterPlot(ScatterPlot):
             sorted_color_indices = take(color_indices, shuffle_indices)
 
             # Now we want to determine where the continuous bands are.  We do
-            # this by right-shifting the sorted_color_indices array, subtracting
-            # it from the original, and looking for all the nonzero points.
+            # this by right-shifting the sorted_color_indices array,
+            # subtracting it from the original, and looking for all the nonzero
+            # points.
             shifted = right_shift(
                 sorted_color_indices, sorted_color_indices[0]
             )
@@ -265,9 +268,9 @@ class ColormappedScatterPlot(ScatterPlot):
             )
             end_indices = left_shift(start_indices, len(sorted_color_indices))
 
-            # Store the shuffled indices in self._index_bands.  We don't store the
-            # actual data points because we need to allow the renderer to index into
-            # the mapped XY screen positions.
+            # Store the shuffled indices in self._index_bands.  We don't store
+            # the actual data points because we need to allow the renderer to
+            # index into the mapped XY screen positions.
             self._index_bands = {}
             for (start, end) in zip(start_indices, end_indices):
                 color_index = sorted_color_indices[start]
@@ -352,8 +355,8 @@ class ColormappedScatterPlot(ScatterPlot):
             # We have to construct the path for the marker.
             if self.marker != "custom":
                 path = gc.get_empty_path()
-                # turn the class into an instance... we should make add_to_path a
-                # class method at some point.
+                # turn the class into an instance... we should make add_to_path
+                # a class method at some point.
                 marker().add_to_path(path, size)
                 mode = marker.draw_mode
             else:
@@ -407,8 +410,8 @@ class ColormappedScatterPlot(ScatterPlot):
                     )
 
                 elif hasattr(gc, "draw_path_at_points"):
-                    # turn the class into an instance... we should make add_to_path a
-                    # class method at some point.
+                    # turn the class into an instance... we should make
+                    # add_to_path a class method at some point.
                     m = marker_cls()
 
                     def draw_func(x, y, size):

@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-from numpy import array, compress, matrix, newaxis, sqrt, zeros
+from numpy import array, compress, matrix, newaxis, sqrt
 
 # Enthought library imports
 from enable.api import ColorTrait

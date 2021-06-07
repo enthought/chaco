@@ -27,7 +27,6 @@ from numpy import (
     float32,
     ones_like,
 )
-import numpy as np
 
 import operator
 

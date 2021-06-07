@@ -89,16 +89,18 @@ class TraitsTool(BaseTool):
     #: The classes of components that should trigger a traits view
     classes = List([PlotAxis, ColorBar])
 
-    #: A dict of Class : View providing alternate views for a particular component
+    #: A dict of Class : View providing alternate views for a particular
+    #: component
     views = Dict
 
     #: The event to trigger the edit on
     event = Str("left_dclick")
 
     def _dispatch_stateful_event(self, event, suffix):
-        """If the event type matches the specification in *event*, look for a component that
-        matches one of the classes in *classes* in our containment hierarchy.  If one is found,
-        edit it using either the default editor, or an alternate editor specified in *views*
+        """If the event type matches the specification in *event*, look for a
+        component that matches one of the classes in *classes* in our
+        containment hierarchy.  If one is found, edit it using either the
+        default editor, or an alternate editor specified in *views*
         """
         if suffix != self.event:
             return
@@ -110,7 +112,8 @@ class TraitsTool(BaseTool):
         # on.  If our component is an Axis or PlotRenderer of any sort,
         # then that is the only candidate.  If our component is a container,
         # then we add its non-container components to the list of candidates;
-        # any nested containers are lower priority than primary plot components.
+        # any nested containers are lower priority than primary plot
+        # components.
         candidates = get_nested_components(
             self.component, [Container] + self.classes
         )

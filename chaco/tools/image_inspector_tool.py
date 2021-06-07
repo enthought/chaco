@@ -22,7 +22,8 @@ from chaco.text_box_overlay import TextBoxOverlay
 
 
 class ImageInspectorTool(BaseTool):
-    """A tool that captures the color and underlying values of an image plot."""
+    """A tool that captures the color and underlying values of an image plot.
+    """
 
     #: This event fires whenever the mouse moves over a new image point.
     #: Its value is a dict with a key "color_value", and possibly a key

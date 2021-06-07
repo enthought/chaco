@@ -120,10 +120,10 @@ class GridDataSource(AbstractDataSource):
     def get_bounds(self):
         """get_bounds() -> ((LLx, LLy), (URx, URy))
 
-        Implements AbstractDataSource. Returns two 2-D points, min and max, that
-        represent the bounding corners of a rectangle enclosing the data set.
-        Note that these values are not view-dependent, but represent intrinsic
-        properties of the DataSource.
+        Implements AbstractDataSource. Returns two 2-D points, min and max,
+        that represent the bounding corners of a rectangle enclosing the data
+        set. Note that these values are not view-dependent, but represent
+        intrinsic properties of the DataSource.
 
         If data axis is the empty set, then the min and max valuess are 0.0.
         """

@@ -69,7 +69,8 @@ def tfrac(t, **time_unit):
     """Performs a calendar-aware split of a time into (aligned_time, frac)
     over an interval that is a multiple of one of the following time units:
 
-        "microseconds" "milliseconds", "seconds", "minutes", "hours", "days", "years"
+        "microseconds" "milliseconds", "seconds", "minutes", "hours", "days",
+        "years"
 
     Settings of milliseconds..hours are truncated towards 0, days are counted
     from January 1st of their respective year, and years are counted from 1 AD.
@@ -215,8 +216,8 @@ def trange(start, end, **time_unit):
     elif unit == "years":
         return trange_years(start, end, value)
 
-    # Express start and end ticks as (date, frac) where date is calendar-aligned
-    # with the interval in time_unit.
+    # Express start and end ticks as (date, frac) where date is
+    # calendar-aligned with the interval in time_unit.
     start_whole, start_frac = tfrac(start, **time_unit)
     end_whole, end_frac = tfrac(end, **time_unit)
 
@@ -433,7 +434,8 @@ class CalendarScaleSystem(ScaleSystem):
     def __init__(self, *scales, **kw):
         """Creates a new CalendarScaleSystem.
 
-        If scales are not provided, then it defaults to HMSScales and MDYScales.
+        If scales are not provided, then it defaults to HMSScales and
+        MDYScales.
         """
         if len(scales) == 0:
             scales = HMSScales + MDYScales

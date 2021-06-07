@@ -23,9 +23,9 @@ class TransformColorMapper(ColorMapper):
     color space.  A TransformColorMapper allows a nonlinear mapper to be
     created.
 
-    A ColorMapper works by linearly transforming the data from data space to the
-    unit interval [0,1], and then linearly mapping that interval to the color
-    space.
+    A ColorMapper works by linearly transforming the data from data space to
+    the unit interval [0,1], and then linearly mapping that interval to the
+    color space.
 
     A TransformColorMapper allows an arbitrary transform to be inserted at two
     places in this process.  First, an initial transformation, `data_func` can
@@ -75,7 +75,8 @@ class TransformColorMapper(ColorMapper):
     def from_color_mapper(
         cls, color_mapper, data_func=None, unit_func=None, **traits
     ):
-        """Create a TransformColorMapper from an existing ColorMapper instance."""
+        """Create a TransformColorMapper from an existing ColorMapper instance.
+        """
         segdata = color_mapper._segmentdata
         return cls.from_segment_map(
             segdata,
@@ -91,9 +92,9 @@ class TransformColorMapper(ColorMapper):
     ):
         """Create a TransformColorMapper from a colormap generator function.
 
-        The return value is an instance of TransformColorMapper, *not* a factory
-        function, so this does not provide a direct replacement for a standard
-        colormap factory function.  For that, use the class method
+        The return value is an instance of TransformColorMapper, *not* a
+        factory function, so this does not provide a direct replacement for a
+        standard colormap factory function.  For that, use the class method
         TransoformColorMapper.factory_from_color_map().
         """
         # Call the colormap factory function to create an instance of a

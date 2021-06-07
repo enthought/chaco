@@ -55,8 +55,8 @@ class Base2DPlot(AbstractPlotRenderer):
     orientation = Enum("h", "v")
 
     #: Overrides PlotComponent; 2-D plots draw on the 'image' layer,
-    #: underneath all decorations and annotations, and above only the background
-    #: fill color.
+    #: underneath all decorations and annotations, and above only the
+    #: background fill color.
     draw_layer = "image"
 
     #: Convenience property for accessing the x-direction mappers regardless
@@ -75,9 +75,9 @@ class Base2DPlot(AbstractPlotRenderer):
     #: is done in this class).
     index_data_changed = Event
 
-    #: Event fired when the index mapper changes. Subclasses can listen for this
-    #: event and take appropriate steps (except for requesting a redraw, which
-    #: is done in this class).
+    #: Event fired when the index mapper changes. Subclasses can listen for
+    #: this event and take appropriate steps (except for requesting a redraw,
+    #: which is done in this class).
     index_mapper_changed = Event
 
     #: Event fired when the value data changes. Subclasses can listen for this
@@ -169,7 +169,7 @@ class Base2DPlot(AbstractPlotRenderer):
             x_ndx = reverse_map_1d(
                 x_data, x_pt, self.index.sort_order[0], floor_only=True
             )
-        except IndexError as e:
+        except IndexError:
             if outside_returns_none:
                 return None, None
 
@@ -183,7 +183,7 @@ class Base2DPlot(AbstractPlotRenderer):
             y_ndx = reverse_map_1d(
                 y_data, y_pt, self.index.sort_order[1], floor_only=True
             )
-        except IndexError as e:
+        except IndexError:
             if outside_returns_none:
                 return None, None
 

@@ -12,8 +12,7 @@
 """
 # Enthought library imports
 from enable.api import Component
-from enable.kiva_graphics_context import GraphicsContext
-from traits.api import Bool, Instance, observe, Str
+from traits.api import Instance, observe, Str
 
 
 DEFAULT_DRAWING_ORDER = [
@@ -48,9 +47,9 @@ class PlotComponent(Component):
     # Rendering control traits
     # ------------------------------------------------------------------------
 
-    #: The order in which various rendering classes on this component are drawn.
-    #: Note that if this component is placed in a container, in most cases
-    #: the container's draw order is used, since the container calls
+    #: The order in which various rendering classes on this component are
+    #: drawn. Note that if this component is placed in a container, in most
+    #: cases the container's draw order is used, since the container calls
     #: each of its contained components for each rendering pass.
     #: Typically, the definitions of the layers are:
     #:

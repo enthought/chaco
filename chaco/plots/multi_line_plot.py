@@ -44,9 +44,9 @@ from chaco.base_xy_plot import BaseXYPlot
 class MultiLinePlot(BaseXYPlot):
     """A plot consisting of multiple lines.
 
-    The data to be plotted must come from a two-dimensional array with shape M by N
-    stored in a MultiArrayDataSource object.  M is the number of lines to be plotted,
-    and N is the number of points in each line.
+    The data to be plotted must come from a two-dimensional array with shape
+    M by N stored in a MultiArrayDataSource object.  M is the number of lines
+    to be plotted, and N is the number of points in each line.
 
     Parameters
     ----------
@@ -57,10 +57,11 @@ class MultiLinePlot(BaseXYPlot):
         These are the 'y' coordinates.
 
     value : instance of a MultiArrayDataSource
-        Note that the `scale`, `offset` and `normalized_amplitude` attributes of the
-        MultiLinePlot control the projection of the traces into the (x,y)
-        plot.  In simplest case, `scale=1` and `offset=0`, and `normalized_amplitude`
-        controls the scaling of the traces relative to their base y value.
+        Note that the `scale`, `offset` and `normalized_amplitude` attributes
+        of the MultiLinePlot control the projection of the traces into the
+        (x,y) plot.  In simplest case, `scale=1` and `offset=0`, and
+        `normalized_amplitude` controls the scaling of the traces relative to
+        their base y value.
 
     global_min, global_max : float
         The minimum and maximum values of the data in `value`.  For large
@@ -72,20 +73,20 @@ class MultiLinePlot(BaseXYPlot):
     color : ColorTrait
 
     color_func : Callable or None
-        If not None, this Callable overrides `color`.  The argument to `color_func`
-        will be the integer index of the trace to be rendered.  `color_func` must
-        return an RGBA 4-tuple.
+        If not None, this Callable overrides `color`.  The argument to
+        `color_func` will be the integer index of the trace to be rendered.
+        `color_func` must return an RGBA 4-tuple.
         Default: None
 
     orientation : str
-        Must be 'v' or 'h' (for 'vertical' or 'horizontal', respectively).  This is
-        the orientation of the index axis (i.e. the 'x' axis).
+        Must be 'v' or 'h' (for 'vertical' or 'horizontal', respectively).
+        This is the orientation of the index axis (i.e. the 'x' axis).
         Default: 'h'
 
     fast_clip : bool
-        If True, traces whose *base* 'y' coordinate is outside the value axis range
-        are not plotted, even if some of the data in the curve extends into the plot
-        region.
+        If True, traces whose *base* 'y' coordinate is outside the value axis
+        range are not plotted, even if some of the data in the curve extends
+        into the plot region.
         Default: False
 
     line_width : float
@@ -107,8 +108,8 @@ class MultiLinePlot(BaseXYPlot):
 
     # amplitude = Float(0.0)
 
-    #: `scale` and `offset` provide a more general transformation, but are currently
-    #: untested.
+    #: `scale` and `offset` provide a more general transformation, but are
+    #: currently untested.
     scale = Float(1.0)
     offset = Float(0.0)
 
@@ -117,7 +118,8 @@ class MultiLinePlot(BaseXYPlot):
     #: The color of the lines.
     color = black_color_trait(requires_redraw=True)
 
-    #: A function that returns the color of lines.  Overrides `color` if not None.
+    #: A function that returns the color of lines.  Overrides `color` if not
+    #: None.
     color_func = Trait(None, None, Callable)
 
     #: The color to use to highlight the line when selected.
@@ -196,9 +198,11 @@ class MultiLinePlot(BaseXYPlot):
     # ------------------------------------------------------------------------
 
     def trait_view(self, obj):
-        """Create a minimalist View, with just the amplitude and color attributes."""
-        # Minimalist TraitsUI View for customizing the plot: only the trace amplitude
-        # and line color are exposed.
+        """Create a minimalist View, with just the amplitude and color
+        attributes.
+        """
+        # Minimalist TraitsUI View for customizing the plot: only the trace
+        # amplitude and line color are exposed.
         view = View(
             HGroup(
                 Item("use_global_bounds"),
@@ -225,10 +229,6 @@ class MultiLinePlot(BaseXYPlot):
     #
     # ------------------------------------------------------------------------
 
-    # See base_xy_plot.py for these:
-    ## def hittest(self, screen_pt, threshold=7.0):
-    ## def interpolate(self, index_value):
-
     def get_screen_points(self):
         self._gather_points()
         scrn_pts_list = [
@@ -247,7 +247,8 @@ class MultiLinePlot(BaseXYPlot):
         If the amplitude is set to this value, the largest trace deviation from
         its base y coordinate will be equal to the y coordinate spacing.
         """
-        # Note: Like the rest of the current code, this ignores the `scale` attribute.
+        # Note: Like the rest of the current code, this ignores the `scale`
+        # attribute.
 
         if self.yindex is not None:
             coordinates = self.yindex.get_data()
@@ -399,9 +400,10 @@ class MultiLinePlot(BaseXYPlot):
                     if index_mask[r[0]] != 0
                 ]
 
-                # Check to see if our data view region is between two points in the
-                # index data.  If so, then we have to reverse map our current view
-                # into the appropriate index and draw the bracketing points.
+                # Check to see if our data view region is between two points in
+                # the index data.  If so, then we have to reverse map our
+                # current view into the appropriate index and draw the
+                # bracketing points.
                 if runs == []:
                     data_pt = self.map_data(
                         (self.x_mapper.low_pos, self.y_mapper.low_pos)
@@ -420,23 +422,23 @@ class MultiLinePlot(BaseXYPlot):
                             sort = -1
                     ndx = bin_search(sorted_index, data_pt, sort)
                     if ndx == -1:
-                        # bin_search can return -1 if data_pt is outside the bounds
-                        # of the source data
+                        # bin_search can return -1 if data_pt is outside the
+                        # bounds of the source data
                         continue
 
                     z = transpose(
                         array(
                             (
-                                sorted_index[ndx : ndx + 2],
-                                sorted_value[ndx : ndx + 2],
+                                sorted_index[ndx: ndx + 2],
+                                sorted_value[ndx: ndx + 2],
                             )
                         )
                     )
                     points.append(z)
 
                 else:
-                    # Expand the width of every group of points so we draw the lines
-                    # up to their next point, outside the plot area
+                    # Expand the width of every group of points so we draw the
+                    # lines up to their next point, outside the plot area
                     data_end = len(index_mask)
                     for run in runs:
                         start, end = run
@@ -458,10 +460,6 @@ class MultiLinePlot(BaseXYPlot):
 
         self._cached_data_pts = line_points
         self._cache_valid = True
-
-    # See base_xy_plot.py for:
-    ## def _downsample(self):
-    ## def _downsample_vectorized(self):
 
     def _render(self, gc, line_points, selected_points=None):
 

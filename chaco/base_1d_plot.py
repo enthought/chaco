@@ -60,7 +60,8 @@ class Base1DPlot(AbstractPlotRenderer):
     #: The orientation of the index axis.
     orientation = Enum("v", "h")
 
-    #: Should the plot go left-to-right or bottom-to-top (normal) or the reverse?
+    #: Should the plot go left-to-right or bottom-to-top (normal) or the
+    #: reverse?
     direction = Enum("normal", "flipped")
 
     #: Faux origin for the axes and other objects to look at
@@ -264,7 +265,8 @@ class Base1DPlot(AbstractPlotRenderer):
         self._screen_cached_valid = False
 
     def _update_mappers(self):
-        """Update the mapper when the bounds, orientation or direction change"""
+        """Update the mapper when the bounds, orientation or direction change
+        """
         mapper = self.index_mapper
         if mapper is None:
             return

@@ -35,8 +35,8 @@ class ArrayPlotData(AbstractPlotData):
     #: Map of names to arrays.  Although there is no restriction on the array
     #: dimensions, each array must correspond to a single plot item; that
     #: is, a single name must not map to a multi-dimensional array unless
-    #: the array is being used for an image plot or for something that can handle
-    #: multi-dimensional input data.
+    #: the array is being used for an image plot or for something that can
+    #: handle multi-dimensional input data.
     arrays = Dict
 
     #: Consumers can write data to this object (overrides AbstractPlotData).
@@ -79,7 +79,8 @@ class ArrayPlotData(AbstractPlotData):
     # ------------------------------------------------------------------------
 
     def list_data(self):
-        """Returns a list of the names of the arrays managed by this instance."""
+        """Returns a list of the names of the arrays managed by this instance.
+        """
         return list(self.arrays.keys())
 
     def get_data(self, name):

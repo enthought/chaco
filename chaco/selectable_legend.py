@@ -37,7 +37,6 @@ class SelectableLegend(Legend, SelectTool):
         icon_width, icon_height = self.icon_bounds
 
         icon_x = self.x + edge_space
-        text_x = icon_x + icon_width + self.icon_spacing
         y = self.y2 - edge_space
         for i, label_name in enumerate(self._cached_label_names):
             label_width, label_height = self._cached_label_sizes[i]

@@ -44,7 +44,8 @@ class LogMapper(Base1DMapper):
     space to a 1-D region in output space.
     """
 
-    #: The value to map when asked to map values <= LOG_MINIMUM to screen space.
+    #: The value to map when asked to map values <= LOG_MINIMUM to screen
+    #: space.
     fill_value = Float(1.0)
 
     # ------------------------------------------------------------------------
@@ -94,7 +95,8 @@ class LogMapper(Base1DMapper):
     def map_data(self, screen_val):
         """map_data(screen_val) -> data_val
 
-        Overrides Abstract Mapper. Maps values from screen space into data space.
+        Overrides Abstract Mapper. Maps values from screen space into data
+        space.
         """
         if not self._cache_valid:
             self._compute_scale()
@@ -151,7 +153,8 @@ class LogMapper(Base1DMapper):
             self._null_screen_range = True
 
         # Get dataspace low and high from the range that are "safe" for a
-        # logarithmic mapper, i.e. constrained to be between LOG_MINIMUM and inf.
+        # logarithmic mapper, i.e. constrained to be between LOG_MINIMUM and
+        # inf.
         low, high = self._get_safe_scale(self.range)
         if high - low == 0:
             self._null_data_range = True

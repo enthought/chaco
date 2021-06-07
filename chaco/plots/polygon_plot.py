@@ -18,7 +18,7 @@ import numpy as np
 # Enthought library imports.
 from enable.api import LineStyle, black_color_trait, transparent_color_trait
 from kiva.api import points_in_polygon
-from traits.api import Enum, Float, Tuple, Property, cached_property, observe
+from traits.api import Enum, Float, Tuple, Property, cached_property
 
 # Local imports.
 from chaco.base_xy_plot import BaseXYPlot

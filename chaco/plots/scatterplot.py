@@ -224,8 +224,8 @@ class ScatterPlot(BaseXYPlot):
     # keys.
     marker = MarkerTrait(requires_redraw=True)
 
-    # The pixel size of the markers, not including the thickness of the outline.
-    # Default value is 4.0.
+    # The pixel size of the markers, not including the thickness of the
+    #  outline. Default value is 4.0.
     # TODO: for consistency, there should be a size data source and a mapper
     marker_size = Either(Float, Array, requires_redraw=True)
 
@@ -361,9 +361,9 @@ class ScatterPlot(BaseXYPlot):
                 ndx = reverse_map_1d(
                     index_data, data_pt, self.index.sort_order
                 )
-            except IndexError as e:
-                # if reverse_map raises this exception, it means that data_pt is
-                # outside the range of values in index_data.
+            except IndexError:
+                # if reverse_map raises this exception, it means that data_pt
+                # is outside the range of values in index_data.
                 if outside_returns_none:
                     return None
                 else:
@@ -455,7 +455,7 @@ class ScatterPlot(BaseXYPlot):
                     try:
                         for mask in ds.metadata["selection_masks"]:
                             point_mask &= mask
-                        indices = where(point_mask == True)
+                        indices = where(point_mask is True)
                         points = column_stack([index[indices], value[indices]])
                     except:
                         continue

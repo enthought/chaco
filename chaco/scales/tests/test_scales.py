@@ -185,8 +185,8 @@ class BasicFormatterTestCase(TicksTestCase):
         ticks = scale.ticks(start, end, numlabels)
         labels = fmt.format(ticks, numlabels, None)
         # desired = [str(float(x)) for x in range(12, 19)]
-        ## This test fails when desired is created with str(float(x)).
-        ## The format function returns "12",...,"18", not "12.0",...,"18.0".
+        # This test fails when desired is created with str(float(x)).
+        # The format function returns "12",...,"18", not "12.0",...,"18.0".
         desired = ["12", "13", "14", "15", "16", "17", "18"]
         self.check_labels(labels, desired)
 
@@ -231,7 +231,9 @@ class BasicFormatterTestCase(TicksTestCase):
             (3e8, 6e8, 8),
         )
         for start, end, numlabels in test_intervals:
-            estimate = fmt.estimate_width(start, end, numlabels, ticker=scale)[1]
+            estimate = fmt.estimate_width(
+                start, end, numlabels, ticker=scale
+            )[1]
             ticks = scale.ticks(start, end, numlabels)
             labels = fmt.format(ticks, numlabels, None)
             actual = sum(map(len, labels))

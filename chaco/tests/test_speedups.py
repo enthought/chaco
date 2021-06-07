@@ -8,8 +8,6 @@
 #
 # Thanks for using Enthought open source!
 
-import unittest
-
 from numpy import alltrue, array, ravel, zeros, isinf, linspace
 
 
@@ -38,7 +36,7 @@ class GatherPointsBase(object):
                 [0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.8],
             ]
         ).T
-        self.assertTrue(selection == None)
+        self.assertNone(selection)
         assert_close(desired, points)
 
     def test_masked(self):

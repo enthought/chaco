@@ -166,21 +166,19 @@ class DataView(OverlayPlotContainer):
     #: area can be "top", "bottom", or "float".  The default position for a new
     #: x-axis is "bottom".
     #:
-    #: TODO: For now, this is an instance of AbstractOverlay instead of PlotAxis
-    #: because scales_axis.PlotAxis doesn't inherit from PlotAxis, but instead is a
-    #: semi-reimplementation.  Thus, rather than making scales_axis.PlotAxis
-    #: inherit a concrete class, I chose to loosen this trait by specifying
-    #: a more general base class of PlotAxis.  This incurs lower risk of subtle
-    #: and difficult-to-catch bugs being introduced by changes to the
-    #: axis.PlotAxis class.  This same comment applies to the y_axis trait
-    #: below.  --pwang
-    #:x_axis = Instance(PlotAxis)
+    #: TODO: For now, this is an instance of AbstractOverlay instead of
+    #: PlotAxis because scales_axis.PlotAxis doesn't inherit from PlotAxis, but
+    #: instead is a semi-reimplementation.  Thus, rather than making
+    #: scales_axis.PlotAxis inherit a concrete class, I chose to loosen this
+    #: trait by specifying a more general base class of PlotAxis.  This incurs
+    #: lower risk of subtle and difficult-to-catch bugs being introduced by
+    #: changes to the axis.PlotAxis class.  This same comment applies to the
+    #: y_axis trait below.  --pwang
     x_axis = Instance(AbstractOverlay)
 
     #: The vertical axis.  Its position relative to the plot
     #: area can be "left", "right", or "float".  The default position for a new
     #: y-axis is "left".
-    #:y_axis = Instance(PlotAxis)
     y_axis = Instance(AbstractOverlay)
 
     #: The grid that intersects the x-axis, i.e., a set of vertical lines.
@@ -203,8 +201,8 @@ class DataView(OverlayPlotContainer):
     #: Convenience property for accessing the value axis, which can be Y or X,
     #: depending on **orientation**.
     value_axis = AxisProperty
-    #: Convenience property for accessing the index grid, which can be horizontal
-    #: or vertical, depending on **orientation**.
+    #: Convenience property for accessing the index grid, which can be
+    #: horizontal or vertical, depending on **orientation**.
     index_grid = GridProperty
     #: Convenience property for accessing the value grid, which can be vertical
     #: or horizontal, depending on **orientation**.

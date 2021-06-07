@@ -10,14 +10,12 @@
 
 """ Defines the BasePlotContainer class.
 """
-import warnings
-
 # Enthought library imports
 from enable.api import Container
-from traits.api import Bool, Instance, Property, Str, Tuple
+from traits.api import Instance, Str, Tuple
 
 # Local, relative imports
-from .plot_component import DEFAULT_DRAWING_ORDER, PlotComponent
+from .plot_component import DEFAULT_DRAWING_ORDER
 
 
 class BasePlotContainer(Container):
@@ -39,11 +37,9 @@ class BasePlotContainer(Container):
     #: of the Enable default of "mainlayer"
     container_under_layers = Tuple("background", "image", "underlay", "plot")
 
-    #:------------------------------------------------------------------------
     #: Duplicate trait declarations from PlotComponent.  We don't subclass
-    #: PlotComponent to avoid MRO complications with trait handlers and property
-    #: getters/setters.
-    #:------------------------------------------------------------------------
+    #: PlotComponent to avoid MRO complications with trait handlers and
+    #: property getters/setters.
 
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
     draw_layer = Str("plot")

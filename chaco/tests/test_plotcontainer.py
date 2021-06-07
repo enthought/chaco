@@ -8,7 +8,6 @@
 #
 # Thanks for using Enthought open source!
 
-import sys
 import unittest
 
 from chaco.api import (
@@ -18,7 +17,7 @@ from chaco.api import (
     VPlotContainer,
     GridContainer,
 )
-from traits.api import Any, Tuple
+from traits.api import Any
 
 SizePrefs = GridContainer.SizePrefs
 
@@ -229,8 +228,8 @@ class VPlotContainerTestCase(ContainerTestCase):
         container.add(comp1)
         container.add(comp2)
         self.assert_tuple(container.get_preferred_size(), (200, 240))
-        # The container should not change its size as a result of its fit_components
-        # being set.
+        # The container should not change its size as a result of its
+        # fit_components being set.
         self.assert_tuple(container.bounds, (200, 300))
         container.bounds = container.get_preferred_size()
         container.do_layout()
@@ -329,7 +328,8 @@ class SizePrefsTestCase(unittest.TestCase):
         self.assert_tuple(sizes3, (50, 100, 50))
 
     def test_overlapping_mixed_resizable(self):
-        # Tests a sequence of overlapping resizable and fully resizable components.
+        # Tests a sequence of overlapping resizable and fully resizable
+        # components.
         prefs = SizePrefs(4, "h")
         # Slot 1
         prefs.update_from_component(ResizablePlotComponent([100, 10]), 0)

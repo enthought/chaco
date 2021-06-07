@@ -37,9 +37,9 @@ class AbstractDataRange(HasTraits):
 
     #: The actual value of the upper bound of this range. To set it, use
     #: high_setting. (Setting this attribute directly just calls the setter for
-    #: high_setting.) Although the default value is specified as 1.0, subclasses
-    #: can redefine the default. Also, subclasses can redefined the type to
-    #: correspond to their dimensionality.
+    #: high_setting.) Although the default value is specified as 1.0,
+    #: subclasses can redefine the default. Also, subclasses can redefined the
+    #: type to correspond to their dimensionality.
     high = Float(1.0)
 
     #: Setting for the lower bound of this range.

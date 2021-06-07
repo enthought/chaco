@@ -20,7 +20,7 @@ from chaco.api import DataRange1D, ArrayDataSource
 
 class Foo(HasTraits):
     """
-    This class is used to test the firing of the `updated` event of DataRange1D.
+    This class is used to test the firing of the `updated` event of DataRange1D
     """
 
     range = Instance(DataRange1D)
@@ -52,7 +52,8 @@ class DataRangeTestCase(unittest.TestCase):
         # Paranoid check first (not the main point of this test):
         self.assertEqual(foo.range.low, 0.0)
         self.assertEqual(foo.range.high, 1.0)
-        # Now reset foo's range_updated flag and set the bounds with set_bounds().
+        # Now reset foo's range_updated flag and set the bounds with
+        # set_bounds().
         foo.range_updated = False
         foo.range.set_bounds(-1.0, 2.0)
         # Verify the values.
@@ -67,7 +68,8 @@ class DataRangeTestCase(unittest.TestCase):
         # Paranoid check first (not the main point of this test):
         self.assertEqual(foo.range.low, 0.0)
         self.assertEqual(foo.range.high, 1.0)
-        # Now reset foo's range_updated flag and set the bounds with set_bounds().
+        # Now reset foo's range_updated flag and set the bounds with
+        # set_bounds().
         foo.range_updated = False
         foo.range.set_bounds(0.0, 2.0)
         # Verify the values.
@@ -82,7 +84,8 @@ class DataRangeTestCase(unittest.TestCase):
         # Paranoid check first (not the main point of this test):
         self.assertEqual(foo.range.low, 0.0)
         self.assertEqual(foo.range.high, 1.0)
-        # Now reset foo's range_updated flag and set the bounds with set_bounds().
+        # Now reset foo's range_updated flag and set the bounds with
+        # set_bounds().
         foo.range_updated = False
         foo.range.set_bounds(0.5, 1.0)
         # Verify the values.
@@ -99,7 +102,8 @@ class DataRangeTestCase(unittest.TestCase):
         # Paranoid check first (not the main point of this test):
         self.assertEqual(foo.range.low, 0.0)
         self.assertEqual(foo.range.high, 1.0)
-        # Now reset foo's range_updated flag and set the bounds with set_bounds().
+        # Now reset foo's range_updated flag and set the bounds with
+        # set_bounds().
         foo.range_updated = False
         foo.range.set_bounds(100.0, "track")
         # Verify the values.
@@ -116,7 +120,8 @@ class DataRangeTestCase(unittest.TestCase):
         # Paranoid check first (not the main point of this test):
         self.assertEqual(foo.range.low, 0.0)
         self.assertEqual(foo.range.high, 1.0)
-        # Now reset foo's range_updated flag and set the bounds with set_bounds().
+        # Now reset foo's range_updated flag and set the bounds with
+        # set_bounds().
         foo.range_updated = False
         foo.range.set_bounds("track", 100.0)
         # Verify the values.
@@ -126,7 +131,9 @@ class DataRangeTestCase(unittest.TestCase):
         self.assertTrue(foo.range_updated)
 
     def test_set_tracking_amount(self):
-        """Test setting the tracking amount using the set_tracking_amount() method."""
+        """Test setting the tracking amount using the set_tracking_amount()
+        method.
+        """
         foo = Foo(range=DataRange1D(tracking_amount=1.0))
         foo.range.low_setting = "track"
         foo.range.high_setting = 1.0
@@ -143,7 +150,9 @@ class DataRangeTestCase(unittest.TestCase):
         self.assertTrue(foo.range_updated)
 
     def test_scale_tracking_amount(self):
-        """Test setting the tracking amount using the scale_tracking_amount() method."""
+        """Test setting the tracking amount using the scale_tracking_amount()
+        method.
+        """
         foo = Foo(range=DataRange1D(tracking_amount=1.0))
         foo.range.low_setting = "track"
         foo.range.high_setting = 1.0

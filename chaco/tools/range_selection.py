@@ -104,8 +104,8 @@ class RangeSelection(AbstractController):
     #: on **plot** that corresponds to **axis**.
     mapper = Property
 
-    #: The index to use for **axis**. By default, this is self.plot.orientation,
-    #: but it can be overriden and set to 0 or 1.
+    #: The index to use for **axis**. By default, this is
+    #: self.plot.orientation, but it can be overriden and set to 0 or 1.
     axis_index = Property
 
     #: List of listeners that listen to selection events.
@@ -627,9 +627,9 @@ class RangeSelection(AbstractController):
 
         self.trait_property_changed("selection", oldval, val)
 
-        for l in self.listeners:
-            if hasattr(l, "set_value_selection"):
-                l.set_value_selection(val)
+        for listener in self.listeners:
+            if hasattr(listener, "set_value_selection"):
+                listener.set_value_selection(val)
 
     # ------------------------------------------------------------------------
     # Private methods

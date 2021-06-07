@@ -17,15 +17,12 @@ import warnings
 
 # Major library imports
 from numpy import (
-    argsort,
     array,
     concatenate,
     inf,
     invert,
     isnan,
-    take,
     transpose,
-    zeros,
     sqrt,
     argmin,
     clip,
@@ -38,7 +35,7 @@ from traits.api import Enum, Float, List, Str, Property, Tuple, cached_property
 from traitsui.api import Item, View
 
 # Local relative imports
-from chaco.base import arg_find_runs, arg_true_runs, reverse_map_1d, intersect_range
+from chaco.base import arg_true_runs, reverse_map_1d, intersect_range
 from chaco.base_xy_plot import BaseXYPlot
 
 
@@ -176,8 +173,8 @@ class LinePlot(BaseXYPlot):
             )
             end = array(
                 [
-                    self.index.get_data()[start_ndx + 1 : end_ndx + 1],
-                    self.value.get_data()[start_ndx + 1 : end_ndx + 1],
+                    self.index.get_data()[start_ndx + 1: end_ndx + 1],
+                    self.value.get_data()[start_ndx + 1: end_ndx + 1],
                 ]
             )
 
@@ -214,8 +211,8 @@ class LinePlot(BaseXYPlot):
     def interpolate(self, index_value):
         """
         Returns the value of the plot at the given index value in screen space.
-        Raises an IndexError when *index_value* exceeds the bounds of indexes on
-        the value.
+        Raises an IndexError when *index_value* exceeds the bounds of indexes
+        on the value.
         """
 
         if self.index is None or self.value is None:
@@ -306,9 +303,6 @@ class LinePlot(BaseXYPlot):
 
             # TODO: restore the functionality of rendering highlighted portions
             # of the line
-            # selection = self.index.metadata.get(self.metadata_name, None)
-            # if selection is not None and type(selection) in (ndarray, list) and \
-            #        len(selection) > 0:
 
             # Split the index and value raw data into non-NaN chunks
             mask = invert(isnan(value)) & invert(isnan(index))

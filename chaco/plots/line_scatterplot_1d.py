@@ -18,7 +18,7 @@ from numpy import empty
 
 # Enthought library imports
 from enable.api import black_color_trait, ColorTrait, LineStyle
-from traits.api import Any, Bool, Float, Str
+from traits.api import Bool, Float, Str
 
 # local imports
 from chaco.base_1d_plot import Base1DPlot

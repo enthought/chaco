@@ -82,7 +82,9 @@ class JitterPlot(ScatterPlot1D):
         outside_returns_none=True,
         index_only=True,
     ):
-        """Maps a screen space point to an index into the plot's index array(s)."""
+        """Maps a screen space point to an index into the plot's index
+        array(s).
+        """
         screen_points = self._cached_screen_pts
 
         if len(screen_points) == 0:

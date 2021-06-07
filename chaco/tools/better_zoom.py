@@ -64,7 +64,7 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
     #: The amount to zoom in by. The zoom out will be inversely proportional
     zoom_factor = Float(2.0)
 
-    #:: the position to zoom on (usually the mouse location)
+    #: the position to zoom on (usually the mouse location)
     position = Tuple(Float, Float)
 
     # The zoom factor on each axis

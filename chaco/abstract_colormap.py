@@ -17,7 +17,8 @@ from .data_range_1d import DataRange1D
 
 class AbstractColormap(HasTraits):
     """
-    Abstract class for color maps, which map from scalar values to color values.
+    Abstract class for color maps, which map from scalar values to color
+    values.
     """
 
     #: The data-space bounds of the mapper.

@@ -331,8 +331,6 @@ from .plot_containers import (
     GridPlotContainer,
 )
 
-GridContainer = GridPlotContainer
-
 try:
     from .plot_containers import ConstraintsPlotContainer
 except ImportError:
@@ -498,7 +496,7 @@ from .default_colormaps import (
     YlGn,
     YlGnBu,
     YlOrBr,
-    YlOrRd,  
+    YlOrRd,
     gist_earth,
     gist_gray,
     gist_heat,
@@ -527,3 +525,5 @@ from .default_colormaps import (
     Set3,
 )
 from .default_colors import cbrewer, palette11, palette14, PALETTES
+
+GridContainer = GridPlotContainer

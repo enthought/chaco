@@ -108,7 +108,8 @@ class ColormapperTestCase(unittest.TestCase):
         )
 
     def test_alpha_palette(self):
-        """Create a colormap with a varying alpha channel from a palette array."""
+        """Create a colormap with a varying alpha channel from a palette array.
+        """
         cm = ColorMapper.from_palette_array(
             [[0.0, 0.0, 0.0, 0.5], [1.0, 1.0, 1.0, 1.0]]
         )

@@ -19,19 +19,13 @@ from numpy import (
     clip,
     divide,
     float32,
-    int8,
-    isinf,
-    isnan,
     ones,
     searchsorted,
     sometrue,
     sort,
     take,
-    uint8,
-    where,
     zeros,
     linspace,
-    ones_like,
 )
 
 # Enthought library imports
@@ -107,8 +101,8 @@ class ColorMapper(AbstractColormap):
     locations, quantization errors will occur.
 
     Construction of a ColorMapper can be done through the factory methods
-    from_palette_array() and from_segment_map(). Do not make direct calls to the
-    ColorMapper constructor.
+    from_palette_array() and from_segment_map(). Do not make direct calls to
+    the ColorMapper constructor.
     """
 
     #: The color table.
@@ -146,8 +140,8 @@ class ColorMapper(AbstractColormap):
         The palette colors are linearly interpolated across the range of
         mapped values.
 
-        The *palette* parameter is a Nx3 or Nx4 array of intensity values, where
-        N > 1::
+        The *palette* parameter is a Nx3 or Nx4 array of intensity values,
+        where N > 1::
 
             [[R0, G0, B0], ... [R(N-1), G(N-1), B(N-1)]]
 
@@ -191,14 +185,15 @@ class ColorMapper(AbstractColormap):
         'blue' (and optionally 'alpha') entries.  Each entry is a list of
         (x, y0, y1) tuples:
 
-        * x: an offset in [0..1] (offsets within the list must be in ascending order)
+        * x: an offset in [0..1] (offsets within the list must be in ascending
+          order)
         * y0: value for the color channel for values less than or equal to x
         * y1: value for the color channel for values greater than x
 
         When a data value gets mapped to a color, it will be normalized to be
         within [0..1]. For each RGB(A) component, the two adjacent values will
-        be found in the segment_map. The mapped component value will be found by
-        linearly interpolating the two values.
+        be found in the segment_map. The mapped component value will be found
+        by linearly interpolating the two values.
 
         Generally, y0==y1. Colormaps with sharp transitions will have y0!=y1 at
         the transitions.
@@ -214,9 +209,10 @@ class ColorMapper(AbstractColormap):
         """Creates a ColorMapper from a file.
 
         The *filename* parameter is the name of a file whose lines each contain
-        4 or 5 float values between 0.0 and 1.0. The first value is an offset in
-        the range [0..1], and the remaining 3 or 4 values are red, green, blue,
-        and optionally alpha values for the color corresponding to that offset.
+        4 or 5 float values between 0.0 and 1.0. The first value is an offset
+        in the range [0..1], and the remaining 3 or 4 values are red, green,
+        blue, and optionally alpha values for the color corresponding to that
+        offset.
 
         The first line is assumed to contain the name of the colormap.
         """
@@ -260,14 +256,15 @@ class ColorMapper(AbstractColormap):
         'blue' (and optionally 'alpha') entries.  Each entry is a list of
         (x, y0, y1) tuples:
 
-        * x: an offset in [0..1] (offsets within the list must be in ascending order)
+        * x: an offset in [0..1] (offsets within the list must be in ascending
+          order)
         * y0: value for the color channel for values less than or equal to x
         * y1: value for the color channel for values greater than x
 
         When a data value gets mapped to a color, it will be normalized to be
         within [0..1]. For each RGB(A) component, the two adjacent values will
-        be found in the segment_map. The mapped component value will be found by
-        linearly interpolating the two values.
+        be found in the segment_map. The mapped component value will be found
+        by linearly interpolating the two values.
 
         Generally, y0==y1. Colormaps with sharp transitions will have y0!=y1 at
         the transitions.
@@ -344,7 +341,7 @@ class ColorMapper(AbstractColormap):
             self._recalculate()
 
         luts = [self._red_lut, self._green_lut, self._blue_lut]
-        if self.color_depth is "rgba":
+        if self.color_depth == "rgba":
             luts.append(self._alpha_lut)
 
         result = list(zip(*luts))
@@ -377,12 +374,13 @@ class ColorMapper(AbstractColormap):
     def _make_mapping_array(self, n, data):
         """Creates an N-element 1-D lookup table
 
-        The *data* parameter is a list of x,y0,y1 mapping correspondences (which
-        can be lists or tuples), where all the items are values between 0 and 1,
-        inclusive. The items in the mapping are:
+        The *data* parameter is a list of x,y0,y1 mapping correspondences
+        (which can be lists or tuples), where all the items are values between
+        0 and 1, inclusive. The items in the mapping are:
 
         * x: a value being mapped
-        * y0: the value of y for values of x less than or equal to the given x value.
+        * y0: the value of y for values of x less than or equal to the given x
+          value.
         * y1: the value of y for values of x greater than the given x value.
 
         The two values of y allow for discontinuous mapping functions (for
@@ -428,7 +426,8 @@ class ColorMapper(AbstractColormap):
         lut[0] = y1[0]
         lut[-1] = y0[-1]
 
-        # ensure that the lut is confined to values between 0 and 1 by clipping it
+        # ensure that the lut is confined to values between 0 and 1 by
+        # clipping it
         lut = lut.clip(0, 1)
         return lut
 

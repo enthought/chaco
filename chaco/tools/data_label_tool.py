@@ -11,7 +11,7 @@
 """ Defines the DataLabelTool class.
 """
 # Major library imports
-from numpy import array, asarray, argmin, sqrt
+from numpy import array, asarray, argmin
 
 # Enthought library imports
 from traits.api import Any, Bool, Enum

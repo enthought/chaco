@@ -50,14 +50,15 @@ class LassoSelection(AbstractController):
     #: A list of all the selection polygons.
     disjoint_selections = Property(List)
 
-    #: Fires whenever **dataspace_points** changes, necessitating a redraw of the
-    #: selection region.
+    #: Fires whenever **dataspace_points** changes, necessitating a redraw of
+    #: the selection region.
     updated = Event
 
     #: Fires when the selection mask changes.
     selection_changed = Event
 
-    #: Fires when the user release the mouse button and finalizes the selection.
+    #: Fires when the user release the mouse button and finalizes the
+    #: selection.
     selection_completed = Event
 
     #: If True, the selection mask is updated as the mouse moves, rather

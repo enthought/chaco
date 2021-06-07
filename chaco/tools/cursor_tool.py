@@ -51,7 +51,8 @@ from .line_inspector import LineInspector
 def CursorTool(component, *args, **kwds):
     """
     Factory function returning either a CursorTool1D or CursorTool2D instance
-    depending on whether the provided plot component is an XY-plot or a 2D plot.
+    depending on whether the provided plot component is an XY-plot or a 2D
+    plot.
     """
     if isinstance(component, BaseXYPlot):
         return CursorTool1D(component, *args, **kwds)
@@ -96,8 +97,9 @@ class BaseCursorTool(LineInspector, DragTool):
 
     def _draw_marker(self, gc, sx, sy):
         """
-        Ruthlessly hijacked from the scatterplot.py class. This design is silly; the
-        choice of rendering path should be encapsulated within the GC.
+        Ruthlessly hijacked from the scatterplot.py class. This design is
+        silly; the choice of rendering path should be encapsulated within the
+        GC.
         """
         if (
             sx < self.component.x
@@ -125,8 +127,8 @@ class BaseCursorTool(LineInspector, DragTool):
             ):
                 pass
 
-            # The second fastest method - draw the path into a compiled path, then
-            # draw the compiled path at each point
+            # The second fastest method - draw the path into a compiled path,
+            # then draw the compiled path at each point
             elif hasattr(gc, "draw_path_at_points"):
                 path = gc.get_empty_path()
                 marker.add_to_path(path, marker_size)
@@ -135,7 +137,8 @@ class BaseCursorTool(LineInspector, DragTool):
                     gc.set_antialias(False)
                 gc.draw_path_at_points(points, path, mode)
 
-            # Neither of the fast functions worked, so use the brute-force, manual way
+            # Neither of the fast functions worked, so use the brute-force,
+            # manual way
             else:
                 if not marker.antialias:
                     gc.set_antialias(False)
@@ -157,10 +160,11 @@ class BaseCursorTool(LineInspector, DragTool):
 
 class CursorTool1D(BaseCursorTool):
     """
-    This tools provides a draggable cursor bound to a XY plot component instance.
+    This tools provides a draggable cursor bound to a XY plot component
+    instance.
 
-    Note, be sure to select an drag_button which does not conflict with other tools
-    (e.g. the PanTool).
+    Note, be sure to select an drag_button which does not conflict with other
+    tools (e.g. the PanTool).
 
     """
 

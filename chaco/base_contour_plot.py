@@ -100,7 +100,8 @@ class BaseContourPlot(Base2DPlot):
 
     def _update_colors(self, numcolors=None):
         """Update the colors cache using our color mapper and based
-        on our number of levels.  The **mode** parameter accounts for fenceposting:
+        on our number of levels.  The **mode** parameter accounts for
+        fenceposting:
           - If **mode** is "poly", then the number of colors to generate is 1
             less than the number of levels
           - If **mode** is "line", then the number of colors to generate is
@@ -139,8 +140,8 @@ class BaseContourPlot(Base2DPlot):
                 self._color_map_trait = colors
                 self._colors = [self._color_map_trait_] * numcolors
             else:
-                # if the list of colors is shorter than the list of levels, simply
-                # repeat colors from the beginning of the list as needed
+                # if the list of colors is shorter than the list of levels,
+                # simply repeat colors from the beginning of the list as needed
                 self._colors = []
                 for i in range(len(self._levels)):
                     self._color_map_trait = colors[i % len(colors)]

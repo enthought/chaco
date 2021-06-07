@@ -20,7 +20,6 @@ from numpy import (
     array,
     ceil,
     concatenate,
-    equal,
     finfo,
     float64,
     floor,
@@ -28,9 +27,7 @@ from numpy import (
     linspace,
     log10,
     minimum,
-    ndarray,
     newaxis,
-    putmask,
     shape,
 )
 
@@ -164,8 +161,8 @@ class ShowAllTickGenerator(AbstractTickGenerator):
 
 
 class MinorTickGenerator(DefaultTickGenerator):
-    """An implementation of AbstractTickGenerator that extends DefaultTickGenerator,
-    but sets the tick interval to a smaller length.
+    """An implementation of AbstractTickGenerator that extends
+    DefaultTickGenerator, but sets the tick interval to a smaller length.
     """
 
     def get_ticks(
@@ -525,8 +522,8 @@ def log_auto_ticks(
         )
 
     elif log_interval < (tick_goal + 1) / 2 or explicit_ticks:
-        # If there's enough space, try to put lines at the magic number multipliers
-        # inside each power of ten
+        # If there's enough space, try to put lines at the magic number
+        # multipliers inside each power of ten
 
         # Try each interval to see how many ticks we get
         for interval in magic_numbers:

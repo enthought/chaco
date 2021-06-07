@@ -69,14 +69,16 @@ class FilledLinePlot(PolygonPlot):
         with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
 
-            # If the fill color is not transparent, then draw the fill polygon first
+            # If the fill color is not transparent, then draw the fill polygon
+            # first
             face_col = self.effective_face_color
             if not (len(face_col) == 4 and face_col[-1] == 0):
                 if self.render_style in ("hold", "connectedhold"):
-                    # Modify the points array before passing it in to render_polys:
-                    # Between every two points, create an intermediate point with
-                    # the first point's Y and the second point's X.  (For vertical
-                    # plots, use the first point's X and the second point's Y.)
+                    # Modify the points array before passing it in to
+                    # render_polys: Between every two points, create an
+                    # intermediate point with the first point's Y and the
+                    # second point's X.  (For vertical plots, use the first
+                    # point's X and the second point's Y.)
                     new_points = empty((points.shape[0] * 2 - 1, 2))
                     new_points[::2] = points
                     if self.orientation == "h":
@@ -99,7 +101,8 @@ class FilledLinePlot(PolygonPlot):
                 gc.set_line_width(self.edge_width)
                 gc.set_line_dash(self.edge_style_)
                 # Create a list around points because the LinePlot supports
-                # Nans, and its rendering methods expect lists of disjoint arrays.
+                # Nans, and its rendering methods expect lists of disjoint
+                # arrays.
                 render_lines(gc, [points], self.orientation)
 
     def _render_polys(self, gc, points, ox, oy):

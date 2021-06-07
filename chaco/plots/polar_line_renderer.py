@@ -52,7 +52,8 @@ class PolarLineRenderer(AbstractPlotRenderer):
 
     def _gather_points(self):
         """
-        Collects the data points that are within the plot bounds and caches them
+        Collects the data points that are within the plot bounds and caches
+        them
         """
         # This is just a stub for now.  We should really find the lines only
         # inside the screen range here.

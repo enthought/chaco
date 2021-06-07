@@ -53,8 +53,8 @@ class LineSegmentTool(AbstractOverlay):
     #: The pixel distance from a vertex that is considered 'on' the vertex.
     proximity_distance = Int(4)
 
-    #: The data (index, value) position of the mouse cursor; this is used by various
-    #: draw() routines.
+    #: The data (index, value) position of the mouse cursor; this is used by
+    #: various draw() routines.
     mouse_position = Trait(None, None, Tuple)
 
     # The index of the vertex being dragged, if any.
@@ -273,7 +273,7 @@ class LineSegmentTool(AbstractOverlay):
 
     def _cancel_drag(self):
         """Cancels a drag operation."""
-        if self._dragged != None:
+        if self._dragged is not None:
             if self._drag_new_point:
                 # Only remove the point if it was a newly-placed point
                 self.points.pop(self._dragged)
@@ -361,7 +361,8 @@ class LineSegmentTool(AbstractOverlay):
 
     def _finalize_selection(self):
         """
-        Abstract method called to take action after the line selection is complete
+        Abstract method called to take action after the line selection is
+        complete
         """
         pass
 

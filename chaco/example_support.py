@@ -8,6 +8,11 @@
 #
 # Thanks for using Enthought open source!
 
+from traits.etsconfig.api import ETSConfig
+
+# Import a default palette for backwards compatibility
+from .default_colors import cbrewer as COLOR_PALETTE  # noqa: F401
+
 doc = """
 This file contains a support class that wraps up the boilerplate toolkit calls
 that virtually all the demo programs have to use, and doesn't actually do
@@ -16,14 +21,6 @@ anything when run on its own.
 Try running simple_line.py, colormapped_scatter.py, or check out any of
 the programs in in tutorials/.
 """
-from numpy import array
-
-from traits.etsconfig.api import ETSConfig
-
-
-# Import a default palette for backwards compatibility
-from .default_colors import cbrewer as COLOR_PALETTE
-
 
 # FIXME - it should be enough to do the following import, but because of the
 # PyQt/traits problem (see below) we can't because it would drag in traits too
@@ -62,7 +59,9 @@ if ETSConfig.toolkit == "wx":
             self.Show(True)
 
         def _create_window(self):
-            "Subclasses should override this method and return an enable.wx.Window"
+            """Subclasses should override this method and return an
+            enable.wx.Window
+            """
             raise NotImplementedError
 
     def demo_main(demo_class, size=(400, 400), title="Chaco plot"):
@@ -105,12 +104,13 @@ elif ETSConfig.toolkit == "qt4":
             self.show()
 
         def _create_window(self):
-            "Subclasses should override this method and return an enable.Window"
+            """Subclasses should override this method and return an
+            enable.Window
+            """
             raise NotImplementedError
 
     def demo_main(demo_class, size=(400, 400), title="Chaco plot"):
         "Takes the class of the demo to run as an argument."
-        frame = demo_class(None, size=size, title=title)
         _app.exec_()
 
 

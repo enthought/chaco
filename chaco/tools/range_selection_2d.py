@@ -37,8 +37,8 @@ class RangeSelection2D(RangeSelection):
         within the resize margin of an endpoint, then the tool switches to the
         'selecting' state so that the user can resize the selection.
 
-        If the event is within the bounds of the selection region, then the tool
-        switches to the 'moving' states.
+        If the event is within the bounds of the selection region, then the
+        tool switches to the 'moving' states.
 
         Otherwise, the selection becomes deselected.
         """
@@ -126,7 +126,8 @@ class RangeSelection2D(RangeSelection):
         Otherwise, the cursor is set to an arrow.
         """
         if self.enable_resize:
-            # Change the mouse cursor when the user moves within the resize margin
+            # Change the mouse cursor when the user moves within the resize
+            # margin
             coords = self._get_selection_screencoords()
             if coords is not None:
                 start, end = coords

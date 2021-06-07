@@ -40,16 +40,16 @@ def _create_data_sources(data, index_sort="none"):
             index = ArrayDataSource(array(index), sort_order=index_sort)
         elif not isinstance(index, AbstractDataSource):
             raise RuntimeError(
-                "Need an array or list of values or a DataSource, got %s instead."
-                % type(index)
+                "Need an array or list of values or a DataSource, got %s"
+                " instead." % type(index)
             )
 
         if type(value) in (list, tuple, ndarray):
             value = ArrayDataSource(array(value))
         elif not isinstance(value, AbstractDataSource):
             raise RuntimeError(
-                "Need an array or list of values or a DataSource, got %s instead."
-                % type(index)
+                "Need an array or list of values or a DataSource, got %s"
+                " instead." % type(index)
             )
 
         return index, value

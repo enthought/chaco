@@ -8,12 +8,12 @@
 #
 # Thanks for using Enthought open source!
 
-""" Defines various plot container classes, including stacked, grid, and overlay.
+""" Defines various plot container classes, including stacked, grid, and
+overlay.
 """
 # Major library imports
 from numpy import (
     amax,
-    any,
     arange,
     array,
     cumsum,

@@ -27,12 +27,13 @@ class DragZoom(DragTool, BetterZoom):
     axes by the same amount as the user drags up and down.  (In this default
     configuration, the horizontal position of the drag motion has no effect.)
 
-    By setting **maintain_aspect_ratio** to False, this tool will separably zoom
-    the X and Y axis ranges by the (possibly different) horizontal and vertical
-    drag motions.  This is similar to the drag zoom interaction in Matplotlib.
+    By setting **maintain_aspect_ratio** to False, this tool will separably
+    zoom the X and Y axis ranges by the (possibly different) horizontal and
+    vertical drag motions.  This is similar to the drag zoom interaction in
+    Matplotlib.
 
-    By setting single_axis to True, dragging will only zoom in the axis specified
-    by the axis attribute.
+    By setting single_axis to True, dragging will only zoom in the axis
+    specified by the axis attribute.
 
     By setting restrict_domain to True, the zoom will be limited to the domain
     of the axis mappers.
@@ -41,8 +42,8 @@ class DragZoom(DragTool, BetterZoom):
     #: The mouse button that initiates the drag
     drag_button = Enum("left", "right", "middle")
 
-    #: Scaling factor on the zoom "speed".  A speed of 1.0 implies a zoom rate of
-    #: 5% for every 10 pixels.
+    #: Scaling factor on the zoom "speed".  A speed of 1.0 implies a zoom rate
+    #: of 5% for every 10 pixels.
     speed = Float(1.0)
 
     #: Whether or not to preserve the aspect ratio of X to Y while zooming in.

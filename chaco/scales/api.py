@@ -8,6 +8,31 @@
 #
 # Thanks for using Enthought open source!
 
-from .formatters import *
-from .scales import *
-from .time_scale import *
+from .formatters import (  # noqa: F401
+    BasicFormatter,
+    IntegerFormatter,
+    NullFormatter,
+    OffsetFormatter,
+    TimeFormatter,
+    strftimeEx,
+)
+from .scales import (  # noqa: F401
+    AbstractScale,
+    DefaultScale,
+    FixedScale,
+    LogScale,
+    Pow10Scale,
+    ScaleSystem,
+    frange,
+    heckbert_interval,
+)
+from .time_scale import (  # noqa: F401
+    CalendarScaleSystem,
+    HMSScales,
+    MDYScales,
+    TimeScale,
+    dt_to_sec,
+    td_to_sec,
+    tfrac,
+    trange,
+)

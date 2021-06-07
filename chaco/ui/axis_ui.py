@@ -116,4 +116,5 @@ default_view = View(
     buttons=["OK", "Cancel"],
 )
 
-# Fix me: Should we do something here where we register this with the Axis object?
+# Fix me: Should we do something here where we register this with the Axis
+# object?

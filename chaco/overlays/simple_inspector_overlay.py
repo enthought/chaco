@@ -186,7 +186,6 @@ class SimpleInspectorOverlay(TextGridOverlay):
             self.alternate_position = self.inspector.last_mouse_position
 
         d = new_value_event
-        text = []
         self.text_grid.string_array = array(
             [
                 [formatter(**d) for formatter in row]

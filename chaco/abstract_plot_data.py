@@ -50,8 +50,8 @@ class AbstractPlotData(HasTraits):
     def get_data(self, name):
         """Returns the data or data source associated with *name*.
 
-        If there is no data or data source associated with the name, this method
-        returns None.
+        If there is no data or data source associated with the name, this
+        method returns None.
         """
         raise NotImplementedError
 

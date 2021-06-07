@@ -28,10 +28,8 @@ class SaveTool(BaseTool):
     #: the extension.
     filename = Str("saved_plot.png")
 
-    #:-------------------------------------------------------------------------
     #: PDF format options
     #: This mirror the traits in PdfPlotGraphicsContext.
-    #:-------------------------------------------------------------------------
 
     pagesize = Enum("letter", "A4")
     dest_box = Tuple((0.5, 0.5, -0.5, -0.5))

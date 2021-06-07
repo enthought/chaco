@@ -109,9 +109,9 @@ class BaseCandlePlot(BaseXYPlot):
 
             # Draw the stem lines for min to max.  Draw these first so we can
             # draw the boxes on top.
-            # A little tricky: we need to account for cases when either min or max
-            # are None.  To do this, just draw to bar_min or from bar_max instead
-            # of drawing a single line from min to max.
+            # A little tricky: we need to account for cases when either min or
+            # max are None.  To do this, just draw to bar_min or from bar_max
+            # instead of drawing a single line from min to max.
             if min is not None or max is not None:
                 if self.stem_color is None:
                     stem_color = self.outline_color_

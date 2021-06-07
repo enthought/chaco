@@ -30,8 +30,8 @@ class PolarMapper(AbstractMapper):
     Maps a 1-D data space to and from screen space by specifying a range in
     data space and a corresponding fixed line in screen space.
 
-    This class concerns itself only with metric and not with orientation. So, to
-    "flip" the screen space orientation, swap the values for **low_pos**
+    This class concerns itself only with metric and not with orientation. So,
+    to "flip" the screen space orientation, swap the values for **low_pos**
     and **high_pos**.
     """
 
@@ -53,7 +53,8 @@ class PolarMapper(AbstractMapper):
     def map_screen(self, data_array):
         """map_screen(data_array) -> screen_array
 
-        Overrides AbstractMapper. Maps values from data space into screen space.
+        Overrides AbstractMapper. Maps values from data space into screen
+        space.
         """
         self._compute_scale()
         if self._null_data_range:
@@ -67,7 +68,8 @@ class PolarMapper(AbstractMapper):
     def map_data(self, screen_val):
         """map_data(screen_val) -> data_val
 
-        Overrides AbstractMapper. Maps values from screen space into data space.
+        Overrides AbstractMapper. Maps values from screen space into data
+        space.
         """
         self._compute_scale()
         if self._null_screen_range:
@@ -110,8 +112,8 @@ class PolarMapper(AbstractMapper):
             self._scale = screen_range / data_range
             # The screen_range might be small enough that dividing by the
             # data_range causes it to go to 0. Explicitly call bool because
-            # _scale might also be a numpy scalar and yield another numpy scalar
-            # that the Bool trait rejects.
+            # _scale might also be a numpy scalar and yield another numpy
+            # scalar that the Bool trait rejects.
             self._null_data_range = bool(self._scale == 0.0)
 
         self._cache_valid = True

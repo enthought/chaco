@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 import datetime
-import os
 import contextlib
 import unittest
 
@@ -142,7 +141,8 @@ class TestTFrac(unittest.TestCase):
         with set_timezone(HONOLULU):
             t = 3601
             (base, frac) = tfrac(t, years=10)
-            # previous Honolulu decade start UTC timestamp (including leap years)
+            # previous Honolulu decade start UTC timestamp (including leap
+            # years)
             self.assertEqual(base, 3600 * (-(365 * 10 + 3) * 24 + 10))
             # 15:00:01 in the afternoon, Dec 31, 9 years into decade
             self.assertEqual(frac, 3600 * ((365 * 9 + 3 + 364) * 24 + 15) + 1)
@@ -316,14 +316,14 @@ class TestTFrac(unittest.TestCase):
 
     def test_tfrac_milliseconds_04(self):
         t = 1.0078121
-        # Note that the last digit is lost due to rounding to microsecond scale.
+        # Note that the last digit is lost due to rounding to microsecond scale
         (base, frac) = tfrac(t, milliseconds=1)
         self.assertEqual(base, 1.007)
         self.assertEqual(frac, 0.000812)
 
     def test_tfrac_milliseconds_05(self):
         t = 1.0078056
-        # Note that the last digit is lost due to rounding to microsecond scale.
+        # Note that the last digit is lost due to rounding to microsecond scale
         (base, frac) = tfrac(t, milliseconds=1)
         self.assertEqual(base, 1.007)
         self.assertEqual(frac, 0.000806)
@@ -484,8 +484,8 @@ class TestTimeScale(unittest.TestCase):
         could raise a KeyError.  This test passes if no exception is
         raised.
         """
-        ts = TimeScale(seconds=1, formatter=TimeFormatter())
-        ts = TimeScale(minutes=1, formatter=TimeFormatter())
+        TimeScale(seconds=1, formatter=TimeFormatter())
+        TimeScale(minutes=1, formatter=TimeFormatter())
 
 
 # ----------------------------------------------------------------

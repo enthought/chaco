@@ -26,11 +26,11 @@ class PanTool(DragTool):
     #: Scaling factor on the panning "speed".
     speed = Float(1.0)
 
-    #: The modifier key that, if depressed when the drag is initiated, constrains
-    #: the panning to happen in the only direction of largest initial motion.
-    #: It is possible to permanently restrict this tool to always drag along one
-    #: direction.  To do so, set constrain=True, constrain_key=None, and
-    #: constrain_direction to the desired direction.
+    #: The modifier key that, if depressed when the drag is initiated,
+    #: constrains the panning to happen in the only direction of largest
+    #: initial motion. It is possible to permanently restrict this tool to
+    #: always drag along one direction.  To do so, set constrain=True,
+    #: constrain_key=None, and constrain_direction to the desired direction.
     constrain_key = Enum(None, "shift", "control", "alt")
 
     #: Constrain the panning to one direction?
@@ -96,8 +96,6 @@ class PanTool(DragTool):
 
                 screenlow, screenhigh = mapper.screen_bounds
                 screendelta = self.speed * (eventpos - origpos)
-                # if getattr(plot, direction + "_direction", None) == "flipped":
-                #    screendelta = -screendelta
 
                 newlow = mapper.map_data(screenlow - screendelta)
                 newhigh = mapper.map_data(screenhigh - screendelta)

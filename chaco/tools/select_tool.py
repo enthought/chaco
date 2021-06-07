@@ -20,7 +20,8 @@ class SelectTool(BaseTool):
     to handle actual selection/deselection.
     """
 
-    #: The threshold, in pixels, around the cursor location to search for points.
+    #: The threshold, in pixels, around the cursor location to search for
+    #: points.
     threshold = Float(5.0)
 
     #: How selections are handled:
@@ -30,8 +31,8 @@ class SelectTool(BaseTool):
     #:     key) to select or deselect them. If the point is already selected,
     #:     clicking it again deselects it. The modifier key to use is set by
     #:     **multiselect_modifier**. The only way to deselect points is by
-    #:     clicking on them; clicking on a screen space outside of the plot does
-    #:     not deselect points.
+    #:     clicking on them; clicking on a screen space outside of the plot
+    #:     does not deselect points.
     #: "multi"
     #:     Like **toggle** mode, except that the user can deselect all points
     #:     at once by clicking on the plot area away from a point.

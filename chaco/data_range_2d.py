@@ -12,16 +12,14 @@
 Defines the DataRange2D class.
 """
 
-from numpy import compress, inf, transpose
+from numpy import compress, transpose
 
 # Enthought library imports
 from traits.api import (
-    Any,
     Bool,
     CFloat,
     Instance,
     Property,
-    Trait,
     Tuple,
     observe,
 )
@@ -46,9 +44,9 @@ class DataRange2D(BaseDataRange):
     #: **high_setting**.
     high = Property  # (2,) array of upper-right x,y
 
-    #: Property for the lower bound of this range (overrides AbstractDataRange).
+    #: Property for the lower bound of this range (overrides AbstractDataRange)
     low_setting = Property
-    #: Property for the upper bound of this range (overrides AbstractDataRange).
+    #: Property for the upper bound of this range (overrides AbstractDataRange)
     high_setting = Property
 
     # The 2-D grid range is actually implemented as two 1-D ranges, which can

@@ -16,7 +16,7 @@ import warnings
 import time as stdlib_time
 
 # Yup, we're exposing everything from time.
-from time import *
+from time import *  # noqa: F401, F403
 from datetime import datetime, timedelta, MINYEAR, MAXYEAR
 
 __all__ = [x for x in dir(stdlib_time) if not x.startswith("_")] + [
@@ -49,7 +49,7 @@ def safe_fromtimestamp(timestamp, *args, **kwds):
     """
     try:
         return EPOCH + timedelta(seconds=timestamp)
-    except (ValueError, OverflowError) as e:
+    except (ValueError, OverflowError):
         warnings.warn("Timestamp out of range.  Returning safe default value.")
         if timestamp <= 0:
             return datetime(MINYEAR, 1, 1, 0, 0, 0)
@@ -87,7 +87,10 @@ struct_time = type(stdlib_time.localtime())
 
 def localtime(t=None):
     """
-    localtime([seconds]) -> (tm_year,tm_mon,tm_day,tm_hour,tm_min,tm_sec,tm_wday,tm_yday,tm_isdst)
+    localtime([seconds]) -> (
+        tm_year, tm_mon, tm_day, tm_hour, tm_min, tm_sec, tm_wday, tm_yday,
+        tm_isdst
+    )
 
     Convert seconds since the Epoch to a time tuple expressing local time.
     When 'seconds' is not passed in, convert the current time instead.

@@ -236,7 +236,7 @@ class ExportDataToClipboardButton(ToolbarButton):
 
         # if all of rows are the same length, use faster algorithms,
         # otherwise go element by element adding the necessary empty strings
-        if len(set([len(l) for l in values])) == 1:
+        if len(set([len(value) for value in values])) == 1:
             data = [indices[0]] + values
             if self.orientation == "v":
                 data = numpy.array(data).T.tolist()
