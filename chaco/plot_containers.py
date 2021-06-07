@@ -33,6 +33,7 @@ from traits.api import (
     Instance,
     List,
     Property,
+    Str,
     String,
     Trait,
     Tuple,
@@ -105,6 +106,8 @@ class OverlayPlotContainer(BasePlotContainer):
     #: Redefine the container layers to name the main layer as "plot" instead
     #: of the Enable default of "mainlayer"
     container_under_layers = Tuple("background", "image", "underlay", "plot")
+
+    draw_layer = Str("plot")
 
     def get_preferred_size(self, components=None):
         """Returns the size (width,height) that is preferred for this component.
