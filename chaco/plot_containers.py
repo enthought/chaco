@@ -102,6 +102,10 @@ class OverlayPlotContainer(BasePlotContainer):
     # Cache (width, height) of the container's preferred size.
     _cached_preferred_size = Tuple
 
+    #: Redefine the container layers to name the main layer as "plot" instead
+    #: of the Enable default of "mainlayer"
+    container_under_layers = Tuple("background", "image", "underlay", "plot")
+
     def get_preferred_size(self, components=None):
         """Returns the size (width,height) that is preferred for this component.
 
