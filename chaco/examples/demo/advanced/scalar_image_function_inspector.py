@@ -454,8 +454,8 @@ class TimerController(HasTraits):
     # The plot view which will be affected by timed animation
     view = Instance(PlotUI)
 
-    # The ModelView instance that contains the animation options:
-    model_view = Instance("ModelView")
+    # The DemoModelView instance that contains the animation options:
+    model_view = Instance("DemoModelView")
 
     # Whether the view is animated:
     animated = DelegatesTo("model_view")
@@ -556,7 +556,7 @@ class TimerController(HasTraits):
             metadata["selections"] = x, y
 
 
-class ModelView(HasTraits):
+class DemoModelView(HasTraits):
 
     model = Instance(Model)
     view = Instance(PlotUI)
@@ -614,14 +614,14 @@ class ModelView(HasTraits):
 
     def edit_traits(self, *args, **kws):
         self._start_timer()
-        return super(ModelView, self).edit_traits(*args, **kws)
+        return super(DemoModelView, self).edit_traits(*args, **kws)
 
     def configure_traits(self, *args, **kws):
         self._start_timer()
-        return super(ModelView, self).configure_traits(*args, **kws)
+        return super(DemoModelView, self).configure_traits(*args, **kws)
 
 
-demo = ModelView(model=Model(), view=PlotUI())
+demo = DemoModelView(model=Model(), view=PlotUI())
 
 
 if __name__ == "__main__":
