@@ -40,6 +40,7 @@ from traits.api import (
     Int,
 )
 from enable.api import OverlayContainer
+from enable.stacked_layout import stack_layout, stacked_preferred_size
 
 try:
     from enable.api import ConstraintsContainer
@@ -131,153 +132,11 @@ class StackedPlotContainer(BasePlotContainer):
 
         Overrides PlotComponent.
         """
-        if self.fixed_preferred_size is not None:
-            self._cached_preferred_size = self.fixed_preferred_size
-            return self.fixed_preferred_size
-
-        if self.resizable == "":
-            self._cached_preferred_size = self.outer_bounds[:]
-            return self.outer_bounds
-
-        if components is None:
-            components = self.components
-
-        ndx = self.stack_index
-        other_ndx = 1 - ndx
-
-        no_visible_components = True
-        total_size = 0
-        max_other_size = 0
-        for component in components:
-            if not self._should_layout(component):
-                continue
-
-            no_visible_components = False
-
-            pref_size = component.get_preferred_size()
-            total_size += pref_size[ndx] + self.spacing
-            if pref_size[other_ndx] > max_other_size:
-                max_other_size = pref_size[other_ndx]
-
-        if total_size >= self.spacing:
-            total_size -= self.spacing
-
-        if (self.stack_dimension not in self.resizable) and (
-            self.stack_dimension not in self.fit_components
-        ):
-            total_size = self.bounds[ndx]
-        elif no_visible_components or (total_size == 0):
-            total_size = self.default_size[ndx]
-
-        if (self.other_dimension not in self.resizable) and (
-            self.other_dimension not in self.fit_components
-        ):
-            max_other_size = self.bounds[other_ndx]
-        elif no_visible_components or (max_other_size == 0):
-            max_other_size = self.default_size[other_ndx]
-
-        if ndx == 0:
-            self._cached_preferred_size = (
-                total_size + self.hpadding,
-                max_other_size + self.vpadding,
-            )
-        else:
-            self._cached_preferred_size = (
-                max_other_size + self.hpadding,
-                total_size + self.vpadding,
-            )
-
-        return self._cached_preferred_size
+        return stacked_preferred_size(container=self, components=components)
 
     def _do_stack_layout(self, components, align):
         """Helper method that does the actual work of layout."""
-
-        size = list(self.bounds)
-        if self.fit_components != "":
-            self.get_preferred_size()
-            if "h" in self.fit_components:
-                size[0] = self._cached_preferred_size[0] - self.hpadding
-            if "v" in self.fit_components:
-                size[1] = self._cached_preferred_size[1] - self.vpadding
-
-        ndx = self.stack_index
-        other_ndx = 1 - ndx
-        other_dim = self.other_dimension
-
-        # Assign sizes of non-resizable components, and compute the total size
-        # used by them (along the stack dimension).
-        total_fixed_size = 0
-        resizable_components = []
-        size_prefs = {}
-        total_resizable_size = 0
-
-        for component in components:
-            if not self._should_layout(component):
-                continue
-            if self.stack_dimension not in component.resizable:
-                total_fixed_size += component.outer_bounds[ndx]
-            else:
-                preferred_size = component.get_preferred_size()
-                size_prefs[component] = preferred_size
-                total_resizable_size += preferred_size[ndx]
-                resizable_components.append(component)
-
-        new_bounds_dict = {}
-
-        # Assign sizes of all the resizable components along the stack dimension
-        if resizable_components:
-            space = self.spacing * (len(self.components) - 1)
-            avail_size = size[ndx] - total_fixed_size - space
-            if total_resizable_size > 0:
-                scale = avail_size / float(total_resizable_size)
-                for component in resizable_components:
-                    tmp = list(component.outer_bounds)
-                    tmp[ndx] = int(size_prefs[component][ndx] * scale)
-                    new_bounds_dict[component] = tmp
-            else:
-                each_size = int(avail_size / len(resizable_components))
-                for component in resizable_components:
-                    tmp = list(component.outer_bounds)
-                    tmp[ndx] = each_size
-                    new_bounds_dict[component] = tmp
-
-        # Loop over all the components, assigning position and computing the
-        # size in the other dimension and its position.
-        cur_pos = 0
-        for component in components:
-            if not self._should_layout(component):
-                continue
-
-            position = list(component.outer_position)
-            position[ndx] = cur_pos
-
-            bounds = new_bounds_dict.get(
-                component, list(component.outer_bounds)
-            )
-            cur_pos += bounds[ndx] + self.spacing
-
-            if (bounds[other_ndx] > size[other_ndx]) or (
-                other_dim in component.resizable
-            ):
-                # If the component is resizable in the other dimension or it exceeds the
-                # container bounds, set it to the maximum size of the container
-
-                position[other_ndx] = 0
-                bounds[other_ndx] = size[other_ndx]
-            else:
-                position[other_ndx] = 0
-                if align == "min":
-                    pass
-                elif align == "max":
-                    position[other_ndx] = size[other_ndx] - bounds[other_ndx]
-                elif align == "center":
-                    position[other_ndx] = (
-                        size[other_ndx] - bounds[other_ndx]
-                    ) / 2.0
-
-            component.outer_position = position
-            component.outer_bounds = bounds
-            component.do_layout()
+        stack_layout(container=self, components=components, align=align)
 
     ### Persistence ###########################################################
 
