@@ -39,7 +39,7 @@ from traits.api import (
     Tuple,
     Int,
 )
-from enable.api import OverlayContainer
+from enable.api import Container, OverlayContainer
 from enable.stacked_layout import stack_layout, stacked_preferred_size
 
 try:
@@ -108,7 +108,7 @@ class OverlayPlotContainer(OverlayContainer):
     draw_layer = Str("plot")
 
 
-class HPlotContainer(BasePlotContainer):
+class HPlotContainer(Container):
     """
     A plot container that stacks all of its components horizontally. Resizable
     components share the free space evenly. All components are stacked from
@@ -184,7 +184,7 @@ class HPlotContainer(BasePlotContainer):
         return state
 
 
-class VPlotContainer(BasePlotContainer):
+class VPlotContainer(Container):
     """
     A plot container that stacks plot components vertically.
     """
