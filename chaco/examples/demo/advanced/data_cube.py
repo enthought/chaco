@@ -6,13 +6,6 @@ Click or click-drag in any data window to set the slice to view.
 
 import warnings
 
-# Outstanding TODOs:
-#  - need to add line inspectors to side and bottom plots, and synchronize
-#    with center plot
-#  - need to set the various image plots to use the same colormap instance,
-#    and that colormap's range needs to be set to min/max of the entire cube
-#  - refactor create_window() so there is less code duplication
-#  - try to eliminate the use of model.xs, ys, zs in favor of bounds tuples
 from numpy import amin, amax, zeros, fromfile, transpose, uint8
 
 # Standard library imports
@@ -192,7 +185,7 @@ class ImageIndexTool(BaseTool):
             self.wheel_cb(self, event.mouse_wheel)
 
 
-class PlotFrame(DemoFrame):
+class Demo(DemoFrame):
 
     # These are the indices into the cube that each of the image plot views
     # will show; the default values are non-zero just to make it a little
@@ -466,6 +459,6 @@ def cleanup_data():
 if __name__ == "__main__":
     # Save demo so that it doesn't get garbage collected when run within
     # existing event loop (i.e. from ipython).
-    demo = demo_main(PlotFrame, size=(800, 700), title="Cube analyzer")
+    demo = demo_main(Demo, size=(800, 700), title="Cube analyzer")
     if run_cleanup:
         cleanup_data()

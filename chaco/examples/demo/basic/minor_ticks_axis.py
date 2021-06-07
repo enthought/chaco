@@ -57,6 +57,8 @@ class MinorTickDemo(HasTraits):
         return plot
 
 
+demo = MinorTickDemo()
+
+
 if __name__ == "__main__":
-    demo = MinorTickDemo()
     demo.configure_traits()

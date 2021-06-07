@@ -9,3 +9,7 @@ except ImportError:
     __version__ = "not-built"
 
 __requires__ = ["traits", "traitsui", "pyface", "numpy", "enable"]
+
+__extras_require__ = {
+    'examples': ['encore', 'scipy', 'pandas']
+}
