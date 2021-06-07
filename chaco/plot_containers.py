@@ -121,6 +121,12 @@ class HPlotContainer(BasePlotContainer):
     # attribute.
     stack_index = 0
 
+    #: Redefine the container layers to name the main layer as "plot" instead
+    #: of the Enable default of "mainlayer"
+    container_under_layers = Tuple("background", "image", "underlay", "plot")
+
+    draw_layer = Str("plot")
+
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
     # The dimension along which to stack components that are added to
@@ -182,6 +188,12 @@ class VPlotContainer(BasePlotContainer):
     """
     A plot container that stacks plot components vertically.
     """
+
+    #: Redefine the container layers to name the main layer as "plot" instead
+    #: of the Enable default of "mainlayer"
+    container_under_layers = Tuple("background", "image", "underlay", "plot")
+
+    draw_layer = Str("plot")
 
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
