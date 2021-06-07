@@ -39,8 +39,7 @@ from traits.api import (
     Tuple,
     Int,
 )
-from enable.api import Container, HStackedContainer, OverlayContainer
-from enable.stacked_layout import stack_layout, stacked_preferred_size
+from enable.api import HStackedContainer, OverlayContainer, VStackedContainer
 
 try:
     from enable.api import ConstraintsContainer
@@ -136,7 +135,7 @@ class HPlotContainer(HStackedContainer):
         return state
 
 
-class VPlotContainer(Container):
+class VPlotContainer(VStackedContainer):
     """
     A plot container that stacks plot components vertically.
     """
@@ -148,55 +147,6 @@ class VPlotContainer(Container):
     draw_layer = Str("plot")
 
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
-
-    # The dimension along which to stack components that are added to
-    # this container.
-    stack_dimension = Str("v", transient=True)
-
-    # The "other" dimension, i.e., the dual of the stack dimension.
-    other_dimension = Str("h", transient=True)
-
-    # The index into obj.position and obj.bounds that corresponds to
-    # **stack_dimension**.  This is a class-level and not an instance-level
-    # attribute.
-    stack_index = 1
-
-    # VPlotContainer attributes
-
-    #: The horizontal alignment of objects that don't span the full width.
-    halign = Enum("left", "right", "center")
-
-    #: The order in which components in the plot container are laid out.
-    stack_order = Enum("bottom_to_top", "top_to_bottom")
-
-    #: The amount of space to put between components.
-    spacing = Float(0.0)
-
-    def get_preferred_size(self, components=None):
-        """Returns the size (width,height) that is preferred for this component.
-
-        Overrides PlotComponent.
-        """
-        return stacked_preferred_size(container=self, components=components)
-
-    def _do_stack_layout(self, components, align):
-        """Helper method that does the actual work of layout."""
-        stack_layout(container=self, components=components, align=align)
-
-    def _do_layout(self):
-        """Actually performs a layout (called by do_layout())."""
-        if self.stack_order == "bottom_to_top":
-            components = self.components
-        else:
-            components = self.components[::-1]
-        if self.halign == "left":
-            align = "min"
-        elif self.halign == "center":
-            align = "center"
-        else:
-            align = "max"
-
-        return self._do_stack_layout(components, align)
 
     ### Persistence ###########################################################
 
