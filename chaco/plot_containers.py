@@ -39,6 +39,7 @@ from traits.api import (
     Tuple,
     Int,
 )
+from enable.api import Container
 from enable.simple_layout import (
     simple_container_get_preferred_size,
     simple_container_do_layout,
@@ -89,7 +90,7 @@ if ConstraintsContainer is not None:
     __all__.append("ConstraintsPlotContainer")
 
 
-class OverlayPlotContainer(BasePlotContainer):
+class OverlayPlotContainer(Container):
     """
     A plot container that stretches all its components to fit within its
     space.  All of its components must therefore be resizable.
