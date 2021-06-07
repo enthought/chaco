@@ -163,6 +163,13 @@ class HPlotContainer(StackedPlotContainer):
 
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
+    # The dimension along which to stack components that are added to
+    # this container.
+    stack_dimension = Str("h", transient=True)
+
+    # The "other" dimension, i.e., the dual of the stack dimension.
+    other_dimension = Str("v", transient=True)
+
     #: The order in which components in the plot container are laid out.
     stack_order = Enum("left_to_right", "right_to_left")
 
@@ -218,10 +225,12 @@ class VPlotContainer(StackedPlotContainer):
 
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
-    #: Overrides StackedPlotContainer.
-    stack_dimension = "v"
-    #: Overrides StackedPlotContainer.
-    other_dimension = "h"
+    # The dimension along which to stack components that are added to
+    # this container.
+    stack_dimension = Str("v", transient=True)
+
+    # The "other" dimension, i.e., the dual of the stack dimension.
+    other_dimension = Str("h", transient=True)
 
     # The index into obj.position and obj.bounds that corresponds to
     # **stack_dimension**.  This is a class-level and not an instance-level
