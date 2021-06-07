@@ -3,7 +3,7 @@ This particular editor allows the user to set two endpoints of an
 interval.
 """
 
-
+from traits.api import HasTraits
 from traits.etsconfig.api import ETSConfig
 
 if ETSConfig.toolkit == "wx":
@@ -11,7 +11,7 @@ if ETSConfig.toolkit == "wx":
 else:
     from traitsui.qt4.editor import Editor
 
-from traitsui.api import EditorFactory
+from traitsui.api import EditorFactory, Item, View
 
 from enable.api import ColorTrait, Window
 
@@ -173,18 +173,15 @@ class IntervalEditorImpl(Editor):
 IntervalEditor = IntervalEditorFactory
 
 
-# --- Demonstration ---
-
-if __name__ == "__main__":
-    from traits.api import HasTraits
-    from traitsui.api import View, Item
-
-    class IntervalTest(HasTraits):
+class IntervalTest(HasTraits):
         interval = Interval(low=0, high=1)
 
         traits_view = View(
             Item("interval", editor=IntervalEditor()), resizable=True
         )
 
-    it = IntervalTest()
-    it.configure_traits()
+
+demo = IntervalTest()
+
+if __name__ == "__main__":
+    demo.configure_traits()

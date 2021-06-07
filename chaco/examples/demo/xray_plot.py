@@ -172,5 +172,7 @@ class PlotExample(HasTraits):
     )
 
 
-example = PlotExample()
-example.configure_traits()
+demo = PlotExample()
+
+if __name__ == '__main__':
+    demo.configure_traits()

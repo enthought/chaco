@@ -1,6 +1,7 @@
 from chaco.api import ArrayPlotData, Plot
 from enable.api import ComponentEditor
 from traits.api import (
+    Bool,
     HasTraits,
     Instance,
     Int,
@@ -42,6 +43,12 @@ class Hyetograph(HasTraits):
     intensity_plot = Instance(Plot)
 
     nrcs_plot = Instance(Plot)
+
+    initialized = Bool(False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.initialized = True
 
     def _intensity_plot_default(self):
         intensity_plot = Plot(ArrayPlotData(x=self.timeline, y=self.intensity))
@@ -104,7 +111,7 @@ class Hyetograph(HasTraits):
                 vr[i] = 0
         self.nrcs = vr
 
-    @observe('duration, year_storm, county, curve_number')
+    @observe('duration, year_storm, county, curve_number, initialized')
     def _perform_calculations(self, event=None):
         self.calculate_intensity()
         self.calculate_runoff()
@@ -126,10 +133,6 @@ class Hyetograph(HasTraits):
         self.intensity_plot.invalidate_and_redraw()
         self.nrcs_plot.invalidate_and_redraw()
 
-    def start(self):
-        self._perform_calculations()
-        self.configure_traits()
-
     traits_view = View(
         Item('plot_type'),
         Item("intensity_plot", editor=ComponentEditor()),
@@ -144,6 +147,8 @@ class Hyetograph(HasTraits):
     )
 
 
+popup = Hyetograph()
+
+
 if __name__ == "__main__":
-    hyetograph = Hyetograph()
-    hyetograph.start()
+    popup.configure_traits()

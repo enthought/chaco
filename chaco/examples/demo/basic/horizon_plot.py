@@ -186,11 +186,9 @@ class Demo(HasTraits):
     )
 
 
-demo = Demo()
+filled, horizon = _create_plot_components()
+demo = Demo(horizon=horizon, filled=filled)
+
 
 if __name__ == "__main__":
-
-    filled, horizon = _create_plot_components()
-    demo.horizon = horizon
-    demo.filled = filled
     demo.configure_traits()
