@@ -32,6 +32,12 @@ jobs:
           sudo apt-get install libxcb-render-util0
           sudo apt-get install libxcb-xinerama0
         if: matrix.toolkit != 'null'
+        # NOTE : Temporarily needed for building enable from source
+        # Should be removed when enable 5.2 is released
+      - name: Install GL dependencies necessary to build enable
+        run: |
+          sudo apt-get update
+          sudo apt-get install libglu1-mesa-dev
       - name: Cache EDM packages
         uses: actions/cache@v2
         with:
