@@ -40,7 +40,7 @@ from traits.api import (
     Int,
 )
 from enable.api import OverlayContainer
-from enable.stacked_layout import stack_layout, stacked_preferred_size
+from enable.stacked_container import HStackedContainer, VStackedContainer
 
 try:
     from enable.api import ConstraintsContainer
@@ -108,35 +108,23 @@ class OverlayPlotContainer(OverlayContainer):
     draw_layer = Str("plot")
 
 
-class StackedPlotContainer(BasePlotContainer):
+class HPlotContainer(HStackedContainer):
     """
-    Base class for 1-D stacked plot containers, both horizontal and vertical.
+    A plot container that stacks all of its components horizontally. Resizable
+    components share the free space evenly. All components are stacked from
+    according to **stack_order* in the same order that they appear in the
+    **components** list.
     """
+
+    #: Redefine the container layers to name the main layer as "plot" instead
+    #: of the Enable default of "mainlayer"
+    container_under_layers = Tuple("background", "image", "underlay", "plot")
+
+    draw_layer = Str("plot")
 
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
-    # The dimension along which to stack components that are added to
-    # this container.
-    stack_dimension = Enum("h", "v", transient=True)
-
-    # The "other" dimension, i.e., the dual of the stack dimension.
-    other_dimension = Enum("v", "h", transient=True)
-
-    # The index into obj.position and obj.bounds that corresponds to
-    # **stack_dimension**.  This is a class-level and not an instance-level
-    # attribute. It must be 0 or 1.
-    stack_index = 0
-
-    def get_preferred_size(self, components=None):
-        """Returns the size (width,height) that is preferred for this component.
-
-        Overrides PlotComponent.
-        """
-        return stacked_preferred_size(container=self, components=components)
-
-    def _do_stack_layout(self, components, align):
-        """Helper method that does the actual work of layout."""
-        stack_layout(container=self, components=components, align=align)
+    _cached_preferred_size = Tuple(transient=True)
 
     ### Persistence ###########################################################
 
@@ -148,83 +136,29 @@ class StackedPlotContainer(BasePlotContainer):
         return state
 
 
-class HPlotContainer(StackedPlotContainer):
-    """
-    A plot container that stacks all of its components horizontally. Resizable
-    components share the free space evenly. All components are stacked from
-    according to **stack_order* in the same order that they appear in the
-    **components** list.
-    """
-
-    draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
-
-    #: The order in which components in the plot container are laid out.
-    stack_order = Enum("left_to_right", "right_to_left")
-
-    #: The amount of space to put between components.
-    spacing = Float(0.0)
-
-    #: The vertical alignment of objects that don't span the full height.
-    valign = Enum("bottom", "top", "center")
-
-    _cached_preferred_size = Tuple(transient=True)
-
-    def _do_layout(self):
-        """Actually performs a layout (called by do_layout())."""
-        if self.stack_order == "left_to_right":
-            components = self.components
-        else:
-            components = self.components[::-1]
-
-        if self.valign == "bottom":
-            align = "min"
-        elif self.valign == "center":
-            align = "center"
-        else:
-            align = "max"
-
-        return self._do_stack_layout(components, align)
-
-
-class VPlotContainer(StackedPlotContainer):
+class VPlotContainer(VStackedContainer):
     """
     A plot container that stacks plot components vertically.
     """
 
+    #: Redefine the container layers to name the main layer as "plot" instead
+    #: of the Enable default of "mainlayer"
+    container_under_layers = Tuple("background", "image", "underlay", "plot")
+
+    draw_layer = Str("plot")
+
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
-    #: Overrides StackedPlotContainer.
-    stack_dimension = "v"
-    #: Overrides StackedPlotContainer.
-    other_dimension = "h"
-    #: Overrides StackedPlotContainer.
-    stack_index = 1
+    _cached_preferred_size = Tuple(transient=True)
 
-    # VPlotContainer attributes
+    ### Persistence ###########################################################
 
-    #: The horizontal alignment of objects that don't span the full width.
-    halign = Enum("left", "right", "center")
-
-    #: The order in which components in the plot container are laid out.
-    stack_order = Enum("bottom_to_top", "top_to_bottom")
-
-    #: The amount of space to put between components.
-    spacing = Float(0.0)
-
-    def _do_layout(self):
-        """Actually performs a layout (called by do_layout())."""
-        if self.stack_order == "bottom_to_top":
-            components = self.components
-        else:
-            components = self.components[::-1]
-        if self.halign == "left":
-            align = "min"
-        elif self.halign == "center":
-            align = "center"
-        else:
-            align = "max"
-
-        return self._do_stack_layout(components, align)
+    # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
+    def __getstate__(self):
+        state = super().__getstate__()
+        if "stack_index" in state:
+            del state["stack_index"]
+        return state
 
 
 class GridPlotContainer(BasePlotContainer):
