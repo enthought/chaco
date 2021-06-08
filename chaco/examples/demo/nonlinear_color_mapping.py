@@ -272,11 +272,13 @@ class DataGridView(HasTraits):
         self.colorbar.index_mapper = new_mapper
 
 
+grid = DataGrid(
+    func=lambda x, y: 3.0 ** (x ** 2 + 2 * (cos(2 * pi * y) - 1)),
+    domain_bounds=(0.0, 0.0, 2.0, 2.0),
+    grid_size=(200, 200),
+)
+demo = DataGridView(model=grid)
+
+
 if __name__ == "__main__":
-    grid = DataGrid(
-        func=lambda x, y: 3.0 ** (x ** 2 + 2 * (cos(2 * pi * y) - 1)),
-        domain_bounds=(0.0, 0.0, 2.0, 2.0),
-        grid_size=(200, 200),
-    )
-    demo = DataGridView(model=grid)
     demo.configure_traits()

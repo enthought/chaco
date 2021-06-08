@@ -54,42 +54,40 @@ class DataframeScatterOverlay(TextBoxOverlay):
         return show_data
 
 
-if __name__ == "__main__":
+def _create_plot_component():
+    # Create a fake dataset from which 2 dimensions will be displayed in a
+    # scatter plot:
+    x = np.random.uniform(0.0, 10.0, 50)
+    y = np.random.uniform(0.0, 5.0, 50)
+    data = pd.DataFrame(
+        {"x": x, "y": y, "dataset": np.random.choice(list("abcdefg"), 50)}
+    )
+    plot_data = ArrayPlotData(x=x, y=y)
+    plot = Plot(plot_data)
+    scatter = plot.plot(("x", "y"), type="scatter")[0]
 
-    def _create_plot_component():
-        # Create a fake dataset from which 2 dimensions will be displayed in a
-        # scatter plot:
-        x = np.random.uniform(0.0, 10.0, 50)
-        y = np.random.uniform(0.0, 5.0, 50)
-        data = pd.DataFrame(
-            {"x": x, "y": y, "dataset": np.random.choice(list("abcdefg"), 50)}
-        )
-        plot_data = ArrayPlotData(x=x, y=y)
-        plot = Plot(plot_data)
-        scatter = plot.plot(("x", "y"), type="scatter")[0]
+    # Attach the inspector and its overlays
+    inspector = DataframeScatterInspector(component=scatter, data=data)
+    scatter.tools.append(inspector)
 
-        # Attach the inspector and its overlays
-        inspector = DataframeScatterInspector(component=scatter, data=data)
-        scatter.tools.append(inspector)
+    text_overlay = DataframeScatterOverlay(
+        component=plot,
+        inspector=inspector,
+        bgcolor="black",
+        alpha=0.6,
+        text_color="white",
+        border_color="none",
+    )
+    plot.overlays.append(text_overlay)
 
-        text_overlay = DataframeScatterOverlay(
-            component=plot,
-            inspector=inspector,
-            bgcolor="black",
-            alpha=0.6,
-            text_color="white",
-            border_color="none",
-        )
-        plot.overlays.append(text_overlay)
-
-        # Optional: add an overlay on the point to confirm what is hovered over
-        # Note that this overlay magically knows about hovered points by
-        # listening to renderer events rather than inspector events:
-        point_overlay = ScatterInspectorOverlay(
-            component=scatter, hover_color="red", hover_marker_size=6
-        )
-        scatter.overlays.append(point_overlay)
-        return plot
+    # Optional: add an overlay on the point to confirm what is hovered over
+    # Note that this overlay magically knows about hovered points by
+    # listening to renderer events rather than inspector events:
+    point_overlay = ScatterInspectorOverlay(
+        component=scatter, hover_color="red", hover_marker_size=6
+    )
+    scatter.overlays.append(point_overlay)
+    return plot
 
 
 # =============================================================================
