@@ -255,31 +255,43 @@ class PlotAxis(AbstractOverlay):
         """
         if not self.visible:
             return
-        self._draw_component(gc, view_bounds, mode, component)
-
-    def _draw_overlay(self, gc, view_bounds=None, mode="normal"):
-        """Draws the overlay layer of a component.
-
-        Overrides PlotComponent.
-        """
-        self._draw_component(gc, view_bounds, mode)
-
-    def _draw_component(
-        self, gc, view_bounds=None, mode="normal", component=None
-    ):
-        """Draws the component.
-
-        This method is preserved for backwards compatibility. Overrides
-        PlotComponent.
-        """
-        if not self.visible:
-            return
 
         if not self._cache_valid:
             if component is not None:
                 self._calculate_geometry_overlay(component)
             else:
                 self._calculate_geometry()
+            self._compute_tick_positions(gc, component)
+            self._compute_labels(gc)
+
+        with gc:
+            # slight optimization: if we set the font correctly on the
+            # base gc before handing it in to our title and tick labels,
+            # their set_font() won't have to do any work.
+            gc.set_font(self.tick_label_font)
+
+            if self.axis_line_visible:
+                self._draw_axis_line(
+                    gc, self._origin_point, self._end_axis_point
+                )
+            if self.title:
+                self._draw_title(gc)
+
+            self._draw_ticks(gc)
+            self._draw_labels(gc)
+
+        self._cache_valid = True
+
+    def _draw_overlay(self, gc, view_bounds=None, mode="normal"):
+        """Draws the overlay layer of a component.
+
+        Overrides PlotComponent.
+        """
+        if not self.visible:
+            return
+
+        if not self._cache_valid:
+            self._calculate_geometry()
             self._compute_tick_positions(gc, component)
             self._compute_labels(gc)
 

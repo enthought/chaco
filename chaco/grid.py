@@ -343,25 +343,6 @@ class PlotGrid(AbstractOverlay):
 
         Overrides PlotComponent.
         """
-        self._draw_component(gc, view_bounds, mode)
-
-    def overlay(self, other_component, gc, view_bounds=None, mode="normal"):
-        """Draws this component overlaid on another component.
-
-        Overrides AbstractOverlay.
-        """
-        if not self.visible:
-            return
-        self._compute_ticks(other_component)
-        self._draw_component(gc, view_bounds, mode)
-        self._cache_valid = False
-
-    def _draw_component(self, gc, view_bounds=None, mode="normal"):
-        """Draws the component.
-
-        This method is preserved for backwards compatibility. Overrides
-        PlotComponent.
-        """
         # What we're really trying to do with a grid is plot contour lines in
         # the space of the plot.  In a rectangular plot, these will always be
         # straight lines.
@@ -402,6 +383,55 @@ class PlotGrid(AbstractOverlay):
                 starts, ends = ends, starts
             gc.line_set(starts, ends)
             gc.stroke_path()
+
+    def overlay(self, other_component, gc, view_bounds=None, mode="normal"):
+        """Draws this component overlaid on another component.
+
+        Overrides AbstractOverlay.
+        """
+        # What we're really trying to do with a grid is plot contour lines in
+        # the space of the plot.  In a rectangular plot, these will always be
+        # straight lines.
+        if not self.visible:
+            return
+        self._compute_ticks(other_component)
+        
+        if not self._cache_valid:
+            self._compute_ticks()
+
+        if len(self._tick_positions) == 0:
+            return
+
+        with gc:
+            gc.set_line_width(self.line_weight)
+            gc.set_line_dash(self.line_style_)
+            gc.set_stroke_color(self.line_color_)
+            gc.set_antialias(False)
+
+            if self.component is not None:
+                gc.clip_to_rect(
+                    *(self.component.position + self.component.bounds)
+                )
+            else:
+                gc.clip_to_rect(*(self.position + self.bounds))
+
+            gc.begin_path()
+            if self.orientation == "horizontal":
+                starts = self._tick_positions.copy()
+                starts[:, 0] = self._tick_extents[:, 0]
+                ends = self._tick_positions.copy()
+                ends[:, 0] = self._tick_extents[:, 1]
+            else:
+                starts = self._tick_positions.copy()
+                starts[:, 1] = self._tick_extents[:, 0]
+                ends = self._tick_positions.copy()
+                ends[:, 1] = self._tick_extents[:, 1]
+            if self.flip_axis:
+                starts, ends = ends, starts
+            gc.line_set(starts, ends)
+            gc.stroke_path()
+
+        self._cache_valid = False
 
     def _mapper_changed(self, old, new):
         if old is not None:

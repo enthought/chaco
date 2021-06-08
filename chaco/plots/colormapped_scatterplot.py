@@ -131,7 +131,7 @@ class ColormappedScatterPlot(ScatterPlot):
             # Take into account fill_alpha even if we are rendering with only two values
             old_color = self.color
             self.color = tuple(self.fill_alpha * array(self.color_))
-            super()._draw_component(gc, view_bounds, mode)
+            super()._draw_plot(gc, view_bounds, mode)
             self.color = old_color
         else:
             colors = self._cached_data_pts[:, 2]
