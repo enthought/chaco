@@ -484,12 +484,6 @@ class BaseXYPlot(AbstractPlotRenderer):
 
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
         """Draws the 'plot' layer."""
-        self._draw_component(gc, view_bounds, mode)
-
-    def _draw_component(self, gc, view_bounds=None, mode="normal"):
-        # This method should be folded into self._draw_plot(), but is here for
-        # backwards compatibilty with non-draw-order stuff.
-
         pts = self.get_screen_points()
         self._render(gc, pts)
 
