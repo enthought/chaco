@@ -1,5 +1,13 @@
-# Copyright (c) 2008-2019 by Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 import os
 import re
 import runpy
@@ -280,6 +288,7 @@ if __name__ == "__main__":
     __version__, _ = resolve_version()
     data = read_module('__init__')
     __requires__ = data['__requires__']
+    __extras_require__ = data['__extras_require__']
 
     numpy_include_dir = get_include()
 
@@ -331,18 +340,25 @@ if __name__ == "__main__":
             Topic :: Software Development
             Topic :: Software Development :: Libraries
             """.splitlines() if len(c.strip()) > 0],
+        entry_points={
+            "etsdemo_data": [
+                "chaco_examples = chaco.examples._etsdemo_info:info",
+            ]
+        },
         package_data={
             'chaco': [
                 'overlays/layers/data/*.svg',
                 'tests/data/PngSuite/*.png',
                 'tools/toolbars/images/*.png',
-            ]
+            ],
+            "chaco.examples": ["demo/*", "demo/*/*"],
         },
         description='interactive 2-dimensional plotting',
         long_description=open('README.rst').read(),
         ext_modules=extensions,
         include_package_data=True,
         install_requires=__requires__,
+        extras_require=__extras_require__,
         license='BSD',
         packages=find_packages(),
         platforms=["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
