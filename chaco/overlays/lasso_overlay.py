@@ -58,7 +58,21 @@ class LassoOverlay(AbstractOverlay):
         with gc:
             c = other_component
             gc.clip_to_rect(c.x, c.y, c.width, c.height)
-            self._draw_component(gc, view_bounds, mode)
+            with gc:
+                # We may need to make map_screen more flexible in the number of
+                # dimensions it accepts for ths to work well.
+                for selection in self.lasso_selection.disjoint_selections:
+                    points = self.component.map_screen(selection)
+                    if len(points) == 0:
+                        return
+                    points = concatenate((points, points[0, newaxis]), axis=0)
+                    gc.set_line_width(self.selection_border_width)
+                    gc.set_line_dash(self.selection_border_dash_)
+                    gc.set_fill_color(self.selection_fill_color_)
+                    gc.set_stroke_color(self.selection_border_color_)
+                    gc.set_alpha(self.selection_alpha)
+                    gc.lines(points)
+                    gc.draw_path()
 
     def _updated_changed_for_lasso_selection(self):
         self.component.invalidate_draw()
@@ -68,25 +82,3 @@ class LassoOverlay(AbstractOverlay):
         self._draw_selection = val == "selecting"
         self.component.invalidate_draw()
         self.component.request_redraw()
-
-    def _draw_component(self, gc, view_bounds=None, mode="normal"):
-        """Draws the component.
-
-        This method is preserved for backwards compatibility with _old_draw().
-        Overrides PlotComponent.
-        """
-        with gc:
-            # We may need to make map_screen more flexible in the number of
-            # dimensions it accepts for ths to work well.
-            for selection in self.lasso_selection.disjoint_selections:
-                points = self.component.map_screen(selection)
-                if len(points) == 0:
-                    return
-                points = concatenate((points, points[0, newaxis]), axis=0)
-                gc.set_line_width(self.selection_border_width)
-                gc.set_line_dash(self.selection_border_dash_)
-                gc.set_fill_color(self.selection_fill_color_)
-                gc.set_stroke_color(self.selection_border_color_)
-                gc.set_alpha(self.selection_alpha)
-                gc.lines(points)
-                gc.draw_path()
