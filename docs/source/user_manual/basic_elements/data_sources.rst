@@ -213,9 +213,9 @@ This is a list of all concrete implementations of data sources in Chaco:
   multidimensional numerical data.
 
   It is useful, for example, to define 2D vector data at each point of
-  a scatter plot (as in :class:`~chaco.quiverplot.QuiverPlot`),
+  a scatter plot (as in :class:`~chaco.plots.quiverplot.QuiverPlot`),
   or to represent multiple values
-  for each index (as in :class:`~chaco.multi_line_plot.MultiLinePlot`).
+  for each index (as in :class:`~chaco.plots.multi_line_plot.MultiLinePlot`).
 
   As :class:`~.ArrayDataSource`, this data source defines a
   :attr:`~chaco.abstract_data_source.MultiArrayDataSource.sort_order`

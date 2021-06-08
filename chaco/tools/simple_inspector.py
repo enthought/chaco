@@ -1,3 +1,13 @@
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 """Simple Inspector tool for plots
 
 This module provides a simple tool that reports the data-space coordinates of
@@ -5,7 +15,7 @@ the current mouse cursor position in a plot.  It is intended for use with
 SimpleInspectorOverlay, but other objects can potentially hook into its API.
 """
 
-from chaco.image_plot import ImagePlot
+from chaco.plots.image_plot import ImagePlot
 from enable.api import BaseTool, KeySpec
 from traits.api import Bool, Event, Tuple, Enum, Callable
 

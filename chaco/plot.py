@@ -1,3 +1,13 @@
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 """ Defines the Plot class.
 """
 # Major library imports
@@ -17,34 +27,34 @@ from .abstract_plot_data import AbstractPlotData
 from .array_data_source import ArrayDataSource
 from .array_plot_data import ArrayPlotData
 from .base_xy_plot import BaseXYPlot
-from .barplot import BarPlot
-from .candle_plot import CandlePlot
-from .colormapped_scatterplot import ColormappedScatterPlot
-from .contour_line_plot import ContourLinePlot
-from .contour_poly_plot import ContourPolyPlot
-from .cmap_image_plot import CMapImagePlot
 from .data_range_1d import DataRange1D
 from .data_view import DataView
 from .default_colormaps import Spectral
 from .grid_data_source import GridDataSource
 from .grid_mapper import GridMapper
 from .image_data import ImageData
-from .image_plot import ImagePlot
 from .legend import Legend
-from .lineplot import LinePlot
-from .line_scatterplot_1d import LineScatterPlot1D
 from .linear_mapper import LinearMapper
 from .log_mapper import LogMapper
 from .plot_label import PlotLabel
-from .polygon_plot import PolygonPlot
-from .scatterplot import ScatterPlot
-from .scatterplot_1d import ScatterPlot1D
-from .segment_plot import ColormappedSegmentPlot, SegmentPlot
-from .text_plot import TextPlot
-from .text_plot_1d import TextPlot1D
-from .filled_line_plot import FilledLinePlot
-from .quiverplot import QuiverPlot
-from .jitterplot import JitterPlot
+from .plots.barplot import BarPlot
+from .plots.candle_plot import CandlePlot
+from .plots.colormapped_scatterplot import ColormappedScatterPlot
+from .plots.contour.contour_line_plot import ContourLinePlot
+from .plots.contour.contour_poly_plot import ContourPolyPlot
+from .plots.cmap_image_plot import CMapImagePlot
+from .plots.filled_line_plot import FilledLinePlot
+from .plots.image_plot import ImagePlot
+from .plots.jitterplot import JitterPlot
+from .plots.lineplot import LinePlot
+from .plots.line_scatterplot_1d import LineScatterPlot1D
+from .plots.polygon_plot import PolygonPlot
+from .plots.scatterplot import ScatterPlot
+from .plots.scatterplot_1d import ScatterPlot1D
+from .plots.segment_plot import ColormappedSegmentPlot, SegmentPlot
+from .plots.text_plot import TextPlot
+from .plots.text_plot_1d import TextPlot1D
+from .plots.quiverplot import QuiverPlot
 
 
 # -----------------------------------------------------------------------------

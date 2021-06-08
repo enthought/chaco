@@ -4,9 +4,14 @@
 
 import numpy as np
 
-from chaco.api import LinearMapper, Plot, ArrayDataSource, DataRange1D
-from chaco.multi_array_data_source import MultiArrayDataSource
-from chaco.multi_line_plot import MultiLinePlot
+from chaco.api import (
+    ArrayDataSource,
+    DataRange1D,
+    LinearMapper,
+    MultiArrayDataSource,
+    MultiLinePlot,
+    Plot,
+)
 from enable.api import ComponentEditor
 from traits.api import Instance, HasTraits
 from traitsui.api import View, UItem

@@ -1,3 +1,13 @@
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 from unittest import TestCase
 import numpy as np
 
@@ -7,8 +17,9 @@ from chaco.plot_factory import (
     create_polar_plot,
     create_scatter_plot,
 )
-from chaco.api import BarPlot, LinePlot, PlotAxis, PlotGrid, ScatterPlot
-from chaco.polar_line_renderer import PolarLineRenderer
+from chaco.api import (
+    BarPlot, LinePlot, PlotAxis, PlotGrid, PolarLineRenderer, ScatterPlot
+)
 
 x = np.array([1, 2, 3, 4])
 

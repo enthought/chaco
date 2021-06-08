@@ -1,3 +1,13 @@
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 """ Defines the TraitsTool and Fifo classes, and get_nested_components90
 function.
 """
@@ -7,7 +17,7 @@ from traits.api import List, Dict, Str
 
 # Chaco imports
 from chaco.axis import PlotAxis
-from chaco.color_bar import ColorBar
+from chaco.plots.color_bar import ColorBar
 
 
 class Fifo(object):

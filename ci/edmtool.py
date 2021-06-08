@@ -121,6 +121,40 @@ doc_dependencies = {
 
 doc_ignore = {
     "*/tests",
+    # The following stub modules were kept for backwards compatibility but
+    # will be removed in the next major relaese. Ref: enthought/chaco#748
+    "chaco/colormapped_selection_overlay.py",
+    "chaco/data_label.py",
+    "chaco/lasso_overlay.py",
+    "chaco/layers/*",
+    "chaco/legend.py",
+    "chaco/plot_label.py",
+    "chaco/scatter_inspector_overlay.py",
+    "chaco/text_box_overlay.py",
+    "chaco/tooltip.py",
+    "chaco/barplot.py",
+    "chaco/candle_plot.py",
+    "chaco/cmap_image_plot.py",
+    "chaco/color_bar.py",
+    "chaco/colormapped_scatterplot.py",
+    "chaco/contour_line_plot.py",
+    "chaco/contour_poly_plot.py",
+    "chaco/errorbar_plot.py",
+    "chaco/filled_line_plot.py",
+    "chaco/horizon_plot.py",
+    "chaco/image_plot.py",
+    "chaco/jitterplot.py",
+    "chaco/line_scatterplot_1d.py",
+    "chaco/lineplot.py",
+    "chaco/multi_line_plot.py",
+    "chaco/polar_line_renderer.py",
+    "chaco/polygon_plot.py",
+    "chaco/quiverplot.py",
+    "chaco/scatterplot.py",
+    "chaco/scatterplot_1d.py",
+    "chaco/segment_plot.py",
+    "chaco/text_plot.py",
+    "chaco/text_plot_1d.py",
 }
 
 environment_vars = {
@@ -182,6 +216,25 @@ def install(runtime, toolkit, environment, editable, source):
     ]
 
     click.echo("Creating environment '{environment}'".format(**parameters))
+    execute(commands, parameters)
+
+    # NOTE : temporary code to install enable from source instead of relying on
+    # enable 5.1.1. This should be removed immediately after enable 5.2.0 is
+    # released.
+    command = "edm plumbing remove-package --environment {environment} --force enable"  # noqa
+    execute([command], parameters)
+    source_pkgs = [
+        "git+http://github.com/enthought/enable.git@maint/5.2#egg=enable"
+    ]
+    # Without the --no-dependencies flag such that new dependencies on
+    # master are brought in.
+    commands = [
+        "python -m pip install --force-reinstall {pkg} ".format(pkg=pkg)
+        for pkg in source_pkgs
+    ]
+    commands = [
+        "edm run -e {environment} -- " + command for command in commands
+    ]
     execute(commands, parameters)
 
     if source:
