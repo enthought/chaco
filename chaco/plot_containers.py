@@ -33,15 +33,14 @@ from traits.api import (
     Instance,
     List,
     Property,
+    Str,
     String,
     Trait,
     Tuple,
     Int,
 )
-from enable.simple_layout import (
-    simple_container_get_preferred_size,
-    simple_container_do_layout,
-)
+from enable.api import OverlayContainer
+from enable.stacked_container import HStackedContainer, VStackedContainer
 
 try:
     from enable.api import ConstraintsContainer
@@ -88,7 +87,7 @@ if ConstraintsContainer is not None:
     __all__.append("ConstraintsPlotContainer")
 
 
-class OverlayPlotContainer(BasePlotContainer):
+class OverlayPlotContainer(OverlayContainer):
     """
     A plot container that stretches all its components to fit within its
     space.  All of its components must therefore be resizable.
@@ -102,189 +101,30 @@ class OverlayPlotContainer(BasePlotContainer):
     # Cache (width, height) of the container's preferred size.
     _cached_preferred_size = Tuple
 
-    def get_preferred_size(self, components=None):
-        """Returns the size (width,height) that is preferred for this component.
+    #: Redefine the container layers to name the main layer as "plot" instead
+    #: of the Enable default of "mainlayer"
+    container_under_layers = Tuple("background", "image", "underlay", "plot")
 
-        Overrides PlotComponent
-        """
-        return simple_container_get_preferred_size(self, components=components)
-
-    def _do_layout(self):
-        """Actually performs a layout (called by do_layout())."""
-        simple_container_do_layout(self)
+    draw_layer = Str("plot")
 
 
-class StackedPlotContainer(BasePlotContainer):
+class HPlotContainer(HStackedContainer):
     """
-    Base class for 1-D stacked plot containers, both horizontal and vertical.
+    A plot container that stacks all of its components horizontally. Resizable
+    components share the free space evenly. All components are stacked from
+    according to **stack_order* in the same order that they appear in the
+    **components** list.
     """
+
+    #: Redefine the container layers to name the main layer as "plot" instead
+    #: of the Enable default of "mainlayer"
+    container_under_layers = Tuple("background", "image", "underlay", "plot")
+
+    draw_layer = Str("plot")
 
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
-    # The dimension along which to stack components that are added to
-    # this container.
-    stack_dimension = Enum("h", "v", transient=True)
-
-    # The "other" dimension, i.e., the dual of the stack dimension.
-    other_dimension = Enum("v", "h", transient=True)
-
-    # The index into obj.position and obj.bounds that corresponds to
-    # **stack_dimension**.  This is a class-level and not an instance-level
-    # attribute. It must be 0 or 1.
-    stack_index = 0
-
-    def get_preferred_size(self, components=None):
-        """Returns the size (width,height) that is preferred for this component.
-
-        Overrides PlotComponent.
-        """
-        if self.fixed_preferred_size is not None:
-            self._cached_preferred_size = self.fixed_preferred_size
-            return self.fixed_preferred_size
-
-        if self.resizable == "":
-            self._cached_preferred_size = self.outer_bounds[:]
-            return self.outer_bounds
-
-        if components is None:
-            components = self.components
-
-        ndx = self.stack_index
-        other_ndx = 1 - ndx
-
-        no_visible_components = True
-        total_size = 0
-        max_other_size = 0
-        for component in components:
-            if not self._should_layout(component):
-                continue
-
-            no_visible_components = False
-
-            pref_size = component.get_preferred_size()
-            total_size += pref_size[ndx] + self.spacing
-            if pref_size[other_ndx] > max_other_size:
-                max_other_size = pref_size[other_ndx]
-
-        if total_size >= self.spacing:
-            total_size -= self.spacing
-
-        if (self.stack_dimension not in self.resizable) and (
-            self.stack_dimension not in self.fit_components
-        ):
-            total_size = self.bounds[ndx]
-        elif no_visible_components or (total_size == 0):
-            total_size = self.default_size[ndx]
-
-        if (self.other_dimension not in self.resizable) and (
-            self.other_dimension not in self.fit_components
-        ):
-            max_other_size = self.bounds[other_ndx]
-        elif no_visible_components or (max_other_size == 0):
-            max_other_size = self.default_size[other_ndx]
-
-        if ndx == 0:
-            self._cached_preferred_size = (
-                total_size + self.hpadding,
-                max_other_size + self.vpadding,
-            )
-        else:
-            self._cached_preferred_size = (
-                max_other_size + self.hpadding,
-                total_size + self.vpadding,
-            )
-
-        return self._cached_preferred_size
-
-    def _do_stack_layout(self, components, align):
-        """Helper method that does the actual work of layout."""
-
-        size = list(self.bounds)
-        if self.fit_components != "":
-            self.get_preferred_size()
-            if "h" in self.fit_components:
-                size[0] = self._cached_preferred_size[0] - self.hpadding
-            if "v" in self.fit_components:
-                size[1] = self._cached_preferred_size[1] - self.vpadding
-
-        ndx = self.stack_index
-        other_ndx = 1 - ndx
-        other_dim = self.other_dimension
-
-        # Assign sizes of non-resizable components, and compute the total size
-        # used by them (along the stack dimension).
-        total_fixed_size = 0
-        resizable_components = []
-        size_prefs = {}
-        total_resizable_size = 0
-
-        for component in components:
-            if not self._should_layout(component):
-                continue
-            if self.stack_dimension not in component.resizable:
-                total_fixed_size += component.outer_bounds[ndx]
-            else:
-                preferred_size = component.get_preferred_size()
-                size_prefs[component] = preferred_size
-                total_resizable_size += preferred_size[ndx]
-                resizable_components.append(component)
-
-        new_bounds_dict = {}
-
-        # Assign sizes of all the resizable components along the stack dimension
-        if resizable_components:
-            space = self.spacing * (len(self.components) - 1)
-            avail_size = size[ndx] - total_fixed_size - space
-            if total_resizable_size > 0:
-                scale = avail_size / float(total_resizable_size)
-                for component in resizable_components:
-                    tmp = list(component.outer_bounds)
-                    tmp[ndx] = int(size_prefs[component][ndx] * scale)
-                    new_bounds_dict[component] = tmp
-            else:
-                each_size = int(avail_size / len(resizable_components))
-                for component in resizable_components:
-                    tmp = list(component.outer_bounds)
-                    tmp[ndx] = each_size
-                    new_bounds_dict[component] = tmp
-
-        # Loop over all the components, assigning position and computing the
-        # size in the other dimension and its position.
-        cur_pos = 0
-        for component in components:
-            if not self._should_layout(component):
-                continue
-
-            position = list(component.outer_position)
-            position[ndx] = cur_pos
-
-            bounds = new_bounds_dict.get(
-                component, list(component.outer_bounds)
-            )
-            cur_pos += bounds[ndx] + self.spacing
-
-            if (bounds[other_ndx] > size[other_ndx]) or (
-                other_dim in component.resizable
-            ):
-                # If the component is resizable in the other dimension or it exceeds the
-                # container bounds, set it to the maximum size of the container
-
-                position[other_ndx] = 0
-                bounds[other_ndx] = size[other_ndx]
-            else:
-                position[other_ndx] = 0
-                if align == "min":
-                    pass
-                elif align == "max":
-                    position[other_ndx] = size[other_ndx] - bounds[other_ndx]
-                elif align == "center":
-                    position[other_ndx] = (
-                        size[other_ndx] - bounds[other_ndx]
-                    ) / 2.0
-
-            component.outer_position = position
-            component.outer_bounds = bounds
-            component.do_layout()
+    _cached_preferred_size = Tuple(transient=True)
 
     ### Persistence ###########################################################
 
@@ -296,83 +136,29 @@ class StackedPlotContainer(BasePlotContainer):
         return state
 
 
-class HPlotContainer(StackedPlotContainer):
-    """
-    A plot container that stacks all of its components horizontally. Resizable
-    components share the free space evenly. All components are stacked from
-    according to **stack_order* in the same order that they appear in the
-    **components** list.
-    """
-
-    draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
-
-    #: The order in which components in the plot container are laid out.
-    stack_order = Enum("left_to_right", "right_to_left")
-
-    #: The amount of space to put between components.
-    spacing = Float(0.0)
-
-    #: The vertical alignment of objects that don't span the full height.
-    valign = Enum("bottom", "top", "center")
-
-    _cached_preferred_size = Tuple(transient=True)
-
-    def _do_layout(self):
-        """Actually performs a layout (called by do_layout())."""
-        if self.stack_order == "left_to_right":
-            components = self.components
-        else:
-            components = self.components[::-1]
-
-        if self.valign == "bottom":
-            align = "min"
-        elif self.valign == "center":
-            align = "center"
-        else:
-            align = "max"
-
-        return self._do_stack_layout(components, align)
-
-
-class VPlotContainer(StackedPlotContainer):
+class VPlotContainer(VStackedContainer):
     """
     A plot container that stacks plot components vertically.
     """
 
+    #: Redefine the container layers to name the main layer as "plot" instead
+    #: of the Enable default of "mainlayer"
+    container_under_layers = Tuple("background", "image", "underlay", "plot")
+
+    draw_layer = Str("plot")
+
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
-    #: Overrides StackedPlotContainer.
-    stack_dimension = "v"
-    #: Overrides StackedPlotContainer.
-    other_dimension = "h"
-    #: Overrides StackedPlotContainer.
-    stack_index = 1
+    _cached_preferred_size = Tuple(transient=True)
 
-    # VPlotContainer attributes
+    ### Persistence ###########################################################
 
-    #: The horizontal alignment of objects that don't span the full width.
-    halign = Enum("left", "right", "center")
-
-    #: The order in which components in the plot container are laid out.
-    stack_order = Enum("bottom_to_top", "top_to_bottom")
-
-    #: The amount of space to put between components.
-    spacing = Float(0.0)
-
-    def _do_layout(self):
-        """Actually performs a layout (called by do_layout())."""
-        if self.stack_order == "bottom_to_top":
-            components = self.components
-        else:
-            components = self.components[::-1]
-        if self.halign == "left":
-            align = "min"
-        elif self.halign == "center":
-            align = "center"
-        else:
-            align = "max"
-
-        return self._do_stack_layout(components, align)
+    # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
+    def __getstate__(self):
+        state = super().__getstate__()
+        if "stack_index" in state:
+            del state["stack_index"]
+        return state
 
 
 class GridPlotContainer(BasePlotContainer):
