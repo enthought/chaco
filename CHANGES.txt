@@ -86,6 +86,7 @@ Documentation/examples
 * Organize annotated examples (#721)
 * Link to "how do i", not "faq", from home page (#722)
 * Matplotlib to chaco cheatsheet in docs (#723)
+* Contribute examples to etsdemo (#751)
 
 Maintenance
 
@@ -127,6 +128,9 @@ Maintenance
 * Consolidate overlays into "chaco.overlays" (#741)
 * Replace bg_color with bgcolor (#742)
 * Revive ScalyPlot (#744)
+* Add/Update copyright headers (#755)
+* Plot Containers Refactor (#757, #758, #764)
+* Remove all definitions / uses of _draw_component (#743)
 
 Build/CI
 
