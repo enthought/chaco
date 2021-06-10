@@ -130,7 +130,7 @@ Maintenance
 * Revive ScalyPlot (#744)
 * Add/Update copyright headers (#755)
 * Plot Containers Refactor (#757, #758, #764)
-* Remove all definitions / uses of _draw_component (#743)
+* Remove all definitions / uses of _draw_component (#743, #772)
 
 Build/CI
 
