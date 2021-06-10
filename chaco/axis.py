@@ -292,7 +292,7 @@ class PlotAxis(AbstractOverlay):
 
         if not self._cache_valid:
             self._calculate_geometry()
-            self._compute_tick_positions(gc, component)
+            self._compute_tick_positions(gc)
             self._compute_labels(gc)
 
         with gc:
