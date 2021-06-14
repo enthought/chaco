@@ -8,6 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
+# cython: language_level=3
 import sys
 import numpy as np
 cimport numpy as np

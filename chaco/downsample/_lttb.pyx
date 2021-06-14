@@ -8,6 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
+# cython: language_level=3
 cimport cython
 
 from libc.math cimport isnan, fabs, floor
