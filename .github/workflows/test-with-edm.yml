@@ -15,7 +15,7 @@ jobs:
   test-edm-linux:
     strategy:
       matrix:
-        toolkit: ['null', 'pyqt', 'pyqt5', 'pyside2']
+        toolkit: ['null', 'pyqt5', 'pyside2']
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
