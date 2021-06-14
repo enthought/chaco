@@ -149,8 +149,7 @@ Build/CI
 * Skip test_dont_crash_on_click on windows/pyqt (#666)
 * Cleanup ci module and setup (#695)
 * Unskip no longer failing test (#714)
-* Add pyproject.toml specifying numpy and cython as build deps (#730)
-* Add pyproject.toml to MANIFEST.in (#747)
+* Add pyproject.toml specifying numpy and cython as build deps (#730, #747, #779)
 
 Release 4.8.0
 -------------
