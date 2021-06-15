@@ -22,26 +22,26 @@ from traitsui.api import Item, View
 # town locations
 towns = np.array(
     [
-        (24.0, 55.0, u"Kowno"),
-        (25.3, 54.7, u"Wilna"),
-        (26.4, 54.4, u"Smorgoni"),
-        (26.8, 54.3, u"Molodexno"),
-        (27.7, 55.2, u"Gloubokoe"),
-        (27.6, 53.9, u"Minsk"),
-        (28.5, 54.3, u"Studienska"),
-        (28.7, 55.5, u"Polotzk"),
-        (29.2, 54.4, u"Bobr"),
-        (30.2, 55.3, u"Witebsk"),
-        (30.4, 54.5, u"Orscha"),
-        (30.4, 53.9, u"Mohilow"),
-        (32.0, 54.8, u"Smolensk"),
-        (33.2, 54.9, u"Dorogobouge"),
-        (34.3, 55.2, u"Wixma"),
-        (34.4, 55.5, u"Chjat"),
-        (36.0, 55.5, u"Mojaisk"),
-        (37.6, 55.8, u"Moscou"),
-        (36.6, 55.3, u"Tarantino"),
-        (36.5, 55.0, u"Malo-jarosewli"),
+        (24.0, 55.0, "Kowno"),
+        (25.3, 54.7, "Wilna"),
+        (26.4, 54.4, "Smorgoni"),
+        (26.8, 54.3, "Molodexno"),
+        (27.7, 55.2, "Gloubokoe"),
+        (27.6, 53.9, "Minsk"),
+        (28.5, 54.3, "Studienska"),
+        (28.7, 55.5, "Polotzk"),
+        (29.2, 54.4, "Bobr"),
+        (30.2, 55.3, "Witebsk"),
+        (30.4, 54.5, "Orscha"),
+        (30.4, 53.9, "Mohilow"),
+        (32.0, 54.8, "Smolensk"),
+        (33.2, 54.9, "Dorogobouge"),
+        (34.3, 55.2, "Wixma"),
+        (34.4, 55.5, "Chjat"),
+        (36.0, 55.5, "Mojaisk"),
+        (37.6, 55.8, "Moscou"),
+        (36.6, 55.3, "Tarantino"),
+        (36.5, 55.0, "Malo-jarosewli"),
     ],
     dtype=[("lon", "f4"), ("lat", "f4"), ("town", "U12")],
 )
@@ -192,7 +192,7 @@ def _create_plot_component():
     temp_plot.x_grid = None
     temp_plot.x_axis = None
     temp_plot.y_axis.orientation = "right"
-    temp_plot.y_axis.title = u"Temp (°Re)"
+    temp_plot.y_axis.title = "Temp (°Re)"
     temp_plot.plot(
         ("temp_lon", "temp"),
         type="line",
