@@ -125,7 +125,7 @@ Maintenance
 * Remove calls to Component._draw_component (#737)
 * Add new chaco.plots submodule (#738)
 * Use mock through unittest (#740)
-* Consolidate overlays into "chaco.overlays" (#741)
+* Consolidate overlays into "chaco.overlays" (#741, #786)
 * Replace bg_color with bgcolor (#742)
 * Revive ScalyPlot (#744)
 * Add/Update copyright headers (#755)
