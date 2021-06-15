@@ -351,7 +351,7 @@ Source Code
 ===========
 
 The final version of the program,
-`hyetograph.py <https://github.com/enthought/chaco/blob/master/examples/demo/hyetograph.py>`_. 
+`hyetograph.py <https://github.com/enthought/chaco/blob/master/chaco/examples/demo/hyetograph.py>`_. 
 
 .. literalinclude:: /../../examples/demo/hyetograph.py
    :language: python
