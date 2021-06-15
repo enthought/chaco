@@ -33,10 +33,10 @@ from .default_colormaps import Spectral
 from .grid_data_source import GridDataSource
 from .grid_mapper import GridMapper
 from .image_data import ImageData
-from .legend import Legend
 from .linear_mapper import LinearMapper
 from .log_mapper import LogMapper
-from .plot_label import PlotLabel
+from .overlays.legend import Legend
+from .overlays.plot_label import PlotLabel
 from .plots.barplot import BarPlot
 from .plots.candle_plot import CandlePlot
 from .plots.colormapped_scatterplot import ColormappedScatterPlot
