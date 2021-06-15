@@ -319,7 +319,7 @@ Source Code
 ===========
 
 The final version of the program,
-`vanderwaals.py <https://github.com/enthought/chaco/blob/master/examples/demo/vanderwaals.py>`_
+`vanderwaals.py <https://github.com/enthought/chaco/blob/master/chaco/examples/demo/vanderwaals.py>`_
 
 .. literalinclude:: /../../examples/demo/vanderwaals.py
    :language: python
