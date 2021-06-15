@@ -19,10 +19,10 @@ from traits.api import Enum, Event, Instance, Property, Range, Trait
 # Local relative imports
 from .abstract_plot_renderer import AbstractPlotRenderer
 from .base import reverse_map_1d
-from .plot_label import PlotLabel
 from .grid_data_source import GridDataSource
 from .grid_mapper import GridMapper
 from .image_data import ImageData
+from .overlays.plot_label import PlotLabel
 
 
 class Base2DPlot(AbstractPlotRenderer):
