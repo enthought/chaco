@@ -1,0 +1,548 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Modeling Van der Waal’s Equation With Chaco and Traits &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">Modeling Van der Waal’s Equation With Chaco and Traits</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="modeling-van-der-waal-s-equation-with-chaco-and-traits">
+<span id="tutorial-van-der-waal"></span><h1>Modeling Van der Waal’s Equation With Chaco and Traits<a class="headerlink" href="#modeling-van-der-waal-s-equation-with-chaco-and-traits" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>In this example we will walk through the creation of a program that plots a
+scientific equation.  In particular, we will model <a class="reference external" href="http://en.wikipedia.org/wiki/Van_der_Waals_equation">Van der Waal’s Equation</a>, which is a
+modification to the ideal gas law that takes into account the nonzero size of
+molecules and the attraction to each other that they experience.</p>
+</div>
+<div class="section" id="writing-the-program">
+<h2>Writing the Program<a class="headerlink" href="#writing-the-program" title="Permalink to this headline">¶</a></h2>
+<p>First, we define a HasTraits class and the elements necessary to model the task.
+The following class is made for the Van der Waal equation, whose
+variables can be viewed on
+<a class="reference external" href="http://en.wikipedia.org/wiki/Van_der_Waals_equation">this wiki page</a>.  The
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">volume</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code> attributes hold lists of our X- and
+Y-coordinates, respectively, and are defined as arrays. The attributes
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">attraction</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">tot_volume</span></code> are input parameters specified by the
+user.  The type of the variables dictates their appearance in the GUI.  For
+example, <code class="xref py py-attr docutils literal notranslate"><span class="pre">attraction</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">tot_volume</span></code> are defined as Ranges, so they
+show up as slider bars.  Likewise, <code class="xref py py-attr docutils literal notranslate"><span class="pre">plot_type</span></code> is shown as a drop-down
+list, since it is defined as an Enum.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># We&#39;ll also import a few things to be used later.</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">ArrayPlotData</span><span class="p">,</span> <span class="n">Plot</span>
+<span class="kn">from</span> <span class="nn">enable.api</span> <span class="kn">import</span> <span class="n">ComponentEditor</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Array</span><span class="p">,</span>
+    <span class="n">Enum</span><span class="p">,</span>
+    <span class="n">Float</span><span class="p">,</span>
+    <span class="n">HasTraits</span><span class="p">,</span>
+    <span class="n">Instance</span><span class="p">,</span>
+    <span class="n">observe</span><span class="p">,</span>
+    <span class="n">Property</span><span class="p">,</span>
+    <span class="n">Range</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">Item</span><span class="p">,</span> <span class="n">UItem</span><span class="p">,</span> <span class="n">View</span>
+
+
+<span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+
+    <span class="n">volume</span> <span class="o">=</span> <span class="n">Array</span><span class="p">()</span>
+
+    <span class="n">pressure</span> <span class="o">=</span> <span class="n">Array</span><span class="p">()</span>
+
+    <span class="n">attraction</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="mf">50.0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+
+    <span class="n">tot_volume</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="n">low</span><span class="o">=.</span><span class="mi">01</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+
+    <span class="n">temperature</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="mf">50.0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">50.0</span><span class="p">)</span>
+
+    <span class="n">r_constant</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">8.314472</span><span class="p">)</span>
+
+    <span class="n">plot_type</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="s2">&quot;scatter&quot;</span><span class="p">)</span>
+
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
+
+<span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-the-view">
+<h2>Creating the View<a class="headerlink" href="#creating-the-view" title="Permalink to this headline">¶</a></h2>
+<p>The main GUI window is created by defining a Traits <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code> instance.
+This View contains all of the GUI elements, including the plot. To
+link a variable with a widget element on the GUI, we create a Traits
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code> instance with the same name as the variable and pass it as an
+argument of the Traits <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code> instance declaration. The
+<a class="reference external" href="https://docs.enthought.com/traitsui/traitsui_user_manual/index.html">TraitsUI User Manual</a>
+discusses the <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code> objects in depth.</p>
+<p>In order to embed a Chaco plot into a Traits View, we can do exactly the same,
+only we must explicitly specify the editor of that <code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code> to be a
+<a class="reference external" href="http://docs.enthought.com/enable/api/enable.component_editor.html#enable.component_editor.ComponentEditor" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ComponentEditor</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="o">...</span>
+
+    <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span>
+        <span class="n">UItem</span><span class="p">(</span>
+            <span class="s2">&quot;plot&quot;</span><span class="p">,</span>
+            <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span>
+            <span class="n">resizable</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;attraction&#39;</span><span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tot_volume&#39;</span><span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;temperature&#39;</span><span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;r_constant&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;readonly&#39;</span><span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;plot_type&#39;</span><span class="p">),</span>
+        <span class="n">resizable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">buttons</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;OK&quot;</span><span class="p">],</span>
+        <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Van der Waal Equation&#39;</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span>
+        <span class="n">height</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="initializing-the-plot">
+<h2>Initializing the plot<a class="headerlink" href="#initializing-the-plot" title="Permalink to this headline">¶</a></h2>
+<p>Now, we need to give the initial details of the plot that we want the view to
+display. To do so, we define a method to construct the default value for
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">plot</span></code>. We wrap the data we wish to plot in an <code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayPlotData</span></code>
+object, and then create a <code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code> instance using that data. We then
+configure some properties of the plot before finally calling the <code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code>
+method to create a plot renderer for the plot. When doing so we specify the
+type of plot to create based of the value of the <code class="xref py py-attr docutils literal notranslate"><span class="pre">plot_type</span></code> trait,
+and we also use this trait as the name of our plot.  This name will show up
+again later.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plotdata</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pressure</span><span class="p">)</span>
+        <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plotdata</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Pressure vs. Volume&#39;</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">x_axis</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Volume&quot;</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">y_axis</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Pressure&quot;</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">range2d</span><span class="o">.</span><span class="n">set_bounds</span><span class="p">((</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">2000</span><span class="p">),</span> <span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">4000</span><span class="p">))</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">padding_left</span> <span class="o">=</span> <span class="mi">80</span>
+
+        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_type</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_type</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">plot</span>
+
+<span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="updating-the-plot">
+<h2>Updating the Plot<a class="headerlink" href="#updating-the-plot" title="Permalink to this headline">¶</a></h2>
+<p>The power of Traits and Chaco enables the plot to update itself
+whenever the X- or Y-arrays are changed. Currently, our plot is stuck as the
+default defined above and will not react to changes. So, we need a function
+to re-calculate the X- and Y-coordinate lists whenever the input
+parameters are changed by the user moving the sliders in the GUI.</p>
+<p>The <code class="xref py py-attr docutils literal notranslate"><span class="pre">volume</span></code> attribute is the independent variable and <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code> is
+the dependent variable. The relationship between pressure and volume, as derived
+from the equation found on the wiki page, is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>            <span class="n">r_constant</span> <span class="o">*</span> <span class="n">temperature</span>       <span class="n">attraction</span>
+<span class="n">pressure</span> <span class="o">=</span>  <span class="o">------------------------</span>   <span class="o">-</span>   <span class="o">----------</span>
+               <span class="n">volume</span> <span class="o">-</span> <span class="n">tot_volume</span>          <span class="n">volume</span><span class="o">**</span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>Next, there are two programing tasks to complete:</p>
+<ol class="arabic simple">
+<li><p>Define trait listener method(s) for your input parameters. These
+methods are automatically called whenever the parameters are
+changed, since it will be time to recalculate the <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code> array.</p></li>
+<li><p>Write a calculation method that updates your lists of X- and
+Y-coordinates for your plot.</p></li>
+</ol>
+<p>The following is the code for these two needs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Re-calculate when attraction, tot_volume, or temperature are changed.</span>
+<span class="nd">@observe</span><span class="p">(</span><span class="s1">&#39;attraction, tot_volume, temperature&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">calc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Update the data based on the numbers specified by the user. &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pressure</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r_constant</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">temperature</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_volume</span><span class="p">)</span>
+        <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">attraction</span><span class="o">/</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pressure</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="xref py py-func docutils literal notranslate"><span class="pre">calc()</span></code> function computes the <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code> array using the current
+values of the independent variables. It then updates the <code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code> of our
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">plot</span></code> to use the newly computed values.  Meanwhile, the
+<code class="xref py py-func docutils literal notranslate"><span class="pre">&#64;observe()</span></code> decorator (provided by Traits) tells Python to call
+<code class="xref py py-func docutils literal notranslate"><span class="pre">calc()</span></code> whenever any of the attributes <code class="xref py py-attr docutils literal notranslate"><span class="pre">attraction</span></code>,
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">tot_volume</span></code>, or <code class="xref py py-attr docutils literal notranslate"><span class="pre">temperature</span></code> changes.</p>
+<p>In addition to reacting to changes in the input parameters, we also want our
+plot to change based on the user selected <code class="xref py py-attr docutils literal notranslate"><span class="pre">plot_type</span></code>.  To do this, we can
+define a separate listener as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;plot_type&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_update_plot_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+    <span class="n">old_plot_type</span><span class="p">,</span> <span class="n">new_plot_type</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">old</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">new</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">delplot</span><span class="p">(</span><span class="n">old_plot_type</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="n">new_plot_type</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">new_plot_type</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>Here we are listening for changes in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">plot_type</span></code> trait.  When it changes,
+we delete the old plot and create a new plot using the new <code class="xref py py-attr docutils literal notranslate"><span class="pre">plot_type</span></code>. The
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">name</span></code> of the plot is how we specify a plot to delete, hence our previous
+reuse of the <code class="xref py py-attr docutils literal notranslate"><span class="pre">plot_type</span></code> as the name.</p>
+</div>
+<div class="section" id="testing-your-program">
+<h2>Testing your Program<a class="headerlink" href="#testing-your-program" title="Permalink to this headline">¶</a></h2>
+<p>The application is now in a state where can be tested by instantiating a copy
+of the class and then creating the view by calling the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">configure_traits()</span></code> method on the class.  For a simple test, run these
+lines from an interpreter or a separate module:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vanderwaals</span> <span class="kn">import</span> <span class="n">Data</span>
+<span class="n">viewer</span> <span class="o">=</span> <span class="n">Data</span><span class="p">()</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">calc</span><span class="p">()</span>            <span class="c1"># Must calculate the initial (x,y) lists</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Clicking and dragging on the sliders in the GUI dynamically updates the pressure
+data array, and causes the plot to update, showing the new values.</p>
+</div>
+<div class="section" id="screenshots">
+<h2>Screenshots<a class="headerlink" href="#screenshots" title="Permalink to this headline">¶</a></h2>
+<p>Here is what the program looks like:</p>
+<img alt="../_images/vanderwaals.png" src="../_images/vanderwaals.png" />
+</div>
+<div class="section" id="but-it-could-be-better">
+<h2>But it could be better….<a class="headerlink" href="#but-it-could-be-better" title="Permalink to this headline">¶</a></h2>
+<p>It seems inconvenient to have to call a calculation function manually
+before we call <code class="xref py py-meth docutils literal notranslate"><span class="pre">configure_traits()</span></code>.  Also, the pressure equation depends on
+the values of other variables. It would be nice to make the
+relationship between the dependant and independent variables clearer.
+There is another way we could define our variables that is easier for
+the user to understand, and provides better source documentation.</p>
+<p>Since our X-values remain constant in this example, it is wasteful to
+keep recreating the <code class="xref py py-attr docutils literal notranslate"><span class="pre">volume</span></code> array.  The Y-array, <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code>, is the
+single array that needs to be updated when the independent variables
+change. So, instead of defining <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code> as an <code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code>, we define
+it as a <code class="xref py py-class docutils literal notranslate"><span class="pre">Property</span></code>. Property is a Traits type that allows you to define
+a variable whose value is recalculated whenever it is requested. In
+addition, when the <strong>observe</strong> argument of a Property constructor is
+set to list of traits in your <code class="xref py py-class docutils literal notranslate"><span class="pre">HasTraits</span></code> class, the property’s trait
+events fire whenever any of the dependent trait’s change events
+fire. This means that the <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code> attribute fires a trait change
+whenever our <strong>observe</strong> traits are changed. Meanwhile, we can set up the Chaco
+plot to automatically listen to the <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code> attribute, so the plot
+display gets the new value of <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code> whenever someone changes
+the input parameters!</p>
+<p>When the value of a Property trait is requested, the
+<code class="samp docutils literal notranslate"><span class="pre">_get_</span><em><span class="pre">trait_name</span></em></code> method is called to calculate and return its
+current value. So we define use the <code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_pressure()</span></code> method as our new
+calculation method. It is important to note that this implementation
+does have a weakness. Since we are calculating new pressures each
+time someone changes the value of the input variables, this could slow
+down the program if the calculation is long.  When the user drags a
+slider widget, each stopping point along the slider requests a
+recompute.</p>
+<p>For the new implementation, these are the necessary changes:</p>
+<ol class="arabic simple">
+<li><p>Define the Y-coordinate array variable as a Property instead of an
+Array.</p></li>
+<li><p>Perform the calculations in the <code class="samp docutils literal notranslate"><span class="pre">_get_</span><em><span class="pre">trait_name</span></em></code> method for the
+Y-coordinate array variable, which is <code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_pressure()</span></code> in this
+example.</p></li>
+<li><p>Define the <code class="samp docutils literal notranslate"><span class="pre">_</span><em><span class="pre">trait</span></em><span class="pre">_default</span></code> method to set the initial value of
+the X-coordinate array, so <code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_pressure()</span></code> does not have to keep
+recalculating it.</p></li>
+<li><p>Set up a listener to update the plot whenever the <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code> trait
+changes.</p></li>
+<li><p>Remove the previous <code class="xref py py-func docutils literal notranslate"><span class="pre">&#64;observe()</span></code> decorator and calculation
+method.</p></li>
+</ol>
+<p>The new pieces of code to add to the Data class are:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="n">pressure</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span>
+        <span class="n">Array</span><span class="p">,</span> <span class="n">observe</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;attraction&#39;</span><span class="p">,</span> <span class="s1">&#39;tot_volume&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">_volume_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Default handler for volume Trait. &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_pressure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Recalculate when a trait the property observes changes.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r_constant</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">temperature</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_volume</span><span class="p">)</span>
+            <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">attraction</span><span class="o">/</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;pressure&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_update_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plotdata</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pressure</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You now no longer have to call an inconvenient calculation function
+before the first call to <code class="xref py py-meth docutils literal notranslate"><span class="pre">configure_traits()</span></code>!</p>
+</div>
+<div class="section" id="source-code">
+<h2>Source Code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
+<p>The final version of the program,
+<a class="reference external" href="https://github.com/enthought/chaco/blob/master/chaco/examples/demo/vanderwaals.py">vanderwaals.py</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Example application for exploring Van der Waal&#39;s Equation</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">ArrayPlotData</span><span class="p">,</span> <span class="n">Plot</span>
+<span class="kn">from</span> <span class="nn">enable.api</span> <span class="kn">import</span> <span class="n">ComponentEditor</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Array</span><span class="p">,</span>
+    <span class="n">Enum</span><span class="p">,</span>
+    <span class="n">Float</span><span class="p">,</span>
+    <span class="n">HasTraits</span><span class="p">,</span>
+    <span class="n">Instance</span><span class="p">,</span>
+    <span class="n">observe</span><span class="p">,</span>
+    <span class="n">Property</span><span class="p">,</span>
+    <span class="n">Range</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">Item</span><span class="p">,</span> <span class="n">UItem</span><span class="p">,</span> <span class="n">View</span>
+
+
+<span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+
+    <span class="n">volume</span> <span class="o">=</span> <span class="n">Array</span><span class="p">()</span>
+
+    <span class="n">pressure</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span>
+        <span class="n">Array</span><span class="p">,</span> <span class="n">observe</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;attraction&#39;</span><span class="p">,</span> <span class="s1">&#39;tot_volume&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">attraction</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="mf">50.0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+
+    <span class="n">tot_volume</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="n">low</span><span class="o">=.</span><span class="mi">01</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+
+    <span class="n">temperature</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="mf">50.0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">50.0</span><span class="p">)</span>
+
+    <span class="n">r_constant</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">8.314472</span><span class="p">)</span>
+
+    <span class="n">plot_type</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="s2">&quot;scatter&quot;</span><span class="p">)</span>
+
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plotdata</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pressure</span><span class="p">)</span>
+        <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plotdata</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Pressure vs. Volume&#39;</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">x_axis</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Volume&quot;</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">y_axis</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Pressure&quot;</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">range2d</span><span class="o">.</span><span class="n">set_bounds</span><span class="p">((</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">2000</span><span class="p">),</span> <span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">4000</span><span class="p">))</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">padding_left</span> <span class="o">=</span> <span class="mi">80</span>
+
+        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_type</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_type</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">plot</span>
+
+    <span class="k">def</span> <span class="nf">_volume_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Default handler for volume Trait Array. &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_pressure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Recalculate when a trait the property observes changes.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r_constant</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">temperature</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_volume</span><span class="p">)</span>
+            <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">attraction</span><span class="o">/</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;pressure&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_update_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plotdata</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pressure</span><span class="p">)</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;plot_type&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_update_plot_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="n">old_plot_type</span><span class="p">,</span> <span class="n">new_plot_type</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">old</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">new</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">delplot</span><span class="p">(</span><span class="n">old_plot_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="n">new_plot_type</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">new_plot_type</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">invalidate_and_redraw</span><span class="p">()</span>
+
+    <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span>
+        <span class="n">UItem</span><span class="p">(</span>
+            <span class="s2">&quot;plot&quot;</span><span class="p">,</span>
+            <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span>
+            <span class="n">resizable</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;attraction&#39;</span><span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tot_volume&#39;</span><span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;temperature&#39;</span><span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;r_constant&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;readonly&#39;</span><span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;plot_type&#39;</span><span class="p">),</span>
+        <span class="n">resizable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">buttons</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;OK&quot;</span><span class="p">],</span>
+        <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Van der Waal Equation&#39;</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span>
+        <span class="n">height</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="n">popup</span> <span class="o">=</span> <span class="n">Data</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">popup</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Modeling Van der Waal’s Equation With Chaco and Traits</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#writing-the-program">Writing the Program</a></li>
+<li><a class="reference internal" href="#creating-the-view">Creating the View</a></li>
+<li><a class="reference internal" href="#initializing-the-plot">Initializing the plot</a></li>
+<li><a class="reference internal" href="#updating-the-plot">Updating the Plot</a></li>
+<li><a class="reference internal" href="#testing-your-program">Testing your Program</a></li>
+<li><a class="reference internal" href="#screenshots">Screenshots</a></li>
+<li><a class="reference internal" href="#but-it-could-be-better">But it could be better….</a></li>
+<li><a class="reference internal" href="#source-code">Source Code</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/user_manual/tutorial_van_der_waal.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

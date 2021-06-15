@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco package &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco package</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco">
+<span id="chaco-package"></span><h1>chaco package<a class="headerlink" href="#module-chaco" title="Permalink to this headline">¶</a></h1>
+<p>Two-dimensional plotting application toolkit.
+Part of the Chaco project of the Enthought Tool Suite.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chaco.abstract_colormap.html">chaco.abstract_colormap module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.abstract_controller.html">chaco.abstract_controller module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.abstract_data_range.html">chaco.abstract_data_range module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.abstract_data_source.html">chaco.abstract_data_source module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.abstract_mapper.html">chaco.abstract_mapper module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.abstract_overlay.html">chaco.abstract_overlay module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.abstract_plot_data.html">chaco.abstract_plot_data module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.abstract_plot_renderer.html">chaco.abstract_plot_renderer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.api.html">chaco.api module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chaco.api.html#base">Base</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.api.html#data-model">Data Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.api.html#mappers">Mappers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.api.html#visual-components-overlays">Visual Components / Overlays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.api.html#renderers">Renderers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.api.html#plot-factories">Plot Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.api.html#axis">Axis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.api.html#grid">Grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.api.html#tools">Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.api.html#colormaps-and-color-palettes">Colormaps and Color Palettes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chaco.api.html#utilities-convenience-objects">Utilities / Convenience Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.api.html#colormaps">Colormaps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.api.html#color-palettes">Color Palettes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.array_data_source.html">chaco.array_data_source module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.array_plot_data.html">chaco.array_plot_data module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.axis.html">chaco.axis module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.axis_view.html">chaco.axis_view module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.base.html">chaco.base module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.base_1d_mapper.html">chaco.base_1d_mapper module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.base_1d_plot.html">chaco.base_1d_plot module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.base_2d_plot.html">chaco.base_2d_plot module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.base_candle_plot.html">chaco.base_candle_plot module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.base_contour_plot.html">chaco.base_contour_plot module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.base_data_range.html">chaco.base_data_range module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.base_plot_container.html">chaco.base_plot_container module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.base_xy_plot.html">chaco.base_xy_plot module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.chaco_traits.html">chaco.chaco_traits module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.color_mapper.html">chaco.color_mapper module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.color_spaces.html">chaco.color_spaces module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.colormap_generators.html">chaco.colormap_generators module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.data_frame_plot_data.html">chaco.data_frame_plot_data module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.data_range_1d.html">chaco.data_range_1d module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.data_range_2d.html">chaco.data_range_2d module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.data_view.html">chaco.data_view module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.default_colormaps.html">chaco.default_colormaps module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.default_colors.html">chaco.default_colors module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.discrete_color_mapper.html">chaco.discrete_color_mapper module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.example_support.html">chaco.example_support module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.function_data_source.html">chaco.function_data_source module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.function_image_data.html">chaco.function_image_data module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.grid.html">chaco.grid module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.grid_data_source.html">chaco.grid_data_source module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.grid_mapper.html">chaco.grid_mapper module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.image_data.html">chaco.image_data module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.image_utils.html">chaco.image_utils module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.label.html">chaco.label module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.label_axis.html">chaco.label_axis module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.linear_mapper.html">chaco.linear_mapper module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.log_mapper.html">chaco.log_mapper module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.multi_array_data_source.html">chaco.multi_array_data_source module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.pdf_graphics_context.html">chaco.pdf_graphics_context module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.plot.html">chaco.plot module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.plot_canvas.html">chaco.plot_canvas module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.plot_canvas_toolbar.html">chaco.plot_canvas_toolbar module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.plot_component.html">chaco.plot_component module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.plot_containers.html">chaco.plot_containers module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.plot_factory.html">chaco.plot_factory module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.plot_graphics_context.html">chaco.plot_graphics_context module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.plotscrollbar.html">chaco.plotscrollbar module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.point_data_source.html">chaco.point_data_source module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.polar_mapper.html">chaco.polar_mapper module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.scales_tick_generator.html">chaco.scales_tick_generator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.scaly_plot.html">chaco.scaly_plot module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.selectable_legend.html">chaco.selectable_legend module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.speedups.html">chaco.speedups module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.svg_graphics_context.html">chaco.svg_graphics_context module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.ticks.html">chaco.ticks module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.toolbar_plot.html">chaco.toolbar_plot module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.transform_color_mapper.html">chaco.transform_color_mapper module</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chaco.downsample.html">chaco.downsample package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chaco.downsample.lttb.html">chaco.downsample.lttb module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.examples.html">chaco.examples package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chaco.examples.demo.html">chaco.examples.demo package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.bigdata.html">chaco.examples.demo.bigdata module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.chaco_trait_editor.html">chaco.examples.demo.chaco_trait_editor module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.coordinate_line_overlay_demo.html">chaco.examples.demo.coordinate_line_overlay_demo module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.cursor_tool_demo.html">chaco.examples.demo.cursor_tool_demo module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.data_labels.html">chaco.examples.demo.data_labels module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.data_view.html">chaco.examples.demo.data_view module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.edit_line.html">chaco.examples.demo.edit_line module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.functionplotter.html">chaco.examples.demo.functionplotter module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.hyetograph.html">chaco.examples.demo.hyetograph module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.image_plot_origin_and_orientation.html">chaco.examples.demo.image_plot_origin_and_orientation module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.multi_line_plot_demo.html">chaco.examples.demo.multi_line_plot_demo module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.nonlinear_color_mapping.html">chaco.examples.demo.nonlinear_color_mapping module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.qt_example.html">chaco.examples.demo.qt_example module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.quiver.html">chaco.examples.demo.quiver module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.range_selection_demo.html">chaco.examples.demo.range_selection_demo module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.scales_test.html">chaco.examples.demo.scales_test module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.simple_line.html">chaco.examples.demo.simple_line module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.simple_polar.html">chaco.examples.demo.simple_polar module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.stacked_axis.html">chaco.examples.demo.stacked_axis module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.status_overlay.html">chaco.examples.demo.status_overlay module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.toolbar_plot.html">chaco.examples.demo.toolbar_plot module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.tornado.html">chaco.examples.demo.tornado module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.two_plots.html">chaco.examples.demo.two_plots module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.vanderwaals.html">chaco.examples.demo.vanderwaals module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.vertical_plot.html">chaco.examples.demo.vertical_plot module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.xray_plot.html">chaco.examples.demo.xray_plot module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.advanced.html">chaco.examples.demo.advanced package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.advanced.asynchronous_updates.html">chaco.examples.demo.advanced.asynchronous_updates module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.advanced.cmap_variable_sized_scatter.html">chaco.examples.demo.advanced.cmap_variable_sized_scatter module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.advanced.data_cube.html">chaco.examples.demo.advanced.data_cube module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.advanced.data_stream.html">chaco.examples.demo.advanced.data_stream module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.advanced.scalar_image_function_inspector.html">chaco.examples.demo.advanced.scalar_image_function_inspector module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.basic.html">chaco.examples.demo.basic package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.bar_plot_configurable.html">chaco.examples.demo.basic.bar_plot_configurable module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.bar_plot_stacked.html">chaco.examples.demo.basic.bar_plot_stacked module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.bounded_grids.html">chaco.examples.demo.basic.bounded_grids module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.candle.html">chaco.examples.demo.basic.candle module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.cmap_image_aspect_ratio.html">chaco.examples.demo.basic.cmap_image_aspect_ratio module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.cmap_image_plot.html">chaco.examples.demo.basic.cmap_image_plot module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.cmap_image_select.html">chaco.examples.demo.basic.cmap_image_select module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.cmap_scatter.html">chaco.examples.demo.basic.cmap_scatter module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.cmap_segment_plot.html">chaco.examples.demo.basic.cmap_segment_plot module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.contour_cmap_plot.html">chaco.examples.demo.basic.contour_cmap_plot module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.contour_plot.html">chaco.examples.demo.basic.contour_plot module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.discrete_cmap_image_plot.html">chaco.examples.demo.basic.discrete_cmap_image_plot module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.discrete_cmap_scatter.html">chaco.examples.demo.basic.discrete_cmap_scatter module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.draw_layers.html">chaco.examples.demo.basic.draw_layers module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.grid_container.html">chaco.examples.demo.basic.grid_container module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.grid_container_aspect_ratio.html">chaco.examples.demo.basic.grid_container_aspect_ratio module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.hittest_tool.html">chaco.examples.demo.basic.hittest_tool module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.horizon_plot.html">chaco.examples.demo.basic.horizon_plot module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.image_from_file.html">chaco.examples.demo.basic.image_from_file module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.image_inspector.html">chaco.examples.demo.basic.image_inspector module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.image_lasso.html">chaco.examples.demo.basic.image_lasso module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.image_plot.html">chaco.examples.demo.basic.image_plot module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.inset_plot.html">chaco.examples.demo.basic.inset_plot module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.line_drawing.html">chaco.examples.demo.basic.line_drawing module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.line_plot1.html">chaco.examples.demo.basic.line_plot1 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.line_plot_hold.html">chaco.examples.demo.basic.line_plot_hold module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.log_plot.html">chaco.examples.demo.basic.log_plot module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.minard_napoleon.html">chaco.examples.demo.basic.minard_napoleon module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="chaco.examples.demo.basic.minard_napoleon.html#minard-s-map-of-napoleon-s-russian-campaign">Minard’s Map of Napoleon’s Russian Campaign</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.minor_ticks_axis.html">chaco.examples.demo.basic.minor_ticks_axis module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.nans_plot.html">chaco.examples.demo.basic.nans_plot module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.pandas_data.html">chaco.examples.demo.basic.pandas_data module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.polygon_move.html">chaco.examples.demo.basic.polygon_move module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.polygon_plot_demo.html">chaco.examples.demo.basic.polygon_plot_demo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.regression.html">chaco.examples.demo.basic.regression module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.scatter.html">chaco.examples.demo.basic.scatter module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.scatter_1d.html">chaco.examples.demo.basic.scatter_1d module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.scatter_alpha.html">chaco.examples.demo.basic.scatter_alpha module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.scatter_custom_marker.html">chaco.examples.demo.basic.scatter_custom_marker module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.scatter_inspector.html">chaco.examples.demo.basic.scatter_inspector module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.scatter_inspector2.html">chaco.examples.demo.basic.scatter_inspector2 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.scatter_rect_select.html">chaco.examples.demo.basic.scatter_rect_select module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.scatter_select.html">chaco.examples.demo.basic.scatter_select module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.scatter_toggle.html">chaco.examples.demo.basic.scatter_toggle module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.scatter_variable_size.html">chaco.examples.demo.basic.scatter_variable_size module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.scrollbar.html">chaco.examples.demo.basic.scrollbar module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.segment_plot.html">chaco.examples.demo.basic.segment_plot module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.tabbed_plots.html">chaco.examples.demo.basic.tabbed_plots module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.basic.zoomable_colorbar.html">chaco.examples.demo.basic.zoomable_colorbar module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.examples.demo.financial.html">chaco.examples.demo.financial package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.financial.correlations.html">chaco.examples.demo.financial.correlations module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chaco.examples.demo.financial.stock_prices.html">chaco.examples.demo.financial.stock_prices module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.overlays.html">chaco.overlays package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chaco.overlays.aligned_container_overlay.html">chaco.overlays.aligned_container_overlay module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.overlays.api.html">chaco.overlays.api module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.overlays.colormapped_selection_overlay.html">chaco.overlays.colormapped_selection_overlay module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.overlays.container_overlay.html">chaco.overlays.container_overlay module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.overlays.coordinate_line_overlay.html">chaco.overlays.coordinate_line_overlay module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.overlays.data_label.html">chaco.overlays.data_label module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.overlays.databox.html">chaco.overlays.databox module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.overlays.lasso_overlay.html">chaco.overlays.lasso_overlay module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.overlays.legend.html">chaco.overlays.legend module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.overlays.plot_label.html">chaco.overlays.plot_label module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.overlays.scatter_inspector_overlay.html">chaco.overlays.scatter_inspector_overlay module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.overlays.simple_inspector_overlay.html">chaco.overlays.simple_inspector_overlay module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.overlays.text_box_overlay.html">chaco.overlays.text_box_overlay module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.overlays.text_grid_overlay.html">chaco.overlays.text_grid_overlay module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.overlays.tooltip.html">chaco.overlays.tooltip module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.overlays.layers.html">chaco.overlays.layers package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chaco.overlays.layers.api.html">chaco.overlays.layers.api module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.overlays.layers.status_layer.html">chaco.overlays.layers.status_layer module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.overlays.layers.svg_range_selection_overlay.html">chaco.overlays.layers.svg_range_selection_overlay module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.plots.html">chaco.plots package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.api.html">chaco.plots.api module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.barplot.html">chaco.plots.barplot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.candle_plot.html">chaco.plots.candle_plot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.cmap_image_plot.html">chaco.plots.cmap_image_plot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.color_bar.html">chaco.plots.color_bar module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.colormapped_scatterplot.html">chaco.plots.colormapped_scatterplot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.errorbar_plot.html">chaco.plots.errorbar_plot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.filled_line_plot.html">chaco.plots.filled_line_plot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.horizon_plot.html">chaco.plots.horizon_plot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.image_plot.html">chaco.plots.image_plot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.jitterplot.html">chaco.plots.jitterplot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.line_scatterplot_1d.html">chaco.plots.line_scatterplot_1d module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.lineplot.html">chaco.plots.lineplot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.multi_line_plot.html">chaco.plots.multi_line_plot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.polar_line_renderer.html">chaco.plots.polar_line_renderer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.polygon_plot.html">chaco.plots.polygon_plot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.quiverplot.html">chaco.plots.quiverplot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.scatterplot.html">chaco.plots.scatterplot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.scatterplot_1d.html">chaco.plots.scatterplot_1d module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.segment_plot.html">chaco.plots.segment_plot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.text_plot.html">chaco.plots.text_plot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.text_plot_1d.html">chaco.plots.text_plot_1d module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.plots.contour.html">chaco.plots.contour package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chaco.plots.contour.contour_line_plot.html">chaco.plots.contour.contour_line_plot module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.plots.contour.contour_poly_plot.html">chaco.plots.contour.contour_poly_plot module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.plots.contour.setup.html">chaco.plots.contour.setup module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.scales.html">chaco.scales package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chaco.scales.api.html">chaco.scales.api module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.scales.formatters.html">chaco.scales.formatters module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.scales.safetime.html">chaco.scales.safetime module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.scales.scales.html">chaco.scales.scales module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.scales.time_scale.html">chaco.scales.time_scale module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.tools.html">chaco.tools package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.api.html">chaco.tools.api module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.better_selecting_zoom.html">chaco.tools.better_selecting_zoom module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.better_zoom.html">chaco.tools.better_zoom module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.broadcaster.html">chaco.tools.broadcaster module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.cursor_tool.html">chaco.tools.cursor_tool module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.data_label_tool.html">chaco.tools.data_label_tool module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.dataprinter.html">chaco.tools.dataprinter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.drag_zoom.html">chaco.tools.drag_zoom module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.draw_points_tool.html">chaco.tools.draw_points_tool module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.highlight_tool.html">chaco.tools.highlight_tool module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.image_inspector_tool.html">chaco.tools.image_inspector_tool module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.lasso_selection.html">chaco.tools.lasso_selection module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.legend_highlighter.html">chaco.tools.legend_highlighter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.legend_tool.html">chaco.tools.legend_tool module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.line_inspector.html">chaco.tools.line_inspector module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.line_segment_tool.html">chaco.tools.line_segment_tool module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.move_tool.html">chaco.tools.move_tool module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.pan_tool.html">chaco.tools.pan_tool module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.pan_tool2.html">chaco.tools.pan_tool2 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.point_marker.html">chaco.tools.point_marker module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.range_selection.html">chaco.tools.range_selection module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.range_selection_2d.html">chaco.tools.range_selection_2d module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.range_selection_overlay.html">chaco.tools.range_selection_overlay module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.rect_zoom.html">chaco.tools.rect_zoom module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.rectangular_selection.html">chaco.tools.rectangular_selection module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.regression_lasso.html">chaco.tools.regression_lasso module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.save_tool.html">chaco.tools.save_tool module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.scatter_inspector.html">chaco.tools.scatter_inspector module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.select_tool.html">chaco.tools.select_tool module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.simple_inspector.html">chaco.tools.simple_inspector module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.tool_history_mixin.html">chaco.tools.tool_history_mixin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.tool_states.html">chaco.tools.tool_states module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.tracking_pan_tool.html">chaco.tools.tracking_pan_tool module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.tracking_zoom.html">chaco.tools.tracking_zoom module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.traits_tool.html">chaco.tools.traits_tool module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.zoom_tool.html">chaco.tools.zoom_tool module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.tools.toolbars.html">chaco.tools.toolbars package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chaco.tools.toolbars.plot_toolbar.html">chaco.tools.toolbars.plot_toolbar module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chaco.tools.toolbars.toolbar_buttons.html">chaco.tools.toolbars.toolbar_buttons module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chaco.ui.html">chaco.ui package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chaco.ui.axis_ui.html">chaco.ui.axis_ui module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaco.ui.plot_window.html">chaco.ui.plot_window module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Plots and Plot Data &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">Plots and Plot Data</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="plots-and-plot-data">
+<span id="plots"></span><h1>Plots and Plot Data<a class="headerlink" href="#plots-and-plot-data" title="Permalink to this headline">¶</a></h1>
+<p>The primary interface that Chaco presents is the <a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot" title="chaco.plot.Plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code></a>
+class.  Informally you can think of this as a single set of shared axes that
+contain a collection of renderers within that view.  It comes pre-configured
+with most of the decorations that you might want, such as grids, titles and
+legends, and those can easily be modified if desired.</p>
+<div class="section" id="plots-are-components">
+<h2>Plots Are Components<a class="headerlink" href="#plots-are-components" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot" title="chaco.plot.Plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code></a> class is a subclass of the
+<a class="reference external" href="http://docs.enthought.com/enable/api/enable.component.html#enable.component.Component" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a> class, and so you can display a plot
+in a TraitsUI using a <a class="reference external" href="http://docs.enthought.com/enable/api/enable.component_editor.html#enable.component_editor.ComponentEditor" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ComponentEditor</span></code></a>
+as you would any other Enable <a class="reference external" href="http://docs.enthought.com/enable/api/enable.component.html#enable.component.Component" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>.
+Usually this looks something like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PowerFunctionExample</span><span class="p">(</span><span class="n">HasStrictTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Display a plot of a power function. &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The plot holding the visualization</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
+
+    <span class="c1">#: The power of the monomial to use.</span>
+    <span class="n">power</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+            <span class="p">),</span>
+            <span class="n">show_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">resizable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Power Function Example&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">view</span> <span class="o">=</span> <span class="n">PowerFunctionExample</span><span class="p">()</span>
+    <span class="n">view</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Because plots tend to consume a large amount of vertical space you typically
+want to avoid displaying it in a group which shows labels on the left-hand
+side, as this creates a lot of empty space.  By grouping in a way like what
+is shown above, you get the following, more pleasing layout:</p>
+<a class="reference internal image-reference" href="../_images/power_function_example.png"><img alt="../_images/power_function_example.png" src="../_images/power_function_example.png" style="width: 512.0px; height: 572.0px;" /></a>
+<p>Since <a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot" title="chaco.plot.Plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code></a> subclasses
+<a class="reference external" href="http://docs.enthought.com/enable/api/enable.component.html#enable.component.Component" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>, you have the basic styling options
+that <a class="reference external" href="http://docs.enthought.com/enable/api/enable.component.html#enable.component.Component" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a> gives you, such as background
+color, padding, borders, etc.  However <a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot" title="chaco.plot.Plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code></a> assumes
+that you have substantial padding around it as the plot titles, axis ticks
+and axis labels are rendered in the padding around the plot by default; but
+you can frequently get more compact layout by reducing the padding on the
+sides which do not have labels.</p>
+<p>Similarly, this means that you can use a plot in the same way that you would
+any other Enable component, and it will work with Enable tools.  So you could
+have multiple <code class="xref py py-class docutils literal notranslate"><span class="pre">Container</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code>
+and attach <a class="reference external" href="http://docs.enthought.com/enable/api/enable.tools.move_tool.html#enable.tools.move_tool.MoveTool" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MoveTool</span></code></a> and
+<a class="reference external" href="http://docs.enthought.com/enable/api/enable.tools.resize_tool.html#enable.tools.resize_tool.ResizeTool" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResizeTool</span></code></a> to them to allow the user
+complete control over the location and size of the plots.</p>
+</div>
+<div class="section" id="plot-data">
+<h2>Plot Data<a class="headerlink" href="#plot-data" title="Permalink to this headline">¶</a></h2>
+<p>The data for a <a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot" title="chaco.plot.Plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code></a> is stored in an instance of an
+<a class="reference internal" href="../api/chaco.abstract_plot_data.html#chaco.abstract_plot_data.AbstractPlotData" title="chaco.abstract_plot_data.AbstractPlotData"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractPlotData</span></code></a> (and almost always
+<a class="reference internal" href="../api/chaco.array_plot_data.html#chaco.array_plot_data.ArrayPlotData" title="chaco.array_plot_data.ArrayPlotData"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayPlotData</span></code></a>).  The plot data classes
+provide a namespace that maps names to data so that the
+<a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot" title="chaco.plot.Plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code></a> can refer to the data by name when constructing
+and modifying plot renderers.</p>
+<p>Usually the raw data is added to the plot data during initialization, and
+the assigned names used as the data parameters for the plot factories:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PowerFunctionExample</span><span class="p">(</span><span class="n">HasStrictTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Display a plot of a power function. &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The plot holding the visualization</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
+
+    <span class="c1">#: The power of the monomial to use.</span>
+    <span class="n">power</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1">#: The x-values to plot.</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Trait defaults --------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">power</span>
+        <span class="n">plot_data</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plot_data</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;power function&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
+
+        <span class="c1"># configure the plot</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">padding_top</span> <span class="o">=</span> <span class="mi">25</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">border_visible</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">index_grid</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="c1"># Trait change handlers -------------------------------------------------</span>
+</pre></div>
+</div>
+<p>After raw data has been added to the plot, it can be updated via the
+<a class="reference internal" href="../api/chaco.array_plot_data.html#chaco.array_plot_data.ArrayPlotData.set_data" title="chaco.array_plot_data.ArrayPlotData.set_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_data()</span></code></a> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="nd">@on_trait_change</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_update_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">power</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update_data</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Sometimes it is convenient to update multiple data values at the same
+time, and in this case there is the
+<a class="reference internal" href="../api/chaco.array_plot_data.html#chaco.array_plot_data.ArrayPlotData.update_data" title="chaco.array_plot_data.ArrayPlotData.update_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update_data()</span></code></a> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="nd">@on_trait_change</span><span class="p">(</span><span class="s2">&quot;power&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_update_title</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Power Function n=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">power</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<p>Peforming an update rather than multiple individual data setting
+operations is preferable, where possible, since it triggers a single
+combined update on any plots that are listening for changes to the
+data rather than many smaller updates.</p>
+</div>
+<div class="section" id="plot-factory-methods">
+<h2>Plot Factory Methods<a class="headerlink" href="#plot-factory-methods" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot" title="chaco.plot.Plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code></a> class allws you to add multiple plots
+of different types to the visualization your are constructing.  It does
+this via a family of factory methods, the most commonly used of which is
+the <a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot.plot" title="chaco.plot.Plot.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a> method, but which include methods
+for image plots, contour plots, candle plots and so on.</p>
+<p>All of these methods share that they expect parameters for:</p>
+<dl class="simple">
+<dt>data</dt><dd><p>Either a name or a tuple of data names from the plot data that
+should be used in the plot.  The exact interpretation and number
+of data values expected varies from method to method.</p>
+</dd>
+<dt>name</dt><dd><p>A name to be given to the renderer or renderers created by the
+method.  The renderer can be retrieved from the
+<a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot" title="chaco.plot.Plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code></a> using its name.  If a name is not
+given, one is auto-generated.</p>
+</dd>
+<dt>origin</dt><dd><p>An indication of the orientation of the plot.  This is the
+corner of the plot where the origin is located when looking
+at data in the first quadrant (positive x and y).</p>
+</dd>
+<dt>**styles</dt><dd><p>Keyword arguments that are passed directly through to the
+plot renderer, most commonly used to set things like colors,
+line styles, marker types, and so on.</p>
+</dd>
+</dl>
+<p>Other common arguments that some, but not all, factory methods take
+include whether to use linear or logarithmic axes, the bounds of
+image or contour data in data space, and colormap information.</p>
+<p>The plot factory methods all return a list of plot renderers, all
+of which are associated with the given name.</p>
+<p>The plot factory methods are:</p>
+<dl class="simple">
+<dt><a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot.plot" title="chaco.plot.Plot.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a></dt><dd><p>The method for creating different types of XY plot subclasses.
+In adddition to the parameters listed above, this takes a
+<code class="docutils literal notranslate"><span class="pre">type</span></code> argument, which is a string naming the type of plot
+renderer to create, such as <code class="docutils literal notranslate"><span class="pre">line</span></code> (the default), <code class="docutils literal notranslate"><span class="pre">scatter</span></code>,
+<code class="docutils literal notranslate"><span class="pre">bar</span></code>, and so on.  When called with many parameters, this
+method may create multiple plot renderers of the same type.</p>
+</dd>
+<dt><a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot.img_plot" title="chaco.plot.Plot.img_plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">img_plot()</span></code></a></dt><dd><p>The method for creating image plots.  If the data has a shape
+of (N, M, 3) or (N, M, 4) then it is treated as RGB or RGBA
+data, otherwise for (N, M) shaped data a colormap will be
+applied.  This method can be given information about the
+extent of the data in the index data space.  This can come from
+a named data source, from a hard-coded array of values, or from
+a (low, high) tuple.  If nothing is supplied then the bounds
+for an image with N rows and M columns are (0, M) in the x
+direction an (0, N) in the y direction.</p>
+</dd>
+<dt><a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot.contour_plot" title="chaco.plot.Plot.contour_plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">contour_plot()</span></code></a></dt><dd><p>The method for creating contour plots.  Like the
+<a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot.plot" title="chaco.plot.Plot.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a> method this takes a <cite>type</cite>
+argument to select between a <code class="docutils literal notranslate"><span class="pre">&quot;line&quot;</span></code> contour plot and a
+filled <code class="docutils literal notranslate"><span class="pre">&quot;poly&quot;</span></code> polygon contour plot.  This method can be
+given information about the position of the data in the x and
+y data spaces.  This can come from a named data source, from a
+hard-coded array of values, or from a (low, high) tuple.  If
+nothing is supplied then the locations of data points for an
+image with N rows and M columns are (0, 1, …, M-1) in the x
+direction an (0, 1, …, N-1) in the y direction.</p>
+</dd>
+<dt><a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot.candle_plot" title="chaco.plot.Plot.candle_plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">candle_plot()</span></code></a></dt><dd><p>This method creates various styles of plots with error bars.
+The type is inferred from the number of data values passed.
+The first argument is always the index, but the remaining
+arguments are variously interpreted as min and max values
+for bar and whiskers, plus an optional central value.
+It is up to the calling code to correctly derive the data
+arrays: no aggregation is performed by the plot.</p>
+</dd>
+<dt><a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot.quiverplot" title="chaco.plot.Plot.quiverplot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">quiverplot()</span></code></a></dt><dd><p>The method creates a plot that places arrows at locations
+determined by a list of x and y points.  It expects three
+data values: two arrays of length N for the points, and
+a third (N, 2) array of direction vectors for the arrows.</p>
+</dd>
+<dt><a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot.plot_1d" title="chaco.plot.Plot.plot_1d"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_1d()</span></code></a></dt><dd><p>The method for creating different types of 1D plot subclasses.
+In adddition to the parameters listed above, this takes a
+<code class="docutils literal notranslate"><span class="pre">type</span></code> argument, which is a string naming the type of plot
+renderer to create, such as <code class="docutils literal notranslate"><span class="pre">scatter_1d</span></code> (the default),
+<code class="docutils literal notranslate"><span class="pre">line_scatter_1d</span></code>, <code class="docutils literal notranslate"><span class="pre">textplot_1d</span></code>, and so on.</p>
+</dd>
+</dl>
+<p>The plot renderers for a <a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot" title="chaco.plot.Plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code></a> instance are
+available via the <a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot.plots" title="chaco.plot.Plot.plots"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plots</span></code></a> attribute, which
+is a dictionary mapping plot names to a list of plots that match
+that name.  Once obtained, they can have styling attributes changed
+or otherwise be manipulated.  In particular, since the plot renderers
+are alse <a class="reference external" href="http://docs.enthought.com/enable/api/enable.component.html#enable.component.Component" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.component.Component</span></code></a> subclasses, they can
+have tools attached to them and otherwise be used as a component
+might be.</p>
+<p>Plot renderers can be removed by calling the
+<a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot.delplot" title="chaco.plot.Plot.delplot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">delplot()</span></code></a> method with arguments of the
+names of the plots to be removed.  All plot renderers with
+matching names will be deleted.</p>
+<p>Plot renderers can also be shown and hidden as groups by name using
+the <a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot.hideplot" title="chaco.plot.Plot.hideplot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">hideplot()</span></code></a> and
+<a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot.showplot" title="chaco.plot.Plot.showplot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">showplot()</span></code></a> methods.</p>
+</div>
+<div class="section" id="plot-configuration">
+<h2>Plot Configuration<a class="headerlink" href="#plot-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Since <a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot" title="chaco.plot.Plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code></a> is a subclass of
+<a class="reference external" href="http://docs.enthought.com/enable/api/enable.component.html#enable.component.Component" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a> the options for changing background
+and border properties that <a class="reference external" href="http://docs.enthought.com/enable/api/enable.component.html#enable.component.Component" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>
+provides are available.</p>
+<p>The  <a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot" title="chaco.plot.Plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code></a> class comes pre-configured to display
+basic plots in a reasonably clean way: plots are provided with axes and
+grids by default, but not with any other sort of decoration.  However
+it is straightforward to remove these, or to add other basic decoration
+such as titles and legends if they are desired.</p>
+<p>Title characteristics can be set directly via attributes such as
+<a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot.title_text" title="chaco.plot.Plot.title_text"><code class="xref py py-attr docutils literal notranslate"><span class="pre">title_text</span></code></a>,
+<a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot.title_font" title="chaco.plot.Plot.title_font"><code class="xref py py-attr docutils literal notranslate"><span class="pre">title_font</span></code></a>,
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">title_color</span></code>,
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">title_angle</span></code>, and
+<a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot.title_position" title="chaco.plot.Plot.title_position"><code class="xref py py-attr docutils literal notranslate"><span class="pre">title_position</span></code></a>.  The title text can also be set
+via the convenience property <a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot.title" title="chaco.plot.Plot.title"><code class="xref py py-attr docutils literal notranslate"><span class="pre">title</span></code></a>, which has the
+added side-effect of hiding the title if the text is the empty string.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">power</span>
+        <span class="n">plot_data</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plot_data</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;power function&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
+
+        <span class="c1"># configure the plot</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">padding_top</span> <span class="o">=</span> <span class="mi">25</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">border_visible</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">index_grid</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">value_grid</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">bgcolor</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">True</span>
+
+</pre></div>
+</div>
+<p>Title text and other attributes can be updated dynamically and the plot will
+update correctly to display the modified label.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+    <span class="n">view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span>
+        <span class="n">VGroup</span><span class="p">(</span>
+</pre></div>
+</div>
+<p>The plot class also provides a <code class="xref py py-class docutils literal notranslate"><span class="pre">Legend</span></code> instance
+that is hidden by default.  It can be shown by toggling the visibility
+of the legend. The positioning of the legend relative to the plot can be
+set via the <a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot.legend_alignment" title="chaco.plot.Plot.legend_alignment"><code class="xref py py-attr docutils literal notranslate"><span class="pre">legend_alignment</span></code></a> trait.  Additional
+configuration can be performed via the <code class="xref py py-class docutils literal notranslate"><span class="pre">Legend</span></code> class
+up to and including replacing it with a custom <code class="xref py py-class docutils literal notranslate"><span class="pre">Legend</span></code>
+subclass.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">power</span>
+        <span class="n">plot_data</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plot_data</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;power function&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
+
+        <span class="c1"># configure the plot</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">padding_top</span> <span class="o">=</span> <span class="mi">25</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">border_visible</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">index_grid</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">value_grid</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">index_axis</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;y&quot;</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">value_axis</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span>
+
+        <span class="k">return</span> <span class="n">plot</span>
+</pre></div>
+</div>
+<p>Axes and grids can be accessed either as “index” and “value” or “x” and “y”
+depending on how the code is working with them.  In general it is preferable
+to use “index” and “value” as this takes into account the orientation of the
+plot. Axes and grids can be removed by setting their visibility to False,
+or setting the appropriate trait to None.  Axes and grids have many
+configuration options, detailed in their documentation.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Plots and Plot Data</a><ul>
+<li><a class="reference internal" href="#plots-are-components">Plots Are Components</a></li>
+<li><a class="reference internal" href="#plot-data">Plot Data</a></li>
+<li><a class="reference internal" href="#plot-factory-methods">Plot Factory Methods</a></li>
+<li><a class="reference internal" href="#plot-configuration">Plot Configuration</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/user_manual/plots.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

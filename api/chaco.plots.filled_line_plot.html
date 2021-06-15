@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.plots.filled_line_plot module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.plots.filled_line_plot module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.plots.filled_line_plot">
+<span id="chaco-plots-filled-line-plot-module"></span><h1>chaco.plots.filled_line_plot module<a class="headerlink" href="#module-chaco.plots.filled_line_plot" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="chaco.plots.filled_line_plot.Alias">
+<code class="sig-prename descclassname">chaco.plots.filled_line_plot.</code><code class="sig-name descname">Alias</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.filled_line_plot.Alias" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="chaco.plots.filled_line_plot.FilledLinePlot">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.plots.filled_line_plot.</code><code class="sig-name descname">FilledLinePlot</code><span class="sig-paren">(</span><em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.filled_line_plot.FilledLinePlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.plots.polygon_plot.html#chaco.plots.polygon_plot.PolygonPlot" title="chaco.plots.polygon_plot.PolygonPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.plots.polygon_plot.PolygonPlot</span></code></a></p>
+<p>Draws a line plot filled to the axis</p>
+<dl class="attribute">
+<dt id="chaco.plots.filled_line_plot.FilledLinePlot.fill_direction">
+<code class="sig-name descname">fill_direction</code><em class="property"> = Enum(&quot;down&quot;, &quot;up&quot;)</em><a class="headerlink" href="#chaco.plots.filled_line_plot.FilledLinePlot.fill_direction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Direction to fill. Down is towards the origin, up is towards the max</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.filled_line_plot.FilledLinePlot.render_style">
+<code class="sig-name descname">render_style</code><em class="property"> = Enum(&quot;connectedpoints&quot;, &quot;hold&quot;, &quot;connectedhold&quot;)</em><a class="headerlink" href="#chaco.plots.filled_line_plot.FilledLinePlot.render_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>The rendering style of the line plot.</p>
+<dl class="simple">
+<dt>connectedpoints</dt><dd><p>“normal” style (default); each point is connected to subsequent and
+prior points by line segments</p>
+</dd>
+<dt>hold</dt><dd><p>each point is represented by a line segment parallel to the abscissa
+(index axis) and spanning the length between the point and its
+subsequent point.</p>
+</dd>
+<dt>connectedhold</dt><dd><p>like “hold” style, but line segments are drawn at each point of the
+plot to connect the hold lines of the prior point and the current
+point.  Also called a “right angle plot”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.plots.filled_line_plot.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

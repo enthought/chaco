@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Mappers &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">Mappers</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="mappers">
+<h1>Mappers<a class="headerlink" href="#mappers" title="Permalink to this headline">¶</a></h1>
+<p>Mappers perform the job of mapping a data space region to screen space,
+and vice versa. They are used by plots to transform their data sources
+to pixel coordinates on the screen. While most of the time this is
+a relatively simple rescaling operation, mapper can also be used
+for non-linear transformations, most notably to map a data source
+to logarithmic coordinates on screen.</p>
+<div class="section" id="interface">
+<h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<p>The general interface for mappers is defined in
+<a class="reference internal" href="../../api/chaco.abstract_mapper.html#chaco.abstract_mapper.AbstractMapper" title="chaco.abstract_mapper.AbstractMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractMapper</span></code></a> and defines only a few
+methods:</p>
+<dl class="simple">
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">map_screen(data_value)</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">map_data(screen_value)</span></code></dt><dd><p>Maps a vector of data coordinates to screen coordinates, and vice versa.</p>
+</dd>
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">map_data_array(screen_value_array)</span></code></dt><dd><p>Maps an array of points in data coordinates to screen coordinates.
+By default, this method just loops over the points, calling <code class="xref py py-attr docutils literal notranslate"><span class="pre">map_data()</span></code>
+on each one.  For vectorizable mapping functions, this
+implementation is overridden with a faster one.</p>
+</dd>
+</dl>
+<p>Mappers for 1D data have a slightly larger interface, defined in
+<a class="reference internal" href="../../api/chaco.base_1d_mapper.html#chaco.base_1d_mapper.Base1DMapper" title="chaco.base_1d_mapper.Base1DMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base1DMapper</span></code></a>. These mappers rely
+on a <a class="reference internal" href="../../api/chaco.data_range_1d.html#chaco.data_range_1d.DataRange1D" title="chaco.data_range_1d.DataRange1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataRange1D</span></code></a> object to find the
+bounds on the data domain.</p>
+<dl class="simple">
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">range</span></code></dt><dd><p>A <a class="reference internal" href="../../api/chaco.data_range_1d.html#chaco.data_range_1d.DataRange1D" title="chaco.data_range_1d.DataRange1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataRange1D</span></code></a> instance to define the
+data-space bounds of the mapper. The mapper listens to the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">updated</span></code> event of the range and re-fires it as its
+own <code class="xref py py-attr docutils literal notranslate"><span class="pre">updated</span></code> event (see below).</p>
+</dd>
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">low_pos</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">high_pos</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">screen_bounds</span></code></dt><dd><p>The screen space position of the lower/upper bound of the data space.
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">screen_bounds</span></code> is a convenience property to set/get the screen
+bounds with a single attribute.</p>
+</dd>
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">stretch_data</span></code></dt><dd><p>When the screen bounds change (in response, for instance, to the
+window resizing) one could either fit more data space on the screen, or
+stretch the data space to the new bounds.
+If <code class="xref py py-attr docutils literal notranslate"><span class="pre">stretch_data</span></code> is True (default), the data is stretched;
+if it is False, the mapper preserves the screen-to-data ratio.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="events">
+<h2>Events<a class="headerlink" href="#events" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../../api/chaco.abstract_mapper.html#chaco.abstract_mapper.AbstractMapper" title="chaco.abstract_mapper.AbstractMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractMapper</span></code></a> interface defines a single
+generic event,
+<a class="reference internal" href="../../api/chaco.abstract_mapper.html#chaco.abstract_mapper.AbstractMapper.updated" title="chaco.abstract_mapper.AbstractMapper.updated"><code class="xref py py-attr docutils literal notranslate"><span class="pre">updated</span></code></a>,
+which is fired when the bound values change.</p>
+<p>For subclasses of <a class="reference internal" href="../../api/chaco.base_1d_mapper.html#chaco.base_1d_mapper.Base1DMapper" title="chaco.base_1d_mapper.Base1DMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base1DMapper</span></code></a>, the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">updated</span></code> event is also fired in response to an <code class="xref py py-attr docutils literal notranslate"><span class="pre">updated</span></code> event
+fired by the underlying data range.
+The value of the new event is the tuple <code class="docutils literal notranslate"><span class="pre">(low_bound,</span> <span class="pre">high_bound)</span></code> contained
+in the triggering event.</p>
+</div>
+<div class="section" id="list-of-chaco-data-mappers">
+<h2>List of Chaco data mappers<a class="headerlink" href="#list-of-chaco-data-mappers" title="Permalink to this headline">¶</a></h2>
+<dl>
+<dt><a class="reference internal" href="../../api/chaco.linear_mapper.html#chaco.linear_mapper.LinearMapper" title="chaco.linear_mapper.LinearMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearMapper</span></code></a> (subclass of <a class="reference internal" href="../../api/chaco.base_1d_mapper.html#chaco.base_1d_mapper.Base1DMapper" title="chaco.base_1d_mapper.Base1DMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base1DMapper</span></code></a>)</dt><dd><p>This mapper transforms a 1D data space range linearly to a fixed 1D range
+in screen space.</p>
+</dd>
+<dt><a class="reference internal" href="../../api/chaco.log_mapper.html#chaco.log_mapper.LogMapper" title="chaco.log_mapper.LogMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogMapper</span></code></a> (subclass of <a class="reference internal" href="../../api/chaco.base_1d_mapper.html#chaco.base_1d_mapper.Base1DMapper" title="chaco.base_1d_mapper.Base1DMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base1DMapper</span></code></a>)</dt><dd><p>Maps a 1D data space range to a 1D range in screen space through a
+logarithmic transform. Data values
+smaller than or equal to 0.0 are
+substituted by <a class="reference internal" href="../../api/chaco.log_mapper.html#chaco.log_mapper.LogMapper.fill_value" title="chaco.log_mapper.LogMapper.fill_value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fill_value</span></code></a>
+(default is 1.0) before the logarithmic transformation.</p>
+</dd>
+<dt><a class="reference internal" href="../../api/chaco.grid_mapper.html#chaco.grid_mapper.GridMapper" title="chaco.grid_mapper.GridMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridMapper</span></code></a></dt><dd><p>Same as <a class="reference internal" href="../../api/chaco.linear_mapper.html#chaco.linear_mapper.LinearMapper" title="chaco.linear_mapper.LinearMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearMapper</span></code></a> for 2D ranges. This class
+replaces the <a class="reference internal" href="../../api/chaco.base_1d_mapper.html#chaco.base_1d_mapper.Base1DMapper" title="chaco.base_1d_mapper.Base1DMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base1DMapper</span></code></a> attributes with analogous ones:</p>
+<dl class="simple">
+<dt><a class="reference internal" href="../../api/chaco.grid_mapper.html#chaco.grid_mapper.GridMapper.range" title="chaco.grid_mapper.GridMapper.range"><code class="xref py py-attr docutils literal notranslate"><span class="pre">range</span></code></a></dt><dd><p>A <a class="reference internal" href="../../api/chaco.data_range_2d.html#chaco.data_range_2d.DataRange2D" title="chaco.data_range_2d.DataRange2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataRange2D</span></code></a> instance to define the
+data-space bounds of the mapper.</p>
+</dd>
+<dt><a class="reference internal" href="../../api/chaco.grid_mapper.html#chaco.grid_mapper.GridMapper.x_low_pos" title="chaco.grid_mapper.GridMapper.x_low_pos"><code class="xref py py-attr docutils literal notranslate"><span class="pre">x_low_pos</span></code></a>, <a class="reference internal" href="../../api/chaco.grid_mapper.html#chaco.grid_mapper.GridMapper.y_low_pos" title="chaco.grid_mapper.GridMapper.y_low_pos"><code class="xref py py-attr docutils literal notranslate"><span class="pre">y_low_pos</span></code></a>, <a class="reference internal" href="../../api/chaco.grid_mapper.html#chaco.grid_mapper.GridMapper.x_high_pos" title="chaco.grid_mapper.GridMapper.x_high_pos"><code class="xref py py-attr docutils literal notranslate"><span class="pre">x_high_pos</span></code></a>, <a class="reference internal" href="../../api/chaco.grid_mapper.html#chaco.grid_mapper.GridMapper.y_high_pos" title="chaco.grid_mapper.GridMapper.y_high_pos"><code class="xref py py-attr docutils literal notranslate"><span class="pre">y_high_pos</span></code></a></dt><dd><p>Screen space positions for the lower and upper bounds of the x and
+y axes.</p>
+</dd>
+<dt><a class="reference internal" href="../../api/chaco.grid_mapper.html#chaco.grid_mapper.GridMapper.screen_bounds" title="chaco.grid_mapper.GridMapper.screen_bounds"><code class="xref py py-attr docutils literal notranslate"><span class="pre">screen_bounds</span></code></a></dt><dd><p>Convenience property to set/get the screen bounds with a single attribute.
+The value of this attribute is a 4-element tuple
+<code class="docutils literal notranslate"><span class="pre">(x_low_pos,</span> <span class="pre">x_high_pos,</span> <span class="pre">y_low_pos,</span> <span class="pre">y_high_pos)</span></code>.</p>
+</dd>
+</dl>
+<p><a class="reference internal" href="../../api/chaco.grid_mapper.html#chaco.grid_mapper.GridMapper" title="chaco.grid_mapper.GridMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridMapper</span></code></a> uses two
+<a class="reference internal" href="../../api/chaco.base_1d_mapper.html#chaco.base_1d_mapper.Base1DMapper" title="chaco.base_1d_mapper.Base1DMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base1DMapper</span></code></a> instances to define mappers for
+the two axes (accessible from the two private attributes
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">_xmapper</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">_ymapper</span></code>).
+It thus possible to set them to be linear or
+logarithmic mappers. This is best made using the class constructor, which has
+this signature:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GridMapper</span><span class="p">(</span><span class="n">x_type</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span> <span class="n">y_type</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">x_type</span></code> and <code class="docutils literal notranslate"><span class="pre">y_type</span></code> can be either ‘linear’ or ‘log’, which will
+create a corresponding <a class="reference internal" href="../../api/chaco.linear_mapper.html#chaco.linear_mapper.LinearMapper" title="chaco.linear_mapper.LinearMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearMapper</span></code></a> or <a class="reference internal" href="../../api/chaco.log_mapper.html#chaco.log_mapper.LogMapper" title="chaco.log_mapper.LogMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogMapper</span></code></a> classes.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Mappers</a><ul>
+<li><a class="reference internal" href="#interface">Interface</a></li>
+<li><a class="reference internal" href="#events">Events</a></li>
+<li><a class="reference internal" href="#list-of-chaco-data-mappers">List of Chaco data mappers</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <div>
+    <a href="../../_sources/user_manual/basic_elements/mappers.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

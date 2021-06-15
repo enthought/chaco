@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.tools.better_zoom module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.tools.better_zoom module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.tools.better_zoom">
+<span id="chaco-tools-better-zoom-module"></span><h1>chaco.tools.better_zoom module<a class="headerlink" href="#module-chaco.tools.better_zoom" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="chaco.tools.better_zoom.BetterZoom">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.better_zoom.</code><code class="sig-name descname">BetterZoom</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.enthought.com/enable/api/enable.base_tool.html#enable.base_tool.BaseTool" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.base_tool.BaseTool</span></code></a>, <a class="reference internal" href="chaco.tools.tool_history_mixin.html#chaco.tools.tool_history_mixin.ToolHistoryMixin" title="chaco.tools.tool_history_mixin.ToolHistoryMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.tool_history_mixin.ToolHistoryMixin</span></code></a></p>
+<dl class="attribute">
+<dt id="chaco.tools.better_zoom.BetterZoom.axis">
+<code class="sig-name descname">axis</code><em class="property"> = Enum(&quot;both&quot;, &quot;index&quot;, &quot;value&quot;)</em><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>The axis to which the selection made by this tool is perpendicular. This
+only applies in ‘range’ mode.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.better_zoom.BetterZoom.enable_wheel">
+<code class="sig-name descname">enable_wheel</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.enable_wheel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable the mousewheel for zooming?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.better_zoom.BetterZoom.keys_zoom_to_mouse">
+<code class="sig-name descname">keys_zoom_to_mouse</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.keys_zoom_to_mouse" title="Permalink to this definition">¶</a></dt>
+<dd><p>if the mouse pointer should be used to control the center
+of the zoom action even for key events based zoom</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.better_zoom.BetterZoom.next_state_key">
+<code class="sig-name descname">next_state_key</code><em class="property"> = Instance(KeySpec, args=(&quot;y&quot;, &quot;control&quot;))</em><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.next_state_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Key to go to the next state in the history.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.better_zoom.BetterZoom.normal_key_pressed">
+<code class="sig-name descname">normal_key_pressed</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.normal_key_pressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles a key being pressed when the tool is in the ‘normal’
+state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.better_zoom.BetterZoom.normal_mouse_enter">
+<code class="sig-name descname">normal_mouse_enter</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.normal_mouse_enter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to set the focus to the window when the mouse enters, otherwise
+the keypress events will not be triggered.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.better_zoom.BetterZoom.normal_mouse_move">
+<code class="sig-name descname">normal_mouse_move</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.normal_mouse_move" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.better_zoom.BetterZoom.normal_mouse_wheel">
+<code class="sig-name descname">normal_mouse_wheel</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.normal_mouse_wheel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.better_zoom.BetterZoom.position">
+<code class="sig-name descname">position</code><em class="property"> = Tuple(Float, Float)</em><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>: the position to zoom on (usually the mouse location)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.better_zoom.BetterZoom.prev_state_key">
+<code class="sig-name descname">prev_state_key</code><em class="property"> = Instance(KeySpec, args=(&quot;z&quot;, &quot;control&quot;))</em><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.prev_state_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Key to go to the previous state in the history.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.better_zoom.BetterZoom.x_max_zoom_factor">
+<code class="sig-name descname">x_max_zoom_factor</code><em class="property"> = Float(1e5)</em><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.x_max_zoom_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>The maximum ratio between the original data space bounds and the
+zoomed-in data space bounds.  If No limit is desired, set to inf</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.better_zoom.BetterZoom.x_min_zoom_factor">
+<code class="sig-name descname">x_min_zoom_factor</code><em class="property"> = Float(1e-5)</em><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.x_min_zoom_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>The maximum ratio between the zoomed-out data space bounds and the
+original bounds.  If No limit is desired, set to -inf</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.better_zoom.BetterZoom.zoom_factor">
+<code class="sig-name descname">zoom_factor</code><em class="property"> = Float(2.0)</em><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.zoom_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>The amount to zoom in by. The zoom out will be inversely proportional</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.better_zoom.BetterZoom.zoom_in">
+<code class="sig-name descname">zoom_in</code><span class="sig-paren">(</span><em class="sig-param">factor=0</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.zoom_in" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.better_zoom.BetterZoom.zoom_in_key">
+<code class="sig-name descname">zoom_in_key</code><em class="property"> = Instance(KeySpec, args=(&quot;+&quot;,), kw={&quot;ignore&quot;: [&quot;shift&quot;]})</em><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.zoom_in_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keys to zoom in/out</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.better_zoom.BetterZoom.zoom_in_x">
+<code class="sig-name descname">zoom_in_x</code><span class="sig-paren">(</span><em class="sig-param">factor=0</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.zoom_in_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.better_zoom.BetterZoom.zoom_in_x_key">
+<code class="sig-name descname">zoom_in_x_key</code><em class="property"> = Instance(KeySpec, args=(&quot;Right&quot;, &quot;shift&quot;))</em><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.zoom_in_x_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keys to zoom in/out in x direction only</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.better_zoom.BetterZoom.zoom_in_y">
+<code class="sig-name descname">zoom_in_y</code><span class="sig-paren">(</span><em class="sig-param">factor=0</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.zoom_in_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.better_zoom.BetterZoom.zoom_in_y_key">
+<code class="sig-name descname">zoom_in_y_key</code><em class="property"> = Instance(KeySpec, args=(&quot;Up&quot;, &quot;shift&quot;))</em><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.zoom_in_y_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keys to zoom in/out in y direction only</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.better_zoom.BetterZoom.zoom_out">
+<code class="sig-name descname">zoom_out</code><span class="sig-paren">(</span><em class="sig-param">factor=0</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.zoom_out" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.better_zoom.BetterZoom.zoom_out_x">
+<code class="sig-name descname">zoom_out_x</code><span class="sig-paren">(</span><em class="sig-param">factor=0</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.zoom_out_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.better_zoom.BetterZoom.zoom_out_y">
+<code class="sig-name descname">zoom_out_y</code><span class="sig-paren">(</span><em class="sig-param">factor=0</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.zoom_out_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.better_zoom.BetterZoom.zoom_to_mouse">
+<code class="sig-name descname">zoom_to_mouse</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.tools.better_zoom.BetterZoom.zoom_to_mouse" title="Permalink to this definition">¶</a></dt>
+<dd><p>if the mouse pointer should be used to control the center
+of the zoom action</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.tools.better_zoom.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

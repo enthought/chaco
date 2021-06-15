@@ -1,0 +1,553 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Plot renderers &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">Plot renderers</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="plot-renderers">
+<span id="id1"></span><h1>Plot renderers<a class="headerlink" href="#plot-renderers" title="Permalink to this headline">¶</a></h1>
+<p>Plot renderers are the classes that actually draw the different kinds of plots,
+or plot-like elements as for instance color bars.</p>
+<p>This section describes the concepts that are common to all kind of plots.
+A separate page  contains an exhaustive
+<a class="reference internal" href="../plot_types.html#plot-types"><span class="std std-ref">list of all plot types</span></a> defined in Chaco.</p>
+<div class="section" id="common-interface">
+<h2>Common interface<a class="headerlink" href="#common-interface" title="Permalink to this headline">¶</a></h2>
+<p>The base interface is defined in the abstract class
+<a class="reference internal" href="../../api/chaco.abstract_plot_renderer.html#chaco.abstract_plot_renderer.AbstractPlotRenderer" title="chaco.abstract_plot_renderer.AbstractPlotRenderer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractPlotRenderer</span></code></a>, and provides
+attributes and methods to set size, position, and aspect of the
+plotting area.</p>
+<p>Three more specialized interfaces are used by most concrete implementations,
+namely <a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot" title="chaco.base_xy_plot.BaseXYPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseXYPlot</span></code></a>, which is the interface
+for <a class="reference internal" href="#xy-plots"><span class="std std-ref">X-vs-Y plots</span></a>,
+<a class="reference internal" href="../../api/chaco.base_2d_plot.html#chaco.base_2d_plot.Base2DPlot" title="chaco.base_2d_plot.Base2DPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base2DPlot</span></code></a>, which is the interface for
+<a class="reference internal" href="../plot_types.html#d-plots"><span class="std std-ref">2D plots</span></a> (e.g., <a class="reference internal" href="../plot_types.html#image-plot"><span class="std std-ref">image plots</span></a> or
+<a class="reference internal" href="../plot_types.html#contour-plot"><span class="std std-ref">contour plots</span></a>) and
+<a class="reference internal" href="../../api/chaco.base_1d_plot.html#chaco.base_1d_plot.Base1DPlot" title="chaco.base_1d_plot.Base1DPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base1DPlot</span></code></a>, which is the interface for
+<a class="reference internal" href="#d-plots"><span class="std std-ref">1D plots</span></a> (e.g., <a class="reference internal" href="../plot_types.html#jitter-plot"><span class="std std-ref">jitter plots</span></a> or
+<a class="reference internal" href="../plot_types.html#scatter-plot"><span class="std std-ref">1D scatter plots</span></a>).</p>
+<p>The base interface inherits from a deep hierarchy of classes generating
+from the <a class="reference external" href="http://docs.enthought.com/enable/api/enable.html#module-enable" title="(in enable v5.2.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">enable</span></code></a> package, starting with
+<a class="reference external" href="http://docs.enthought.com/enable/api/enable.coordinate_box.html#enable.coordinate_box.CoordinateBox" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.coordinate_box.CoordinateBox</span></code></a> (representing a box in screen
+space) and <a class="reference external" href="http://docs.enthought.com/enable/api/enable.interactor.html#enable.interactor.Interactor" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.interactor.Interactor</span></code></a> (which allows plot
+components to react to mouse and keyboard events), and down through
+<a class="reference external" href="http://docs.enthought.com/enable/api/enable.component.html#enable.component.Component" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.component.Component</span></code></a> and <a class="reference internal" href="../../api/chaco.plot_component.html#chaco.plot_component.PlotComponent" title="chaco.plot_component.PlotComponent"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.plot_component.PlotComponent</span></code></a>
+(follow <a class="reference internal" href="../../developer_reference/architecture_overview.html#chaco-enable-kiva"><span class="std std-ref">this link for a description of the relationship between Chaco and enable</span></a>).
+The class where most of the functionality is defined is
+<a class="reference external" href="http://docs.enthought.com/enable/api/enable.component.html#enable.component.Component" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.component.Component</span></code></a>.</p>
+<p>Here we give a summary of all the important properties exposed in
+<a class="reference internal" href="../../api/chaco.abstract_plot_renderer.html#chaco.abstract_plot_renderer.AbstractPlotRenderer" title="chaco.abstract_plot_renderer.AbstractPlotRenderer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractPlotRenderer</span></code></a>, without
+worrying too much about their origin in the hierarchy.
+Also, to avoid unnecessary cluttering
+of the page, attributes and methods that are of secondary importance are not
+listed.
+Please refer to the API documentation for more details.</p>
+<div class="section" id="box-properties">
+<h3>Box properties<a class="headerlink" href="#box-properties" title="Permalink to this headline">¶</a></h3>
+<p>All plot renderers are <a class="reference external" href="http://docs.enthought.com/enable/api/enable.html#module-enable" title="(in enable v5.2.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">enable</span></code></a> graphical components, and thus correspond
+to a rectangular area in screen space. The renderer keeps track of two
+areas: an inner box that only contains the plot, and an outer box
+that includes the padding and border area.
+The properties of the boxes are controlled by
+these attributes:</p>
+<dl>
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">position</span></code></dt><dd><p>Position of the internal box relative to its container,
+given as a list [x,y].
+If there is no container, this is set to [0, 0].
+“Absolute” coordinates of point (i.e., relative to top-level parent
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Window</span></code> object) can be obtained using
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">get_absolute_coords(*coords)</span></code>.</p>
+</dd>
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">x</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">y</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">x2</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">y2</span></code></dt><dd><p>Coordinates of the lower-left (x,y) and upper-right (x2,y2)
+pixel of the internal box, relative to its container.</p>
+</dd>
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">bounds</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">width</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">height</span></code></dt><dd><p>Bounds of the internal box, in pixels.
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">bounds</span></code> is a list [width, height].</p>
+</dd>
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">outer_position</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">outer_x</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">outer_y</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">outer_x2</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">outer_y2</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">outer_bounds</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">outer_width</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">outer_height</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">set_outer_position()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">set_outer_bounds()</span></code></dt><dd><p>Attributes for the outer box equivalent to those defined above for the
+inner box. Modifying the outer position attributes is
+the right way to move the plot without changing its padding or bounds.
+Similarly, modifying the outer bounds attributes leaves the
+lower-left position and the padding unchanged.</p>
+</dd>
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">resizable</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">fixed_preferred_size</span></code></dt><dd><p>String that defines in which dimensions the component is resizable.
+One of ‘’ (not resizable), ‘v’ (resizable vertically), ‘h’
+(resizable horizontally), ‘hv’ (resizable in both directions, default).
+If the component is resizable, <code class="xref py py-attr docutils literal notranslate"><span class="pre">fixed_preferred_size</span></code>
+can be used to specify the
+amount of space that the component would like to get in each dimension,
+as a tuple (width, height). In this case, width and height have to be
+understood as relative sized: if one component in a container
+specifies, say, a fixed preferred width of 50 and another one
+specifies a fixed preferred width of 100, then the latter component will
+always be twice as wide as the former.</p>
+</dd>
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">aspect_ratio</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">auto_center</span></code></dt><dd><p>Ratio of the component’s width to its height. This is used to maintain
+a fixed ratio between bounds when thet are changed independently,
+for example when resizing the window. <code class="xref py py-attr docutils literal notranslate"><span class="pre">auto_center</span></code>
+specifies if the component should center itself in any space
+that is left empty (default is True).</p>
+</dd>
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">padding_left</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">padding_right</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">padding_top</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">padding_bottom</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">padding</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">hpadding</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">vpadding</span></code></dt><dd><p>Padding space (in pixels). <code class="xref py py-attr docutils literal notranslate"><span class="pre">padding</span></code> is a convenience property
+that returns a tuple of (left, right, top, bottom) padding. It can
+also be set to a single integer, in which case all four padding
+attributes are set to the same value.</p>
+<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">hpadding</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">vpadding</span></code> are read-only properties that return
+the total amount of horizontal and vertical padding (including
+the border width if the border is visible).</p>
+</dd>
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">get_absolute_coords(*coords)</span></code></dt><dd><p>Transform coordinates relative to this component’s origin to
+“absolute” coordinates, relative to top-level container.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="aspect-properties">
+<h3>Aspect properties<a class="headerlink" href="#aspect-properties" title="Permalink to this headline">¶</a></h3>
+<p>These attributes control the aspect (e.g. color) of padding, background,
+and borders:</p>
+<dl class="simple">
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">bgcolor</span></code></dt><dd><p>The background color of this component (default is white). This can be
+set to “transparent” or “none” if the component should be see-through.
+The color can be specified as a string or as an RGB or RGBa tuple.</p>
+</dd>
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">fill_padding</span></code></dt><dd><p>If True (default), fill the padding area with the background color.</p>
+</dd>
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">border_visible</span></code></dt><dd><p>Determines if the border is visible (default is False).</p>
+</dd>
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">border_width</span></code></dt><dd><p>Thickness of the border around the component in pixels (default is 1).</p>
+</dd>
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">border_dash</span></code></dt><dd><p>Style of the lines tracing the border. One of ‘solid’ (default),
+‘dot dash’, ‘dash’, ‘dot’, or ‘long dash’.</p>
+</dd>
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">border_color</span></code></dt><dd><p>Color of the border.
+The color can be specified as a string or as an RGB or RGBa tuple.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="layers">
+<span id="plot-layers"></span><h3>Layers<a class="headerlink" href="#layers" title="Permalink to this headline">¶</a></h3>
+<p>Each plot is rendered in a sequence of layers so that different components
+can plot at different times. For example, a line plot is drawn <em>before</em>
+its legend, but <em>after</em> the axes and background grid.</p>
+<p>The default drawing order is defined in
+<a class="reference internal" href="../../api/chaco.plot_component.html#chaco.plot_component.PlotComponent.draw_order" title="chaco.plot_component.PlotComponent.draw_order"><code class="xref py py-attr docutils literal notranslate"><span class="pre">draw_order</span></code></a> as a list
+of the names of the layers. The definition of the layers is as follows:</p>
+<ol class="arabic simple">
+<li><p><strong>background</strong>: Background image, shading, and borders</p></li>
+<li><p><strong>image</strong>: A special layer for plots that render as images. This is in a
+separate layer since these plots must all render before non-image plots</p></li>
+<li><p><strong>underlay</strong>: Axes and grids</p></li>
+<li><p><strong>plot</strong>: The main plot area itself</p></li>
+<li><p><strong>selection</strong>: Selected content are rendered above normal plot elements to
+make them stand out. This can be disabled by setting <code class="xref py py-attr docutils literal notranslate"><span class="pre">use_selection</span></code>
+to False (default).</p></li>
+<li><p><strong>border</strong>: Plot borders</p></li>
+<li><p><strong>annotation</strong>: Lines and text that are conceptually part of the “plot” but
+need to be rendered on top of everything else in the plot</p></li>
+<li><p><strong>overlay</strong>: Legends, selection regions, and other tool-drawn visual
+elements</p></li>
+</ol>
+<p>Concrete plot renderers set their default draw layer in
+<a class="reference internal" href="../../api/chaco.plot_component.html#chaco.plot_component.PlotComponent.draw_layer" title="chaco.plot_component.PlotComponent.draw_layer"><code class="xref py py-attr docutils literal notranslate"><span class="pre">draw_layer</span></code></a> (default is ‘plot’).
+Note that if this component is placed in a container, in most cases
+the container’s draw order is used, since the container calls
+each of its contained components for each rendering pass.</p>
+<p>One can add new elements to a plot by appending them to the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">underlays</span></code> or <code class="xref py py-attr docutils literal notranslate"><span class="pre">overlays</span></code> lists. Components in these lists
+are drawn underneath/above the plots as part of the ‘underlay’/’overlay’
+layers. They also receive mouse and keyboard events.</p>
+</div>
+<div class="section" id="interaction">
+<h3>Interaction<a class="headerlink" href="#interaction" title="Permalink to this headline">¶</a></h3>
+<p>Plot renderers also inherit from <a class="reference external" href="http://docs.enthought.com/enable/api/enable.interactor.html#enable.interactor.Interactor" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.interactor.Interactor</span></code></a>, and
+as such are able to react to keyboard and mouse events. However, interactions
+are usually defined as tools and overlays. Therefore, this part of the
+interface is described at those pages.</p>
+</div>
+<div class="section" id="context">
+<h3>Context<a class="headerlink" href="#context" title="Permalink to this headline">¶</a></h3>
+<p>Since plot renderers take care of displaying graphics, they keep references
+to the larger graphical context:</p>
+<dl class="simple">
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">container</span></code></dt><dd><p>Reference to a container object (None if no container is defined).
+The renderer defines its position relative to this.</p>
+</dd>
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">window</span></code></dt><dd><p>Reference to the top-level enable Window.</p>
+</dd>
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">viewports</span></code></dt><dd><p>List of viewport that are viewing this component</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="screen-and-data-mapping">
+<h3>Screen and Data Mapping<a class="headerlink" href="#screen-and-data-mapping" title="Permalink to this headline">¶</a></h3>
+<p>All <a class="reference internal" href="../../api/chaco.abstract_plot_renderer.html#chaco.abstract_plot_renderer.AbstractPlotRenderer" title="chaco.abstract_plot_renderer.AbstractPlotRenderer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractPlotRenderer</span></code></a> subclasses are
+expected to provide three methods for mapping to and from screen space and
+data space:</p>
+<dl class="field-list simple">
+<dt class="field-odd">map_screen</dt>
+<dd class="field-odd"><p>This is expected to take an array of points (as columns) in
+the appropriate data coordinates, and return the corresponding points
+in screen pixel coordinates (measured from the bottom left of the
+plot component).</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">map_data</dt>
+<dd class="field-odd"><p>This is the reverse of map_screen, and takes an array of
+points (as columns) screen pixel coordinates relative to the renderer
+component and return the corresponding points in screen data
+coordinates.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">map_index</dt>
+<dd class="field-odd"><p>This method takes a point in screen pixel coordinates and returns an
+appropriate index value that can be used to index into data.  This can
+be used by hit-testing methods (see below), and provides optional
+arguments such as threshold distances.  Not every renderer implements
+this, and some data sets may not be amenable to this method, either.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="others">
+<h3>Others<a class="headerlink" href="#others" title="Permalink to this headline">¶</a></h3>
+<dl class="simple">
+<dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">use_backbuffer</span></code></dt><dd><p>If True, the plot renders itself to an
+offscreen buffer that is cached for later use. If False (default), then
+the component will <em>never</em> render itself back-buffered, even if asked
+to do so.</p>
+</dd>
+<dt><code class="xref py py-meth docutils literal notranslate"><span class="pre">invalidate_and_redraw()</span></code></dt><dd><p>Convenience method to invalidate our contents and request redraw.
+This method is sometimes useful when modifying a Chaco plot in an
+ipython shell.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="x-y-plots-interface">
+<span id="xy-plots"></span><h2>X-Y Plots interface<a class="headerlink" href="#x-y-plots-interface" title="Permalink to this headline">¶</a></h2>
+<p>The class <a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot" title="chaco.base_xy_plot.BaseXYPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.base_xy_plot.BaseXYPlot</span></code></a> defines a more concrete
+interface for X-vs-Y plots. First of all, it handles data sources and
+data mappers to convert real data into screen coordinates. Second,
+it defines shortcuts for plot axes, labels and background grids.</p>
+<div class="section" id="data-related-traits">
+<h3>Data-related traits<a class="headerlink" href="#data-related-traits" title="Permalink to this headline">¶</a></h3>
+<p>X-Y plots need two sources of data for the X and Y coordinates, and
+two mappers to map the data coordinates to screen space. The
+data sources are stored in the attributes
+<a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot.index" title="chaco.base_xy_plot.BaseXYPlot.index"><code class="xref py py-attr docutils literal notranslate"><span class="pre">index</span></code></a> and
+<a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot.value" title="chaco.base_xy_plot.BaseXYPlot.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code></a>, and the
+corresponding mappers in
+<a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot.index_mapper" title="chaco.base_xy_plot.BaseXYPlot.index_mapper"><code class="xref py py-attr docutils literal notranslate"><span class="pre">index_mapper</span></code></a> and
+<a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot.value_mapper" title="chaco.base_xy_plot.BaseXYPlot.value_mapper"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value_mapper</span></code></a>.</p>
+<p>‘Index’ and ‘value’ correspond to either the horizontal ‘X’ coordinates
+or the vertical ‘Y’ coordinates depending on the orientation of the
+plot: for <a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot.orientation" title="chaco.base_xy_plot.BaseXYPlot.orientation"><code class="xref py py-attr docutils literal notranslate"><span class="pre">orientation</span></code></a> equal to
+‘h’ (for horizontal, default), indices are on the X-axis, and values
+on the Y-axis. The opposite is true when
+<a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot.orientation" title="chaco.base_xy_plot.BaseXYPlot.orientation"><code class="xref py py-attr docutils literal notranslate"><span class="pre">orientation</span></code></a> is ‘v’. The
+convenience properties <a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot.x_mapper" title="chaco.base_xy_plot.BaseXYPlot.x_mapper"><code class="xref py py-attr docutils literal notranslate"><span class="pre">x_mapper</span></code></a>
+and <a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot.y_mapper" title="chaco.base_xy_plot.BaseXYPlot.y_mapper"><code class="xref py py-attr docutils literal notranslate"><span class="pre">y_mapper</span></code></a> allow accessing
+the mappers for the two axes in an orientation-independent way.</p>
+<p>Finally, the properties
+<a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot.index_range" title="chaco.base_xy_plot.BaseXYPlot.index_range"><code class="xref py py-attr docutils literal notranslate"><span class="pre">index_range</span></code></a> and
+<a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot.value_range" title="chaco.base_xy_plot.BaseXYPlot.value_range"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value_range</span></code></a> give direct access to
+the data ranges stored in the index and value mappers.</p>
+</div>
+<div class="section" id="axis-labels-and-grids">
+<h3>Axis, labels, and grids<a class="headerlink" href="#axis-labels-and-grids" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot" title="chaco.base_xy_plot.BaseXYPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseXYPlot</span></code></a> defines a few properties that are
+shortcuts to find axis and grid objects in the
+<a class="reference internal" href="#plot-layers"><span class="std std-ref">underlays and overlays layers</span></a> of the plot:</p>
+<dl class="simple">
+<dt><a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot.hgrid" title="chaco.base_xy_plot.BaseXYPlot.hgrid"><code class="xref py py-attr docutils literal notranslate"><span class="pre">hgrid</span></code></a>, <a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot.vgrid" title="chaco.base_xy_plot.BaseXYPlot.vgrid"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vgrid</span></code></a></dt><dd><p>Look into the underlays and overlays layers (in this order) for a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">PlotGrid</span></code> object of horizontals / vertical orientation and return
+it. Return None if none is found.</p>
+</dd>
+<dt><a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot.x_axis" title="chaco.base_xy_plot.BaseXYPlot.x_axis"><code class="xref py py-attr docutils literal notranslate"><span class="pre">x_axis</span></code></a>, <a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot.y_axis" title="chaco.base_xy_plot.BaseXYPlot.y_axis"><code class="xref py py-attr docutils literal notranslate"><span class="pre">y_axis</span></code></a></dt><dd><p>Look into the underlays and overlays layers (in this order) for a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">PlotAxis</span></code> object positioned to the bottom or top, or to the
+left or right of plot, respectively. Return the axis, or None if
+none is found.</p>
+</dd>
+<dt><a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot.labels" title="chaco.base_xy_plot.BaseXYPlot.labels"><code class="xref py py-attr docutils literal notranslate"><span class="pre">labels</span></code></a></dt><dd><p>Return a list of all <code class="xref py py-class docutils literal notranslate"><span class="pre">PlotLabel</span></code> objects in the
+overlays and underlays layers.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="hittest">
+<h3>Hittest<a class="headerlink" href="#hittest" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot" title="chaco.base_xy_plot.BaseXYPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseXYPlot</span></code></a> also provides support for “hit tests”,
+i.e., for finding the data point or plot line closest to a given screen
+coordinate. This is typically used to implement interactive tools, for example
+to select a plot point with a mouse click.</p>
+<p>The main functionality is implemented in the method
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">hittest(screen_pt,</span> <span class="pre">threshold=7.0,</span> <span class="pre">return_distance=False)</span></code>,
+which accepts screen coordinates <code class="docutils literal notranslate"><span class="pre">(x,y)</span></code> as input argument
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">screen_pt</span></code> and returns either 1)
+screen coordinates of the closest point on the plot, or 2) the start
+and end coordinates of the closest plot line segment, as
+a tuple <code class="docutils literal notranslate"><span class="pre">((x1,y1),</span> <span class="pre">(x2,y2))</span></code>. Which of the two behaviors is active
+is controlled
+by the attribute <a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot.hittest_type" title="chaco.base_xy_plot.BaseXYPlot.hittest_type"><code class="xref py py-attr docutils literal notranslate"><span class="pre">hittest_type</span></code></a>,
+which is one of ‘point’ (default), or ‘line’.
+If the closest point or line is further than <code class="xref py py-attr docutils literal notranslate"><span class="pre">threshold</span></code> pixels
+away, the methods returns None.</p>
+<p>Alternatively, users may call the methods <code class="xref py py-meth docutils literal notranslate"><span class="pre">get_closest_point()</span></code>
+and <code class="xref py py-meth docutils literal notranslate"><span class="pre">get_closest_line()</span></code>.</p>
+</div>
+<div class="section" id="id2">
+<h3>Others<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Two more attributes are worth mentioning:</p>
+<dl>
+<dt><a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot.bgcolor" title="chaco.base_xy_plot.BaseXYPlot.bgcolor"><code class="xref py py-attr docutils literal notranslate"><span class="pre">bgcolor</span></code></a></dt><dd><p>This is inherited from the AbstractPlotRenderer interface, but is now
+set to ‘transparent’ by default.</p>
+</dd>
+<dt><a class="reference internal" href="../../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot.use_downsampling" title="chaco.base_xy_plot.BaseXYPlot.use_downsampling"><code class="xref py py-attr docutils literal notranslate"><span class="pre">use_downsampling</span></code></a></dt><dd><p>If this attribute is True, the plot uses downsampling for faster display
+(default is False). In other words, the number of display points depends
+on the plot size and range, and not on the total number of data points
+available.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>At the moment, only <code class="xref py py-class docutils literal notranslate"><span class="pre">LinePlot</span></code> defines a downsampling function,
+while other plots raise a <code class="xref py py-class docutils literal notranslate"><span class="pre">NotImplementedError</span></code> when this
+feature is activated.</p>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="d-plots-interface">
+<span id="twod-plots"></span><h2>2D Plots interface<a class="headerlink" href="#d-plots-interface" title="Permalink to this headline">¶</a></h2>
+<p>The class <a class="reference internal" href="../../api/chaco.base_2d_plot.html#chaco.base_2d_plot.Base2DPlot" title="chaco.base_2d_plot.Base2DPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.base_2d_plot.Base2DPlot</span></code></a> is the interface for
+plots that display data defined on a 2D grid, like for example
+image and contour plots. Just like its
+companion interface, <a class="reference internal" href="#xy-plots"><span class="std std-ref">BaseXYPlot</span></a>,
+it handles data sources and
+data mappers, along with convenient shortcuts to find axes, labels and grids.</p>
+<p>Unlike other plot renderers, 2D plots draw on the
+<a class="reference internal" href="#plot-layers"><span class="std std-ref">‘image’ layer</span></a>, i.e., above any underlay element.</p>
+<div class="section" id="id3">
+<h3>Data-related traits<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>2D plots need two sources of data: one for the coordinates of the 2D grid
+on which data is displayed, stored in the attribute
+<a class="reference internal" href="../../api/chaco.base_2d_plot.html#chaco.base_2d_plot.Base2DPlot.index" title="chaco.base_2d_plot.Base2DPlot.index"><code class="xref py py-attr docutils literal notranslate"><span class="pre">index</span></code></a> (a subclass
+of <a class="reference internal" href="../../api/chaco.grid_data_source.html#chaco.grid_data_source.GridDataSource" title="chaco.grid_data_source.GridDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridDataSource</span></code></a>); and one for the
+values of the data at each point of the grid,
+<a class="reference internal" href="../../api/chaco.base_2d_plot.html#chaco.base_2d_plot.Base2DPlot.value" title="chaco.base_2d_plot.Base2DPlot.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code></a> (a subclass
+of <a class="reference internal" href="../../api/chaco.image_data.html#chaco.image_data.ImageData" title="chaco.image_data.ImageData"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageData</span></code></a>).
+The index data source also needs a 2D mapper,
+<a class="reference internal" href="../../api/chaco.base_2d_plot.html#chaco.base_2d_plot.Base2DPlot.index_mapper" title="chaco.base_2d_plot.Base2DPlot.index_mapper"><code class="xref py py-attr docutils literal notranslate"><span class="pre">index_mapper</span></code></a>,
+to map data coordinates to the screen.</p>
+<p>The orientation on screen is set by
+<a class="reference internal" href="../../api/chaco.base_2d_plot.html#chaco.base_2d_plot.Base2DPlot.orientation" title="chaco.base_2d_plot.Base2DPlot.orientation"><code class="xref py py-attr docutils literal notranslate"><span class="pre">orientation</span></code></a> (either ‘h’ – the
+default – or ‘v’), which controls which of the two coordinates
+defined in <a class="reference internal" href="../../api/chaco.base_2d_plot.html#chaco.base_2d_plot.Base2DPlot.index" title="chaco.base_2d_plot.Base2DPlot.index"><code class="xref py py-attr docutils literal notranslate"><span class="pre">index</span></code></a> is mapped to the
+X axis. It is possible to access a mapper for the coordinates corresponding
+to the individual screen coordinates independently of orientation
+using the properties
+<a class="reference internal" href="../../api/chaco.base_2d_plot.html#chaco.base_2d_plot.Base2DPlot.x_mapper" title="chaco.base_2d_plot.Base2DPlot.x_mapper"><code class="xref py py-attr docutils literal notranslate"><span class="pre">x_mapper</span></code></a>
+and <a class="reference internal" href="../../api/chaco.base_2d_plot.html#chaco.base_2d_plot.Base2DPlot.y_mapper" title="chaco.base_2d_plot.Base2DPlot.y_mapper"><code class="xref py py-attr docutils literal notranslate"><span class="pre">y_mapper</span></code></a>.</p>
+<p>Finally, <a class="reference internal" href="../../api/chaco.base_2d_plot.html#chaco.base_2d_plot.Base2DPlot.index_range" title="chaco.base_2d_plot.Base2DPlot.index_range"><code class="xref py py-attr docutils literal notranslate"><span class="pre">index_range</span></code></a> is a shortcut
+to the 2D range of the grid data.</p>
+</div>
+<div class="section" id="id4">
+<h3>Others<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>The attribute <a class="reference internal" href="../../api/chaco.base_2d_plot.html#chaco.base_2d_plot.Base2DPlot.alpha" title="chaco.base_2d_plot.Base2DPlot.alpha"><code class="xref py py-attr docutils literal notranslate"><span class="pre">alpha</span></code></a> defines the
+global transparency value for the whole plot.
+It ranges from 0.0 for transparent to 1.0 (default) for full intensity.</p>
+</div>
+</div>
+<div class="section" id="d-plots">
+<span id="id5"></span><h2>1D Plots Interface<a class="headerlink" href="#d-plots" title="Permalink to this headline">¶</a></h2>
+<p>The class <a class="reference internal" href="../../api/chaco.base_1d_plot.html#chaco.base_1d_plot.Base1DPlot" title="chaco.base_1d_plot.Base1DPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.base_1d_plot.Base1DPlot</span></code></a> defines a more concrete
+interface for plots that plot their data along one axis, either horizontal
+or vertical. Like the other base plot classes it handles data sources and
+data mappers to convert real data into screen coordinates, but unlike the
+other classes it doesn’t define shortcuts for plot axes, labels and background
+grids.  These decorations should either be provided directly when creating the
+plot, if they are desired, or provided by plot containers like the
+<a class="reference internal" href="../../api/chaco.data_view.html#chaco.data_view.DataView" title="chaco.data_view.DataView"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.data_view.DataView</span></code></a> or <a class="reference internal" href="../../api/chaco.plot.html#chaco.plot.Plot" title="chaco.plot.Plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.plot.Plot</span></code></a> classes.</p>
+<div class="section" id="id6">
+<h3>Data-related traits<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>1D plots need one source of data and one mapper to map coordinates to screen
+space. The data source is stored in the attribute
+<a class="reference internal" href="../../api/chaco.base_1d_plot.html#chaco.base_1d_plot.Base1DPlot.index" title="chaco.base_1d_plot.Base1DPlot.index"><code class="xref py py-attr docutils literal notranslate"><span class="pre">index</span></code></a> and the corresponding mapper is
+<a class="reference internal" href="../../api/chaco.base_1d_plot.html#chaco.base_1d_plot.Base1DPlot.index_mapper" title="chaco.base_1d_plot.Base1DPlot.index_mapper"><code class="xref py py-attr docutils literal notranslate"><span class="pre">index_mapper</span></code></a>.</p>
+<p>The ‘index’ corresponds to either the horizontal ‘X’ coordinates
+or the vertical ‘Y’ coordinates depending on the orientation of the
+plot: for <a class="reference internal" href="../../api/chaco.base_1d_plot.html#chaco.base_1d_plot.Base1DPlot.orientation" title="chaco.base_1d_plot.Base1DPlot.orientation"><code class="xref py py-attr docutils literal notranslate"><span class="pre">orientation</span></code></a> equal to
+‘h’ (for horizontal), indices are on the X-axis, and values on the Y-axis.
+The opposite is true when <code class="xref py py-attr docutils literal notranslate"><span class="pre">orientation</span></code>
+is ‘v’ (the default). The convenience properties
+<a class="reference internal" href="../../api/chaco.base_1d_plot.html#chaco.base_1d_plot.Base1DPlot.x_mapper" title="chaco.base_1d_plot.Base1DPlot.x_mapper"><code class="xref py py-attr docutils literal notranslate"><span class="pre">x_mapper</span></code></a> and
+<a class="reference internal" href="../../api/chaco.base_1d_plot.html#chaco.base_1d_plot.Base1DPlot.y_mapper" title="chaco.base_1d_plot.Base1DPlot.y_mapper"><code class="xref py py-attr docutils literal notranslate"><span class="pre">y_mapper</span></code></a> allow accessing the mappers
+for the two axes in an orientation-independent way. The properties take the
+value <code class="docutils literal notranslate"><span class="pre">None</span></code> for the off-orientation case (ie.
+<a class="reference internal" href="../../api/chaco.base_1d_plot.html#chaco.base_1d_plot.Base1DPlot.x_mapper" title="chaco.base_1d_plot.Base1DPlot.x_mapper"><code class="xref py py-attr docutils literal notranslate"><span class="pre">x_mapper</span></code></a> is <code class="docutils literal notranslate"><span class="pre">None</span></code> for vertical
+orientation and <a class="reference internal" href="../../api/chaco.base_1d_plot.html#chaco.base_1d_plot.Base1DPlot.y_mapper" title="chaco.base_1d_plot.Base1DPlot.y_mapper"><code class="xref py py-attr docutils literal notranslate"><span class="pre">y_mapper</span></code></a> is <code class="docutils literal notranslate"><span class="pre">None</span></code>
+for horizontal orientation).</p>
+<p>Finally, the property <a class="reference internal" href="../../api/chaco.base_1d_plot.html#chaco.base_1d_plot.Base1DPlot.index_range" title="chaco.base_1d_plot.Base1DPlot.index_range"><code class="xref py py-attr docutils literal notranslate"><span class="pre">index_range</span></code></a> gives
+direct access to the data ranges stored in the index and value mappers.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Plot renderers</a><ul>
+<li><a class="reference internal" href="#common-interface">Common interface</a><ul>
+<li><a class="reference internal" href="#box-properties">Box properties</a></li>
+<li><a class="reference internal" href="#aspect-properties">Aspect properties</a></li>
+<li><a class="reference internal" href="#layers">Layers</a></li>
+<li><a class="reference internal" href="#interaction">Interaction</a></li>
+<li><a class="reference internal" href="#context">Context</a></li>
+<li><a class="reference internal" href="#screen-and-data-mapping">Screen and Data Mapping</a></li>
+<li><a class="reference internal" href="#others">Others</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#x-y-plots-interface">X-Y Plots interface</a><ul>
+<li><a class="reference internal" href="#data-related-traits">Data-related traits</a></li>
+<li><a class="reference internal" href="#axis-labels-and-grids">Axis, labels, and grids</a></li>
+<li><a class="reference internal" href="#hittest">Hittest</a></li>
+<li><a class="reference internal" href="#id2">Others</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#d-plots-interface">2D Plots interface</a><ul>
+<li><a class="reference internal" href="#id3">Data-related traits</a></li>
+<li><a class="reference internal" href="#id4">Others</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#d-plots">1D Plots Interface</a><ul>
+<li><a class="reference internal" href="#id6">Data-related traits</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <div>
+    <a href="../../_sources/user_manual/basic_elements/plot_renderers.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

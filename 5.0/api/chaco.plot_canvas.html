@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.plot_canvas module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.plot_canvas module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.plot_canvas">
+<span id="chaco-plot-canvas-module"></span><h1>chaco.plot_canvas module<a class="headerlink" href="#module-chaco.plot_canvas" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="chaco.plot_canvas.PlotCanvas">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.plot_canvas.</code><code class="sig-name descname">PlotCanvas</code><span class="sig-paren">(</span><em class="sig-param">*components</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot_canvas.PlotCanvas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.enthought.com/enable/api/enable.canvas.html#enable.canvas.Canvas" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.canvas.Canvas</span></code></a></p>
+<p>The PlotCanvas is basically like Canvas, but we inherit some behaviors
+from PlotComponent as well.  Some methods are redefined in here to
+explicitly make sure we get the right dispatch order.</p>
+<dl class="method">
+<dt id="chaco.plot_canvas.PlotCanvas.draw">
+<code class="sig-name descname">draw</code><span class="sig-paren">(</span><em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='default'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot_canvas.PlotCanvas.draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the plot component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gc</strong> (<em>Kiva GraphicsContext</em>) – The graphics context to draw the component on</p></li>
+<li><p><strong>view_bounds</strong> (<em>4-tuple of integers</em>) – (x, y, width, height) of the area to draw</p></li>
+<li><p><strong>mode</strong> (<em>string</em>) – <p>The drawing mode to use; can be one of:</p>
+<dl class="simple">
+<dt>’normal’</dt><dd><p>Normal, antialiased, high-quality rendering</p>
+</dd>
+<dt>’overlay’</dt><dd><p>The plot component is being rendered over something else,
+so it renders more quickly, and possibly omits rendering
+its background and certain tools</p>
+</dd>
+<dt>’interactive’</dt><dd><p>The plot component is being asked to render in
+direct response to realtime user interaction, and needs to make
+its best effort to render as fast as possible, even if there is
+an aesthetic cost.</p>
+</dd>
+</dl>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plot_canvas.PlotCanvas.get_preferred_size">
+<code class="sig-name descname">get_preferred_size</code><span class="sig-paren">(</span><em class="sig-param">components=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot_canvas.PlotCanvas.get_preferred_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the size (width,height) that is preferred for this
+components.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.plot_canvas.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

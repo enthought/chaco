@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>About the Chaco Scales package &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
+    <link rel="stylesheet" href="_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="_static/img/favicon.ico">
+    <link rel="search" title="Search" href="search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">About the Chaco Scales package</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="about-the-chaco-scales-package">
+<h1>About the Chaco Scales package<a class="headerlink" href="#about-the-chaco-scales-package" title="Permalink to this headline">¶</a></h1>
+<p>In the summer of 2007, I spent a few weeks working through the axis
+ticking and labelling problem.  The basic goal was that I wanted to
+create a flexible ticking system that would produce nicely-spaced axis
+labels for arbitrary sets of labels <em>and</em> arbitrary intervals.  The
+chaco2.scales package is the result of this effort.  It is an entirely
+standalone package that does not import from any other Enthought
+package (not even traits!), and the idea was that it could be used in
+other plotting packages as well.</p>
+<p>The overall idea is that you create a ScaleSystem consisting of
+various Scales.  When the ScaleSystem is presented with a data range
+(low,high) and a screen space amount, it searches through its list of
+scales for the scale that produces the “nicest” set of labels.  It
+takes into account whitespace, the formatted size of labels produced
+by each scale in the ScaleSystem, etc.  So, the basic numerical Scales
+defined in scales.py are:</p>
+<ul class="simple">
+<li><p>FixedScale: Simple scale with a fixed interval; places ticks at
+multiples of the resolution</p></li>
+<li><p>DefaultScale: Scale that tries to place ticks at 1,2,5, and 10 so  that
+ticks don’t “pop” or suddenly jump when the resolution changes  (when
+zooming)</p></li>
+<li><p>LogScale: Dynamic scale that only produces ticks and labels that  work
+well when doing logarithmic plots</p></li>
+</ul>
+<p>By comparison, the default ticking logic in DefaultTickGenerator (in
+ticks.py) is basically just the DefaultScale.  (This is currently the
+default tick generator used by PlotAxis.)</p>
+<p>In time_scale.py, I define an additional scale, the TimeScale.
+TimeScale not only handles time-oriented data using units of uniform
+interval (microseconds up to days and weeks), it also handles non-
+uniform calendar units like “day of the month” and “month of the
+year”.  So, you can tell Chaco to generate ticks on the 1st of every
+month, and it will give you non-uniformly spaced tick and grid lines.</p>
+<p>The scale system mechanism is configurable, so although all of the
+examples use the CalendarScaleSystem, you don’t have to use it.  In
+fact, if you look at CalendarScaleSystem.__init__, it just initializes
+its list of scales with <code class="docutils literal notranslate"><span class="pre">HMSScales</span> <span class="pre">+</span> <span class="pre">MDYScales</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HMSScales</span> <span class="o">=</span> <span class="p">[</span><span class="n">TimeScale</span><span class="p">(</span><span class="n">microseconds</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">TimeScale</span><span class="p">(</span><span class="n">milliseconds</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> \
+           <span class="p">[</span><span class="n">TimeScale</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span> <span class="k">for</span> <span class="n">dt</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">30</span><span class="p">)]</span> <span class="o">+</span> \
+           <span class="p">[</span><span class="n">TimeScale</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span> <span class="k">for</span> <span class="n">dt</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">30</span><span class="p">)]</span> <span class="o">+</span> \
+           <span class="p">[</span><span class="n">TimeScale</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span> <span class="k">for</span> <span class="n">dt</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">24</span><span class="p">)]</span>
+
+<span class="n">MDYScales</span> <span class="o">=</span> <span class="p">[</span><span class="n">TimeScale</span><span class="p">(</span><span class="n">day_of_month</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">31</span><span class="p">,</span><span class="mi">3</span><span class="p">)),</span>
+            <span class="n">TimeScale</span><span class="p">(</span><span class="n">day_of_month</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">22</span><span class="p">)),</span>
+            <span class="n">TimeScale</span><span class="p">(</span><span class="n">day_of_month</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">15</span><span class="p">)),</span>
+            <span class="n">TimeScale</span><span class="p">(</span><span class="n">month_of_year</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">13</span><span class="p">)),</span>
+            <span class="n">TimeScale</span><span class="p">(</span><span class="n">month_of_year</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">3</span><span class="p">)),</span>
+            <span class="n">TimeScale</span><span class="p">(</span><span class="n">month_of_year</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">7</span><span class="p">)),</span>
+            <span class="n">TimeScale</span><span class="p">(</span><span class="n">month_of_year</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))]</span>
+</pre></div>
+</div>
+<p>So, if you wanted to create your own ScaleSystem with days, weeks, and
+whatnot, you could do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ExtendedScales</span> <span class="o">=</span> <span class="n">HSMScales</span> <span class="o">+</span> <span class="p">[</span><span class="n">TimeScale</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">28</span><span class="p">)]</span>
+<span class="n">MyScaleSystem</span> <span class="o">=</span> <span class="n">CalendarScaleSystem</span><span class="p">(</span><span class="o">*</span><span class="n">ExtendedScales</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To use the Scales package in your Chaco plots, just import <code class="xref py py-class docutils literal notranslate"><span class="pre">PlotAxis</span></code> from
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">chaco2.scales_axis</span></code> instead of <code class="xref py py-mod docutils literal notranslate"><span class="pre">chaco2.axis</span></code>.  You will still need to create a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ScalesTickGenerator</span></code> and pass it in.  The financial_plot_dates.py demo is a
+good example of how to do this.</p>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="_sources/scales.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

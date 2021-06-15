@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.overlays.legend module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.overlays.legend module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.overlays.legend">
+<span id="chaco-overlays-legend-module"></span><h1>chaco.overlays.legend module<a class="headerlink" href="#module-chaco.overlays.legend" title="Permalink to this headline">¶</a></h1>
+<p>Defines the Legend, AbstractCompositeIconRenderer, and
+CompositeIconRenderer classes.</p>
+<dl class="class">
+<dt id="chaco.overlays.legend.AbstractCompositeIconRenderer">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.overlays.legend.</code><code class="sig-name descname">AbstractCompositeIconRenderer</code><a class="headerlink" href="#chaco.overlays.legend.AbstractCompositeIconRenderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<p>Abstract class for an icon renderer.</p>
+<dl class="method">
+<dt id="chaco.overlays.legend.AbstractCompositeIconRenderer.render_icon">
+<code class="sig-name descname">render_icon</code><span class="sig-paren">(</span><em class="sig-param">plots</em>, <em class="sig-param">gc</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">width</em>, <em class="sig-param">height</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.legend.AbstractCompositeIconRenderer.render_icon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders an icon representing the given list of plots onto the
+graphics context, using the given dimensions and at the specified
+position.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.overlays.legend.CompositeIconRenderer">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.overlays.legend.</code><code class="sig-name descname">CompositeIconRenderer</code><a class="headerlink" href="#chaco.overlays.legend.CompositeIconRenderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#chaco.overlays.legend.AbstractCompositeIconRenderer" title="chaco.overlays.legend.AbstractCompositeIconRenderer"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.overlays.legend.AbstractCompositeIconRenderer</span></code></a></p>
+<p>Renderer for composite icons.</p>
+<dl class="method">
+<dt id="chaco.overlays.legend.CompositeIconRenderer.render_icon">
+<code class="sig-name descname">render_icon</code><span class="sig-paren">(</span><em class="sig-param">plots</em>, <em class="sig-param">*render_args</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.legend.CompositeIconRenderer.render_icon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders an icon for a list of plots.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.overlays.legend.Legend">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.overlays.legend.</code><code class="sig-name descname">Legend</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.legend.Legend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.abstract_overlay.html#chaco.abstract_overlay.AbstractOverlay" title="chaco.abstract_overlay.AbstractOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></code></a></p>
+<p>A legend for a plot.</p>
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.align">
+<code class="sig-name descname">align</code><em class="property"> = Enum(&quot;ur&quot;, &quot;ul&quot;, &quot;ll&quot;, &quot;lr&quot;)</em><a class="headerlink" href="#chaco.overlays.legend.Legend.align" title="Permalink to this definition">¶</a></dt>
+<dd><p>The position of the legend with respect to its overlaid component. (This
+attribute applies only if the legend is used as an overlay.)</p>
+<ul class="simple">
+<li><p>ur = Upper Right</p></li>
+<li><p>ul = Upper Left</p></li>
+<li><p>ll = Lower Left</p></li>
+<li><p>lr = Lower Right</p></li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.bgcolor">
+<code class="sig-name descname">bgcolor</code><em class="property"> = white_color_trait</em><a class="headerlink" href="#chaco.overlays.legend.Legend.bgcolor" title="Permalink to this definition">¶</a></dt>
+<dd><p>The background color of the legend (overrides AbstractOverlay).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.border_padding">
+<code class="sig-name descname">border_padding</code><em class="property"> = Int(10)</em><a class="headerlink" href="#chaco.overlays.legend.Legend.border_padding" title="Permalink to this definition">¶</a></dt>
+<dd><p>The amount of space between the content of the legend and the border.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.border_visible">
+<code class="sig-name descname">border_visible</code><em class="property"> = True</em><a class="headerlink" href="#chaco.overlays.legend.Legend.border_visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>The border is visible (overrides Enable Component).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.clip_to_component">
+<code class="sig-name descname">clip_to_component</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.overlays.legend.Legend.clip_to_component" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should the legend clip to the bounds it needs, or to its parent?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.color">
+<code class="sig-name descname">color</code><em class="property"> = black_color_trait</em><a class="headerlink" href="#chaco.overlays.legend.Legend.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the text labels</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.composite_icon_renderer">
+<code class="sig-name descname">composite_icon_renderer</code><em class="property"> = Instance(AbstractCompositeIconRenderer)</em><a class="headerlink" href="#chaco.overlays.legend.Legend.composite_icon_renderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The renderer that draws the icons for the legend.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.draw_layer">
+<code class="sig-name descname">draw_layer</code><em class="property"> = &quot;overlay&quot;</em><a class="headerlink" href="#chaco.overlays.legend.Legend.draw_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The legend is drawn on the overlay layer of its parent (overrides
+PlotComponent).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.error_icon">
+<code class="sig-name descname">error_icon</code><em class="property"> = Enum(&quot;skip&quot;, &quot;blank&quot;, &quot;questionmark&quot;)</em><a class="headerlink" href="#chaco.overlays.legend.Legend.error_icon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Action that the legend takes when it encounters a plot whose icon it
+cannot render:</p>
+<ul class="simple">
+<li><p>‘skip’: skip it altogether and don’t render its name</p></li>
+<li><p>‘blank’: render the name but leave the icon blank (color=self.bgcolor)</p></li>
+<li><p>‘questionmark’: render a “question mark” icon</p></li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.font">
+<code class="sig-name descname">font</code><em class="property"> = KivaFont(&quot;modern 12&quot;)</em><a class="headerlink" href="#chaco.overlays.legend.Legend.font" title="Permalink to this definition">¶</a></dt>
+<dd><p>The font to use for the legend text.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.overlays.legend.Legend.get_label_at">
+<code class="sig-name descname">get_label_at</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.legend.Legend.get_label_at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the label object at (x,y)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.overlays.legend.Legend.get_preferred_size">
+<code class="sig-name descname">get_preferred_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.legend.Legend.get_preferred_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the size and position of the legend based on the maximum size
+of the labels, the alignment, and position of the component to overlay.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.hide_invisible_plots">
+<code class="sig-name descname">hide_invisible_plots</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.overlays.legend.Legend.hide_invisible_plots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether or not to hide plots that are not visible. (This is checked
+during layout.) This option <em>will</em> filter out the items in <strong>labels</strong>
+above, so if you absolutely, positively want to set the items that will
+always display in the legend, regardless of anything else, then you
+should turn this option off. Otherwise, it usually makes sense that a
+plot renderer that is not visible will also not be in the legend.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.icon_bounds">
+<code class="sig-name descname">icon_bounds</code><em class="property"> = List([24, 24])</em><a class="headerlink" href="#chaco.overlays.legend.Legend.icon_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>The size of the icon or marker area drawn next to the label.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.icon_spacing">
+<code class="sig-name descname">icon_spacing</code><em class="property"> = Int(5)</em><a class="headerlink" href="#chaco.overlays.legend.Legend.icon_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Amount of spacing between each label and its icon.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.invisible_plot_alpha">
+<code class="sig-name descname">invisible_plot_alpha</code><em class="property"> = Float(0.33)</em><a class="headerlink" href="#chaco.overlays.legend.Legend.invisible_plot_alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>If hide_invisible_plots is False, we can still choose to render the
+names of invisible plots with an alpha.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.overlays.legend.Legend.is_in">
+<code class="sig-name descname">is_in</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.legend.Legend.is_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>overloads from parent class because legend alignment
+and padding does not cooperatate with the basic implementation</p>
+<p>This may just be caused byt a questionable implementation of the
+legend tool, but it works by adjusting the padding. The Component
+class implementation of is_in uses the outer positions which
+includes the padding</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.labels">
+<code class="sig-name descname">labels</code><em class="property"> = List</em><a class="headerlink" href="#chaco.overlays.legend.Legend.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>The list of labels to show and the order to show them in.  If this
+list is blank, then the keys of self.plots is used and displayed in
+alphabetical order.  Otherwise, only the items in the <strong>labels</strong>
+list are drawn in the legend.  Labels are ordered from top to bottom.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.line_spacing">
+<code class="sig-name descname">line_spacing</code><em class="property"> = Int(3)</em><a class="headerlink" href="#chaco.overlays.legend.Legend.line_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>The amount of space between legend items.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.overlays.legend.Legend.overlay">
+<code class="sig-name descname">overlay</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.legend.Legend.overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws this component overlaid on another component.</p>
+<p>Implements AbstractOverlay.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.plots">
+<code class="sig-name descname">plots</code><em class="property"> = Dict</em><a class="headerlink" href="#chaco.overlays.legend.Legend.plots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map of labels (strings) to plot instances or lists of plot instances.
+The Legend determines the appropriate rendering of each plot’s
+marker/line.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.resizable">
+<code class="sig-name descname">resizable</code><em class="property"> = &quot;hv&quot;</em><a class="headerlink" href="#chaco.overlays.legend.Legend.resizable" title="Permalink to this definition">¶</a></dt>
+<dd><p>The legend is not resizable (overrides PlotComponent).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.title">
+<code class="sig-name descname">title</code><em class="property"> = Str(&quot;&quot;)</em><a class="headerlink" href="#chaco.overlays.legend.Legend.title" title="Permalink to this definition">¶</a></dt>
+<dd><p>An optional title string to show on the legend.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.title_at_top">
+<code class="sig-name descname">title_at_top</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.overlays.legend.Legend.title_at_top" title="Permalink to this definition">¶</a></dt>
+<dd><p>If True, title is at top, if False then at bottom.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.legend.Legend.unified_draw">
+<code class="sig-name descname">unified_draw</code><em class="property"> = True</em><a class="headerlink" href="#chaco.overlays.legend.Legend.unified_draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>The legend draws itself as in one pass when its parent is drawing
+the <strong>draw_layer</strong> (overrides PlotComponent).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.overlays.legend.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

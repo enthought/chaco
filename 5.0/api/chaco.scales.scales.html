@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.scales.scales module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.scales.scales module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.scales.scales">
+<span id="chaco-scales-scales-module"></span><h1>chaco.scales.scales module<a class="headerlink" href="#module-chaco.scales.scales" title="Permalink to this headline">¶</a></h1>
+<p>Functions and classes that compute ticks and labels for graph axes, with
+special handling of time and calendar axes.</p>
+<dl class="class">
+<dt id="chaco.scales.scales.AbstractScale">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.scales.scales.</code><code class="sig-name descname">AbstractScale</code><a class="headerlink" href="#chaco.scales.scales.AbstractScale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Defines the general interface for scales.</p>
+<dl class="attribute">
+<dt id="chaco.scales.scales.AbstractScale.DEFAULT_NUM_TICKS">
+<code class="sig-name descname">DEFAULT_NUM_TICKS</code><em class="property"> = 8</em><a class="headerlink" href="#chaco.scales.scales.AbstractScale.DEFAULT_NUM_TICKS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.scales.AbstractScale.label_width">
+<code class="sig-name descname">label_width</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">numlabels=None</em>, <em class="sig-param">char_width=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.AbstractScale.label_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an estimate of the total number of characters used by the
+the labels that this scale produces for the given set of
+inputs, as well as the number of labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<em>number</em>) – The beginning of the scale interval.</p></li>
+<li><p><strong>end</strong> (<em>number</em>) – The end of the scale interval.</p></li>
+<li><p><strong>numlabels</strong> (<em>number</em>) – The ideal number of labels to generate on the interval.</p></li>
+<li><p><strong>char_width</strong> (<em>number</em>) – The total character width available for labelling the interval.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(numlabels, total label width)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.scales.AbstractScale.labels">
+<code class="sig-name descname">labels</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">numlabels=None</em>, <em class="sig-param">char_width=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.AbstractScale.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a series of ticks and corresponding strings for labels
+that fall inside the interval (<em>start</em>,*end*).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<em>number</em>) – The beginning of the scale interval.</p></li>
+<li><p><strong>end</strong> (<em>number</em>) – The end of the scale interval.</p></li>
+<li><p><strong>numlabels</strong> (<em>number</em>) – The ideal number of labels to generate on the interval.</p></li>
+<li><p><strong>char_width</strong> (<em>number</em>) – The total character width available for labelling the interval.</p></li>
+<li><p><strong>of numlabels</strong><strong> or </strong><strong>char_width must be provided. If both are</strong> (<em>One</em>) – </p></li>
+<li><p><strong>then both are considered when picking label density and format.</strong> (<em>provided</em><em>,</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.scales.AbstractScale.num_ticks">
+<code class="sig-name descname">num_ticks</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">desired_ticks=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.AbstractScale.num_ticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an approximate number of ticks that this scale
+produces for the given interval.</p>
+<p>This method is used by the scale system to determine whether this is
+the appropriate scale to use for an interval; the returned number of
+ticks does not have to be exactly the same as what ticks() returns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<em>number</em>) – The beginning of the scale interval.</p></li>
+<li><p><strong>end</strong> (<em>number</em>) – The end of the scale interval.</p></li>
+<li><p><strong>desired_ticks</strong> (<em>integer</em>) – Number of ticks that the caller would like to get</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A float or an integer.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.scales.AbstractScale.ticks">
+<code class="sig-name descname">ticks</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">desired_ticks=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.AbstractScale.ticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the set of “nice” positions on this scale that enclose and
+fall inside the interval (<em>start</em>,*end*).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<em>number</em>) – The beginning of the scale interval.</p></li>
+<li><p><strong>end</strong> (<em>number</em>) – The end of the scale interval.</p></li>
+<li><p><strong>desired_ticks</strong> (<em>integer</em>) – Number of ticks that the caller would like to get</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.scales.scales.DefaultScale">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.scales.scales.</code><code class="sig-name descname">DefaultScale</code><span class="sig-paren">(</span><em class="sig-param">formatter=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.DefaultScale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#chaco.scales.scales.AbstractScale" title="chaco.scales.scales.AbstractScale"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.scales.scales.AbstractScale</span></code></a></p>
+<p>A dynamic scale that tries to place ticks at nice numbers (1, 2, 5, 10)
+so that ticks don’t “pop” as the resolution changes.</p>
+<dl class="method">
+<dt id="chaco.scales.scales.DefaultScale.num_ticks">
+<code class="sig-name descname">num_ticks</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">desired_ticks=8</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.DefaultScale.num_ticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an approximate number of ticks that this scale
+produces for the given interval.</p>
+<p>Implements AbstractScale.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.scales.DefaultScale.ticks">
+<code class="sig-name descname">ticks</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">desired_ticks=8</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.DefaultScale.ticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the set of “nice” positions on this scale that enclose and
+fall inside the interval (<em>start</em>,*end*).</p>
+<p>Implements AbstractScale.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.scales.scales.FixedScale">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.scales.scales.</code><code class="sig-name descname">FixedScale</code><span class="sig-paren">(</span><em class="sig-param">resolution</em>, <em class="sig-param">zero=0.0</em>, <em class="sig-param">formatter=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.FixedScale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#chaco.scales.scales.AbstractScale" title="chaco.scales.scales.AbstractScale"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.scales.scales.AbstractScale</span></code></a></p>
+<p>A scale with fixed resolution, and “nice” points that line up at
+multiples of the resolution.  An optional zero value can be defined
+that offsets the “nice” points to (N*resolution+zero).</p>
+<dl class="method">
+<dt id="chaco.scales.scales.FixedScale.num_ticks">
+<code class="sig-name descname">num_ticks</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">desired_ticks=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.FixedScale.num_ticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>For FixedScale, <em>desired_ticks</em> is ignored.</p>
+<p>Overrides AbstractScale.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.scales.FixedScale.ticks">
+<code class="sig-name descname">ticks</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">desired_ticks=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.FixedScale.ticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>For FixedScale, <em>desired_ticks</em> is ignored.</p>
+<p>Overrides AbstractScale.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.scales.scales.Pow10Scale">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.scales.scales.</code><code class="sig-name descname">Pow10Scale</code><span class="sig-paren">(</span><em class="sig-param">formatter=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.Pow10Scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#chaco.scales.scales.AbstractScale" title="chaco.scales.scales.AbstractScale"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.scales.scales.AbstractScale</span></code></a></p>
+<p>A dynamic scale that shows only whole multiples of powers of 10
+(including powers &lt; 1).</p>
+<dl class="method">
+<dt id="chaco.scales.scales.Pow10Scale.num_ticks">
+<code class="sig-name descname">num_ticks</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">desired_ticks=8</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.Pow10Scale.num_ticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an approximate number of ticks that this scale
+produces for the given interval.</p>
+<p>Implements AbstractScale.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.scales.Pow10Scale.ticks">
+<code class="sig-name descname">ticks</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">desired_ticks=8</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.Pow10Scale.ticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the set of “nice” positions on this scale that enclose and
+fall inside the interval (<em>start</em>,*end*).</p>
+<p>Implements AbstractScale.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.scales.scales.LogScale">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.scales.scales.</code><code class="sig-name descname">LogScale</code><span class="sig-paren">(</span><em class="sig-param">formatter=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.LogScale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#chaco.scales.scales.AbstractScale" title="chaco.scales.scales.AbstractScale"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.scales.scales.AbstractScale</span></code></a></p>
+<p>A dynamic scale that only produces ticks and labels that work well when
+plotting data on a logarithmic scale.</p>
+<dl class="method">
+<dt id="chaco.scales.scales.LogScale.num_ticks">
+<code class="sig-name descname">num_ticks</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">desired_ticks=8</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.LogScale.num_ticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an approximate number of ticks that this scale
+produces for the given interval.</p>
+<p>Implements AbstractScale.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.scales.LogScale.ticks">
+<code class="sig-name descname">ticks</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">desired_ticks=8</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.LogScale.ticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute a “nice” set of ticks for a log scale.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.scales.scales.ScaleSystem">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.scales.scales.</code><code class="sig-name descname">ScaleSystem</code><span class="sig-paren">(</span><em class="sig-param">*scales</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.ScaleSystem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a collection of scales over some range of resolutions.</p>
+<p>This class has settings for a default scale that is used when ticking an
+interval that is smaller than the finest resolution scale or larger than
+the coarsest resolution scale.</p>
+<dl class="method">
+<dt id="chaco.scales.scales.ScaleSystem.labels">
+<code class="sig-name descname">labels</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">numlabels=None</em>, <em class="sig-param">char_width=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.ScaleSystem.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes position and labels for an interval</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<em>number</em>) – The beginning of the scale interval.</p></li>
+<li><p><strong>end</strong> (<em>number</em>) – The end of the scale interval.</p></li>
+<li><p><strong>numlabels</strong> (<em>number</em>) – The ideal number of labels to generate on the interval.</p></li>
+<li><p><strong>char_width</strong> (<em>number</em>) – The total character width available for labelling the interval.</p></li>
+<li><p><strong>of numlabels</strong><strong> or </strong><strong>char_width must be provided.  If both are</strong> (<em>One</em>) – </p></li>
+<li><p><strong>then both are considered when picking label density and format.</strong> (<em>provided</em><em>,</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A list of (tick position, string) tuples.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.scales.ScaleSystem.ticks">
+<code class="sig-name descname">ticks</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">numticks=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.ScaleSystem.ticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes nice locations for tick marks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>end</strong> (<em>start</em><em>,</em>) – The start and end values of the data.</p></li>
+<li><p><strong>numticks</strong> (<em>number</em>) – The desired number of ticks to produce.</p></li>
+<li><p><strong>scales</strong> (<em>a list of tuples of</em><em> (</em><em>min_interval</em><em>, </em><em>Scale</em><em>)</em>) – Scales to use, in order from fine resolution to coarse.
+If the end-start interval is less than a particular scale’s
+<em>min_interval</em>, then the previous scale is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A list of positions where the ticks are to be placed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.scales.heckbert_interval">
+<code class="sig-prename descclassname">chaco.scales.scales.</code><code class="sig-name descname">heckbert_interval</code><span class="sig-paren">(</span><em class="sig-param">data_low</em>, <em class="sig-param">data_high</em>, <em class="sig-param">numticks=8</em>, <em class="sig-param">nicefunc=&lt;function _nice&gt;</em>, <em class="sig-param">enclose=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.heckbert_interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a “nice” range and resolution for an interval and a preferred
+number of ticks, using Paul Heckbert’s algorithm in Graphics Gems.</p>
+<p>If <em>enclose</em> is True, then the function returns a min and a max that fall
+inside <em>data_low</em> and <em>data_high</em>; if <em>enclose</em> is False, the nice interval
+can be larger than the input interval.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.scales.frange">
+<code class="sig-prename descclassname">chaco.scales.scales.</code><code class="sig-name descname">frange</code><span class="sig-paren">(</span><em class="sig-param">min</em>, <em class="sig-param">max</em>, <em class="sig-param">delta</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.scales.frange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Floating point range.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.scales.scales.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

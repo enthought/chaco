@@ -1,0 +1,325 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.plots.barplot module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.plots.barplot module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.plots.barplot">
+<span id="chaco-plots-barplot-module"></span><h1>chaco.plots.barplot module<a class="headerlink" href="#module-chaco.plots.barplot" title="Permalink to this headline">¶</a></h1>
+<p>Defines the BarPlot class.</p>
+<dl class="class">
+<dt id="chaco.plots.barplot.BarPlot">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.plots.barplot.</code><code class="sig-name descname">BarPlot</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.barplot.BarPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.abstract_plot_renderer.html#chaco.abstract_plot_renderer.AbstractPlotRenderer" title="chaco.abstract_plot_renderer.AbstractPlotRenderer"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_plot_renderer.AbstractPlotRenderer</span></code></a></p>
+<p>A renderer for bar charts.</p>
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.alpha">
+<code class="sig-name descname">alpha</code><em class="property"> = Range(0.0, 1.0, 1.0, requires_redraw=True)</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.antialias">
+<code class="sig-name descname">antialias</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.antialias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Round on rectangle dimensions? This is not strictly an “antialias”, but
+it has the same effect through exact pixel drawing.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.bar_width">
+<code class="sig-name descname">bar_width</code><em class="property"> = Float(10)</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.bar_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Width of the bars, in data or screen space (determined by
+<strong>bar_width_type</strong>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.bar_width_type">
+<code class="sig-name descname">bar_width_type</code><em class="property"> = Enum(&quot;data&quot;, &quot;screen&quot;)</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.bar_width_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type of width used for bars:</p>
+<dl class="simple">
+<dt>‘data’</dt><dd><p>The width is in the units along the x-dimension of the data space.</p>
+</dd>
+<dt>‘screen’</dt><dd><p>The width uses a fixed width of pixels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.effective_fill_color">
+<code class="sig-name descname">effective_fill_color</code><em class="property"> = Property(Tuple, observe=[&quot;fill_color&quot;, &quot;alpha&quot;])</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.effective_fill_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The RGBA tuple for rendering the fill. It is always a tuple of length
+4. It has the same RGB values as <a class="reference internal" href="#chaco.plots.barplot.BarPlot.fill_color" title="chaco.plots.barplot.BarPlot.fill_color"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fill_color</span></code></a>, and its alpha
+value is the alpha value of self.fill_color multiplied by self.alpha.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.effective_line_color">
+<code class="sig-name descname">effective_line_color</code><em class="property"> = Property(Tuple, observe=[&quot;line_color&quot;, &quot;alpha&quot;])</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.effective_line_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The RGBA tuple for rendering lines. It is always a tuple of length 4.
+It has the same RGB values as <a class="reference internal" href="#chaco.plots.barplot.BarPlot.line_color" title="chaco.plots.barplot.BarPlot.line_color"><code class="xref py py-attr docutils literal notranslate"><span class="pre">line_color</span></code></a>, and its alpha value
+is the alpha value of self.line_color multiplied by self.alpha.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.fill_color">
+<code class="sig-name descname">fill_color</code><em class="property"> = black_color_trait(requires_redraw=True)</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.fill_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color to fill the bars.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.index">
+<code class="sig-name descname">index</code><em class="property"> = Instance(ArrayDataSource)</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>The data source to use for the index coordinate.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.index_direction">
+<code class="sig-name descname">index_direction</code><em class="property"> = Enum(&quot;normal&quot;, &quot;flipped&quot;)</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.index_direction" title="Permalink to this definition">¶</a></dt>
+<dd><p>The direction of the index axis with respect to the graphics context’s
+direction.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.index_mapper">
+<code class="sig-name descname">index_mapper</code><em class="property"> = Instance(AbstractMapper)</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.index_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Labels for the indices.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.index_range">
+<code class="sig-name descname">index_range</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.index_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for accessing the index data range.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.line_color">
+<code class="sig-name descname">line_color</code><em class="property"> = black_color_trait(requires_redraw=True)</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.line_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color of the border of the bars.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.line_width">
+<code class="sig-name descname">line_width</code><em class="property"> = Float(1.0, requires_redraw=True)</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.line_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Width of the border of the bars.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plots.barplot.BarPlot.map_data">
+<code class="sig-name descname">map_data</code><span class="sig-paren">(</span><em class="sig-param">screen_pt</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.barplot.BarPlot.map_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps a screen space point into the “index” space of the plot.</p>
+<p>Implements the AbstractPlotRenderer interface.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plots.barplot.BarPlot.map_index">
+<code class="sig-name descname">map_index</code><span class="sig-paren">(</span><em class="sig-param">screen_pt</em>, <em class="sig-param">threshold=2.0</em>, <em class="sig-param">outside_returns_none=True</em>, <em class="sig-param">index_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.barplot.BarPlot.map_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps a screen space point to an index into the plot’s index array(s).</p>
+<p>Implements the AbstractPlotRenderer interface.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plots.barplot.BarPlot.map_screen">
+<code class="sig-name descname">map_screen</code><span class="sig-paren">(</span><em class="sig-param">data_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.barplot.BarPlot.map_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of data points into screen space and returns it as
+an array.</p>
+<p>Implements the AbstractPlotRenderer interface.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.orientation">
+<code class="sig-name descname">orientation</code><em class="property"> = Enum(&quot;h&quot;, &quot;v&quot;)</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The orientation of the index axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.starting_value">
+<code class="sig-name descname">starting_value</code><em class="property"> = Instance(ArrayDataSource)</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.starting_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>The data source to use as “starting” values for bars (along value axis).
+For instance, if the values are [10, 20] and starting_value
+is [3, 7], BarPlot will plot two bars, one  between 3 and 10, and
+one between 7 and 20</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.value">
+<code class="sig-name descname">value</code><em class="property"> = Instance(ArrayDataSource)</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>The data source to use as value points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.value_direction">
+<code class="sig-name descname">value_direction</code><em class="property"> = Enum(&quot;normal&quot;, &quot;flipped&quot;)</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.value_direction" title="Permalink to this definition">¶</a></dt>
+<dd><p>The direction of the value axis with respect to the graphics context’s
+direction.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.value_mapper">
+<code class="sig-name descname">value_mapper</code><em class="property"> = Instance(AbstractMapper)</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.value_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Labels for the values.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.value_range">
+<code class="sig-name descname">value_range</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.value_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for accessing the value data range.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.x_direction">
+<code class="sig-name descname">x_direction</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.x_direction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Corresponds to either <strong>index_direction</strong> or <strong>value_direction</strong>,
+depending on the orientation of the plot.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.x_mapper">
+<code class="sig-name descname">x_mapper</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.x_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Corresponds to either <strong>index_mapper</strong> or <strong>value_mapper</strong>, depending on
+the orientation of the plot.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.y_direction">
+<code class="sig-name descname">y_direction</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.y_direction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Corresponds to either <strong>value_direction</strong> or <strong>index_direction</strong>,
+depending on the orientation of the plot</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.barplot.BarPlot.y_mapper">
+<code class="sig-name descname">y_mapper</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.plots.barplot.BarPlot.y_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Corresponds to either <strong>value_mapper</strong> or <strong>index_mapper</strong>, depending on
+the orientation of the plot.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.plots.barplot.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

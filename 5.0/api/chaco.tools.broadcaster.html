@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.tools.broadcaster module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.tools.broadcaster module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.tools.broadcaster">
+<span id="chaco-tools-broadcaster-module"></span><h1>chaco.tools.broadcaster module<a class="headerlink" href="#module-chaco.tools.broadcaster" title="Permalink to this headline">¶</a></h1>
+<p>Defines the BroadcasterTool class.</p>
+<dl class="class">
+<dt id="chaco.tools.broadcaster.BroadcasterTool">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.broadcaster.</code><code class="sig-name descname">BroadcasterTool</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.broadcaster.BroadcasterTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.enthought.com/enable/api/enable.base_tool.html#enable.base_tool.BaseTool" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.base_tool.BaseTool</span></code></a></p>
+<p>A simple tool that keeps a list of other tools, and broadcasts events it
+receives to all of the tools.</p>
+<dl class="method">
+<dt id="chaco.tools.broadcaster.BroadcasterTool.dispatch">
+<code class="sig-name descname">dispatch</code><span class="sig-paren">(</span><em class="sig-param">event</em>, <em class="sig-param">suffix</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.broadcaster.BroadcasterTool.dispatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dispatches a mouse event based on the current event state.</p>
+<p>Overrides BaseTool.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.broadcaster.BroadcasterTool.mouse_owners">
+<code class="sig-name descname">mouse_owners</code><em class="property"> = Dict</em><a class="headerlink" href="#chaco.tools.broadcaster.BroadcasterTool.mouse_owners" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mapping from tools to transforms, for tools that can be mouse owners.
+(See enable.AbstractWindow.)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.broadcaster.BroadcasterTool.tools">
+<code class="sig-name descname">tools</code><em class="property"> = List</em><a class="headerlink" href="#chaco.tools.broadcaster.BroadcasterTool.tools" title="Permalink to this definition">¶</a></dt>
+<dd><p>The tools to which this tool broadcasts events.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.tools.broadcaster.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.overlays.tooltip module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.overlays.tooltip module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.overlays.tooltip">
+<span id="chaco-overlays-tooltip-module"></span><h1>chaco.overlays.tooltip module<a class="headerlink" href="#module-chaco.overlays.tooltip" title="Permalink to this headline">¶</a></h1>
+<p>Defines the ToolTip class.</p>
+<dl class="class">
+<dt id="chaco.overlays.tooltip.ToolTip">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.overlays.tooltip.</code><code class="sig-name descname">ToolTip</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.tooltip.ToolTip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.abstract_overlay.html#chaco.abstract_overlay.AbstractOverlay" title="chaco.abstract_overlay.AbstractOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></code></a></p>
+<p>An overlay that is a toolip.</p>
+<dl class="attribute">
+<dt id="chaco.overlays.tooltip.ToolTip.auto_adjust">
+<code class="sig-name descname">auto_adjust</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.overlays.tooltip.ToolTip.auto_adjust" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should the tooltip automatically reposition itself to remain visible
+and unclipped on its overlaid component?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.tooltip.ToolTip.bgcolor">
+<code class="sig-name descname">bgcolor</code><em class="property"> = white_color_trait</em><a class="headerlink" href="#chaco.overlays.tooltip.ToolTip.bgcolor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use a white background color (overrides AbstractOverlay).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.tooltip.ToolTip.border_padding">
+<code class="sig-name descname">border_padding</code><em class="property"> = Int(4)</em><a class="headerlink" href="#chaco.overlays.tooltip.ToolTip.border_padding" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ammount of space between the border and the text.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.tooltip.ToolTip.border_visible">
+<code class="sig-name descname">border_visible</code><em class="property"> = True</em><a class="headerlink" href="#chaco.overlays.tooltip.ToolTip.border_visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use a visible border. (Overrides Enable Component.)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.overlays.tooltip.ToolTip.draw">
+<code class="sig-name descname">draw</code><span class="sig-paren">(</span><em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.tooltip.ToolTip.draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the plot component.</p>
+<p>Overrides PlotComponent.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.tooltip.ToolTip.font">
+<code class="sig-name descname">font</code><em class="property"> = KivaFont(&quot;modern 10&quot;)</em><a class="headerlink" href="#chaco.overlays.tooltip.ToolTip.font" title="Permalink to this definition">¶</a></dt>
+<dd><p>The font to render the tooltip.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.tooltip.ToolTip.line_spacing">
+<code class="sig-name descname">line_spacing</code><em class="property"> = Int(4)</em><a class="headerlink" href="#chaco.overlays.tooltip.ToolTip.line_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of pixels between lines.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.tooltip.ToolTip.lines">
+<code class="sig-name descname">lines</code><em class="property"> = List</em><a class="headerlink" href="#chaco.overlays.tooltip.ToolTip.lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of text strings to put in the tooltip.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.overlays.tooltip.ToolTip.overlay">
+<code class="sig-name descname">overlay</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.tooltip.ToolTip.overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the tooltip overlaid on another component.</p>
+<p>Overrides AbstractOverlay.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.tooltip.ToolTip.resizable">
+<code class="sig-name descname">resizable</code><em class="property"> = &quot;&quot;</em><a class="headerlink" href="#chaco.overlays.tooltip.ToolTip.resizable" title="Permalink to this definition">¶</a></dt>
+<dd><p>The tooltip is a fixed size. (Overrides PlotComponent.)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.tooltip.ToolTip.rotate_angle">
+<code class="sig-name descname">rotate_angle</code><em class="property"> = Float(0.0)</em><a class="headerlink" href="#chaco.overlays.tooltip.ToolTip.rotate_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Angle to rotate (counterclockwise) in degrees. NB this will <em>only</em>
+currently affect text, so probably only useful if borders and background
+are disabled</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.tooltip.ToolTip.text_color">
+<code class="sig-name descname">text_color</code><em class="property"> = black_color_trait</em><a class="headerlink" href="#chaco.overlays.tooltip.ToolTip.text_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the text in the tooltip</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.overlays.tooltip.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

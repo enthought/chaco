@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.base_1d_plot module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.base_1d_plot module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.base_1d_plot">
+<span id="chaco-base-1d-plot-module"></span><h1>chaco.base_1d_plot module<a class="headerlink" href="#module-chaco.base_1d_plot" title="Permalink to this headline">¶</a></h1>
+<p>Abstract base class for 1-D plots which only use one axis</p>
+<dl class="class">
+<dt id="chaco.base_1d_plot.Base1DPlot">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.base_1d_plot.</code><code class="sig-name descname">Base1DPlot</code><span class="sig-paren">(</span><em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base_1d_plot.Base1DPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.abstract_plot_renderer.html#chaco.abstract_plot_renderer.AbstractPlotRenderer" title="chaco.abstract_plot_renderer.AbstractPlotRenderer"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_plot_renderer.AbstractPlotRenderer</span></code></a></p>
+<p>Base class for one-dimensional plots</p>
+<p>This class provides a base for plots such as jitter plots, color bars,
+single-axis scatter plots, and geophysical horizon and tops plots.</p>
+<dl class="attribute">
+<dt id="chaco.base_1d_plot.Base1DPlot.direction">
+<code class="sig-name descname">direction</code><em class="property"> = Enum(&quot;normal&quot;, &quot;flipped&quot;)</em><a class="headerlink" href="#chaco.base_1d_plot.Base1DPlot.direction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should the plot go left-to-right or bottom-to-top (normal) or the reverse?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_1d_plot.Base1DPlot.index">
+<code class="sig-name descname">index</code><em class="property"> = Instance(ArrayDataSource)</em><a class="headerlink" href="#chaco.base_1d_plot.Base1DPlot.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>The data source of values</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_1d_plot.Base1DPlot.index_mapper">
+<code class="sig-name descname">index_mapper</code><em class="property"> = Instance(AbstractMapper)</em><a class="headerlink" href="#chaco.base_1d_plot.Base1DPlot.index_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Screen mapper for index data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_1d_plot.Base1DPlot.index_range">
+<code class="sig-name descname">index_range</code><em class="property"> = Property(depends_on=&quot;index_mapper.range&quot;)</em><a class="headerlink" href="#chaco.base_1d_plot.Base1DPlot.index_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for accessing the data range of the mapper.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.base_1d_plot.Base1DPlot.map_data">
+<code class="sig-name descname">map_data</code><span class="sig-paren">(</span><em class="sig-param">screen_pts</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base_1d_plot.Base1DPlot.map_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps 2D screen space points into the 1D index space of the plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>screen_pts</strong> (<em>tuple of x-array</em><em>, </em><em>y-array</em>) – 2 arrays (or values) screen space coordinates.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>data_array</strong> – An array of points in data space corresponding to the screen-space
+points.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>1D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.base_1d_plot.Base1DPlot.map_index">
+<code class="sig-name descname">map_index</code><span class="sig-paren">(</span><em class="sig-param">screen_pt</em>, <em class="sig-param">threshold=2.0</em>, <em class="sig-param">outside_returns_none=True</em>, <em class="sig-param">index_only=True</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base_1d_plot.Base1DPlot.map_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps a screen space point to an index into the plot’s index array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>screen_pts</strong> (<em>tuple of x-array</em><em>, </em><em>y-array</em>) – 2 arrays (or values) screen space coordinates.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em>) – Optional screen-space distance allowed between <em>screen_pt</em> and the
+plot; if non-zero, then a <em>screen_pt</em> within this distance is
+mapped to the neared plot index. (This feature is useful for sparse
+data.)</p></li>
+<li><p><strong>outside_returns_none</strong> (<em>Boolean</em>) – If True, then if <em>screen_pt</em> is outside the range of the data, the
+method returns None. If False, it returns the nearest end index in
+such a case.</p></li>
+<li><p><strong>index_only</strong> (<em>Boolean</em>) – This is included for compatibity with the base class, but is
+ignored, as it is always true for 1D plots.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p><strong>index</strong> – An index into the index array. If the input point cannot be mapped
+to an index, then None is returned.</p>
+<p>If <em>screen_pt</em> corresponds to multiple indices, then only the first
+index is returned.</p>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.base_1d_plot.Base1DPlot.map_screen">
+<code class="sig-name descname">map_screen</code><span class="sig-paren">(</span><em class="sig-param">data_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base_1d_plot.Base1DPlot.map_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps a 1D array of data points into screen space and returns it as
+a 1D array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data_array</strong> (<em>1D array</em>) – An array of data-space values to be mapped to screen coordinates.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>screen_array</strong> – An array of points in screen space, either x-values (if
+orientation is ‘h’) or y-values (if orientation is ‘v’).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>1D array</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Returning a 1D array is experimental, and may break some tools and
+overlays.  If needs be we can refactor so that it returns a 2D array.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_1d_plot.Base1DPlot.orientation">
+<code class="sig-name descname">orientation</code><em class="property"> = Enum(&quot;v&quot;, &quot;h&quot;)</em><a class="headerlink" href="#chaco.base_1d_plot.Base1DPlot.orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The orientation of the index axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_1d_plot.Base1DPlot.origin">
+<code class="sig-name descname">origin</code><em class="property"> = Property( …</em><a class="headerlink" href="#chaco.base_1d_plot.Base1DPlot.origin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Faux origin for the axes and other objects to look at</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_1d_plot.Base1DPlot.x_mapper">
+<code class="sig-name descname">x_mapper</code><em class="property"> = Property(observe=[&quot;orientation&quot;, &quot;index_mapper&quot;])</em><a class="headerlink" href="#chaco.base_1d_plot.Base1DPlot.x_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Corresponds to either <strong>index_mapper</strong> or None, depending on
+the orientation of the plot.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_1d_plot.Base1DPlot.y_mapper">
+<code class="sig-name descname">y_mapper</code><em class="property"> = Property(observe=[&quot;orientation&quot;, &quot;index_mapper&quot;])</em><a class="headerlink" href="#chaco.base_1d_plot.Base1DPlot.y_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Corresponds to either <strong>index_mapper</strong> or None, depending on
+the orientation of the plot.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.base_1d_plot.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

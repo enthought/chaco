@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.abstract_data_range module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.abstract_data_range module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.abstract_data_range">
+<span id="chaco-abstract-data-range-module"></span><h1>chaco.abstract_data_range module<a class="headerlink" href="#module-chaco.abstract_data_range" title="Permalink to this headline">¶</a></h1>
+<p>Defines the base class for data ranges.</p>
+<dl class="class">
+<dt id="chaco.abstract_data_range.AbstractDataRange">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.abstract_data_range.</code><code class="sig-name descname">AbstractDataRange</code><span class="sig-paren">(</span><em class="sig-param">*sources</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.abstract_data_range.AbstractDataRange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<p>Abstract class for ranges that represent sub-regions of data space.</p>
+<p>They support “autoscaling” by querying their associated data sources.</p>
+<dl class="method">
+<dt id="chaco.abstract_data_range.AbstractDataRange.bound_data">
+<code class="sig-name descname">bound_data</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.abstract_data_range.AbstractDataRange.bound_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a tuple of indices for the start and end of the first run
+of data that falls within the range.</p>
+<p>Given an array of data values of the same dimensionality as the range,
+returns a tuple of indices (start, end) corresponding to the first and
+last elements of the first run of data that falls within the range.
+For monotonic data, this basically returns the first and last elements
+that fall within the range. Using this method is not advised for
+non-monotonic data; in that case, it returns the first and last
+elements of the first “chunk” of data that falls within the range.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.abstract_data_range.AbstractDataRange.clip_data">
+<code class="sig-name descname">clip_data</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.abstract_data_range.AbstractDataRange.clip_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of data values that are within the range.</p>
+<p>Given an array of data values of the same dimensionality as the range,
+returns a list of data values that are inside the range.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.abstract_data_range.AbstractDataRange.high">
+<code class="sig-name descname">high</code><em class="property"> = Float(1.0)</em><a class="headerlink" href="#chaco.abstract_data_range.AbstractDataRange.high" title="Permalink to this definition">¶</a></dt>
+<dd><p>The actual value of the upper bound of this range. To set it, use
+high_setting. (Setting this attribute directly just calls the setter for
+high_setting.) Although the default value is specified as 1.0, subclasses
+can redefine the default. Also, subclasses can redefined the type to
+correspond to their dimensionality.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.abstract_data_range.AbstractDataRange.high_setting">
+<code class="sig-name descname">high_setting</code><em class="property"> = Trait(&quot;auto&quot;, &quot;auto&quot;, Float)</em><a class="headerlink" href="#chaco.abstract_data_range.AbstractDataRange.high_setting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setting for the upper bound of this range.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.abstract_data_range.AbstractDataRange.low">
+<code class="sig-name descname">low</code><em class="property"> = Float(0.0)</em><a class="headerlink" href="#chaco.abstract_data_range.AbstractDataRange.low" title="Permalink to this definition">¶</a></dt>
+<dd><p>The actual value of the lower bound of this range. To set it, use
+low_setting. (Setting this attribute directly just calls the setter for
+low_setting.) Although the default value is specified as 0.0, subclasses
+can redefine the default. Also, subclasses can redefined the type to
+correspond to their dimensionality.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.abstract_data_range.AbstractDataRange.low_setting">
+<code class="sig-name descname">low_setting</code><em class="property"> = Trait(&quot;auto&quot;, &quot;auto&quot;, Float)</em><a class="headerlink" href="#chaco.abstract_data_range.AbstractDataRange.low_setting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setting for the lower bound of this range.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.abstract_data_range.AbstractDataRange.mask_data">
+<code class="sig-name descname">mask_data</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.abstract_data_range.AbstractDataRange.mask_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a mask array, indicating whether values in the given array
+are inside the range.</p>
+<p>Given an array of data values of the same dimensionality as the range,
+this method returns a mask array of the same length as data, filled
+with 1s and 0s corresponding to whether the data value at that index
+is inside or outside the range.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.abstract_data_range.AbstractDataRange.set_bounds">
+<code class="sig-name descname">set_bounds</code><span class="sig-paren">(</span><em class="sig-param">*new_bounds</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.abstract_data_range.AbstractDataRange.set_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets all the bounds of the range simultaneously.</p>
+<p>Because each bounds change probably fires an event, this method allows
+tools to set all range elements in a single, atomic step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_bounds</strong> (<em>a tuple of</em><em> (</em><em>low</em><em>, </em><em>high</em><em>)</em>) – The new bounds for the range; the dimensionality and cardinality
+depend on the specific subclass.</p></li>
+<li><p><strong>method not only reduces the number of spurious events</strong><strong> (</strong><strong>the</strong> (<em>This</em>) – </p></li>
+<li><p><strong>that result from having to set both high and low</strong><strong>)</strong><strong>, </strong><strong>but also</strong> (<em>ones</em>) – </p></li>
+<li><p><strong>listeners to differentiate between translation and resize</strong> (<em>allows</em>) – </p></li>
+<li><p><strong>operations.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.abstract_data_range.AbstractDataRange.sources">
+<code class="sig-name descname">sources</code><em class="property"> = List(Instance(AbstractDataSource))</em><a class="headerlink" href="#chaco.abstract_data_range.AbstractDataRange.sources" title="Permalink to this definition">¶</a></dt>
+<dd><p>The list of data sources to which this range responds.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.abstract_data_range.AbstractDataRange.updated">
+<code class="sig-name descname">updated</code><em class="property"> = Event</em><a class="headerlink" href="#chaco.abstract_data_range.AbstractDataRange.updated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event that is fired when the actual bounds values change; the value
+of the event is a tuple (low_bound, high_bound)</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.abstract_data_range.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

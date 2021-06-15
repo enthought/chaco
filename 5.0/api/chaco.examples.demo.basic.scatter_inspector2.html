@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.examples.demo.basic.scatter_inspector2 module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.examples.demo.basic.scatter_inspector2 module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.examples.demo.basic.scatter_inspector2">
+<span id="chaco-examples-demo-basic-scatter-inspector2-module"></span><h1>chaco.examples.demo.basic.scatter_inspector2 module<a class="headerlink" href="#module-chaco.examples.demo.basic.scatter_inspector2" title="Permalink to this headline">¶</a></h1>
+<p>Overlay to display the data attached to a scatter point hovered over.</p>
+<dl class="class">
+<dt id="chaco.examples.demo.basic.scatter_inspector2.DataframeScatterInspector">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.examples.demo.basic.scatter_inspector2.</code><code class="sig-name descname">DataframeScatterInspector</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.examples.demo.basic.scatter_inspector2.DataframeScatterInspector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.tools.scatter_inspector.html#chaco.tools.scatter_inspector.ScatterInspector" title="chaco.tools.scatter_inspector.ScatterInspector"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.scatter_inspector.ScatterInspector</span></code></a></p>
+<dl class="attribute">
+<dt id="chaco.examples.demo.basic.scatter_inspector2.DataframeScatterInspector.data">
+<code class="sig-name descname">data</code><em class="property"> = Instance(pd.DataFrame)</em><a class="headerlink" href="#chaco.examples.demo.basic.scatter_inspector2.DataframeScatterInspector.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data structure to gather all data to display neatly</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.examples.demo.basic.scatter_inspector2.DataframeScatterOverlay">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.examples.demo.basic.scatter_inspector2.</code><code class="sig-name descname">DataframeScatterOverlay</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.examples.demo.basic.scatter_inspector2.DataframeScatterOverlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.overlays.text_box_overlay.html#chaco.overlays.text_box_overlay.TextBoxOverlay" title="chaco.overlays.text_box_overlay.TextBoxOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.overlays.text_box_overlay.TextBoxOverlay</span></code></a></p>
+<p>Overlay for displaying hovered data point information.</p>
+<dl class="attribute">
+<dt id="chaco.examples.demo.basic.scatter_inspector2.DataframeScatterOverlay.inspector">
+<code class="sig-name descname">inspector</code><em class="property"> = Instance(ScatterInspector)</em><a class="headerlink" href="#chaco.examples.demo.basic.scatter_inspector2.DataframeScatterOverlay.inspector" title="Permalink to this definition">¶</a></dt>
+<dd><p>The inspector tool which has hover information</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.examples.demo.basic.scatter_inspector2.DataframeScatterOverlay.message_for_data">
+<code class="sig-name descname">message_for_data</code><em class="property"> = Callable</em><a class="headerlink" href="#chaco.examples.demo.basic.scatter_inspector2.DataframeScatterOverlay.message_for_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function which takes and index and returns an info string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.examples.demo.basic.scatter_inspector2.DataframeScatterOverlay.scatter_point_found">
+<code class="sig-name descname">scatter_point_found</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.examples.demo.basic.scatter_inspector2.DataframeScatterOverlay.scatter_point_found" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.examples.demo.basic.scatter_inspector2.Demo">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.examples.demo.basic.scatter_inspector2.</code><code class="sig-name descname">Demo</code><a class="headerlink" href="#chaco.examples.demo.basic.scatter_inspector2.Demo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.examples.demo.basic.scatter_inspector2.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

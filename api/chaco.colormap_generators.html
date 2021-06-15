@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.colormap_generators module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.colormap_generators module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.colormap_generators">
+<span id="chaco-colormap-generators-module"></span><h1>chaco.colormap_generators module<a class="headerlink" href="#module-chaco.colormap_generators" title="Permalink to this headline">¶</a></h1>
+<p>Generate parameteric colormaps.</p>
+<p>Diverging colormaps can be generated via Kenneth Moreland’s procedure using
+<code class="docutils literal notranslate"><span class="pre">generate_diverging_palette()</span></code>.</p>
+<blockquote>
+<div><p>Moreland, Kenneth. Diverging Color Maps for Scientific Visualization
+(Expanded).
+<a class="reference external" href="http://www.sandia.gov/~kmorel/documents/ColorMaps/ColorMapsExpanded.pdf">http://www.sandia.gov/~kmorel/documents/ColorMaps/ColorMapsExpanded.pdf</a></p>
+</div></blockquote>
+<p>Dave Green’s cubehelix family of colormaps can be generated using
+<code class="docutils literal notranslate"><span class="pre">generate_cubehelix_palette()</span></code>.</p>
+<blockquote>
+<div><p>Green, D. A., 2011, A colour scheme for the display of astronomical
+intensity images. Bulletin of the Astronomical Society of India, 39, 289.
+(2011BASI…39..289G at ADS.)
+<a class="reference external" href="http://adsabs.harvard.edu/abs/2011arXiv1108.5083G">http://adsabs.harvard.edu/abs/2011arXiv1108.5083G</a>
+<a class="reference external" href="https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/">https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/</a></p>
+</div></blockquote>
+<dl class="function">
+<dt id="chaco.colormap_generators.adjust_hue">
+<code class="sig-prename descclassname">chaco.colormap_generators.</code><code class="sig-name descname">adjust_hue</code><span class="sig-paren">(</span><em class="sig-param">msh_sat</em>, <em class="sig-param">m_unsat</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.colormap_generators.adjust_hue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adjust the hue when interpolating to an unsaturated color.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>msh_sat</strong> (<em>float array</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Saturated Msh color at an endpoint of the colormap.</p></li>
+<li><p><strong>m_unsat</strong> (<em>float</em>) – The magnitude of the target unsaturated color.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>h_adjusted</strong> – The adjusted target hue value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.colormap_generators.generate_cubehelix_palette">
+<code class="sig-prename descclassname">chaco.colormap_generators.</code><code class="sig-name descname">generate_cubehelix_palette</code><span class="sig-paren">(</span><em class="sig-param">start=0.5</em>, <em class="sig-param">rot=-1.5</em>, <em class="sig-param">saturation=1.2</em>, <em class="sig-param">lightness_range=(0.0</em>, <em class="sig-param">1.0)</em>, <em class="sig-param">gamma=1.0</em>, <em class="sig-param">n_colors=256</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.colormap_generators.generate_cubehelix_palette" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a sequential color palette from black to white spiraling
+through intermediate colors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<em>float between 0.0 and 3.0</em><em>, </em><em>optional</em>) – The starting hue. 0 is blue, 1 is red, 2 is green.</p></li>
+<li><p><strong>rot</strong> (<em>float</em><em>, </em><em>optional</em>) – How many rotations to go in hue space.</p></li>
+<li><p><strong>saturation</strong> (<em>float</em><em>, </em><em>optional</em>) – The saturation intensity factor.</p></li>
+<li><p><strong>lightness_range</strong> (<em>(</em><em>float</em><em>, </em><em>float</em><em>)</em><em>, </em><em>optional</em>) – The range of lightness values to interpolate between.</p></li>
+<li><p><strong>gamma</strong> (<em>float</em><em>, </em><em>optional</em>) – The gamma exponent adjustment to apply to the lightness values.</p></li>
+<li><p><strong>n_colors</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of colors to generate in the palette.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>srgb_palette</strong> – RGB color palette.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float array (n_colors, 3)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.colormap_generators.generate_diverging_palette">
+<code class="sig-prename descclassname">chaco.colormap_generators.</code><code class="sig-name descname">generate_diverging_palette</code><span class="sig-paren">(</span><em class="sig-param">srgb1</em>, <em class="sig-param">srgb2</em>, <em class="sig-param">n_colors=256</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.colormap_generators.generate_diverging_palette" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a diverging color palette with two endpoint colors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>srgb2</strong> (<em>srgb1</em><em>,</em>) – RGB colors for the endpoints. An unsaturated white/grey color will be
+in the middle.</p></li>
+<li><p><strong>n_colors</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of colors to generate in the palette.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>srgb_palette</strong> – RGB color palette.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float array (n_colors, 3)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.colormap_generators.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

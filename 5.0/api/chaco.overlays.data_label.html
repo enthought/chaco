@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.overlays.data_label module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.overlays.data_label module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.overlays.data_label">
+<span id="chaco-overlays-data-label-module"></span><h1>chaco.overlays.data_label module<a class="headerlink" href="#module-chaco.overlays.data_label" title="Permalink to this headline">¶</a></h1>
+<p>Defines the DataLabel class and related trait and function.</p>
+<dl class="class">
+<dt id="chaco.overlays.data_label.DataLabel">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.overlays.data_label.</code><code class="sig-name descname">DataLabel</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.data_label.DataLabel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.overlays.tooltip.html#chaco.overlays.tooltip.ToolTip" title="chaco.overlays.tooltip.ToolTip"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.overlays.tooltip.ToolTip</span></code></a></p>
+<p>A label on a point in data space.</p>
+<p>Optionally, an arrow is drawn to the point.</p>
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.arrow_color">
+<code class="sig-name descname">arrow_color</code><em class="property"> = ColorTrait(&quot;black&quot;)</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.arrow_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the arrow.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.arrow_max_length">
+<code class="sig-name descname">arrow_max_length</code><em class="property"> = Float(inf)</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.arrow_max_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>The maximum length of the arrow before it will be drawn.  By default,
+the arrow will be drawn regardless of how long it is.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.arrow_min_length">
+<code class="sig-name descname">arrow_min_length</code><em class="property"> = Float(0)</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.arrow_min_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>The minimum length of the arrow before it will be drawn.  By default,
+the arrow will be drawn regardless of how short it is.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.arrow_root">
+<code class="sig-name descname">arrow_root</code><em class="property"> = Trait(&quot;auto&quot;, &quot;auto&quot;, &quot;top left&quot;, &quot;top right&quot;, &quot;bottom left&quot;, …</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.arrow_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>The position of the base of the arrow on the label.  If this
+is ‘auto’, then the label uses <strong>label_position</strong>.  Otherwise, it
+treats the label as if it were at the label position indicated by
+this attribute.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.arrow_size">
+<code class="sig-name descname">arrow_size</code><em class="property"> = Float(10)</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.arrow_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The length of the arrowhead, in screen points (e.g., pixels).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.arrow_visible">
+<code class="sig-name descname">arrow_visible</code><em class="property"> = Bool(True)   # FIXME: replace with some sort of ArrowStyle</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.arrow_visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw an arrow from the label to the data point?  Only
+used if <strong>data_point</strong> is not None.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.clip_to_plot">
+<code class="sig-name descname">clip_to_plot</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.clip_to_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the label clip itself against the main plot area?  If not, then
+the label draws into the padding area (where axes typically reside).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.corner_radius">
+<code class="sig-name descname">corner_radius</code><em class="property"> = Float(10)</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.corner_radius" title="Permalink to this definition">¶</a></dt>
+<dd><p>The radius (in screen coordinates) of the curved corners of the “bubble”</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.custom_symbol">
+<code class="sig-name descname">custom_symbol</code><em class="property"> = Any</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.custom_symbol" title="Permalink to this definition">¶</a></dt>
+<dd><p>The symbol to use if <strong>marker</strong> is set to “custom”. This attribute must
+be a compiled path for the given Kiva context.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.data_point">
+<code class="sig-name descname">data_point</code><em class="property"> = ArrayOrNone()</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.data_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>The point in data space where this label should anchor itself.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.label_format">
+<code class="sig-name descname">label_format</code><em class="property"> = Str(&quot;(%(x)f, %(y)f)&quot;)</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.label_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>The format string that determines the label’s text.  This string is
+formatted using a dict containing the keys ‘x’ and ‘y’, corresponding to
+data space values.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.label_position">
+<code class="sig-name descname">label_position</code><em class="property"> = LabelPositionTrait</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.label_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>The location of the data label relative to the data point.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.label_style">
+<code class="sig-name descname">label_style</code><em class="property"> = Enum('box', 'bubble')</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.label_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>‘box’ is a simple rectangular box, with an arrow that is a single line
+with an arrowhead at the data point.
+‘bubble’ can be given rounded corners (by setting <cite>corner_radius</cite>), and
+the ‘arrow’ is a thin triangular wedge with its point at the data point.
+When label_style is ‘bubble’, the following traits are ignored:
+arrow_size, arrow_color, arrow_root, and arrow_max_length.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.label_text">
+<code class="sig-name descname">label_text</code><em class="property"> = Str</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.label_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>The text to show on the label, or above the coordinates for the label,
+if show_label_coords is True</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.marker">
+<code class="sig-name descname">marker</code><em class="property"> = MarkerTrait</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.marker" title="Permalink to this definition">¶</a></dt>
+<dd><p>The type of marker to use.  This is a mapped trait using strings as the
+keys.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.marker_color">
+<code class="sig-name descname">marker_color</code><em class="property"> = ColorTrait(&quot;red&quot;)</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.marker_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the inside of the marker.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.marker_line_color">
+<code class="sig-name descname">marker_line_color</code><em class="property"> = ColorTrait(&quot;black&quot;)</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.marker_line_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color out of the border drawn around the marker.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.marker_line_width">
+<code class="sig-name descname">marker_line_width</code><em class="property"> = Float(1.0)</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.marker_line_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>The thickness, in pixels, of the outline to draw around the marker.
+If this is 0, no outline will be drawn.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.marker_size">
+<code class="sig-name descname">marker_size</code><em class="property"> = Int(4)</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.marker_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pixel size of the marker (doesn’t include the thickness of the
+outline).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.marker_visible">
+<code class="sig-name descname">marker_visible</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.marker_visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mark the point on the data that this label refers to?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.overlays.data_label.DataLabel.overlay">
+<code class="sig-name descname">overlay</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the tooltip overlaid on another component.</p>
+<p>Overrides and extends ToolTip.overlay()</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.show_label_coords">
+<code class="sig-name descname">show_label_coords</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.show_label_coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag whether to show coordinates with the label or not.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.xmid">
+<code class="sig-name descname">xmid</code><em class="property"> = Property(Float, observe=['x', 'x2'])</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.xmid" title="Permalink to this definition">¶</a></dt>
+<dd><p>The center x position (average of x and x2)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.data_label.DataLabel.ymid">
+<code class="sig-name descname">ymid</code><em class="property"> = Property(Float, observe=['y', 'y2'])</em><a class="headerlink" href="#chaco.overlays.data_label.DataLabel.ymid" title="Permalink to this definition">¶</a></dt>
+<dd><p>The center y position (average of y and y2)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.overlays.data_label.draw_arrow">
+<code class="sig-prename descclassname">chaco.overlays.data_label.</code><code class="sig-name descname">draw_arrow</code><span class="sig-paren">(</span><em class="sig-param">gc</em>, <em class="sig-param">pt1</em>, <em class="sig-param">pt2</em>, <em class="sig-param">color</em>, <em class="sig-param">arrowhead_size=10.0</em>, <em class="sig-param">offset1=0</em>, <em class="sig-param">offset2=0</em>, <em class="sig-param">arrow=None</em>, <em class="sig-param">minlen=0</em>, <em class="sig-param">maxlen=inf</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.data_label.draw_arrow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders an arrow from <em>pt1</em> to <em>pt2</em>.  If gc is None, then just returns
+the arrow object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gc</strong> (<em>graphics context</em>) – where to render the arrow</p></li>
+<li><p><strong>pt1</strong> (<em>point</em>) – the origin of the arrow</p></li>
+<li><p><strong>pt2</strong> (<em>point</em>) – where the arrow is pointing</p></li>
+<li><p><strong>color</strong> (<em>a 3-</em><em> or </em><em>4-tuple of color value</em>) – the color to use for the arrow stem and head</p></li>
+<li><p><strong>arrowhead_size</strong> (<em>number</em>) – screen units corresponding to the length of the arrowhead</p></li>
+<li><p><strong>offset1</strong> (<em>number</em>) – the amount of space from the start of the arrow to pt1</p></li>
+<li><p><strong>offset2</strong> (<em>number</em>) – the amount of space from the tip of the arrow to pt2</p></li>
+<li><p><strong>arrow</strong> (<em>object</em>) – an opaque object returned by previous calls to draw_arrow.  If this
+argument is provided, all other arguments (except gc) are ignored</p></li>
+<li><p><strong>minlen</strong> (<em>number</em><em> or </em><em>None</em>) – the minimum length of the arrow; if the arrow is shorter than this,
+it will not be drawn</p></li>
+<li><p><strong>maxlen</strong> (<em>number</em><em> or </em><em>None</em>) – the maximum length of the arrow; if the arrow is longer than this, it
+will not be drawn</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>An ‘arrow’ (opaque object) which can be passed in to subsequent</em></p></li>
+<li><p><em>calls to this method to short-circuit some of the computation.</em></p></li>
+<li><p><em>Even if an arrow is not drawn (due to minlen/maxlen restrictions),</em></p></li>
+<li><p><em>an arrow will be returned.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.overlays.data_label.find_region">
+<code class="sig-prename descclassname">chaco.overlays.data_label.</code><code class="sig-name descname">find_region</code><span class="sig-paren">(</span><em class="sig-param">px</em>, <em class="sig-param">py</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">x2</em>, <em class="sig-param">y2</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.data_label.find_region" title="Permalink to this definition">¶</a></dt>
+<dd><p>Classify the location of the point (px, py) relative to a rectangle.</p>
+<p>(x, y) and (x2, y2) are the lower-left and upper-right corners of the
+rectangle, respectively.  (px, py) is classified as “left”, “right”,
+“top”, “bottom” or “inside”, according to the following diagram:</p>
+<blockquote>
+<div><blockquote>
+<div><dl class="simple">
+<dt>    top      /  # noqa</dt><dd><dl class="simple">
+<dt>           /  # noqa</dt><dd><p>+———-+  # noqa</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>left |  inside  | right  # noqa</dt><dd><blockquote>
+<div><blockquote>
+<div><p>+———-+  # noqa</p>
+</div></blockquote>
+<p>/             # noqa</p>
+</div></blockquote>
+<p>/    bottom     # noqa</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.overlays.data_label.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

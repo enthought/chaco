@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.tools.lasso_selection module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.tools.lasso_selection module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.tools.lasso_selection">
+<span id="chaco-tools-lasso-selection-module"></span><h1>chaco.tools.lasso_selection module<a class="headerlink" href="#module-chaco.tools.lasso_selection" title="Permalink to this headline">¶</a></h1>
+<p>Defines the LassoSelection controller class.</p>
+<dl class="class">
+<dt id="chaco.tools.lasso_selection.LassoSelection">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.lasso_selection.</code><code class="sig-name descname">LassoSelection</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.abstract_controller.html#chaco.abstract_controller.AbstractController" title="chaco.abstract_controller.AbstractController"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_controller.AbstractController</span></code></a></p>
+<p>A controller that represents the interaction of “lassoing” a set of
+points.</p>
+<p>“Lassoing” means drawing an arbitrary selection region around the points
+by dragging the mouse along the outline of the region.</p>
+<dl class="attribute">
+<dt id="chaco.tools.lasso_selection.LassoSelection.dataspace_points">
+<code class="sig-name descname">dataspace_points</code><em class="property"> = Property(Array)</em><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.dataspace_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>An Nx2 array of points in data space representing all selected points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.lasso_selection.LassoSelection.disjoint_selections">
+<code class="sig-name descname">disjoint_selections</code><em class="property"> = Property(List)</em><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.disjoint_selections" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of all the selection polygons.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.lasso_selection.LassoSelection.drag_button">
+<code class="sig-name descname">drag_button</code><em class="property"> = Enum(&quot;left&quot;, &quot;right&quot;)</em><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.drag_button" title="Permalink to this definition">¶</a></dt>
+<dd><p>The button which this tool responds to</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.lasso_selection.LassoSelection.event_state">
+<code class="sig-name descname">event_state</code><em class="property"> = Enum(&quot;normal&quot;, &quot;selecting&quot;)</em><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.event_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>The possible event states of this selection tool (overrides
+enable.Interactor).</p>
+<dl class="simple">
+<dt>normal:</dt><dd><p>Nothing has been selected, and the user is not dragging the mouse.</p>
+</dd>
+<dt>selecting:</dt><dd><p>The user is dragging the mouse and is actively changing the
+selection region.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.lasso_selection.LassoSelection.incremental_select">
+<code class="sig-name descname">incremental_select</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.incremental_select" title="Permalink to this definition">¶</a></dt>
+<dd><p>If True, the selection mask is updated as the mouse moves, rather
+than only at the beginning and end of the selection operation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.lasso_selection.LassoSelection.metadata_name">
+<code class="sig-name descname">metadata_name</code><em class="property"> = Str(&quot;selection&quot;)</em><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.metadata_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the metadata on the datasource that we will write
+the selection mask to</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.lasso_selection.LassoSelection.normal_key_pressed">
+<code class="sig-name descname">normal_key_pressed</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.normal_key_pressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the user pressing a key in the ‘normal’ state.</p>
+<p>If the user presses the Escape key, the tool is reset.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.lasso_selection.LassoSelection.normal_left_down">
+<code class="sig-name descname">normal_left_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.normal_left_down" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.lasso_selection.LassoSelection.normal_mouse_down">
+<code class="sig-name descname">normal_mouse_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.normal_mouse_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the left mouse button being pressed while the tool is
+in the ‘normal’ state.</p>
+<p>Puts the tool into ‘selecting’ mode, and starts defining the selection.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.lasso_selection.LassoSelection.normal_right_down">
+<code class="sig-name descname">normal_right_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.normal_right_down" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.lasso_selection.LassoSelection.plot">
+<code class="sig-name descname">plot</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mapping from screen space to data space. By default, it is just
+self.component.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.lasso_selection.LassoSelection.selecting_left_up">
+<code class="sig-name descname">selecting_left_up</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.selecting_left_up" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.lasso_selection.LassoSelection.selecting_mouse_leave">
+<code class="sig-name descname">selecting_mouse_leave</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.selecting_mouse_leave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse leaving the plot when the tool is in the
+‘selecting’ state.</p>
+<p>Ends the selection operation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.lasso_selection.LassoSelection.selecting_mouse_move">
+<code class="sig-name descname">selecting_mouse_move</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.selecting_mouse_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse moving when the tool is in the ‘selecting’ state.</p>
+<p>The selection is extended to the current mouse position.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.lasso_selection.LassoSelection.selecting_mouse_up">
+<code class="sig-name descname">selecting_mouse_up</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.selecting_mouse_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse button coming up in the ‘selecting’ state.</p>
+<p>Completes the selection and switches to the ‘normal’ state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.lasso_selection.LassoSelection.selecting_right_up">
+<code class="sig-name descname">selecting_right_up</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.selecting_right_up" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.lasso_selection.LassoSelection.selection_changed">
+<code class="sig-name descname">selection_changed</code><em class="property"> = Event</em><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.selection_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fires when the selection mask changes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.lasso_selection.LassoSelection.selection_completed">
+<code class="sig-name descname">selection_completed</code><em class="property"> = Event</em><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.selection_completed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fires when the user release the mouse button and finalizes the selection.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.lasso_selection.LassoSelection.selection_datasource">
+<code class="sig-name descname">selection_datasource</code><em class="property"> = Instance(AbstractDataSource)</em><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.selection_datasource" title="Permalink to this definition">¶</a></dt>
+<dd><p>The data source that the mask of selected points is attached to.  Note
+that the indices in this data source must match the indices of the data
+in the plot.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.lasso_selection.LassoSelection.selection_mode">
+<code class="sig-name descname">selection_mode</code><em class="property"> = Enum(&quot;include&quot;, &quot;exclude&quot;, &quot;invert&quot;)</em><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.selection_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The selection mode of the lasso pointer: “include”, “exclude” or
+“invert” points from the selection. The “include” and “exclude”
+settings essentially invert the selection mask. The “invert” setting
+differs from “exclude” in that “invert” inverses the selection of all
+points the the lasso’ed polygon, while “exclude” operates only on
+points included in a previous selection.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.lasso_selection.LassoSelection.updated">
+<code class="sig-name descname">updated</code><em class="property"> = Event</em><a class="headerlink" href="#chaco.tools.lasso_selection.LassoSelection.updated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fires whenever <strong>dataspace_points</strong> changes, necessitating a redraw of the
+selection region.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.tools.lasso_selection.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

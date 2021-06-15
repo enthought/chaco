@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Chaco 5.0.0 &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
+    <link rel="stylesheet" href="_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="_static/img/favicon.ico">
+    <link rel="search" title="Search" href="search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="#" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="chaco-version">
+<h1>Chaco 5.0.0<a class="headerlink" href="#chaco-version" title="Permalink to this headline">¶</a></h1>
+<p>Chaco is a Python package for building interactive and custom 2-D plots and
+visualizations.  Chaco facilitates writing plotting applications at all levels
+of complexity, from simple scripts with hard-coded data to large plotting
+programs with complex data interrelationships and a multitude of interactive
+tools.  While Chaco generates attractive static plots for publication and
+presentation, Chaco differs from tools like Matplotlib in that it also works
+well for dynamic interactive data visualization and exploration.  Chaco is part
+of the Enthought Tool Suite.</p>
+<a class="reference internal image-reference" href="_images/chaco_show.png"><img alt="_images/chaco_show.png" class="align-center" src="_images/chaco_show.png" style="width: 800px;" /></a>
+<p>Chaco includes renderers for many popular plot types, built-in implementations of
+common interactions with those plots, and a framework for extending and
+customizing plots and interactions.  Chaco can also render graphics in a
+non-interactive fashion to images, in either raster or vector formats, and it
+has a subpackage for doing command-line plotting or simple scripting.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Chaco and all of its dependencies (including the PyQt backend) can be
+installed using the <a class="reference external" href="https://www.enthought.com/product/enthought-deployment-manager/">Enthought Deployment Manager</a> (formerly
+EPD):</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">edm install chaco pyqt5</span>
+</pre></div>
+</div>
+<p>For full installation options, including installation from source, see the
+<a class="reference internal" href="user_manual/installation.html#installation"><span class="std std-ref">installation instructions</span></a>.</p>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>For developers exploring Chaco for the first time, these tutorials and examples
+give a good overview of the capabilities of Chaco:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="annotated_examples.html#examples"><span class="std std-ref">Sample Plot Gallery</span></a></p></li>
+<li><p><a class="reference internal" href="user_manual/chaco_tutorial.html#tutorial"><span class="std std-ref">Tutorial: Interactive plotting with Chaco</span></a></p></li>
+<li><p>Examples:</p>
+<ul>
+<li><p><a class="reference internal" href="user_manual/tutorial_van_der_waal.html#tutorial-van-der-waal"><span class="std std-ref">Modeling Van del Waal’s Equations</span></a></p></li>
+<li><p><a class="reference internal" href="user_manual/tutorial_hyetograph.html#tutorial-hyetograph"><span class="std std-ref">Creating an interactive Hyetograph</span></a></p></li>
+</ul>
+</li>
+</ul>
+<p>There is also a <a class="reference internal" href="user_manual/how_do_i.html#how-do-i"><span class="std std-ref">How Do I…?</span></a> page which provides answers to
+issues and common tricks that help when building Chaco applications.</p>
+<p>For comprehensive documentation, we have:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="user_manual/index.html#user-guide"><span class="std std-ref">User Guide</span></a></p></li>
+<li><p><a class="reference internal" href="developer_reference/index.html#developer-reference"><span class="std std-ref">Developer Reference</span></a></p></li>
+<li><p><a class="reference internal" href="api.html#api-reference"><span class="std std-ref">API Reference</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="reporting-bugs-and-contributing">
+<h2>Reporting bugs and contributing<a class="headerlink" href="#reporting-bugs-and-contributing" title="Permalink to this headline">¶</a></h2>
+<p>Since Chaco is open source and hosted on
+<a class="reference external" href="https://github.com/enthought/chaco">Github</a>, the development version can
+always be checked out from Github, forked, and modified at will. When a bug is
+found, please submit an issue in the
+<a class="reference external" href="https://github.com/enthought/chaco/issues">issue page</a>. If you would like to
+share a bug fix or a new feature, simply submit a Pull Request from your fork.
+Don’t forget to specify very clearly what code to run to reproduce the issue,
+what the logic of the fix is and to add one or more unit tests to ensure future
+stability. The Pull Request description can and often needs to contain
+screenshots of the issue or the fix.</p>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p>As part of the <a class="reference external" href="http://docs.enthought.com/ets">Enthought Tool Suite</a>, Chaco is
+free and open source under a BSD license:</p>
+<p>This software is OSI Certified Open Source Software.
+OSI Certified is a certification mark of the Open Source Initiative.</p>
+<p>Copyright (c) 2005-2021, Enthought, Inc.
+All rights reserved.</p>
+<p>Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:</p>
+<ul class="simple">
+<li><p>Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.</p></li>
+<li><p>Redistributions in binary form must reproduce the above copyright notice,
+this list of conditions and the following disclaimer in the documentation
+and/or other materials provided with the distribution.</p></li>
+<li><p>Neither the name of Enthought, Inc. nor the names of its contributors may
+be used to endorse or promote products derived from this software without
+specific prior written permission.</p></li>
+</ul>
+<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+<p>DISCLOSURE: Under the terms of the Matplotlib 0.83.2 License Agreement,
+Enthought must disclose where the Matplotlib source code has been used:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Chaco makes use of some code from Matplotlib for creating linear
+segmented colormaps.  This code from Matplotlib has been incorporated
+directly into the Chaco LinearSegmentedColormap class and is marked
+with the tag #### matplotlib ####.</p></li>
+<li><p>The “contour” module is also from the Matplotlib project.</p></li>
+</ul>
+</div></blockquote>
+<p>The above code is licensed under the terms of the Matplotlib license,
+reproduced below:</p>
+</div>
+<div class="section" id="license-agreement-for-matplotlib-0-83-2">
+<h2>LICENSE AGREEMENT FOR MATPLOTLIB 0.83.2<a class="headerlink" href="#license-agreement-for-matplotlib-0-83-2" title="Permalink to this headline">¶</a></h2>
+<p>1. This LICENSE AGREEMENT is between the John D. Hunter (“JDH”), and the
+Individual or Organization (“Licensee”) accessing and otherwise using
+matplotlib software in source or binary form and its associated
+documentation.</p>
+<p>2. Subject to the terms and conditions of this License Agreement, JDH
+hereby grants Licensee a nonexclusive, royalty-free, world-wide license
+to reproduce, analyze, test, perform and/or display publicly, prepare
+derivative works, distribute, and otherwise use matplotlib 0.83.2
+alone or in any derivative version, provided, however, that JDH’s
+License Agreement and JDH’s notice of copyright, i.e., “Copyright (c)
+2002-2004 John D. Hunter; All Rights Reserved” are retained in
+matplotlib 0.83.2 alone or in any derivative version prepared by
+Licensee.</p>
+<p>3. In the event Licensee prepares a derivative work that is based on or
+incorporates matplotlib 0.83.2 or any part thereof, and wants to
+make the derivative work available to others as provided herein, then
+Licensee hereby agrees to include in any such work a brief summary of
+the changes made to matplotlib 0.83.2.</p>
+<p>4. JDH is making matplotlib 0.83.2 available to Licensee on an “AS
+IS” basis.  JDH MAKES NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR
+IMPLIED.  BY WAY OF EXAMPLE, BUT NOT LIMITATION, JDH MAKES NO AND
+DISCLAIMS ANY REPRESENTATION OR WARRANTY OF MERCHANTABILITY OR FITNESS
+FOR ANY PARTICULAR PURPOSE OR THAT THE USE OF MATPLOTLIB 0.83.2
+WILL NOT INFRINGE ANY THIRD PARTY RIGHTS.</p>
+<p>5. JDH SHALL NOT BE LIABLE TO LICENSEE OR ANY OTHER USERS OF MATPLOTLIB
+0.83.2 FOR ANY INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES OR
+LOSS AS A RESULT OF MODIFYING, DISTRIBUTING, OR OTHERWISE USING
+MATPLOTLIB 0.83.2, OR ANY DERIVATIVE THEREOF, EVEN IF ADVISED OF
+THE POSSIBILITY THEREOF.</p>
+<p>6. This License Agreement will automatically terminate upon a material
+breach of its terms and conditions.</p>
+<p>7. Nothing in this License Agreement shall be deemed to create any
+relationship of agency, partnership, or joint venture between JDH and
+Licensee.  This License Agreement does not grant permission to use JDH
+trademarks or trade name in a trademark sense to endorse or promote
+products or services of Licensee, or any third party.</p>
+<p>8. By copying, installing or otherwise using matplotlib 0.83.2,
+Licensee agrees to be bound by the terms and conditions of this License
+Agreement.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="#">
+              <img class="logo" src="_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="#">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Chaco 5.0.0</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+<li><a class="reference internal" href="#reporting-bugs-and-contributing">Reporting bugs and contributing</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
+<li><a class="reference internal" href="#license-agreement-for-matplotlib-0-83-2">LICENSE AGREEMENT FOR MATPLOTLIB 0.83.2</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <div>
+    <a href="_sources/index.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

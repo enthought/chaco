@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.plots.polygon_plot module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.plots.polygon_plot module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.plots.polygon_plot">
+<span id="chaco-plots-polygon-plot-module"></span><h1>chaco.plots.polygon_plot module<a class="headerlink" href="#module-chaco.plots.polygon_plot" title="Permalink to this headline">¶</a></h1>
+<p>Defines the PolygonPlot class.</p>
+<dl class="class">
+<dt id="chaco.plots.polygon_plot.PolygonPlot">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.plots.polygon_plot.</code><code class="sig-name descname">PolygonPlot</code><span class="sig-paren">(</span><em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.polygon_plot.PolygonPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot" title="chaco.base_xy_plot.BaseXYPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.base_xy_plot.BaseXYPlot</span></code></a></p>
+<p>Plots a polygon in dataspace.</p>
+<p>Assuming that the index and value mappers are linear mappers, and that
+“index” corresponds to X-coordinates and “value” corresponds to
+Y-coordinates, the points are arranged in a counter-clockwise fashion.
+The polygon is closed automatically, so there is no need to reproduce
+the first point as the last point.</p>
+<p>Nonlinear mappers are possible, but the results may be unexpected. Only the
+data-space points are mapped in a nonlinear fashion. Straight lines
+connecting them in a linear screen-space become curved in a nonlinear
+screen-space; however, the drawing still contains straight lines in
+screen-space.</p>
+<p>If you don’t want the edge of the polygon to be drawn, set <strong>edge_color</strong>
+to transparent; don’t try to do this by setting <strong>edge_width</strong> to 0. In
+some drawing systems, such as PostScript, a line width of 0 means to make
+the line as small as possible while still putting ink on the page.</p>
+<dl class="attribute">
+<dt id="chaco.plots.polygon_plot.PolygonPlot.edge_color">
+<code class="sig-name descname">edge_color</code><em class="property"> = black_color_trait(requires_redraw=True)</em><a class="headerlink" href="#chaco.plots.polygon_plot.PolygonPlot.edge_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the line on the edge of the polygon.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.polygon_plot.PolygonPlot.edge_style">
+<code class="sig-name descname">edge_style</code><em class="property"> = LineStyle(requires_redraw=True)</em><a class="headerlink" href="#chaco.plots.polygon_plot.PolygonPlot.edge_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>The line dash style for the edge of the polygon.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.polygon_plot.PolygonPlot.edge_width">
+<code class="sig-name descname">edge_width</code><em class="property"> = Float(1.0, requires_redraw=True)</em><a class="headerlink" href="#chaco.plots.polygon_plot.PolygonPlot.edge_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>The thickness of the edge of the polygon.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.polygon_plot.PolygonPlot.effective_edge_color">
+<code class="sig-name descname">effective_edge_color</code><em class="property"> = Property(Tuple, observe=[&quot;edge_color&quot;, &quot;alpha&quot;])</em><a class="headerlink" href="#chaco.plots.polygon_plot.PolygonPlot.effective_edge_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The RGBA tuple for rendering edges. It is always a tuple of length 4.
+It has the same RGB values as <a class="reference internal" href="#chaco.plots.polygon_plot.PolygonPlot.edge_color" title="chaco.plots.polygon_plot.PolygonPlot.edge_color"><code class="xref py py-attr docutils literal notranslate"><span class="pre">edge_color</span></code></a>, and its alpha value
+is the alpha value of self.edge_color multiplied by self.alpha.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.polygon_plot.PolygonPlot.effective_face_color">
+<code class="sig-name descname">effective_face_color</code><em class="property"> = Property(Tuple, observe=[&quot;face_color&quot;, &quot;alpha&quot;])</em><a class="headerlink" href="#chaco.plots.polygon_plot.PolygonPlot.effective_face_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The RGBA tuple for rendering the face. It is always a tuple of length
+4. It has the same RGB values as <a class="reference internal" href="#chaco.plots.polygon_plot.PolygonPlot.face_color" title="chaco.plots.polygon_plot.PolygonPlot.face_color"><code class="xref py py-attr docutils literal notranslate"><span class="pre">face_color</span></code></a>, and its alpha
+value is the alpha value of self.face_color multiplied by self.alpha.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.polygon_plot.PolygonPlot.face_color">
+<code class="sig-name descname">face_color</code><em class="property"> = transparent_color_trait(requires_redraw=True)</em><a class="headerlink" href="#chaco.plots.polygon_plot.PolygonPlot.face_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the face of the polygon.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plots.polygon_plot.PolygonPlot.hittest">
+<code class="sig-name descname">hittest</code><span class="sig-paren">(</span><em class="sig-param">screen_pt</em>, <em class="sig-param">threshold=7.0</em>, <em class="sig-param">return_distance=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.polygon_plot.PolygonPlot.hittest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs point-in-polygon testing or point/line proximity testing.
+If self.hittest_type is “line” or “point”, then behaves like the
+parent class BaseXYPlot.hittest().</p>
+<p>If self.hittest_type is “poly”, then returns True if the given
+point is inside the polygon, and False otherwise.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.polygon_plot.PolygonPlot.hittest_type">
+<code class="sig-name descname">hittest_type</code><em class="property"> = Enum(&quot;poly&quot;, &quot;point&quot;, &quot;line&quot;)</em><a class="headerlink" href="#chaco.plots.polygon_plot.PolygonPlot.hittest_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override the hittest_type trait inherited from BaseXYPlot</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.plots.polygon_plot.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

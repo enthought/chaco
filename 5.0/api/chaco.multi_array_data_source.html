@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.multi_array_data_source module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.multi_array_data_source module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.multi_array_data_source">
+<span id="chaco-multi-array-data-source-module"></span><h1>chaco.multi_array_data_source module<a class="headerlink" href="#module-chaco.multi_array_data_source" title="Permalink to this headline">¶</a></h1>
+<p>Defines the MultiArrayDataSource class.</p>
+<dl class="class">
+<dt id="chaco.multi_array_data_source.MultiArrayDataSource">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.multi_array_data_source.</code><code class="sig-name descname">MultiArrayDataSource</code><span class="sig-paren">(</span><em class="sig-param">data=array([]</em>, <em class="sig-param">dtype=float64)</em>, <em class="sig-param">sort_order='ascending'</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.multi_array_data_source.MultiArrayDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.abstract_data_source.html#chaco.abstract_data_source.AbstractDataSource" title="chaco.abstract_data_source.AbstractDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_data_source.AbstractDataSource</span></code></a></p>
+<p>A data source representing a single, continuous array of
+multidimensional numerical data.</p>
+<p>It is useful, for example, to define 2D vector data at each point of
+a scatter plot (as in QuiverPlot), or to represent multiple values
+for each index (as in MultiLinePlot).</p>
+<p>This class does not listen to the array for value changes;  To implement
+such behavior, define a subclass that hooks up the appropriate listeners.</p>
+<dl class="method">
+<dt id="chaco.multi_array_data_source.MultiArrayDataSource.get_bounds">
+<code class="sig-name descname">get_bounds</code><span class="sig-paren">(</span><em class="sig-param">) -&gt; tuple(min</em>, <em class="sig-param">max</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.multi_array_data_source.MultiArrayDataSource.get_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a tuple (min, max) of the bounding values for the data source.
+In the case of 2-D data, min and max are 2-D points that represent the
+bounding corners of a rectangle enclosing the data set.  Note that
+these values are not view-dependent, but represent intrinsic properties
+of the data source.</p>
+<p>If data is the empty set, then the min and max vals are 0.0.</p>
+<p>If <em>value</em> and <em>index</em> are both None, then the method returns the
+global minimum and maximum for the entire data set.
+If <em>value</em> is an integer, then the method returns the minimum and
+maximum along the <em>value</em> slice in the <strong>value_dimension</strong>.
+If <em>index</em> is an integer, then the method returns the minimum and
+maximum along the <em>index</em> slice in the <strong>index_direction</strong>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.multi_array_data_source.MultiArrayDataSource.get_data">
+<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; data_array<a class="headerlink" href="#chaco.multi_array_data_source.MultiArrayDataSource.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>If called with no arguments, this method returns a data array.
+Treat this data array as read-only, and do not alter it in-place.
+This data is contiguous and not masked.</p>
+<p>If <em>axes</em> is an integer or tuple, this method returns the data array,
+sliced along the <strong>index_dimension</strong>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.multi_array_data_source.MultiArrayDataSource.get_data_mask">
+<code class="sig-name descname">get_data_mask</code><span class="sig-paren">(</span><em class="sig-param">) -&gt; (data_array</em>, <em class="sig-param">mask_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.multi_array_data_source.MultiArrayDataSource.get_data_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements AbstractDataSource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.multi_array_data_source.MultiArrayDataSource.get_shape">
+<code class="sig-name descname">get_shape</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.multi_array_data_source.MultiArrayDataSource.get_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the shape of the multi-dimensional data source.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.multi_array_data_source.MultiArrayDataSource.get_size">
+<code class="sig-name descname">get_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#chaco.multi_array_data_source.MultiArrayDataSource.get_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements AbstractDataSource. Returns an integer estimate, or the
+exact size, of the dataset that get_data() returns. This method is
+useful for downsampling.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.multi_array_data_source.MultiArrayDataSource.get_value_size">
+<code class="sig-name descname">get_value_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; size<a class="headerlink" href="#chaco.multi_array_data_source.MultiArrayDataSource.get_value_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the size along the value dimension.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.multi_array_data_source.MultiArrayDataSource.index_dimension">
+<code class="sig-name descname">index_dimension</code><em class="property"> = Int(0)</em><a class="headerlink" href="#chaco.multi_array_data_source.MultiArrayDataSource.index_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dimensionality of the indices into this data source (overrides
+AbstractDataSource).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.multi_array_data_source.MultiArrayDataSource.is_masked">
+<code class="sig-name descname">is_masked</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#chaco.multi_array_data_source.MultiArrayDataSource.is_masked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if this data source’s data uses a mask. In this case,
+retrieve the data using get_data_mask() instead of get_data().
+If you call get_data() for this data source, it returns data, but that
+data may not be the expected data.)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.multi_array_data_source.MultiArrayDataSource.set_data">
+<code class="sig-name descname">set_data</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.multi_array_data_source.MultiArrayDataSource.set_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the data for this data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>array</em>) – The data to use.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.multi_array_data_source.MultiArrayDataSource.sort_order">
+<code class="sig-name descname">sort_order</code><em class="property"> = SortOrderTrait</em><a class="headerlink" href="#chaco.multi_array_data_source.MultiArrayDataSource.sort_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sort order of the data.
+This is a specialized optimization for 1-D arrays, but it’s an important
+one that’s used everywhere.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.multi_array_data_source.MultiArrayDataSource.value_dimension">
+<code class="sig-name descname">value_dimension</code><em class="property"> = Int(1)</em><a class="headerlink" href="#chaco.multi_array_data_source.MultiArrayDataSource.value_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dimensionality of the value at each index point (overrides
+AbstractDataSource).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.multi_array_data_source.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

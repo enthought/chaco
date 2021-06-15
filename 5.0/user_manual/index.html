@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>User Guide &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">User Guide</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="user-guide">
+<span id="id1"></span><h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#what-is-chaco">What is Chaco?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#core-ideas">Core Ideas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-chaco-with-edm">Installing Chaco with EDM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-chaco-from-source">Installing Chaco from Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#extension-modules">Extension Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules_and_classes.html">Commonly Used Modules and Classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules_and_classes.html#base-classes">Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_and_classes.html#data-objects">Data Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_and_classes.html#containers">Containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_and_classes.html#renderers">Renderers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_and_classes.html#tools">Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_and_classes.html#overlays-axis-grid-etc">Overlays: Axis, Grid, etc.</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="plots.html">Plots and Plot Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="plots.html#plots-are-components">Plots Are Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plots.html#plot-data">Plot Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plots.html#plot-factory-methods">Plot Factory Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plots.html#plot-configuration">Plot Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="containers.html">Containers and Layout</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="containers.html#chaco-containers">Chaco containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="containers.html#sizing-rendering-events">Sizing, rendering, events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="basic_elements/data_sources.html">Data Sources</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basic_elements/data_sources.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_elements/data_sources.html#events">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_elements/data_sources.html#list-of-chaco-data-sources">List of Chaco data sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="basic_elements/data_ranges.html">Data ranges</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basic_elements/data_ranges.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_elements/data_ranges.html#events">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_elements/data_ranges.html#list-of-chaco-data-ranges">List of Chaco data ranges</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="basic_elements/mappers.html">Mappers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basic_elements/mappers.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_elements/mappers.html#events">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_elements/mappers.html#list-of-chaco-data-mappers">List of Chaco data mappers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="basic_elements/plot_renderers.html">Plot renderers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basic_elements/plot_renderers.html#common-interface">Common interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_elements/plot_renderers.html#x-y-plots-interface">X-Y Plots interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_elements/plot_renderers.html#d-plots-interface">2D Plots interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_elements/plot_renderers.html#d-plots">1D Plots Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="basic_elements/tools.html">Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basic_elements/tools.html#inspector-type-tools">Inspector-type Tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="basic_elements/overlays.html">Overlays: Axis, Grid, etc.</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basic_elements/overlays.html#core-overlays">Core Overlays</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="plot_types.html">Plot types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="plot_types.html#x-y-plot-types">X-Y Plot Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_types.html#image-and-2d-plots">Image and 2D Plots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_types.html#other-plot-types">Other Plot Types</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="how_do_i.html">How Do I…?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="how_do_i.html#basics">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_do_i.html#layout-and-rendering">Layout and Rendering</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#where-does-the-name-chaco-come-from">Where does the name “Chaco” come from?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#what-are-the-pros-and-cons-of-chaco-vs-matplotlib">What are the pros and cons of Chaco vs. matplotlib?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="matplotlib_to_chaco.html">Matplotlib to Chaco Cheatsheet</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/user_manual/index.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

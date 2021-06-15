@@ -1,0 +1,41 @@
+..
+   (C) Copyright 2006-2021 Enthought, Inc., Austin, TX
+   All rights reserved.
+
+   This software is provided without warranty under the terms of the BSD
+   license included in LICENSE.txt and may be redistributed only under
+   the conditions described in the aforementioned license. The license
+   is also available online at http://www.enthought.com/licenses/BSD.txt
+
+   Thanks for using Enthought open source!
+
+chaco.overlays package
+======================
+
+.. automodule:: chaco.overlays
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. toctree::
+
+   chaco.overlays.aligned_container_overlay
+   chaco.overlays.api
+   chaco.overlays.colormapped_selection_overlay
+   chaco.overlays.container_overlay
+   chaco.overlays.coordinate_line_overlay
+   chaco.overlays.data_label
+   chaco.overlays.databox
+   chaco.overlays.lasso_overlay
+   chaco.overlays.legend
+   chaco.overlays.plot_label
+   chaco.overlays.scatter_inspector_overlay
+   chaco.overlays.simple_inspector_overlay
+   chaco.overlays.text_box_overlay
+   chaco.overlays.text_grid_overlay
+   chaco.overlays.tooltip
+
+
+.. toctree::
+
+   chaco.overlays.layers
