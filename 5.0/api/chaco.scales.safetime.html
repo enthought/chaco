@@ -1,0 +1,617 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.scales.safetime module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.scales.safetime module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.scales.safetime">
+<span id="chaco-scales-safetime-module"></span><h1>chaco.scales.safetime module<a class="headerlink" href="#module-chaco.scales.safetime" title="Permalink to this headline">¶</a></h1>
+<p>This module wraps the standard library time module to gracefully
+handle bad input values for time.</p>
+<dl class="function">
+<dt id="chaco.scales.safetime.asctime">
+<code class="sig-prename descclassname">chaco.scales.safetime.</code><code class="sig-name descname">asctime</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">tuple</em><span class="optional">]</span><span class="sig-paren">)</span> &#x2192; string<a class="headerlink" href="#chaco.scales.safetime.asctime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a time tuple to a string, e.g. ‘Sat Jun 06 16:26:11 1998’.
+When the time tuple is not present, current time as returned by localtime()
+is used.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.safetime.clock">
+<code class="sig-prename descclassname">chaco.scales.safetime.</code><code class="sig-name descname">clock</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; floating point number<a class="headerlink" href="#chaco.scales.safetime.clock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the CPU time or real time since the start of the process or since
+the first call to clock().  This has as much precision as the system
+records.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.safetime.ctime">
+<code class="sig-prename descclassname">chaco.scales.safetime.</code><code class="sig-name descname">ctime</code><span class="sig-paren">(</span><em class="sig-param">seconds</em><span class="sig-paren">)</span> &#x2192; string<a class="headerlink" href="#chaco.scales.safetime.ctime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a time in seconds since the Epoch to a string in local time.
+This is equivalent to asctime(localtime(seconds)). When the time tuple is
+not present, current time as returned by localtime() is used.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.safetime.get_clock_info">
+<code class="sig-prename descclassname">chaco.scales.safetime.</code><code class="sig-name descname">get_clock_info</code><span class="sig-paren">(</span><em class="sig-param">name: str</em><span class="sig-paren">)</span> &#x2192; dict<a class="headerlink" href="#chaco.scales.safetime.get_clock_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get information of the specified clock.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.safetime.gmtime">
+<code class="sig-prename descclassname">chaco.scales.safetime.</code><code class="sig-name descname">gmtime</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">seconds</em><span class="optional">]</span><span class="sig-paren">)</span> &#x2192; (tm_year, tm_mon, tm_mday, tm_hour, tm_min,<a class="headerlink" href="#chaco.scales.safetime.gmtime" title="Permalink to this definition">¶</a></dt>
+<dd><p>tm_sec, tm_wday, tm_yday, tm_isdst)</p>
+<p>Convert seconds since the Epoch to a time tuple expressing UTC (a.k.a.
+GMT).  When ‘seconds’ is not passed in, convert the current time instead.</p>
+<p>If the platform supports the tm_gmtoff and tm_zone, they are available as
+attributes only.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.safetime.localtime">
+<code class="sig-prename descclassname">chaco.scales.safetime.</code><code class="sig-name descname">localtime</code><span class="sig-paren">(</span><em class="sig-param">[seconds]) -&gt; (tm_year,tm_mon,tm_day,tm_hour,tm_min,tm_sec,tm_wday,tm_yday,tm_isdst</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.localtime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert seconds since the Epoch to a time tuple expressing local time.
+When ‘seconds’ is not passed in, convert the current time instead.</p>
+<p>Modified to accept timestamps before the Epoch.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.safetime.mktime">
+<code class="sig-prename descclassname">chaco.scales.safetime.</code><code class="sig-name descname">mktime</code><span class="sig-paren">(</span><em class="sig-param">tuple</em><span class="sig-paren">)</span> &#x2192; floating point number<a class="headerlink" href="#chaco.scales.safetime.mktime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a time tuple in local time to seconds since the Epoch. Invalid time
+tuples will be assigned the value 0.0 and a warning will be issued.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.safetime.monotonic">
+<code class="sig-prename descclassname">chaco.scales.safetime.</code><code class="sig-name descname">monotonic</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#chaco.scales.safetime.monotonic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Monotonic clock, cannot go backward.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.safetime.perf_counter">
+<code class="sig-prename descclassname">chaco.scales.safetime.</code><code class="sig-name descname">perf_counter</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#chaco.scales.safetime.perf_counter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performance counter for benchmarking.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.safetime.process_time">
+<code class="sig-prename descclassname">chaco.scales.safetime.</code><code class="sig-name descname">process_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#chaco.scales.safetime.process_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process time for profiling: sum of the kernel and user-space CPU time.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.safetime.sleep">
+<code class="sig-prename descclassname">chaco.scales.safetime.</code><code class="sig-name descname">sleep</code><span class="sig-paren">(</span><em class="sig-param">seconds</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.sleep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delay execution for a given number of seconds.  The argument may be
+a floating point number for subsecond precision.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.safetime.strftime">
+<code class="sig-prename descclassname">chaco.scales.safetime.</code><code class="sig-name descname">strftime</code><span class="sig-paren">(</span><em class="sig-param">format</em><span class="optional">[</span>, <em class="sig-param">tuple</em><span class="optional">]</span><span class="sig-paren">)</span> &#x2192; string<a class="headerlink" href="#chaco.scales.safetime.strftime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a time tuple to a string according to a format specification.
+See the library reference manual for formatting codes. When the time tuple
+is not present, current time as returned by localtime() is used.</p>
+<p>Commonly used format codes:</p>
+<p>%Y  Year with century as a decimal number.
+%m  Month as a decimal number [01,12].
+%d  Day of the month as a decimal number [01,31].
+%H  Hour (24-hour clock) as a decimal number [00,23].
+%M  Minute as a decimal number [00,59].
+%S  Second as a decimal number [00,61].
+%z  Time zone offset from UTC.
+%a  Locale’s abbreviated weekday name.
+%A  Locale’s full weekday name.
+%b  Locale’s abbreviated month name.
+%B  Locale’s full month name.
+%c  Locale’s appropriate date and time representation.
+%I  Hour (12-hour clock) as a decimal number [01,12].
+%p  Locale’s equivalent of either AM or PM.</p>
+<p>Other codes may be available on your platform.  See documentation for
+the C library strftime function.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.safetime.strptime">
+<code class="sig-prename descclassname">chaco.scales.safetime.</code><code class="sig-name descname">strptime</code><span class="sig-paren">(</span><em class="sig-param">string</em>, <em class="sig-param">format</em><span class="sig-paren">)</span> &#x2192; struct_time<a class="headerlink" href="#chaco.scales.safetime.strptime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a string to a time tuple according to a format specification.
+See the library reference manual for formatting codes (same as
+strftime()).</p>
+<p>Commonly used format codes:</p>
+<p>%Y  Year with century as a decimal number.
+%m  Month as a decimal number [01,12].
+%d  Day of the month as a decimal number [01,31].
+%H  Hour (24-hour clock) as a decimal number [00,23].
+%M  Minute as a decimal number [00,59].
+%S  Second as a decimal number [00,61].
+%z  Time zone offset from UTC.
+%a  Locale’s abbreviated weekday name.
+%A  Locale’s full weekday name.
+%b  Locale’s abbreviated month name.
+%B  Locale’s full month name.
+%c  Locale’s appropriate date and time representation.
+%I  Hour (12-hour clock) as a decimal number [01,12].
+%p  Locale’s equivalent of either AM or PM.</p>
+<p>Other codes may be available on your platform.  See documentation for
+the C library strftime function.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.scales.safetime.struct_time">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.scales.safetime.</code><code class="sig-name descname">struct_time</code><a class="headerlink" href="#chaco.scales.safetime.struct_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<p>The time value as returned by gmtime(), localtime(), and strptime(), and
+accepted by asctime(), mktime() and strftime().  May be considered as a
+sequence of 9 integers.</p>
+<p>Note that several fields’ values are not the same as those defined by
+the C language standard for struct tm.  For example, the value of the
+field tm_year is the actual year, not year - 1900.  See individual
+fields’ descriptions for details.</p>
+<dl class="attribute">
+<dt id="chaco.scales.safetime.struct_time.n_fields">
+<code class="sig-name descname">n_fields</code><em class="property"> = 11</em><a class="headerlink" href="#chaco.scales.safetime.struct_time.n_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.struct_time.n_sequence_fields">
+<code class="sig-name descname">n_sequence_fields</code><em class="property"> = 9</em><a class="headerlink" href="#chaco.scales.safetime.struct_time.n_sequence_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.struct_time.n_unnamed_fields">
+<code class="sig-name descname">n_unnamed_fields</code><em class="property"> = 0</em><a class="headerlink" href="#chaco.scales.safetime.struct_time.n_unnamed_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.struct_time.tm_gmtoff">
+<code class="sig-name descname">tm_gmtoff</code><a class="headerlink" href="#chaco.scales.safetime.struct_time.tm_gmtoff" title="Permalink to this definition">¶</a></dt>
+<dd><p>offset from UTC in seconds</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.struct_time.tm_hour">
+<code class="sig-name descname">tm_hour</code><a class="headerlink" href="#chaco.scales.safetime.struct_time.tm_hour" title="Permalink to this definition">¶</a></dt>
+<dd><p>hours, range [0, 23]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.struct_time.tm_isdst">
+<code class="sig-name descname">tm_isdst</code><a class="headerlink" href="#chaco.scales.safetime.struct_time.tm_isdst" title="Permalink to this definition">¶</a></dt>
+<dd><p>1 if summer time is in effect, 0 if not, and -1 if unknown</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.struct_time.tm_mday">
+<code class="sig-name descname">tm_mday</code><a class="headerlink" href="#chaco.scales.safetime.struct_time.tm_mday" title="Permalink to this definition">¶</a></dt>
+<dd><p>day of month, range [1, 31]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.struct_time.tm_min">
+<code class="sig-name descname">tm_min</code><a class="headerlink" href="#chaco.scales.safetime.struct_time.tm_min" title="Permalink to this definition">¶</a></dt>
+<dd><p>minutes, range [0, 59]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.struct_time.tm_mon">
+<code class="sig-name descname">tm_mon</code><a class="headerlink" href="#chaco.scales.safetime.struct_time.tm_mon" title="Permalink to this definition">¶</a></dt>
+<dd><p>month of year, range [1, 12]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.struct_time.tm_sec">
+<code class="sig-name descname">tm_sec</code><a class="headerlink" href="#chaco.scales.safetime.struct_time.tm_sec" title="Permalink to this definition">¶</a></dt>
+<dd><p>seconds, range [0, 61])</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.struct_time.tm_wday">
+<code class="sig-name descname">tm_wday</code><a class="headerlink" href="#chaco.scales.safetime.struct_time.tm_wday" title="Permalink to this definition">¶</a></dt>
+<dd><p>day of week, range [0, 6], Monday is 0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.struct_time.tm_yday">
+<code class="sig-name descname">tm_yday</code><a class="headerlink" href="#chaco.scales.safetime.struct_time.tm_yday" title="Permalink to this definition">¶</a></dt>
+<dd><p>day of year, range [1, 366]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.struct_time.tm_year">
+<code class="sig-name descname">tm_year</code><a class="headerlink" href="#chaco.scales.safetime.struct_time.tm_year" title="Permalink to this definition">¶</a></dt>
+<dd><p>year, for example, 1993</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.struct_time.tm_zone">
+<code class="sig-name descname">tm_zone</code><a class="headerlink" href="#chaco.scales.safetime.struct_time.tm_zone" title="Permalink to this definition">¶</a></dt>
+<dd><p>abbreviation of timezone name</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.safetime.time">
+<code class="sig-prename descclassname">chaco.scales.safetime.</code><code class="sig-name descname">time</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; floating point number<a class="headerlink" href="#chaco.scales.safetime.time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current time in seconds since the Epoch.
+Fractions of a second may be present if the system clock provides them.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.safetime.tzset">
+<code class="sig-prename descclassname">chaco.scales.safetime.</code><code class="sig-name descname">tzset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.tzset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize, or reinitialize, the local timezone to the value stored in
+os.environ[‘TZ’]. The TZ environment variable should be specified in
+standard Unix timezone format as documented in the tzset man page
+(eg. ‘US/Eastern’, ‘Europe/Amsterdam’). Unknown timezones will silently
+fall back to UTC. If the TZ environment variable is not set, the local
+timezone is set to the systems best guess of wallclock time.
+Changing the TZ environment variable without calling tzset <em>may</em> change
+the local timezone used by methods such as localtime, but this behaviour
+should not be relied on.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.safetime.safe_fromtimestamp">
+<code class="sig-prename descclassname">chaco.scales.safetime.</code><code class="sig-name descname">safe_fromtimestamp</code><span class="sig-paren">(</span><em class="sig-param">timestamp</em><span class="sig-paren">)</span> &#x2192; UTC time from POSIX timestamp.<a class="headerlink" href="#chaco.scales.safetime.safe_fromtimestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Timestamps outside of the valid range will be assigned datetime objects of
+Jan 1 of either MINYEAR or MAXYEAR, whichever appears closest.</p>
+<p>WARNING: This function does not behave properly with Daylight Savings Time,
+due to a documented issue with datetime arithmetic.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.scales.safetime.datetime">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.scales.safetime.</code><code class="sig-name descname">datetime</code><span class="sig-paren">(</span><em class="sig-param">year</em>, <em class="sig-param">month</em>, <em class="sig-param">day</em><span class="optional">[</span>, <em class="sig-param">hour</em><span class="optional">[</span>, <em class="sig-param">minute</em><span class="optional">[</span>, <em class="sig-param">second</em><span class="optional">[</span>, <em class="sig-param">microsecond</em><span class="optional">[</span>, <em class="sig-param">tzinfo</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#chaco.scales.safetime.datetime.date" title="chaco.scales.safetime.datetime.date"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime.date</span></code></a></p>
+<p>The year, month and day arguments are required. tzinfo may be None, or an
+instance of a tzinfo subclass. The remaining arguments may be ints.</p>
+<dl class="method">
+<dt id="chaco.scales.safetime.datetime.astimezone">
+<code class="sig-name descname">astimezone</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime.astimezone" title="Permalink to this definition">¶</a></dt>
+<dd><p>tz -&gt; convert to local time in new timezone tz</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.safetime.datetime.combine">
+<code class="sig-name descname">combine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime.combine" title="Permalink to this definition">¶</a></dt>
+<dd><p>date, time -&gt; datetime with same date and time fields</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.safetime.datetime.ctime">
+<code class="sig-name descname">ctime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime.ctime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return ctime() style string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.safetime.datetime.date">
+<code class="sig-name descname">date</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime.date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return date object with same year, month and day.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.safetime.datetime.dst">
+<code class="sig-name descname">dst</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime.dst" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return self.tzinfo.dst(self).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.datetime.fold">
+<code class="sig-name descname">fold</code><a class="headerlink" href="#chaco.scales.safetime.datetime.fold" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.safetime.datetime.fromtimestamp">
+<code class="sig-name descname">fromtimestamp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime.fromtimestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>timestamp[, tz] -&gt; tz’s local time from POSIX timestamp.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.datetime.hour">
+<code class="sig-name descname">hour</code><a class="headerlink" href="#chaco.scales.safetime.datetime.hour" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.safetime.datetime.isoformat">
+<code class="sig-name descname">isoformat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime.isoformat" title="Permalink to this definition">¶</a></dt>
+<dd><p>[sep] -&gt; string in ISO 8601 format, YYYY-MM-DDT[HH[:MM[:SS[.mmm[uuu]]]]][+HH:MM].
+sep is used to separate the year from the time, and defaults to ‘T’.
+timespec specifies what components of the time to include (allowed values are ‘auto’, ‘hours’, ‘minutes’, ‘seconds’, ‘milliseconds’, and ‘microseconds’).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.datetime.max">
+<code class="sig-name descname">max</code><em class="property"> = datetime.datetime(9999, 12, 31, 23, 59, 59, 999999)</em><a class="headerlink" href="#chaco.scales.safetime.datetime.max" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.datetime.microsecond">
+<code class="sig-name descname">microsecond</code><a class="headerlink" href="#chaco.scales.safetime.datetime.microsecond" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.datetime.min">
+<code class="sig-name descname">min</code><em class="property"> = datetime.datetime(1, 1, 1, 0, 0)</em><a class="headerlink" href="#chaco.scales.safetime.datetime.min" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.datetime.minute">
+<code class="sig-name descname">minute</code><a class="headerlink" href="#chaco.scales.safetime.datetime.minute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.safetime.datetime.now">
+<code class="sig-name descname">now</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime.now" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns new datetime object representing current time local to tz.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>tz</dt><dd><p>Timezone object.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>If no tz is specified, uses local timezone.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.safetime.datetime.replace">
+<code class="sig-name descname">replace</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime.replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return datetime with new specified fields.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.datetime.resolution">
+<code class="sig-name descname">resolution</code><em class="property"> = datetime.timedelta(0, 0, 1)</em><a class="headerlink" href="#chaco.scales.safetime.datetime.resolution" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.datetime.second">
+<code class="sig-name descname">second</code><a class="headerlink" href="#chaco.scales.safetime.datetime.second" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.safetime.datetime.strptime">
+<code class="sig-name descname">strptime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime.strptime" title="Permalink to this definition">¶</a></dt>
+<dd><p>string, format -&gt; new datetime parsed from a string (like time.strptime()).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.safetime.datetime.time">
+<code class="sig-name descname">time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime.time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return time object with same time but with tzinfo=None.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.safetime.datetime.timestamp">
+<code class="sig-name descname">timestamp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime.timestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return POSIX timestamp as float.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.safetime.datetime.timetuple">
+<code class="sig-name descname">timetuple</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime.timetuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return time tuple, compatible with time.localtime().</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.safetime.datetime.timetz">
+<code class="sig-name descname">timetz</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime.timetz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return time object with same time and tzinfo.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.datetime.tzinfo">
+<code class="sig-name descname">tzinfo</code><a class="headerlink" href="#chaco.scales.safetime.datetime.tzinfo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.safetime.datetime.tzname">
+<code class="sig-name descname">tzname</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime.tzname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return self.tzinfo.tzname(self).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.safetime.datetime.utcfromtimestamp">
+<code class="sig-name descname">utcfromtimestamp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime.utcfromtimestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a naive UTC datetime from a POSIX timestamp.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.safetime.datetime.utcnow">
+<code class="sig-name descname">utcnow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime.utcnow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new datetime representing UTC day and time.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.safetime.datetime.utcoffset">
+<code class="sig-name descname">utcoffset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime.utcoffset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return self.tzinfo.utcoffset(self).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.safetime.datetime.utctimetuple">
+<code class="sig-name descname">utctimetuple</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.datetime.utctimetuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return UTC time tuple, compatible with time.localtime().</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.scales.safetime.timedelta">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.scales.safetime.</code><code class="sig-name descname">timedelta</code><a class="headerlink" href="#chaco.scales.safetime.timedelta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Difference between two datetime values.</p>
+<p>timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=0, hours=0, weeks=0)</p>
+<p>All arguments are optional and default to 0.
+Arguments may be integers or floats, and may be positive or negative.</p>
+<dl class="attribute">
+<dt id="chaco.scales.safetime.timedelta.days">
+<code class="sig-name descname">days</code><a class="headerlink" href="#chaco.scales.safetime.timedelta.days" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of days.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.timedelta.max">
+<code class="sig-name descname">max</code><em class="property"> = datetime.timedelta(999999999, 86399, 999999)</em><a class="headerlink" href="#chaco.scales.safetime.timedelta.max" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.timedelta.microseconds">
+<code class="sig-name descname">microseconds</code><a class="headerlink" href="#chaco.scales.safetime.timedelta.microseconds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of microseconds (&gt;= 0 and less than 1 second).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.timedelta.min">
+<code class="sig-name descname">min</code><em class="property"> = datetime.timedelta(-999999999)</em><a class="headerlink" href="#chaco.scales.safetime.timedelta.min" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.timedelta.resolution">
+<code class="sig-name descname">resolution</code><em class="property"> = datetime.timedelta(0, 0, 1)</em><a class="headerlink" href="#chaco.scales.safetime.timedelta.resolution" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.safetime.timedelta.seconds">
+<code class="sig-name descname">seconds</code><a class="headerlink" href="#chaco.scales.safetime.timedelta.seconds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of seconds (&gt;= 0 and less than 1 day).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.safetime.timedelta.total_seconds">
+<code class="sig-name descname">total_seconds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.safetime.timedelta.total_seconds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total seconds in the duration.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.scales.safetime.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

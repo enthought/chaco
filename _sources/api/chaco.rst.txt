@@ -1,0 +1,97 @@
+..
+   (C) Copyright 2006-2021 Enthought, Inc., Austin, TX
+   All rights reserved.
+
+   This software is provided without warranty under the terms of the BSD
+   license included in LICENSE.txt and may be redistributed only under
+   the conditions described in the aforementioned license. The license
+   is also available online at http://www.enthought.com/licenses/BSD.txt
+
+   Thanks for using Enthought open source!
+
+chaco package
+=============
+
+.. automodule:: chaco
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. toctree::
+
+   chaco.abstract_colormap
+   chaco.abstract_controller
+   chaco.abstract_data_range
+   chaco.abstract_data_source
+   chaco.abstract_mapper
+   chaco.abstract_overlay
+   chaco.abstract_plot_data
+   chaco.abstract_plot_renderer
+   chaco.api
+   chaco.array_data_source
+   chaco.array_plot_data
+   chaco.axis
+   chaco.axis_view
+   chaco.base
+   chaco.base_1d_mapper
+   chaco.base_1d_plot
+   chaco.base_2d_plot
+   chaco.base_candle_plot
+   chaco.base_contour_plot
+   chaco.base_data_range
+   chaco.base_plot_container
+   chaco.base_xy_plot
+   chaco.chaco_traits
+   chaco.color_mapper
+   chaco.color_spaces
+   chaco.colormap_generators
+   chaco.data_frame_plot_data
+   chaco.data_range_1d
+   chaco.data_range_2d
+   chaco.data_view
+   chaco.default_colormaps
+   chaco.default_colors
+   chaco.discrete_color_mapper
+   chaco.example_support
+   chaco.function_data_source
+   chaco.function_image_data
+   chaco.grid
+   chaco.grid_data_source
+   chaco.grid_mapper
+   chaco.image_data
+   chaco.image_utils
+   chaco.label
+   chaco.label_axis
+   chaco.linear_mapper
+   chaco.log_mapper
+   chaco.multi_array_data_source
+   chaco.pdf_graphics_context
+   chaco.plot
+   chaco.plot_canvas
+   chaco.plot_canvas_toolbar
+   chaco.plot_component
+   chaco.plot_containers
+   chaco.plot_factory
+   chaco.plot_graphics_context
+   chaco.plotscrollbar
+   chaco.point_data_source
+   chaco.polar_mapper
+   chaco.scales_tick_generator
+   chaco.scaly_plot
+   chaco.selectable_legend
+   chaco.speedups
+   chaco.svg_graphics_context
+   chaco.ticks
+   chaco.toolbar_plot
+   chaco.transform_color_mapper
+
+
+.. toctree::
+
+   chaco.downsample
+   chaco.examples
+   chaco.overlays
+   chaco.plots
+   chaco.scales
+   chaco.tools
+   chaco.ui

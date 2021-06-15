@@ -1,0 +1,251 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Introduction &#8212; Chaco 4.8</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Data sources" href="basic_elements/data_sources.html" />
+    <link rel="prev" title="User guide" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="basic_elements/data_sources.html" title="Data sources"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="index.html" title="User guide"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">User guide</a> &#187;</li>
+  
+    <li><a href="#">Introduction</a></li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-is-chaco">
+<h2>What is Chaco?<a class="headerlink" href="#what-is-chaco" title="Permalink to this headline">¶</a></h2>
+<p>Chaco is a 2D plotting library that is part of and integrates with
+the Enthought Tools Suite.</p>
+<p>The strong points of Chaco are</p>
+<ol class="arabic simple">
+<li><p>it can be <a class="reference internal" href="#embedding"><span class="std std-ref">embedded</span></a> in any wx, Qt, or TraitsUI application</p></li>
+<li><p>it is designed for building interactive plotting applications, rather than
+static 2D plots</p></li>
+<li><p>Chaco classes can be easily extended to create new plot types,
+interactive tools, and plot containers</p></li>
+</ol>
+<p>At the lowest level, Chaco is a hierarchy of classes that defines
+2D plotting elements: plots, containers, interactive tools, color bars, etc.
+In principle, applications can create instances of these elements and lay them
+out in a container to define components that can be <a class="reference internal" href="#embedding"><span class="std std-ref">embedded in one
+of several of graphical back ends</span></a>. Working at this level allows the
+maximum flexibility, but requires understanding
+<a class="reference internal" href="#basic-elements"><span class="std std-ref">Chaco’s basic elements</span></a>.</p>
+<p>Chaco defines two abstraction layers that allow a more high-level
+(albeit less flexible) plotting experience. First, Chaco contains a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code>
+class that defines several methods that create a complete plot given one or
+more data sets. In other words, <code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code> knows how to
+package data for the most common kinds of plots. Second, Chaco has a
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">shell</span></code> module that defines high-level plotting functions. This module
+allows using Chaco as an interactive plotting tool that will be familiar
+to users of matplotlib.</p>
+</div>
+<div class="section" id="basic-elements">
+<span id="id1"></span><h2>Basic elements<a class="headerlink" href="#basic-elements" title="Permalink to this headline">¶</a></h2>
+<p>To venture deeper in Chaco’s architecture it is useful to understand a few
+basic ideas on which Chaco is based:</p>
+<ul>
+<li><p><strong>Plots are compositions of visual components</strong></p>
+<p>Each plot is composed by a number of graphical widgets:
+the plot graphics, axes, labels, legend, colorbar, etc.
+Everything you see in a plot is an individual component
+with position, shape, and appearance attributes, and with an
+opportunity to respond to events.</p>
+</li>
+<li><p><strong>Data and screen space are separated</strong></p>
+<p>Although everything in a plot eventually ends up rendering into a common
+visual area, there are aspects of the plot which are intrinsically
+screen-space, and some which are fundamentally data-space. For example,
+data about the height of college students lives in data space (meters),
+but needs to be rendered in screen space (pixels). Chaco uses the
+concept of <em>mapper</em> to translate one into the other.
+Preserving the distinction between these two domains allows us to think about
+visualizations in a structured way.</p>
+</li>
+<li><p><strong>Layers</strong></p>
+<p>Plot components are split into several layers, which are usually plotted
+in sequence. For example, axes and labels are usually plotted on the
+“underlay” layer, plot data on the “plot” layer, and legends and other
+plot annotations on the “overlay” layer. In this way one can define
+interactive tools that add graphical elements to a plot without
+having to modify the drawing logic.</p>
+</li>
+</ul>
+<p>These pages describe in detail the basic building blocks of
+Chaco plots, and the classes that implement them:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="basic_elements/data_sources.html">Data sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_elements/data_ranges.html">Data ranges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_elements/mappers.html">Mappers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_elements/plot_renderers.html">Plot renderers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plot_types.html">Plot types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_elements/overlays.html">Overlays: axis, legend, grid, etc.</a></li>
+</ul>
+</div>
+<p>TODO: find out how the selection features are organized</p>
+<p>TODO: to see how these elements collaborate to build an interactive plot,
+give complete low-level example of line plot with simple tool and
+describe the exchange of information</p>
+<div class="section" id="tools">
+<h3>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>before axes (axes are overlays)
+tools, overlays</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="plotting-with-chaco">
+<h2>Plotting with Chaco<a class="headerlink" href="#plotting-with-chaco" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="the-plot-class">
+<h3>The Plot class<a class="headerlink" href="#the-plot-class" title="Permalink to this headline">¶</a></h3>
+<p>Plot and PlotData</p>
+</div>
+<div class="section" id="chaco-shell">
+<h3>chaco.shell<a class="headerlink" href="#chaco-shell" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="low-level-chaco-plotting">
+<h2>Low-level Chaco plotting<a class="headerlink" href="#low-level-chaco-plotting" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>create instances of PlotRenderer and add them to a Container.
+There are factory functions in
+plot_factory that make it simpler</p></li>
+<li><p>Create a Plot instance, use methods to create new plots of different kinds.
+This automatizes 1) with an OverlayPlotContainer, i.e., it
+plots multiple curves on the same element</p></li>
+</ol>
+<p>Plots can be rendered in a traitsui, wx, or qt window</p>
+</div>
+<div class="section" id="embedding-chaco-plots">
+<span id="embedding"></span><h2>Embedding Chaco plots<a class="headerlink" href="#embedding-chaco-plots" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="traits-ui">
+<h3>Traits UI<a class="headerlink" href="#traits-ui" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="wxpython">
+<h3>WxPython<a class="headerlink" href="#wxpython" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="qt-pyqt">
+<h3>Qt/PyQt<a class="headerlink" href="#qt-pyqt" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction</a><ul>
+<li><a class="reference internal" href="#what-is-chaco">What is Chaco?</a></li>
+<li><a class="reference internal" href="#basic-elements">Basic elements</a><ul>
+<li><a class="reference internal" href="#tools">Tools</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plotting-with-chaco">Plotting with Chaco</a><ul>
+<li><a class="reference internal" href="#the-plot-class">The Plot class</a></li>
+<li><a class="reference internal" href="#chaco-shell">chaco.shell</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#low-level-chaco-plotting">Low-level Chaco plotting</a></li>
+<li><a class="reference internal" href="#embedding-chaco-plots">Embedding Chaco plots</a><ul>
+<li><a class="reference internal" href="#traits-ui">Traits UI</a></li>
+<li><a class="reference internal" href="#wxpython">WxPython</a></li>
+<li><a class="reference internal" href="#qt-pyqt">Qt/PyQt</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">User guide</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="basic_elements/data_sources.html"
+                        title="next chapter">Data sources</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/user_manual/introduction.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="basic_elements/data_sources.html" title="Data sources"
+             >next</a></li>
+        <li class="right" >
+          <a href="index.html" title="User guide"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >User guide</a> &#187;</li>
+  
+    <li><a href="#">Introduction</a></li>
+  
+
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2019, Enthought, Inc..
+      Last updated on Aug 07, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

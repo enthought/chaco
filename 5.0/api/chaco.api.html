@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.api module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.api module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.api">
+<span id="chaco-api-module"></span><h1>chaco.api module<a class="headerlink" href="#module-chaco.api" title="Permalink to this headline">¶</a></h1>
+<p>Defines the publicly accessible items of the Chaco API.</p>
+<div class="section" id="base">
+<h2>Base<a class="headerlink" href="#base" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="chaco.base.html#chaco.base.NumericalSequenceTrait" title="chaco.base.NumericalSequenceTrait"><code class="xref py py-attr docutils literal notranslate"><span class="pre">NumericalSequenceTrait</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.base.html#chaco.base.PointTrait" title="chaco.base.PointTrait"><code class="xref py py-attr docutils literal notranslate"><span class="pre">PointTrait</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.base.html#chaco.base.ImageTrait" title="chaco.base.ImageTrait"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ImageTrait</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.base.html#chaco.base.DimensionTrait" title="chaco.base.DimensionTrait"><code class="xref py py-attr docutils literal notranslate"><span class="pre">DimensionTrait</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.base.html#chaco.base.SortOrderTrait" title="chaco.base.SortOrderTrait"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SortOrderTrait</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.base.html#chaco.base.bin_search" title="chaco.base.bin_search"><code class="xref py py-func docutils literal notranslate"><span class="pre">bin_search()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.base.html#chaco.base.reverse_map_1d" title="chaco.base.reverse_map_1d"><code class="xref py py-func docutils literal notranslate"><span class="pre">reverse_map_1d()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.base.html#chaco.base.right_shift" title="chaco.base.right_shift"><code class="xref py py-func docutils literal notranslate"><span class="pre">right_shift()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.base.html#chaco.base.left_shift" title="chaco.base.left_shift"><code class="xref py py-func docutils literal notranslate"><span class="pre">left_shift()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.base.html#chaco.base.sort_points" title="chaco.base.sort_points"><code class="xref py py-func docutils literal notranslate"><span class="pre">sort_points()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.base.html#chaco.base.find_runs" title="chaco.base.find_runs"><code class="xref py py-func docutils literal notranslate"><span class="pre">find_runs()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.base.html#chaco.base.arg_find_runs" title="chaco.base.arg_find_runs"><code class="xref py py-func docutils literal notranslate"><span class="pre">arg_find_runs()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.base.html#chaco.base.point_line_distance" title="chaco.base.point_line_distance"><code class="xref py py-func docutils literal notranslate"><span class="pre">point_line_distance()</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="data-model">
+<h2>Data Model<a class="headerlink" href="#data-model" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="chaco.abstract_data_source.html#chaco.abstract_data_source.AbstractDataSource" title="chaco.abstract_data_source.AbstractDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataSource</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.array_data_source.html#chaco.array_data_source.ArrayDataSource" title="chaco.array_data_source.ArrayDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayDataSource</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.grid_data_source.html#chaco.grid_data_source.GridDataSource" title="chaco.grid_data_source.GridDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridDataSource</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.image_data.html#chaco.image_data.ImageData" title="chaco.image_data.ImageData"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageData</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.multi_array_data_source.html#chaco.multi_array_data_source.MultiArrayDataSource" title="chaco.multi_array_data_source.MultiArrayDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiArrayDataSource</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.point_data_source.html#chaco.point_data_source.PointDataSource" title="chaco.point_data_source.PointDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointDataSource</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.abstract_data_range.html#chaco.abstract_data_range.AbstractDataRange" title="chaco.abstract_data_range.AbstractDataRange"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataRange</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.base_data_range.html#chaco.base_data_range.BaseDataRange" title="chaco.base_data_range.BaseDataRange"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDataRange</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.data_range_1d.html#chaco.data_range_1d.DataRange1D" title="chaco.data_range_1d.DataRange1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataRange1D</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.data_range_2d.html#chaco.data_range_2d.DataRange2D" title="chaco.data_range_2d.DataRange2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataRange2D</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="mappers">
+<h2>Mappers<a class="headerlink" href="#mappers" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="chaco.abstract_mapper.html#chaco.abstract_mapper.AbstractMapper" title="chaco.abstract_mapper.AbstractMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractMapper</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.base_1d_mapper.html#chaco.base_1d_mapper.Base1DMapper" title="chaco.base_1d_mapper.Base1DMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base1DMapper</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.grid_mapper.html#chaco.grid_mapper.GridMapper" title="chaco.grid_mapper.GridMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridMapper</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.log_mapper.html#chaco.log_mapper.LogMapper" title="chaco.log_mapper.LogMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogMapper</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.linear_mapper.html#chaco.linear_mapper.LinearMapper" title="chaco.linear_mapper.LinearMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearMapper</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.color_mapper.html#chaco.color_mapper.ColorMapper" title="chaco.color_mapper.ColorMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorMapper</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.color_mapper.html#chaco.color_mapper.ColorMapTemplate" title="chaco.color_mapper.ColorMapTemplate"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorMapTemplate</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.discrete_color_mapper.html#chaco.discrete_color_mapper.DiscreteColorMapper" title="chaco.discrete_color_mapper.DiscreteColorMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiscreteColorMapper</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.transform_color_mapper.html#chaco.transform_color_mapper.TransformColorMapper" title="chaco.transform_color_mapper.TransformColorMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransformColorMapper</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.horizon_plot.html#chaco.plots.horizon_plot.BandedMapper" title="chaco.plots.horizon_plot.BandedMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">BandedMapper</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.polar_mapper.html#chaco.polar_mapper.PolarMapper" title="chaco.polar_mapper.PolarMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">PolarMapper</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="visual-components-overlays">
+<h2>Visual Components / Overlays<a class="headerlink" href="#visual-components-overlays" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="chaco.abstract_plot_renderer.html#chaco.abstract_plot_renderer.AbstractPlotRenderer" title="chaco.abstract_plot_renderer.AbstractPlotRenderer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractPlotRenderer</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.abstract_overlay.html#chaco.abstract_overlay.AbstractOverlay" title="chaco.abstract_overlay.AbstractOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractOverlay</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.base_plot_container.html#chaco.base_plot_container.BasePlotContainer" title="chaco.base_plot_container.BasePlotContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePlotContainer</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.data_view.html#chaco.data_view.DataView" title="chaco.data_view.DataView"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataView</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plot_component.html#chaco.plot_component.PlotComponent" title="chaco.plot_component.PlotComponent"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotComponent</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plot_graphics_context.html#chaco.plot_graphics_context.PlotGraphicsContext" title="chaco.plot_graphics_context.PlotGraphicsContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotGraphicsContext</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plot_graphics_context.html#chaco.plot_graphics_context.PlotGraphicsContextMixin" title="chaco.plot_graphics_context.PlotGraphicsContextMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotGraphicsContextMixin</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plot_containers.html#chaco.plot_containers.OverlayPlotContainer" title="chaco.plot_containers.OverlayPlotContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">OverlayPlotContainer</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plot_containers.html#chaco.plot_containers.HPlotContainer" title="chaco.plot_containers.HPlotContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPlotContainer</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plot_containers.html#chaco.plot_containers.VPlotContainer" title="chaco.plot_containers.VPlotContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">VPlotContainer</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plot_containers.html#chaco.plot_containers.GridPlotContainer" title="chaco.plot_containers.GridPlotContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridPlotContainer</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.label.html#chaco.label.Label" title="chaco.label.Label"><code class="xref py py-class docutils literal notranslate"><span class="pre">Label</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.color_bar.html#chaco.plots.color_bar.ColorBar" title="chaco.plots.color_bar.ColorBar"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorBar</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.aligned_container_overlay.html#chaco.overlays.aligned_container_overlay.AlignedContainerOverlay" title="chaco.overlays.aligned_container_overlay.AlignedContainerOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlignedContainerOverlay</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.colormapped_selection_overlay.html#chaco.overlays.colormapped_selection_overlay.ColormappedSelectionOverlay" title="chaco.overlays.colormapped_selection_overlay.ColormappedSelectionOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColormappedSelectionOverlay</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.container_overlay.html#chaco.overlays.container_overlay.ContainerOverlay" title="chaco.overlays.container_overlay.ContainerOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContainerOverlay</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.coordinate_line_overlay.html#chaco.overlays.coordinate_line_overlay.CoordinateLineOverlay" title="chaco.overlays.coordinate_line_overlay.CoordinateLineOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoordinateLineOverlay</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.databox.html#chaco.overlays.databox.DataBox" title="chaco.overlays.databox.DataBox"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataBox</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.data_label.html#chaco.overlays.data_label.DataLabel" title="chaco.overlays.data_label.DataLabel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLabel</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.lasso_overlay.html#chaco.overlays.lasso_overlay.LassoOverlay" title="chaco.overlays.lasso_overlay.LassoOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">LassoOverlay</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.legend.html#chaco.overlays.legend.AbstractCompositeIconRenderer" title="chaco.overlays.legend.AbstractCompositeIconRenderer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractCompositeIconRenderer</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.legend.html#chaco.overlays.legend.CompositeIconRenderer" title="chaco.overlays.legend.CompositeIconRenderer"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompositeIconRenderer</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.plot_label.html#chaco.overlays.plot_label.PlotLabel" title="chaco.overlays.plot_label.PlotLabel"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotLabel</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.scatter_inspector_overlay.html#chaco.overlays.scatter_inspector_overlay.ScatterInspectorOverlay" title="chaco.overlays.scatter_inspector_overlay.ScatterInspectorOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScatterInspectorOverlay</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.simple_inspector_overlay.html#chaco.overlays.simple_inspector_overlay.basic_formatter" title="chaco.overlays.simple_inspector_overlay.basic_formatter"><code class="xref py py-func docutils literal notranslate"><span class="pre">basic_formatter()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.simple_inspector_overlay.html#chaco.overlays.simple_inspector_overlay.datetime_formatter" title="chaco.overlays.simple_inspector_overlay.datetime_formatter"><code class="xref py py-func docutils literal notranslate"><span class="pre">datetime_formatter()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.simple_inspector_overlay.html#chaco.overlays.simple_inspector_overlay.date_formatter" title="chaco.overlays.simple_inspector_overlay.date_formatter"><code class="xref py py-func docutils literal notranslate"><span class="pre">date_formatter()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.simple_inspector_overlay.html#chaco.overlays.simple_inspector_overlay.SimpleInspectorOverlay" title="chaco.overlays.simple_inspector_overlay.SimpleInspectorOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleInspectorOverlay</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.simple_inspector_overlay.html#chaco.overlays.simple_inspector_overlay.time_formatter" title="chaco.overlays.simple_inspector_overlay.time_formatter"><code class="xref py py-func docutils literal notranslate"><span class="pre">time_formatter()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.text_box_overlay.html#chaco.overlays.text_box_overlay.TextBoxOverlay" title="chaco.overlays.text_box_overlay.TextBoxOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBoxOverlay</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.text_grid_overlay.html#chaco.overlays.text_grid_overlay.TextGridOverlay" title="chaco.overlays.text_grid_overlay.TextGridOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextGridOverlay</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.tooltip.html#chaco.overlays.tooltip.ToolTip" title="chaco.overlays.tooltip.ToolTip"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolTip</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.tools.image_inspector_tool.html#chaco.tools.image_inspector_tool.ImageInspectorOverlay" title="chaco.tools.image_inspector_tool.ImageInspectorOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInspectorOverlay</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.layers.status_layer.html#chaco.overlays.layers.status_layer.ErrorLayer" title="chaco.overlays.layers.status_layer.ErrorLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorLayer</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.layers.status_layer.html#chaco.overlays.layers.status_layer.StatusLayer" title="chaco.overlays.layers.status_layer.StatusLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">StatusLayer</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.overlays.layers.status_layer.html#chaco.overlays.layers.status_layer.WarningLayer" title="chaco.overlays.layers.status_layer.WarningLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">WarningLayer</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.colormapped_scatterplot.html#chaco.plots.colormapped_scatterplot.ColormappedScatterPlotView" title="chaco.plots.colormapped_scatterplot.ColormappedScatterPlotView"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColormappedScatterPlotView</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.scatterplot.html#chaco.plots.scatterplot.ScatterPlotView" title="chaco.plots.scatterplot.ScatterPlotView"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScatterPlotView</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="renderers">
+<h2>Renderers<a class="headerlink" href="#renderers" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="chaco.base_1d_plot.html#chaco.base_1d_plot.Base1DPlot" title="chaco.base_1d_plot.Base1DPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base1DPlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.base_2d_plot.html#chaco.base_2d_plot.Base2DPlot" title="chaco.base_2d_plot.Base2DPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base2DPlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot" title="chaco.base_xy_plot.BaseXYPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseXYPlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.barplot.html#chaco.plots.barplot.BarPlot" title="chaco.plots.barplot.BarPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">BarPlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.candle_plot.html#chaco.plots.candle_plot.CandlePlot" title="chaco.plots.candle_plot.CandlePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">CandlePlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.cmap_image_plot.html#chaco.plots.cmap_image_plot.CMapImagePlot" title="chaco.plots.cmap_image_plot.CMapImagePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">CMapImagePlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.colormapped_scatterplot.html#chaco.plots.colormapped_scatterplot.ColormappedScatterPlot" title="chaco.plots.colormapped_scatterplot.ColormappedScatterPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColormappedScatterPlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.segment_plot.html#chaco.plots.segment_plot.ColormappedSegmentPlot" title="chaco.plots.segment_plot.ColormappedSegmentPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColormappedSegmentPlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.contour.contour_line_plot.html#chaco.plots.contour.contour_line_plot.ContourLinePlot" title="chaco.plots.contour.contour_line_plot.ContourLinePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContourLinePlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.contour.contour_poly_plot.html#chaco.plots.contour.contour_poly_plot.ContourPolyPlot" title="chaco.plots.contour.contour_poly_plot.ContourPolyPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContourPolyPlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.errorbar_plot.html#chaco.plots.errorbar_plot.ErrorBarPlot" title="chaco.plots.errorbar_plot.ErrorBarPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorBarPlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.filled_line_plot.html#chaco.plots.filled_line_plot.FilledLinePlot" title="chaco.plots.filled_line_plot.FilledLinePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">FilledLinePlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.horizon_plot.html#chaco.plots.horizon_plot.HorizonPlot" title="chaco.plots.horizon_plot.HorizonPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">HorizonPlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.image_plot.html#chaco.plots.image_plot.ImagePlot" title="chaco.plots.image_plot.ImagePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImagePlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.jitterplot.html#chaco.plots.jitterplot.JitterPlot" title="chaco.plots.jitterplot.JitterPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">JitterPlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.line_scatterplot_1d.html#chaco.plots.line_scatterplot_1d.LineScatterPlot1D" title="chaco.plots.line_scatterplot_1d.LineScatterPlot1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineScatterPlot1D</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.lineplot.html#chaco.plots.lineplot.LinePlot" title="chaco.plots.lineplot.LinePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinePlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.multi_line_plot.html#chaco.plots.multi_line_plot.MultiLinePlot" title="chaco.plots.multi_line_plot.MultiLinePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiLinePlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.polar_line_renderer.html#chaco.plots.polar_line_renderer.PolarLineRenderer" title="chaco.plots.polar_line_renderer.PolarLineRenderer"><code class="xref py py-class docutils literal notranslate"><span class="pre">PolarLineRenderer</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.polygon_plot.html#chaco.plots.polygon_plot.PolygonPlot" title="chaco.plots.polygon_plot.PolygonPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">PolygonPlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.quiverplot.html#chaco.plots.quiverplot.QuiverPlot" title="chaco.plots.quiverplot.QuiverPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuiverPlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.scatterplot.html#chaco.plots.scatterplot.render_markers" title="chaco.plots.scatterplot.render_markers"><code class="xref py py-func docutils literal notranslate"><span class="pre">render_markers()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.scatterplot.html#chaco.plots.scatterplot.ScatterPlot" title="chaco.plots.scatterplot.ScatterPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScatterPlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.scatterplot_1d.html#chaco.plots.scatterplot_1d.ScatterPlot1D" title="chaco.plots.scatterplot_1d.ScatterPlot1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScatterPlot1D</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.segment_plot.html#chaco.plots.segment_plot.SegmentPlot" title="chaco.plots.segment_plot.SegmentPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">SegmentPlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.text_plot.html#chaco.plots.text_plot.TextPlot" title="chaco.plots.text_plot.TextPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextPlot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plots.text_plot_1d.html#chaco.plots.text_plot_1d.TextPlot1D" title="chaco.plots.text_plot_1d.TextPlot1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextPlot1D</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.scaly_plot.html#chaco.scaly_plot.ScalyPlot" title="chaco.scaly_plot.ScalyPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScalyPlot</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="plot-factories">
+<h2>Plot Factories<a class="headerlink" href="#plot-factories" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="chaco.plot_factory.html#chaco.plot_factory.create_bar_plot" title="chaco.plot_factory.create_bar_plot"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_bar_plot()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plot_factory.html#chaco.plot_factory.create_line_plot" title="chaco.plot_factory.create_line_plot"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_line_plot()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plot_factory.html#chaco.plot_factory.create_scatter_plot" title="chaco.plot_factory.create_scatter_plot"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_scatter_plot()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plot_factory.html#chaco.plot_factory.create_polar_plot" title="chaco.plot_factory.create_polar_plot"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_polar_plot()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.examples.demo.scales_test.html#chaco.examples.demo.scales_test.add_default_axes" title="chaco.examples.demo.scales_test.add_default_axes"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_default_axes()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.examples.demo.scales_test.html#chaco.examples.demo.scales_test.add_default_grids" title="chaco.examples.demo.scales_test.add_default_grids"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_default_grids()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.abstract_plot_data.html#chaco.abstract_plot_data.AbstractPlotData" title="chaco.abstract_plot_data.AbstractPlotData"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractPlotData</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.array_plot_data.html#chaco.array_plot_data.ArrayPlotData" title="chaco.array_plot_data.ArrayPlotData"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayPlotData</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.data_frame_plot_data.html#chaco.data_frame_plot_data.DataFramePlotData" title="chaco.data_frame_plot_data.DataFramePlotData"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFramePlotData</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.plot.html#chaco.plot.Plot" title="chaco.plot.Plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.toolbar_plot.html#chaco.toolbar_plot.ToolbarPlot" title="chaco.toolbar_plot.ToolbarPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolbarPlot</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="axis">
+<h2>Axis<a class="headerlink" href="#axis" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="chaco.axis.html#chaco.axis.PlotAxis" title="chaco.axis.PlotAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotAxis</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.axis.html#chaco.axis.MinorPlotAxis" title="chaco.axis.MinorPlotAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">MinorPlotAxis</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.label_axis.html#chaco.label_axis.LabelAxis" title="chaco.label_axis.LabelAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">LabelAxis</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.ticks.html#chaco.ticks.AbstractTickGenerator" title="chaco.ticks.AbstractTickGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractTickGenerator</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.ticks.html#chaco.ticks.DefaultTickGenerator" title="chaco.ticks.DefaultTickGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultTickGenerator</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.ticks.html#chaco.ticks.auto_ticks" title="chaco.ticks.auto_ticks"><code class="xref py py-func docutils literal notranslate"><span class="pre">auto_ticks()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.ticks.html#chaco.ticks.auto_interval" title="chaco.ticks.auto_interval"><code class="xref py py-func docutils literal notranslate"><span class="pre">auto_interval()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.ticks.html#chaco.ticks.tick_intervals" title="chaco.ticks.tick_intervals"><code class="xref py py-func docutils literal notranslate"><span class="pre">tick_intervals()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.ticks.html#chaco.ticks.log_auto_ticks" title="chaco.ticks.log_auto_ticks"><code class="xref py py-func docutils literal notranslate"><span class="pre">log_auto_ticks()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.ticks.html#chaco.ticks.auto_bounds" title="chaco.ticks.auto_bounds"><code class="xref py py-func docutils literal notranslate"><span class="pre">auto_bounds()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.ticks.html#chaco.ticks.calc_bound" title="chaco.ticks.calc_bound"><code class="xref py py-func docutils literal notranslate"><span class="pre">calc_bound()</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="grid">
+<h2>Grid<a class="headerlink" href="#grid" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="chaco.grid.html#chaco.grid.PlotGrid" title="chaco.grid.PlotGrid"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotGrid</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="tools">
+<h2>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="chaco.abstract_controller.html#chaco.abstract_controller.AbstractController" title="chaco.abstract_controller.AbstractController"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractController</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="colormaps-and-color-palettes">
+<h2>Colormaps and Color Palettes<a class="headerlink" href="#colormaps-and-color-palettes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="utilities-convenience-objects">
+<h3>Utilities / Convenience Objects<a class="headerlink" href="#utilities-convenience-objects" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.center" title="chaco.default_colormaps.center"><code class="xref py py-func docutils literal notranslate"><span class="pre">center()</span></code></a></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">color_map_dict</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">color_map_functions</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">color_map_name_dict</span></code></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.reverse" title="chaco.default_colormaps.reverse"><code class="xref py py-func docutils literal notranslate"><span class="pre">reverse()</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="colormaps">
+<h3>Colormaps<a class="headerlink" href="#colormaps" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.autumn" title="chaco.default_colormaps.autumn"><code class="xref py py-func docutils literal notranslate"><span class="pre">autumn()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.binary" title="chaco.default_colormaps.binary"><code class="xref py py-func docutils literal notranslate"><span class="pre">binary()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.bone" title="chaco.default_colormaps.bone"><code class="xref py py-func docutils literal notranslate"><span class="pre">bone()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.cool" title="chaco.default_colormaps.cool"><code class="xref py py-func docutils literal notranslate"><span class="pre">cool()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.copper" title="chaco.default_colormaps.copper"><code class="xref py py-func docutils literal notranslate"><span class="pre">copper()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.flag" title="chaco.default_colormaps.flag"><code class="xref py py-func docutils literal notranslate"><span class="pre">flag()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.seismic" title="chaco.default_colormaps.seismic"><code class="xref py py-func docutils literal notranslate"><span class="pre">seismic()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.terrain" title="chaco.default_colormaps.terrain"><code class="xref py py-func docutils literal notranslate"><span class="pre">terrain()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.gray" title="chaco.default_colormaps.gray"><code class="xref py py-func docutils literal notranslate"><span class="pre">gray()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.yarg" title="chaco.default_colormaps.yarg"><code class="xref py py-func docutils literal notranslate"><span class="pre">yarg()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.hot" title="chaco.default_colormaps.hot"><code class="xref py py-func docutils literal notranslate"><span class="pre">hot()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.hsv" title="chaco.default_colormaps.hsv"><code class="xref py py-func docutils literal notranslate"><span class="pre">hsv()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.jet" title="chaco.default_colormaps.jet"><code class="xref py py-func docutils literal notranslate"><span class="pre">jet()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.pink" title="chaco.default_colormaps.pink"><code class="xref py py-func docutils literal notranslate"><span class="pre">pink()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.prism" title="chaco.default_colormaps.prism"><code class="xref py py-func docutils literal notranslate"><span class="pre">prism()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.spring" title="chaco.default_colormaps.spring"><code class="xref py py-func docutils literal notranslate"><span class="pre">spring()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.summer" title="chaco.default_colormaps.summer"><code class="xref py py-func docutils literal notranslate"><span class="pre">summer()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.winter" title="chaco.default_colormaps.winter"><code class="xref py py-func docutils literal notranslate"><span class="pre">winter()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.cw1_004" title="chaco.default_colormaps.cw1_004"><code class="xref py py-func docutils literal notranslate"><span class="pre">cw1_004()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.cw1_005" title="chaco.default_colormaps.cw1_005"><code class="xref py py-func docutils literal notranslate"><span class="pre">cw1_005()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.cw1_006" title="chaco.default_colormaps.cw1_006"><code class="xref py py-func docutils literal notranslate"><span class="pre">cw1_006()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.cw1_028" title="chaco.default_colormaps.cw1_028"><code class="xref py py-func docutils literal notranslate"><span class="pre">cw1_028()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.gmt_drywet" title="chaco.default_colormaps.gmt_drywet"><code class="xref py py-func docutils literal notranslate"><span class="pre">gmt_drywet()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.Blues" title="chaco.default_colormaps.Blues"><code class="xref py py-func docutils literal notranslate"><span class="pre">Blues()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.BrBG" title="chaco.default_colormaps.BrBG"><code class="xref py py-func docutils literal notranslate"><span class="pre">BrBG()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.BuGn" title="chaco.default_colormaps.BuGn"><code class="xref py py-func docutils literal notranslate"><span class="pre">BuGn()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.BuPu" title="chaco.default_colormaps.BuPu"><code class="xref py py-func docutils literal notranslate"><span class="pre">BuPu()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.GnBu" title="chaco.default_colormaps.GnBu"><code class="xref py py-func docutils literal notranslate"><span class="pre">GnBu()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.Greens" title="chaco.default_colormaps.Greens"><code class="xref py py-func docutils literal notranslate"><span class="pre">Greens()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.Greys" title="chaco.default_colormaps.Greys"><code class="xref py py-func docutils literal notranslate"><span class="pre">Greys()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.OrRd" title="chaco.default_colormaps.OrRd"><code class="xref py py-func docutils literal notranslate"><span class="pre">OrRd()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.Oranges" title="chaco.default_colormaps.Oranges"><code class="xref py py-func docutils literal notranslate"><span class="pre">Oranges()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.PRGn" title="chaco.default_colormaps.PRGn"><code class="xref py py-func docutils literal notranslate"><span class="pre">PRGn()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.PiYG" title="chaco.default_colormaps.PiYG"><code class="xref py py-func docutils literal notranslate"><span class="pre">PiYG()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.PuBu" title="chaco.default_colormaps.PuBu"><code class="xref py py-func docutils literal notranslate"><span class="pre">PuBu()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.PuBuGn" title="chaco.default_colormaps.PuBuGn"><code class="xref py py-func docutils literal notranslate"><span class="pre">PuBuGn()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.PuOr" title="chaco.default_colormaps.PuOr"><code class="xref py py-func docutils literal notranslate"><span class="pre">PuOr()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.PuRd" title="chaco.default_colormaps.PuRd"><code class="xref py py-func docutils literal notranslate"><span class="pre">PuRd()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.Purples" title="chaco.default_colormaps.Purples"><code class="xref py py-func docutils literal notranslate"><span class="pre">Purples()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.RdBu" title="chaco.default_colormaps.RdBu"><code class="xref py py-func docutils literal notranslate"><span class="pre">RdBu()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.RdGy" title="chaco.default_colormaps.RdGy"><code class="xref py py-func docutils literal notranslate"><span class="pre">RdGy()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.RdPu" title="chaco.default_colormaps.RdPu"><code class="xref py py-func docutils literal notranslate"><span class="pre">RdPu()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.RdYlBu" title="chaco.default_colormaps.RdYlBu"><code class="xref py py-func docutils literal notranslate"><span class="pre">RdYlBu()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.RdYlGn" title="chaco.default_colormaps.RdYlGn"><code class="xref py py-func docutils literal notranslate"><span class="pre">RdYlGn()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.Reds" title="chaco.default_colormaps.Reds"><code class="xref py py-func docutils literal notranslate"><span class="pre">Reds()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.Spectral" title="chaco.default_colormaps.Spectral"><code class="xref py py-func docutils literal notranslate"><span class="pre">Spectral()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.YlGn" title="chaco.default_colormaps.YlGn"><code class="xref py py-func docutils literal notranslate"><span class="pre">YlGn()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.YlGnBu" title="chaco.default_colormaps.YlGnBu"><code class="xref py py-func docutils literal notranslate"><span class="pre">YlGnBu()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.YlOrBr" title="chaco.default_colormaps.YlOrBr"><code class="xref py py-func docutils literal notranslate"><span class="pre">YlOrBr()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.YlOrRd" title="chaco.default_colormaps.YlOrRd"><code class="xref py py-func docutils literal notranslate"><span class="pre">YlOrRd()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.gist_earth" title="chaco.default_colormaps.gist_earth"><code class="xref py py-func docutils literal notranslate"><span class="pre">gist_earth()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.gist_gray" title="chaco.default_colormaps.gist_gray"><code class="xref py py-func docutils literal notranslate"><span class="pre">gist_gray()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.gist_heat" title="chaco.default_colormaps.gist_heat"><code class="xref py py-func docutils literal notranslate"><span class="pre">gist_heat()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.gist_ncar" title="chaco.default_colormaps.gist_ncar"><code class="xref py py-func docutils literal notranslate"><span class="pre">gist_ncar()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.gist_rainbow" title="chaco.default_colormaps.gist_rainbow"><code class="xref py py-func docutils literal notranslate"><span class="pre">gist_rainbow()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.gist_stern" title="chaco.default_colormaps.gist_stern"><code class="xref py py-func docutils literal notranslate"><span class="pre">gist_stern()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.gist_yarg" title="chaco.default_colormaps.gist_yarg"><code class="xref py py-func docutils literal notranslate"><span class="pre">gist_yarg()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.CubicYF" title="chaco.default_colormaps.CubicYF"><code class="xref py py-func docutils literal notranslate"><span class="pre">CubicYF()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.CubicL" title="chaco.default_colormaps.CubicL"><code class="xref py py-func docutils literal notranslate"><span class="pre">CubicL()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.LinearL" title="chaco.default_colormaps.LinearL"><code class="xref py py-func docutils literal notranslate"><span class="pre">LinearL()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.LinearLHot" title="chaco.default_colormaps.LinearLHot"><code class="xref py py-func docutils literal notranslate"><span class="pre">LinearLHot()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.CoolWarm" title="chaco.default_colormaps.CoolWarm"><code class="xref py py-func docutils literal notranslate"><span class="pre">CoolWarm()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.CubeHelix" title="chaco.default_colormaps.CubeHelix"><code class="xref py py-func docutils literal notranslate"><span class="pre">CubeHelix()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.wistia" title="chaco.default_colormaps.wistia"><code class="xref py py-func docutils literal notranslate"><span class="pre">wistia()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.magma" title="chaco.default_colormaps.magma"><code class="xref py py-func docutils literal notranslate"><span class="pre">magma()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.inferno" title="chaco.default_colormaps.inferno"><code class="xref py py-func docutils literal notranslate"><span class="pre">inferno()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.plasma" title="chaco.default_colormaps.plasma"><code class="xref py py-func docutils literal notranslate"><span class="pre">plasma()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.viridis" title="chaco.default_colormaps.viridis"><code class="xref py py-func docutils literal notranslate"><span class="pre">viridis()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.accent" title="chaco.default_colormaps.accent"><code class="xref py py-func docutils literal notranslate"><span class="pre">accent()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.Dark2" title="chaco.default_colormaps.Dark2"><code class="xref py py-func docutils literal notranslate"><span class="pre">Dark2()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.Paired" title="chaco.default_colormaps.Paired"><code class="xref py py-func docutils literal notranslate"><span class="pre">Paired()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.Pastel1" title="chaco.default_colormaps.Pastel1"><code class="xref py py-func docutils literal notranslate"><span class="pre">Pastel1()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.Pastel2" title="chaco.default_colormaps.Pastel2"><code class="xref py py-func docutils literal notranslate"><span class="pre">Pastel2()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.Set1" title="chaco.default_colormaps.Set1"><code class="xref py py-func docutils literal notranslate"><span class="pre">Set1()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.Set2" title="chaco.default_colormaps.Set2"><code class="xref py py-func docutils literal notranslate"><span class="pre">Set2()</span></code></a></p></li>
+<li><p><a class="reference internal" href="chaco.default_colormaps.html#chaco.default_colormaps.Set3" title="chaco.default_colormaps.Set3"><code class="xref py py-func docutils literal notranslate"><span class="pre">Set3()</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="color-palettes">
+<h3>Color Palettes<a class="headerlink" href="#color-palettes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cbrewer</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">palette11</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">palette14</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">PALETTEES</span></code></p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">chaco.api module</a><ul>
+<li><a class="reference internal" href="#base">Base</a></li>
+<li><a class="reference internal" href="#data-model">Data Model</a></li>
+<li><a class="reference internal" href="#mappers">Mappers</a></li>
+<li><a class="reference internal" href="#visual-components-overlays">Visual Components / Overlays</a></li>
+<li><a class="reference internal" href="#renderers">Renderers</a></li>
+<li><a class="reference internal" href="#plot-factories">Plot Factories</a></li>
+<li><a class="reference internal" href="#axis">Axis</a></li>
+<li><a class="reference internal" href="#grid">Grid</a></li>
+<li><a class="reference internal" href="#tools">Tools</a></li>
+<li><a class="reference internal" href="#colormaps-and-color-palettes">Colormaps and Color Palettes</a><ul>
+<li><a class="reference internal" href="#utilities-convenience-objects">Utilities / Convenience Objects</a></li>
+<li><a class="reference internal" href="#colormaps">Colormaps</a></li>
+<li><a class="reference internal" href="#color-palettes">Color Palettes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.api.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

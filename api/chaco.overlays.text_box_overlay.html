@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.overlays.text_box_overlay module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.overlays.text_box_overlay module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.overlays.text_box_overlay">
+<span id="chaco-overlays-text-box-overlay-module"></span><h1>chaco.overlays.text_box_overlay module<a class="headerlink" href="#module-chaco.overlays.text_box_overlay" title="Permalink to this headline">¶</a></h1>
+<p>Defines the TextBoxOverlay class.</p>
+<dl class="class">
+<dt id="chaco.overlays.text_box_overlay.TextBoxOverlay">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.overlays.text_box_overlay.</code><code class="sig-name descname">TextBoxOverlay</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.text_box_overlay.TextBoxOverlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.abstract_overlay.html#chaco.abstract_overlay.AbstractOverlay" title="chaco.abstract_overlay.AbstractOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></code></a></p>
+<p>Draws a box with text in it.</p>
+<dl class="attribute">
+<dt id="chaco.overlays.text_box_overlay.TextBoxOverlay.align">
+<code class="sig-name descname">align</code><em class="property"> = Enum(&quot;ur&quot;, &quot;ul&quot;, &quot;ll&quot;, &quot;lr&quot;)</em><a class="headerlink" href="#chaco.overlays.text_box_overlay.TextBoxOverlay.align" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alignment of the text in the box:</p>
+<ul class="simple">
+<li><p>“ur”: upper right</p></li>
+<li><p>“ul”: upper left</p></li>
+<li><p>“ll”: lower left</p></li>
+<li><p>“lr”: lower right</p></li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.text_box_overlay.TextBoxOverlay.alpha">
+<code class="sig-name descname">alpha</code><em class="property"> = Trait(1.0, None, Float)</em><a class="headerlink" href="#chaco.overlays.text_box_overlay.TextBoxOverlay.alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>The alpha value to apply to <strong>bgcolor</strong></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.text_box_overlay.TextBoxOverlay.alternate_position">
+<code class="sig-name descname">alternate_position</code><em class="property"> = Any</em><a class="headerlink" href="#chaco.overlays.text_box_overlay.TextBoxOverlay.alternate_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>This allows subclasses to specify an alternate position for the root
+of the text box.  Must be a sequence of length 2.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.text_box_overlay.TextBoxOverlay.bgcolor">
+<code class="sig-name descname">bgcolor</code><em class="property"> = ColorTrait(&quot;transparent&quot;)</em><a class="headerlink" href="#chaco.overlays.text_box_overlay.TextBoxOverlay.bgcolor" title="Permalink to this definition">¶</a></dt>
+<dd><p>The background color for the box (overrides AbstractOverlay).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.text_box_overlay.TextBoxOverlay.border_color">
+<code class="sig-name descname">border_color</code><em class="property"> = ColorTrait(&quot;dodgerblue&quot;)</em><a class="headerlink" href="#chaco.overlays.text_box_overlay.TextBoxOverlay.border_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the outside box.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.text_box_overlay.TextBoxOverlay.border_size">
+<code class="sig-name descname">border_size</code><em class="property"> = Int(1)</em><a class="headerlink" href="#chaco.overlays.text_box_overlay.TextBoxOverlay.border_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The thickness of box border.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.text_box_overlay.TextBoxOverlay.border_visible">
+<code class="sig-name descname">border_visible</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.overlays.text_box_overlay.TextBoxOverlay.border_visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>The border visibility. Defaults to true to duplicate previous behavior.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.text_box_overlay.TextBoxOverlay.font">
+<code class="sig-name descname">font</code><em class="property"> = KivaFont(&quot;modern 12&quot;)</em><a class="headerlink" href="#chaco.overlays.text_box_overlay.TextBoxOverlay.font" title="Permalink to this definition">¶</a></dt>
+<dd><p>The font to use for the text.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.text_box_overlay.TextBoxOverlay.max_text_width">
+<code class="sig-name descname">max_text_width</code><em class="property"> = Float(0.0)</em><a class="headerlink" href="#chaco.overlays.text_box_overlay.TextBoxOverlay.max_text_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>The maximum width of the displayed text. This affects the width of the
+text only, not the text box, which includes margins around the text and
+<cite>padding</cite>.
+A <cite>max_text_width</cite> of 0.0 means that the width will not be restricted.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.overlays.text_box_overlay.TextBoxOverlay.overlay">
+<code class="sig-name descname">overlay</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.text_box_overlay.TextBoxOverlay.overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the box overlaid on another component.</p>
+<p>Overrides AbstractOverlay.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.text_box_overlay.TextBoxOverlay.padding">
+<code class="sig-name descname">padding</code><em class="property"> = Int(5)</em><a class="headerlink" href="#chaco.overlays.text_box_overlay.TextBoxOverlay.padding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of pixels of padding around the text within the box.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.text_box_overlay.TextBoxOverlay.text">
+<code class="sig-name descname">text</code><em class="property"> = Str</em><a class="headerlink" href="#chaco.overlays.text_box_overlay.TextBoxOverlay.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>The text to display in the box.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.overlays.text_box_overlay.TextBoxOverlay.text_color">
+<code class="sig-name descname">text_color</code><em class="property"> = ColorTrait(&quot;black&quot;)</em><a class="headerlink" href="#chaco.overlays.text_box_overlay.TextBoxOverlay.text_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the text.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.overlays.text_box_overlay.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

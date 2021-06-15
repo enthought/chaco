@@ -1,0 +1,430 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.color_spaces module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.color_spaces module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.color_spaces">
+<span id="chaco-color-spaces-module"></span><h1>chaco.color_spaces module<a class="headerlink" href="#module-chaco.color_spaces" title="Permalink to this headline">¶</a></h1>
+<p>Conversion functions between various color spaces.</p>
+<p>The implementations and data are mostly taken from the old
+scipy.sandbox.image package.</p>
+<p>The CIE XYZ tristimulus colorspace with a standard D65 whitepoint is the
+default interchange color space for the implementations here. This is
+a useful whitepoint for viewing on computer monitors. However, it should
+be noted that the dimmer D50 whitepoint is often used in print
+applications. Notably, ICC profiles use the XYZ space with a D50
+whitepoint as one of its standard interchange color spaces.</p>
+<dl class="function">
+<dt id="chaco.color_spaces.convert">
+<code class="sig-prename descclassname">chaco.color_spaces.</code><code class="sig-name descname">convert</code><span class="sig-paren">(</span><em class="sig-param">matrix</em>, <em class="sig-param">TTT</em>, <em class="sig-param">axis=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.color_spaces.convert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply linear matrix transformation to an array of color triples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matrix</strong> (<em>float array</em><em> (</em><em>3</em><em>, </em><em>3</em><em>)</em>) – The transformation to apply.</p></li>
+<li><p><strong>TTT</strong> (<em>float array</em>) – The set of colors to transform.</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>optional</em>) – The axis of <cite>TTT</cite> along which the color triples extend.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>OUT</strong> – The transformed colors.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.color_spaces.join_colors">
+<code class="sig-prename descclassname">chaco.color_spaces.</code><code class="sig-name descname">join_colors</code><span class="sig-paren">(</span><em class="sig-param">c1</em>, <em class="sig-param">c2</em>, <em class="sig-param">c3</em>, <em class="sig-param">axis</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.color_spaces.join_colors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rejoin the separated colors into a single array.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.color_spaces.lab2xyz">
+<code class="sig-prename descclassname">chaco.color_spaces.</code><code class="sig-name descname">lab2xyz</code><span class="sig-paren">(</span><em class="sig-param">lab, axis=-1, wp=[0.9504285453771807, 1.0, 1.0889003707981277]</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.color_spaces.lab2xyz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert CIE L*a*b* colors to XYZ tristimulus values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lab</strong> (<em>float array</em>) – L*a*b* values.</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>optional</em>) – The axis of the XYZ values.</p></li>
+<li><p><strong>wp</strong> (<em>list of 3 floats</em><em>, </em><em>optional</em>) – The XYZ tristimulus values of the whitepoint.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>xyz</strong> – The XYZ colors.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.color_spaces.makeslices">
+<code class="sig-prename descclassname">chaco.color_spaces.</code><code class="sig-name descname">makeslices</code><span class="sig-paren">(</span><em class="sig-param">n</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.color_spaces.makeslices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of <cite>n</cite> slice objects.</p>
+<p>Each slice object corresponds to [:] without arguments.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.color_spaces.msh2xyz">
+<code class="sig-prename descclassname">chaco.color_spaces.</code><code class="sig-name descname">msh2xyz</code><span class="sig-paren">(</span><em class="sig-param">msh, axis=-1, wp=[0.9504285453771807, 1.0, 1.0889003707981277]</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.color_spaces.msh2xyz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert Msh values to XYZ tristimulus values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>msh</strong> (<em>float array</em>) – The Msh colors.</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>optional</em>) – The axis of the XYZ values.</p></li>
+<li><p><strong>wp</strong> (<em>list of 3 floats</em><em>, </em><em>optional</em>) – The XYZ tristimulus values of the whitepoint.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>xyz</strong> – XYZ values.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.color_spaces.rgb2rgbp">
+<code class="sig-prename descclassname">chaco.color_spaces.</code><code class="sig-name descname">rgb2rgbp</code><span class="sig-paren">(</span><em class="sig-param">rgb</em>, <em class="sig-param">gamma=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.color_spaces.rgb2rgbp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert linear RGB coordinates to nonlinear R’G’B’ coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rgb</strong> (<em>float array</em>) – </p></li>
+<li><p><strong>gamma</strong> (<em>float</em><em>, </em><em>optional</em>) – If provided, then this value of gamma will be used to correct the
+colors. If not provided, then the standard sR’G’B’ space will be
+assumed. It is almost, but not quite equivalent to a gamma of 2.2.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>rgbp</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.color_spaces.rgb2xyz">
+<code class="sig-prename descclassname">chaco.color_spaces.</code><code class="sig-name descname">rgb2xyz</code><span class="sig-paren">(</span><em class="sig-param">rgb</em>, <em class="sig-param">axis=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.color_spaces.rgb2xyz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert linear RGB coordinates to XYZ tristimulus values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rgb</strong> (<em>float array</em>) – RGB values.</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>optional</em>) – The axis of the XYZ values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>xyz</strong> – The XYZ colors.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.color_spaces.rgbp2rgb">
+<code class="sig-prename descclassname">chaco.color_spaces.</code><code class="sig-name descname">rgbp2rgb</code><span class="sig-paren">(</span><em class="sig-param">rgbp</em>, <em class="sig-param">gamma=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.color_spaces.rgbp2rgb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert nonlinear R’G’B’ coordinates to linear RGB coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rgbp</strong> (<em>float array</em>) – </p></li>
+<li><p><strong>gamma</strong> (<em>float</em><em>, </em><em>optional</em>) – If provided, then this value of gamma will be used to correct the
+colors. If not provided, then the standard sR’G’B’ space will be
+assumed. It is almost, but not quite equivalent to a gamma of 2.2.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>rgb</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.color_spaces.separate_colors">
+<code class="sig-prename descclassname">chaco.color_spaces.</code><code class="sig-name descname">separate_colors</code><span class="sig-paren">(</span><em class="sig-param">xyz</em>, <em class="sig-param">axis=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.color_spaces.separate_colors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Separate an array of color triples into three arrays, one for
+each color axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xyz</strong> (<em>float array</em>) – </p></li>
+<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>optional</em>) – The axis along which the color triples extend.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>x</strong> (<em>float array</em>)</p></li>
+<li><p><strong>y</strong> (<em>float array</em>)</p></li>
+<li><p><strong>z</strong> (<em>float array</em>) – The separate color arrays.</p></li>
+<li><p><strong>axis</strong> (<em>int</em>) – The axis along which they need to be reassembled.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.color_spaces.srgb2xyz">
+<code class="sig-prename descclassname">chaco.color_spaces.</code><code class="sig-name descname">srgb2xyz</code><span class="sig-paren">(</span><em class="sig-param">srgb</em>, <em class="sig-param">axis=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.color_spaces.srgb2xyz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert sR’G’B’ colors to XYZ.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>srgb</strong> (<em>float array</em>) – sR’G’B’ values.</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>optional</em>) – The axis of the XYZ values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>xyz</strong> – The XYZ colors.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.color_spaces.triwhite">
+<code class="sig-prename descclassname">chaco.color_spaces.</code><code class="sig-name descname">triwhite</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.color_spaces.triwhite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert x,y chromaticity coordinates to XYZ tristimulus values.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.color_spaces.xyz2lab">
+<code class="sig-prename descclassname">chaco.color_spaces.</code><code class="sig-name descname">xyz2lab</code><span class="sig-paren">(</span><em class="sig-param">xyz, axis=-1, wp=[0.9504285453771807, 1.0, 1.0889003707981277]</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.color_spaces.xyz2lab" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert XYZ tristimulus values to CIE L*a*b*.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xyz</strong> (<em>float array</em>) – XYZ values.</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>optional</em>) – The axis of the XYZ values.</p></li>
+<li><p><strong>wp</strong> (<em>list of 3 floats</em><em>, </em><em>optional</em>) – The XYZ tristimulus values of the whitepoint.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>lab</strong> – The L*a*b* colors.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.color_spaces.xyz2msh">
+<code class="sig-prename descclassname">chaco.color_spaces.</code><code class="sig-name descname">xyz2msh</code><span class="sig-paren">(</span><em class="sig-param">xyz, axis=-1, wp=[0.9504285453771807, 1.0, 1.0889003707981277]</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.color_spaces.xyz2msh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert XYZ tristimulus values to Msh.</p>
+<p>Msh is a hemispherical coordinate system derived from L*a*b*. The
+origin remains the same. M is the distance from the origin. s is an
+inclination angle from the vertical corresponding to saturation.
+h is the azimuthal angle corresponding to hue.</p>
+<p>Moreland, Kenneth. Diverging Color Maps for Scientific Visualization
+(Expanded).
+<a class="reference external" href="http://www.sandia.gov/~kmorel/documents/ColorMaps/ColorMapsExpanded.pdf">http://www.sandia.gov/~kmorel/documents/ColorMaps/ColorMapsExpanded.pdf</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xyz</strong> (<em>float array</em>) – XYZ values.</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>optional</em>) – The axis of the XYZ values.</p></li>
+<li><p><strong>wp</strong> (<em>list of 3 floats</em><em>, </em><em>optional</em>) – The XYZ tristimulus values of the whitepoint.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>msh</strong> – The Msh colors.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.color_spaces.xyz2rgb">
+<code class="sig-prename descclassname">chaco.color_spaces.</code><code class="sig-name descname">xyz2rgb</code><span class="sig-paren">(</span><em class="sig-param">xyz</em>, <em class="sig-param">axis=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.color_spaces.xyz2rgb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert XYZ tristimulus values to linear RGB coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xyz</strong> (<em>float array</em>) – XYZ values.</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>optional</em>) – The axis of the XYZ values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>rgb</strong> – The RGB colors.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.color_spaces.xyz2srgb">
+<code class="sig-prename descclassname">chaco.color_spaces.</code><code class="sig-name descname">xyz2srgb</code><span class="sig-paren">(</span><em class="sig-param">xyz</em>, <em class="sig-param">axis=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.color_spaces.xyz2srgb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert XYZ colors to sR’G’B’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xyz</strong> (<em>float array</em>) – XYZ values.</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>optional</em>) – The axis of the XYZ values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>srgb</strong> – The sR’G’B’ colors.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.color_spaces.xyz2xyz">
+<code class="sig-prename descclassname">chaco.color_spaces.</code><code class="sig-name descname">xyz2xyz</code><span class="sig-paren">(</span><em class="sig-param">xyz</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.color_spaces.xyz2xyz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identity mapping.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.color_spaces.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

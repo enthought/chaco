@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.examples.demo.advanced.data_stream module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.examples.demo.advanced.data_stream module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.examples.demo.advanced.data_stream">
+<span id="chaco-examples-demo-advanced-data-stream-module"></span><h1>chaco.examples.demo.advanced.data_stream module<a class="headerlink" href="#module-chaco.examples.demo.advanced.data_stream" title="Permalink to this headline">¶</a></h1>
+<p>Visualization of simulated live data stream</p>
+<p>Shows how Chaco and Traits can be used to easily build a data
+acquisition and visualization system.</p>
+<p>Two frames are opened: one has the plot and allows configuration of
+various plot properties, and one which simulates controls for the hardware
+device from which the data is being acquired; in this case, it is a mockup
+random number generator whose mean and standard deviation can be controlled
+by the user.</p>
+<dl class="class">
+<dt id="chaco.examples.demo.advanced.data_stream.Controller">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.examples.demo.advanced.data_stream.</code><code class="sig-name descname">Controller</code><a class="headerlink" href="#chaco.examples.demo.advanced.data_stream.Controller" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<dl class="method">
+<dt id="chaco.examples.demo.advanced.data_stream.Controller.timer_tick">
+<code class="sig-name descname">timer_tick</code><span class="sig-paren">(</span><em class="sig-param">*args</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.examples.demo.advanced.data_stream.Controller.timer_tick" title="Permalink to this definition">¶</a></dt>
+<dd><p>Callback function that should get called based on a timer tick.  This
+will generate a new random data point and set it on the <cite>.data</cite> array
+of our viewer object.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.examples.demo.advanced.data_stream.Demo">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.examples.demo.advanced.data_stream.</code><code class="sig-name descname">Demo</code><a class="headerlink" href="#chaco.examples.demo.advanced.data_stream.Demo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<dl class="method">
+<dt id="chaco.examples.demo.advanced.data_stream.Demo.configure_traits">
+<code class="sig-name descname">configure_traits</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kws</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.examples.demo.advanced.data_stream.Demo.configure_traits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and displays a dialog box for editing values of trait
+attributes, as if it were a complete, self-contained GUI application.</p>
+<p>This method is intended for use in applications that do not normally
+have a GUI. Control does not resume in the calling application until
+the user closes the dialog box.</p>
+<p>The method attempts to open and unpickle the contents of <em>filename</em>
+before displaying the dialog box. When editing is complete, the method
+attempts to pickle the updated contents of the object back to
+<em>filename</em>. If the file referenced by <em>filename</em> does not exist, the
+object is not modified before displaying the dialog box. If <em>filename</em>
+is unspecified or None, no pickling or unpickling occurs.</p>
+<p>If <em>edit</em> is True (the default), a dialog box for editing the
+current object is displayed. If <em>edit</em> is False or None, no
+dialog box is displayed. You can use <code class="docutils literal notranslate"><span class="pre">edit=False</span></code> if you want the
+object to be restored from the contents of <em>filename</em>, without being
+modified by the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – <p>The name (including path) of a file that contains a pickled
+representation of the current object. When this parameter is
+specified, the method reads the corresponding file (if it exists)
+to restore the saved values of the object’s traits before
+displaying them. If the user confirms the dialog box (by clicking
+<strong>OK</strong>), the new values are written to the file. If this parameter
+is not specified, the values are loaded from the in-memory object,
+and are not persisted when the dialog box is closed.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 6.0.0.</span></p>
+</div>
+</p></li>
+<li><p><strong>view</strong> (<em>View</em><em> or </em><em>str</em>) – A View object (or its name) that defines a user interface for
+editing trait attribute values of the current object. If the view
+is defined as an attribute on this class, use the name of the
+attribute. Otherwise, use a reference to the view object. If this
+attribute is not specified, the View object returned by
+trait_view() is used.</p></li>
+<li><p><strong>kind</strong> (<em>str</em>) – The type of user interface window to create. See the
+<strong>traitsui.view.kind_trait</strong> trait for values and
+their meanings. If <em>kind</em> is unspecified or None, the <strong>kind</strong>
+attribute of the View object is used.</p></li>
+<li><p><strong>edit</strong> (<em>bool</em>) – <p>Indicates whether to display a user interface. If <em>filename</em>
+specifies an existing file, setting <em>edit</em> to False loads the
+saved values from that file into the object without requiring
+user interaction.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 6.2.0.</span></p>
+</div>
+</p></li>
+<li><p><strong>context</strong> (<em>object</em><em> or </em><em>dictionary</em>) – A single object or a dictionary of string/object pairs, whose trait
+attributes are to be edited. If not specified, the current object
+is used</p></li>
+<li><p><strong>handler</strong> (<em>Handler</em>) – A handler object used for event handling in the dialog box. If
+None, the default handler for Traits UI is used.</p></li>
+<li><p><strong>id</strong> (<em>str</em>) – A unique ID for persisting preferences about this user interface,
+such as size and position. If not specified, no user preferences
+are saved.</p></li>
+<li><p><strong>scrollable</strong> (<em>bool</em>) – Indicates whether the dialog box should be scrollable. When set to
+True, scroll bars appear on the dialog box if it is not large
+enough to display all of the items in the view at one time.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>True on success.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.examples.demo.advanced.data_stream.Demo.edit_traits">
+<code class="sig-name descname">edit_traits</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kws</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.examples.demo.advanced.data_stream.Demo.edit_traits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays a user interface window for editing trait attribute
+values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>view</strong> (<em>View</em><em> or </em><em>string</em>) – A View object (or its name) that defines a user interface for
+editing trait attribute values of the current object. If the view
+is defined as an attribute on this class, use the name of the
+attribute. Otherwise, use a reference to the view object. If this
+attribute is not specified, the View object returned by
+trait_view() is used.</p></li>
+<li><p><strong>parent</strong> (<em>toolkit control</em>) – The reference to a user interface component to use as the parent
+window for the object’s UI window.</p></li>
+<li><p><strong>kind</strong> (<em>str</em>) – The type of user interface window to create. See the
+<strong>traitsui.view.kind_trait</strong> trait for values and
+their meanings. If <em>kind</em> is unspecified or None, the <strong>kind</strong>
+attribute of the View object is used.</p></li>
+<li><p><strong>context</strong> (<em>object</em><em> or </em><em>dictionary</em>) – A single object or a dictionary of string/object pairs, whose trait
+attributes are to be edited. If not specified, the current object
+is used.</p></li>
+<li><p><strong>handler</strong> (<em>Handler</em>) – A handler object used for event handling in the dialog box. If
+None, the default handler for Traits UI is used.</p></li>
+<li><p><strong>id</strong> (<em>str</em>) – A unique ID for persisting preferences about this user interface,
+such as size and position. If not specified, no user preferences
+are saved.</p></li>
+<li><p><strong>scrollable</strong> (<em>bool</em>) – Indicates whether the dialog box should be scrollable. When set to
+True, scroll bars appear on the dialog box if it is not large
+enough to display all of the items in the view at one time.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A UI object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.examples.demo.advanced.data_stream.DemoHandler">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.examples.demo.advanced.data_stream.</code><code class="sig-name descname">DemoHandler</code><a class="headerlink" href="#chaco.examples.demo.advanced.data_stream.DemoHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traitsui.handler.Handler</span></code></p>
+<dl class="method">
+<dt id="chaco.examples.demo.advanced.data_stream.DemoHandler.closed">
+<code class="sig-name descname">closed</code><span class="sig-paren">(</span><em class="sig-param">info</em>, <em class="sig-param">is_ok</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.examples.demo.advanced.data_stream.DemoHandler.closed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles a dialog-based user interface being closed by the user.
+Overridden here to stop the timer once the window is destroyed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.examples.demo.advanced.data_stream.Viewer">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.examples.demo.advanced.data_stream.</code><code class="sig-name descname">Viewer</code><a class="headerlink" href="#chaco.examples.demo.advanced.data_stream.Viewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<p>This class just contains the two data arrays that will be updated
+by the Controller.  The visualization/editor for this class is a
+Chaco plot.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.examples.demo.advanced.data_stream.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

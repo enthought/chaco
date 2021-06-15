@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.plot_containers module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.plot_containers module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.plot_containers">
+<span id="chaco-plot-containers-module"></span><h1>chaco.plot_containers module<a class="headerlink" href="#module-chaco.plot_containers" title="Permalink to this headline">¶</a></h1>
+<p>Defines various plot container classes, including stacked, grid, and overlay.</p>
+<dl class="class">
+<dt id="chaco.plot_containers.OverlayPlotContainer">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.plot_containers.</code><code class="sig-name descname">OverlayPlotContainer</code><span class="sig-paren">(</span><em class="sig-param">*components</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot_containers.OverlayPlotContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.enthought.com/enable/api/enable.overlay_container.html#enable.overlay_container.OverlayContainer" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.overlay_container.OverlayContainer</span></code></a></p>
+<p>A plot container that stretches all its components to fit within its
+space.  All of its components must therefore be resizable.</p>
+<dl class="attribute">
+<dt id="chaco.plot_containers.OverlayPlotContainer.container_under_layers">
+<code class="sig-name descname">container_under_layers</code><em class="property"> = Tuple(&quot;background&quot;, &quot;image&quot;, &quot;underlay&quot;, &quot;plot&quot;)</em><a class="headerlink" href="#chaco.plot_containers.OverlayPlotContainer.container_under_layers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Redefine the container layers to name the main layer as “plot” instead
+of the Enable default of “mainlayer”</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot_containers.OverlayPlotContainer.use_backbuffer">
+<code class="sig-name descname">use_backbuffer</code><em class="property"> = False</em><a class="headerlink" href="#chaco.plot_containers.OverlayPlotContainer.use_backbuffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do not use an off-screen backbuffer.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.plot_containers.HPlotContainer">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.plot_containers.</code><code class="sig-name descname">HPlotContainer</code><span class="sig-paren">(</span><em class="sig-param">*components</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot_containers.HPlotContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.enthought.com/enable/api/enable.stacked_container.html#enable.stacked_container.HStackedContainer" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.stacked_container.HStackedContainer</span></code></a></p>
+<p>A plot container that stacks all of its components horizontally. Resizable
+components share the free space evenly. All components are stacked from
+according to <strong>stack_order* in the same order that they appear in the
+**components</strong> list.</p>
+<dl class="attribute">
+<dt id="chaco.plot_containers.HPlotContainer.container_under_layers">
+<code class="sig-name descname">container_under_layers</code><em class="property"> = Tuple(&quot;background&quot;, &quot;image&quot;, &quot;underlay&quot;, &quot;plot&quot;)</em><a class="headerlink" href="#chaco.plot_containers.HPlotContainer.container_under_layers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Redefine the container layers to name the main layer as “plot” instead
+of the Enable default of “mainlayer”</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.plot_containers.VPlotContainer">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.plot_containers.</code><code class="sig-name descname">VPlotContainer</code><span class="sig-paren">(</span><em class="sig-param">*components</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot_containers.VPlotContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.enthought.com/enable/api/enable.stacked_container.html#enable.stacked_container.VStackedContainer" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.stacked_container.VStackedContainer</span></code></a></p>
+<p>A plot container that stacks plot components vertically.</p>
+<dl class="attribute">
+<dt id="chaco.plot_containers.VPlotContainer.container_under_layers">
+<code class="sig-name descname">container_under_layers</code><em class="property"> = Tuple(&quot;background&quot;, &quot;image&quot;, &quot;underlay&quot;, &quot;plot&quot;)</em><a class="headerlink" href="#chaco.plot_containers.VPlotContainer.container_under_layers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Redefine the container layers to name the main layer as “plot” instead
+of the Enable default of “mainlayer”</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.plot_containers.GridPlotContainer">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.plot_containers.</code><code class="sig-name descname">GridPlotContainer</code><span class="sig-paren">(</span><em class="sig-param">*components</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot_containers.GridPlotContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.base_plot_container.html#chaco.base_plot_container.BasePlotContainer" title="chaco.base_plot_container.BasePlotContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.base_plot_container.BasePlotContainer</span></code></a></p>
+<p>A GridPlotContainer consists of rows and columns in a tabular format.</p>
+<p>Each cell’s width is the same as all other cells in its column, and each
+cell’s height is the same as all other cells in its row.</p>
+<p>Although grid layout requires more layout information than a simple
+ordered list, this class keeps components as a simple list and exposes a
+<strong>shape</strong> trait.</p>
+<dl class="class">
+<dt id="chaco.plot_containers.GridPlotContainer.SizePrefs">
+<em class="property">class </em><code class="sig-name descname">SizePrefs</code><span class="sig-paren">(</span><em class="sig-param">length</em>, <em class="sig-param">direction</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot_containers.GridPlotContainer.SizePrefs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Object to hold size preferences across spans in a particular
+dimension.  For instance, if SizePrefs is being used for the row
+axis, then each element in the arrays below express sizing information
+about the corresponding column.</p>
+<dl class="method">
+<dt id="chaco.plot_containers.GridPlotContainer.SizePrefs.compute_size_array">
+<code class="sig-name descname">compute_size_array</code><span class="sig-paren">(</span><em class="sig-param">size</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot_containers.GridPlotContainer.SizePrefs.compute_size_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a length along the axis corresponding to this SizePref,
+returns an array of lengths to assign each cell, taking into account
+resizability and preferred sizes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot_containers.GridPlotContainer.SizePrefs.direction">
+<code class="sig-name descname">direction</code><em class="property"> = &lt;traits.trait_types.Enum object&gt;</em><a class="headerlink" href="#chaco.plot_containers.GridPlotContainer.SizePrefs.direction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot_containers.GridPlotContainer.SizePrefs.fixed_lengths">
+<code class="sig-name descname">fixed_lengths</code><a class="headerlink" href="#chaco.plot_containers.GridPlotContainer.SizePrefs.fixed_lengths" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.trait_numeric.Array</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plot_containers.GridPlotContainer.SizePrefs.get_preferred_size">
+<code class="sig-name descname">get_preferred_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot_containers.GridPlotContainer.SizePrefs.get_preferred_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot_containers.GridPlotContainer.SizePrefs.index">
+<code class="sig-name descname">index</code><em class="property"> = &lt;traits.trait_types.Int object&gt;</em><a class="headerlink" href="#chaco.plot_containers.GridPlotContainer.SizePrefs.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot_containers.GridPlotContainer.SizePrefs.resizable_lengths">
+<code class="sig-name descname">resizable_lengths</code><a class="headerlink" href="#chaco.plot_containers.GridPlotContainer.SizePrefs.resizable_lengths" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.trait_numeric.Array</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plot_containers.GridPlotContainer.SizePrefs.update_from_component">
+<code class="sig-name descname">update_from_component</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">index</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot_containers.GridPlotContainer.SizePrefs.update_from_component" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a component at a particular index along this SizePref’s
+axis, integrates the component’s resizability and sizing information
+into self.fixed_lengths and self.resizable_lengths.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plot_containers.GridPlotContainer.SizePrefs.update_from_pref_size">
+<code class="sig-name descname">update_from_pref_size</code><span class="sig-paren">(</span><em class="sig-param">pref_length</em>, <em class="sig-param">index</em>, <em class="sig-param">resizable</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot_containers.GridPlotContainer.SizePrefs.update_from_pref_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot_containers.GridPlotContainer.component_grid">
+<code class="sig-name descname">component_grid</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.plot_containers.GridPlotContainer.component_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property exposes the underlying grid structure of the container,
+and is the preferred way of setting and reading its contents.
+When read, this property returns a Numpy array with dtype=object; values
+for setting it can be nested tuples, lists, or 2-D arrays.
+The array is in row-major order, so that component_grid[0] is the first
+row, and component_grid[:,0] is the first column.  The rows are ordered
+from top to bottom.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plot_containers.GridPlotContainer.get_preferred_size">
+<code class="sig-name descname">get_preferred_size</code><span class="sig-paren">(</span><em class="sig-param">components=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot_containers.GridPlotContainer.get_preferred_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the size (width,height) that is preferred for this component.</p>
+<p>Overrides PlotComponent.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot_containers.GridPlotContainer.halign">
+<code class="sig-name descname">halign</code><em class="property"> = Enum(&quot;left&quot;, &quot;right&quot;, &quot;center&quot;)</em><a class="headerlink" href="#chaco.plot_containers.GridPlotContainer.halign" title="Permalink to this definition">¶</a></dt>
+<dd><p>The horizontal alignment of objects that don’t span the full width.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot_containers.GridPlotContainer.shape">
+<code class="sig-name descname">shape</code><em class="property"> = Trait((0, 0), Either(Tuple, List, Array))</em><a class="headerlink" href="#chaco.plot_containers.GridPlotContainer.shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>The shape of this container, i.e, (rows, columns).  The items in
+<strong>components</strong> are shuffled appropriately to match this
+specification.  If there are fewer components than cells, the remaining
+cells are filled in with spaces.  If there are more components than cells,
+the remainder wrap onto new rows as appropriate.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot_containers.GridPlotContainer.spacing">
+<code class="sig-name descname">spacing</code><em class="property"> = Either(Tuple, List, Array)</em><a class="headerlink" href="#chaco.plot_containers.GridPlotContainer.spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>The amount of space to put on either side of each component, expressed
+as a tuple (h_spacing, v_spacing).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot_containers.GridPlotContainer.valign">
+<code class="sig-name descname">valign</code><em class="property"> = Enum(&quot;bottom&quot;, &quot;top&quot;, &quot;center&quot;)</em><a class="headerlink" href="#chaco.plot_containers.GridPlotContainer.valign" title="Permalink to this definition">¶</a></dt>
+<dd><p>The vertical alignment of objects that don’t span the full height.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.plot_containers.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,393 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.axis module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.axis module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.axis">
+<span id="chaco-axis-module"></span><h1>chaco.axis module<a class="headerlink" href="#module-chaco.axis" title="Permalink to this headline">¶</a></h1>
+<p>Defines the PlotAxis class, and associated validator and UI.</p>
+<dl class="function">
+<dt id="chaco.axis.DEFAULT_TICK_FORMATTER">
+<code class="sig-prename descclassname">chaco.axis.</code><code class="sig-name descname">DEFAULT_TICK_FORMATTER</code><span class="sig-paren">(</span><em class="sig-param">val</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.axis.DEFAULT_TICK_FORMATTER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="chaco.axis.MinorPlotAxis">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.axis.</code><code class="sig-name descname">MinorPlotAxis</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.axis.MinorPlotAxis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#chaco.axis.PlotAxis" title="chaco.axis.PlotAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.axis.PlotAxis</span></code></a></p>
+<p>The MinorPlotAxis is a PlotAxis which draws ticks with a smaller interval,
+smaller tick sizes, and no tick labels.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.axis.PlotAxis">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.axis.</code><code class="sig-name descname">PlotAxis</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.axis.PlotAxis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.abstract_overlay.html#chaco.abstract_overlay.AbstractOverlay" title="chaco.abstract_overlay.AbstractOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></code></a></p>
+<p>The PlotAxis is a visual component that can be rendered on its own as
+a standalone component or attached as an overlay to another component.
+(To attach it as an overlay, set its <strong>component</strong> attribute.)</p>
+<p>When it is attached as an overlay, it draws into the padding around
+the component.</p>
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.axis_line_color">
+<code class="sig-name descname">axis_line_color</code><em class="property"> = ColorTrait(&quot;black&quot;)</em><a class="headerlink" href="#chaco.axis.PlotAxis.axis_line_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the axis line.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.axis_line_style">
+<code class="sig-name descname">axis_line_style</code><em class="property"> = LineStyle(&quot;solid&quot;)</em><a class="headerlink" href="#chaco.axis.PlotAxis.axis_line_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dash style of the axis line.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.axis_line_visible">
+<code class="sig-name descname">axis_line_visible</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.axis.PlotAxis.axis_line_visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the axis line visible?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.axis_line_weight">
+<code class="sig-name descname">axis_line_weight</code><em class="property"> = Float(1.0)</em><a class="headerlink" href="#chaco.axis.PlotAxis.axis_line_weight" title="Permalink to this definition">¶</a></dt>
+<dd><p>The line thickness (in pixels) of the axis line.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.bgcolor">
+<code class="sig-name descname">bgcolor</code><em class="property"> = ColorTrait(&quot;transparent&quot;)</em><a class="headerlink" href="#chaco.axis.PlotAxis.bgcolor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Background color (overrides AbstractOverlay). Axes usually let the color of
+the container show through.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.ensure_labels_bounded">
+<code class="sig-name descname">ensure_labels_bounded</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.axis.PlotAxis.ensure_labels_bounded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the axis ensure that its end labels fall within its bounding area?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.ensure_ticks_bounded">
+<code class="sig-name descname">ensure_ticks_bounded</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.axis.PlotAxis.ensure_ticks_bounded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the axis prevent the ticks from being rendered outside its bounds?
+This flag is off by default because the standard axis <em>does</em> render ticks
+that encroach on the plot area.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.axis.PlotAxis.invalidate">
+<code class="sig-name descname">invalidate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.axis.PlotAxis.invalidate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invalidates the pre-computed layout and scaling data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.mapper">
+<code class="sig-name descname">mapper</code><em class="property"> = Instance(AbstractMapper)</em><a class="headerlink" href="#chaco.axis.PlotAxis.mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mapper that drives this axis.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.axis.PlotAxis.mapper_updated">
+<code class="sig-name descname">mapper_updated</code><span class="sig-paren">(</span><em class="sig-param">event=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.axis.PlotAxis.mapper_updated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event handler that is bound to this axis’s mapper’s <strong>updated</strong> event</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.orientation">
+<code class="sig-name descname">orientation</code><em class="property"> = Enum(&quot;top&quot;, &quot;bottom&quot;, &quot;left&quot;, &quot;right&quot;)</em><a class="headerlink" href="#chaco.axis.PlotAxis.orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The location of the axis relative to the plot.  This determines where
+the axis title is located relative to the axis line.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.origin">
+<code class="sig-name descname">origin</code><em class="property"> = Enum(&quot;bottom left&quot;, &quot;top left&quot;, &quot;bottom right&quot;, &quot;top right&quot;)</em><a class="headerlink" href="#chaco.axis.PlotAxis.origin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keep an origin for plots that aren’t attached to a component</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.axis.PlotAxis.overlay">
+<code class="sig-name descname">overlay</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.axis.PlotAxis.overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws this component overlaid on another component.</p>
+<p>Overrides AbstractOverlay.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.resizable">
+<code class="sig-name descname">resizable</code><em class="property"> = &quot;hv&quot;</em><a class="headerlink" href="#chaco.axis.PlotAxis.resizable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dimensions that the axis is resizable in (overrides PlotComponent).
+Typically, axes are resizable in both dimensions.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.small_haxis_style">
+<code class="sig-name descname">small_haxis_style</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.axis.PlotAxis.small_haxis_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>A special version of the axis line that is more useful for geophysical
+plots.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.tick_color">
+<code class="sig-name descname">tick_color</code><em class="property"> = ColorTrait(&quot;black&quot;)</em><a class="headerlink" href="#chaco.axis.PlotAxis.tick_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the ticks.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.tick_generator">
+<code class="sig-name descname">tick_generator</code><em class="property"> = Instance(AbstractTickGenerator)</em><a class="headerlink" href="#chaco.axis.PlotAxis.tick_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>A callable that implements the AbstractTickGenerator interface.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.tick_in">
+<code class="sig-name descname">tick_in</code><em class="property"> = Int(5)</em><a class="headerlink" href="#chaco.axis.PlotAxis.tick_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of pixels by which the ticks extend into the plot area.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.tick_interval">
+<code class="sig-name descname">tick_interval</code><em class="property"> = Trait(&quot;auto&quot;, &quot;auto&quot;, Float)</em><a class="headerlink" href="#chaco.axis.PlotAxis.tick_interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dataspace interval between ticks.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.tick_label_alignment">
+<code class="sig-name descname">tick_label_alignment</code><em class="property"> = Enum(&quot;edge&quot;, &quot;corner&quot;)</em><a class="headerlink" href="#chaco.axis.PlotAxis.tick_label_alignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to align to corners or edges (corner is better for 45 degree rotation)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.tick_label_color">
+<code class="sig-name descname">tick_label_color</code><em class="property"> = ColorTrait(&quot;black&quot;)</em><a class="headerlink" href="#chaco.axis.PlotAxis.tick_label_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the tick labels.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.tick_label_font">
+<code class="sig-name descname">tick_label_font</code><em class="property"> = KivaFont(&quot;modern 10&quot;)</em><a class="headerlink" href="#chaco.axis.PlotAxis.tick_label_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>The font of the tick labels.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.tick_label_formatter">
+<code class="sig-name descname">tick_label_formatter</code><em class="property"> = Callable(DEFAULT_TICK_FORMATTER)</em><a class="headerlink" href="#chaco.axis.PlotAxis.tick_label_formatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A callable that is passed the numerical value of each tick label and
+that returns a string.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.tick_label_margin">
+<code class="sig-name descname">tick_label_margin</code><em class="property"> = Int(2)</em><a class="headerlink" href="#chaco.axis.PlotAxis.tick_label_margin" title="Permalink to this definition">¶</a></dt>
+<dd><p>The margin around the tick labels.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.tick_label_offset">
+<code class="sig-name descname">tick_label_offset</code><em class="property"> = Float(8.0)</em><a class="headerlink" href="#chaco.axis.PlotAxis.tick_label_offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>The distance of the tick label from the axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.tick_label_position">
+<code class="sig-name descname">tick_label_position</code><em class="property"> = Enum(&quot;outside&quot;, &quot;inside&quot;)</em><a class="headerlink" href="#chaco.axis.PlotAxis.tick_label_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the tick labels appear to the inside or the outside of the plot area</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.tick_label_rotate_angle">
+<code class="sig-name descname">tick_label_rotate_angle</code><em class="property"> = Float(0)</em><a class="headerlink" href="#chaco.axis.PlotAxis.tick_label_rotate_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>The rotation of the tick labels.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.tick_out">
+<code class="sig-name descname">tick_out</code><em class="property"> = Int(5)</em><a class="headerlink" href="#chaco.axis.PlotAxis.tick_out" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of pixels by which the ticks extend into the label area.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.tick_visible">
+<code class="sig-name descname">tick_visible</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.axis.PlotAxis.tick_visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Are ticks visible at all?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.tick_weight">
+<code class="sig-name descname">tick_weight</code><em class="property"> = Float(1.0)</em><a class="headerlink" href="#chaco.axis.PlotAxis.tick_weight" title="Permalink to this definition">¶</a></dt>
+<dd><p>The thickness (in pixels) of each tick.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.title">
+<code class="sig-name descname">title</code><em class="property"> = Trait(&quot;&quot;, Str, Unicode)  # May want to add PlotLabel option</em><a class="headerlink" href="#chaco.axis.PlotAxis.title" title="Permalink to this definition">¶</a></dt>
+<dd><p>The text of the axis title.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.title_angle">
+<code class="sig-name descname">title_angle</code><em class="property"> = Float(0.0)</em><a class="headerlink" href="#chaco.axis.PlotAxis.title_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>The angle of the title, in degrees, from horizontal line</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.title_color">
+<code class="sig-name descname">title_color</code><em class="property"> = ColorTrait(&quot;black&quot;)</em><a class="headerlink" href="#chaco.axis.PlotAxis.title_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the title.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.title_font">
+<code class="sig-name descname">title_font</code><em class="property"> = KivaFont(&quot;modern 12&quot;)</em><a class="headerlink" href="#chaco.axis.PlotAxis.title_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>The font of the title.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.title_spacing">
+<code class="sig-name descname">title_spacing</code><em class="property"> = Trait(&quot;auto&quot;, &quot;auto&quot;, Float)</em><a class="headerlink" href="#chaco.axis.PlotAxis.title_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>The spacing between the axis line and the title</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.axis.PlotAxis.traits_view">
+<code class="sig-name descname">traits_view</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.axis.PlotAxis.traits_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a View instance for use with TraitsUI.  This method is
+called automatically be the Traits framework when .edit_traits() is
+invoked.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.axis.PlotAxis.updated">
+<code class="sig-name descname">updated</code><em class="property"> = Event</em><a class="headerlink" href="#chaco.axis.PlotAxis.updated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fired when the axis’s range bounds change.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.axis.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

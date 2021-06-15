@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.scales.time_scale module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.scales.time_scale module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.scales.time_scale">
+<span id="chaco-scales-time-scale-module"></span><h1>chaco.scales.time_scale module<a class="headerlink" href="#module-chaco.scales.time_scale" title="Permalink to this headline">¶</a></h1>
+<p>A scale for time and calendar intervals.</p>
+<dl class="class">
+<dt id="chaco.scales.time_scale.TimeScale">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.scales.time_scale.</code><code class="sig-name descname">TimeScale</code><span class="sig-paren">(</span><em class="sig-param">**kw_interval</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.time_scale.TimeScale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.scales.scales.html#chaco.scales.scales.AbstractScale" title="chaco.scales.scales.AbstractScale"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.scales.scales.AbstractScale</span></code></a></p>
+<p>A scale based on time intervals and calendar dates. The valid
+intervals are:</p>
+<dl class="simple">
+<dt>Natural time:</dt><dd><p>microseconds, milliseconds, seconds, minutes, hours, days, years</p>
+</dd>
+<dt>Calendar time:</dt><dd><p>day_of_month, month_of_year</p>
+</dd>
+</dl>
+<p>For calendar times, a list of hours/days/months is set.
+By default, intervals are aligned to January 1st.</p>
+<dl class="attribute">
+<dt id="chaco.scales.time_scale.TimeScale.CALENDAR_UNITS">
+<code class="sig-name descname">CALENDAR_UNITS</code><em class="property"> = ('day_of_month', 'month_of_year')</em><a class="headerlink" href="#chaco.scales.time_scale.TimeScale.CALENDAR_UNITS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.time_scale.TimeScale.SECS_PER_UNIT">
+<code class="sig-name descname">SECS_PER_UNIT</code><em class="property"> = {'day_of_month': 2592000, 'days': 86400, 'hours': 3600, 'microseconds': 1e-06, 'milliseconds': 0.001, 'minutes': 60, 'month_of_year': 31536000, 'seconds': 1, 'years': 31536000}</em><a class="headerlink" href="#chaco.scales.time_scale.TimeScale.SECS_PER_UNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.time_scale.TimeScale.cal_ticks">
+<code class="sig-name descname">cal_ticks</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.time_scale.TimeScale.cal_ticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>ticks() method for calendar-based intervals</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.time_scale.TimeScale.label_width">
+<code class="sig-name descname">label_width</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">numlabels=None</em>, <em class="sig-param">char_width=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.time_scale.TimeScale.label_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an estimate of total number of characters used by the
+the labels that this scale will produce for the given set of
+inputs, as well as the number of labels.</p>
+<p>Overrides AbstractScale.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.time_scale.TimeScale.labels">
+<code class="sig-name descname">labels</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">numlabels=None</em>, <em class="sig-param">char_width=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.time_scale.TimeScale.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a series of ticks and corresponding strings for labels
+that fall inside the interval (<em>start</em>,*end*).</p>
+<p>Overrides AbstractScale.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.time_scale.TimeScale.num_ticks">
+<code class="sig-name descname">num_ticks</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">desired_ticks=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.time_scale.TimeScale.num_ticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an approximate number of ticks that this scale
+produces for the given interval.</p>
+<p>Implements AbstractScale.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.time_scale.TimeScale.ticks">
+<code class="sig-name descname">ticks</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">desired_ticks=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.time_scale.TimeScale.ticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the set of “nice” positions on this scale that enclose and
+fall inside the interval (<em>start</em>,*end*).</p>
+<p>Implements AbstractScale. The <em>start</em> and <em>end</em> parameters are
+floating-point seconds since the epoch.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.scales.time_scale.CalendarScaleSystem">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.scales.time_scale.</code><code class="sig-name descname">CalendarScaleSystem</code><span class="sig-paren">(</span><em class="sig-param">*scales</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.time_scale.CalendarScaleSystem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.scales.scales.html#chaco.scales.scales.ScaleSystem" title="chaco.scales.scales.ScaleSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.scales.scales.ScaleSystem</span></code></a></p>
+<p>Scale system for calendars.</p>
+<p>This class has a pre-defined set of nice “time points” to use for ticking
+and labelling.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.time_scale.trange">
+<code class="sig-prename descclassname">chaco.scales.time_scale.</code><code class="sig-name descname">trange</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">**time_unit</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.time_scale.trange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like range(), but for times, and with “natural” alignment depending on
+the interval.</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t_range</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">+</span><span class="mi">76</span><span class="o">*</span><span class="mi">3600</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">t_range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">months</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>end</strong> (<em>start</em><em>,</em>) – Time in seconds.  <em>end</em> must be later than <em>start</em>.</p></li>
+<li><p><strong>time_unit</strong> (<em>a single</em><em> (</em><em>key</em><em>, </em><em>int_value</em><em>) </em><em>pair</em>) – The units to use. <em>key</em> must be in the list: “milliseconds”, “seconds”,
+“minutes”, “hours”, “days”, “months”, “years”.  Months are treated as
+30 days, and years are treated as 365 days.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>A list of times that nicely span the interval, or an empty list if *start*</em></p></li>
+<li><p><em>and *end</em> fall within the same interval.*</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.time_scale.tfrac">
+<code class="sig-prename descclassname">chaco.scales.time_scale.</code><code class="sig-name descname">tfrac</code><span class="sig-paren">(</span><em class="sig-param">t</em>, <em class="sig-param">**time_unit</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.time_scale.tfrac" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a calendar-aware split of a time into (aligned_time, frac)
+over an interval that is a multiple of one of the following time units:</p>
+<blockquote>
+<div><p>“microseconds” “milliseconds”, “seconds”, “minutes”, “hours”, “days”, “years”</p>
+</div></blockquote>
+<p>Settings of milliseconds..hours are truncated towards 0, days are counted
+from January 1st of their respective year, and years are counted from 1 AD.
+This may lead to unexpected rounding if multi-day or multi-year intervals
+are used.</p>
+<p>For example:</p>
+<p>If it is currently 4:15pm on January 3rd, 2007, calling:
+<code class="docutils literal notranslate"><span class="pre">tfrac(time.time(),</span> <span class="pre">hours=3)</span></code>
+returns the UNIX number of seconds corresponding to
+“January 3rd, 2007 15:00:00”
+as the aligned time, and the number of seconds in 1 hour and 15 minutes as
+the fractional part.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> (<em>float</em>) – time in seconds</p></li>
+<li><p><strong>**time_unit</strong> (<em>dict</em>) – a single (interval=value) item</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>A tuple</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(aligned time as UNIX time, remainder in seconds)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.time_scale.td_to_sec">
+<code class="sig-prename descclassname">chaco.scales.time_scale.</code><code class="sig-name descname">td_to_sec</code><span class="sig-paren">(</span><em class="sig-param">td</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.time_scale.td_to_sec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the floating point number of seconds in a timedelta object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.time_scale.dt_to_sec">
+<code class="sig-prename descclassname">chaco.scales.time_scale.</code><code class="sig-name descname">dt_to_sec</code><span class="sig-paren">(</span><em class="sig-param">t</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.time_scale.dt_to_sec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the floating point number of seconds since the UNIX epoch
+corresponding to the given datetime instance.</p>
+<p>This value is more accurate than mktime(t.timetuple()) because it
+preserves milliseconds.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.scales.time_scale.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.base module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.base module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.base">
+<span id="chaco-base-module"></span><h1>chaco.base module<a class="headerlink" href="#module-chaco.base" title="Permalink to this headline">¶</a></h1>
+<p>Defines basic traits and functions for the data model.</p>
+<dl class="attribute">
+<dt id="chaco.base.CubeTrait">
+<code class="sig-prename descclassname">chaco.base.</code><code class="sig-name descname">CubeTrait</code><em class="property"> = ArrayOrNone(shape=(None, None, None))</em><a class="headerlink" href="#chaco.base.CubeTrait" title="Permalink to this definition">¶</a></dt>
+<dd><p>An 3D array of numbers of shape (Nx, Ny, Nz)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base.DimensionTrait">
+<code class="sig-prename descclassname">chaco.base.</code><code class="sig-name descname">DimensionTrait</code><em class="property"> = Enum(&quot;scalar&quot;, &quot;point&quot;, &quot;image&quot;, &quot;cube&quot;)</em><a class="headerlink" href="#chaco.base.DimensionTrait" title="Permalink to this definition">¶</a></dt>
+<dd><p>This enumeration lists the fundamental mathematical coordinate types that
+Chaco supports.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base.ImageTrait">
+<code class="sig-prename descclassname">chaco.base.</code><code class="sig-name descname">ImageTrait</code><em class="property"> = ArrayOrNone()</em><a class="headerlink" href="#chaco.base.ImageTrait" title="Permalink to this definition">¶</a></dt>
+<dd><p>An NxM array of numbers or NxMxRGB(A) array of colors.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base.NumericalSequenceTrait">
+<code class="sig-prename descclassname">chaco.base.</code><code class="sig-name descname">NumericalSequenceTrait</code><em class="property"> = ArrayOrNone()</em><a class="headerlink" href="#chaco.base.NumericalSequenceTrait" title="Permalink to this definition">¶</a></dt>
+<dd><p>A single array of numbers.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base.PointTrait">
+<code class="sig-prename descclassname">chaco.base.</code><code class="sig-name descname">PointTrait</code><em class="property"> = ArrayOrNone(shape=(None, 2))</em><a class="headerlink" href="#chaco.base.PointTrait" title="Permalink to this definition">¶</a></dt>
+<dd><p>A sequence of pairs of numbers, i.e., an Nx2 array.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base.SortOrderTrait">
+<code class="sig-prename descclassname">chaco.base.</code><code class="sig-name descname">SortOrderTrait</code><em class="property"> = Enum(&quot;ascending&quot;, &quot;descending&quot;, &quot;none&quot;)</em><a class="headerlink" href="#chaco.base.SortOrderTrait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Linear sort order.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.base.arg_find_runs">
+<code class="sig-prename descclassname">chaco.base.</code><code class="sig-name descname">arg_find_runs</code><span class="sig-paren">(</span><em class="sig-param">int_array</em>, <em class="sig-param">order='ascending'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base.arg_find_runs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like find_runs(), but returns a list of tuples indicating the start and
+end indices of runs in the input <em>int_array</em>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.base.arg_true_runs">
+<code class="sig-prename descclassname">chaco.base.</code><code class="sig-name descname">arg_true_runs</code><span class="sig-paren">(</span><em class="sig-param">bool_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base.arg_true_runs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find runs where array is True</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.base.bin_search">
+<code class="sig-prename descclassname">chaco.base.</code><code class="sig-name descname">bin_search</code><span class="sig-paren">(</span><em class="sig-param">values</em>, <em class="sig-param">value</em>, <em class="sig-param">ascending</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base.bin_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a binary search of a sorted array for a specified value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> (<em>array</em>) – The values being searched.</p></li>
+<li><p><strong>value</strong> (<em>float</em>) – The value being searched for.</p></li>
+<li><p><strong>ascending</strong> (<em>-1</em><em> or </em><em>1</em>) – This value should be 1 if the values array is ascending, or -1 if
+the values array is descending.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>Returns the lowest position where the value can be found or where the</em></p></li>
+<li><p><em>array value is the last value less (greater) than the desired value.</em></p></li>
+<li><p>Returns -1 if <cite>value</cite> is beyond the minimum or maximum of <cite>values</cite>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.base.find_runs">
+<code class="sig-prename descclassname">chaco.base.</code><code class="sig-name descname">find_runs</code><span class="sig-paren">(</span><em class="sig-param">int_array</em>, <em class="sig-param">order=&lt;'ascending'|'flat'|'descending'&gt;</em><span class="sig-paren">)</span> &#x2192; list_of_int_arrays<a class="headerlink" href="#chaco.base.find_runs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given an integer array sorted in ascending/descending order or flat order,
+returns a list of continuous runs of integers inside the list.  for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">find_runs</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">15</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>returns [ [1,2,3], [6,7,8,9,10,11], [15] ]
+and:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">find_runs</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;flat&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>return [ [0,0,0], [1,1,1,1], [0,0,0,0] ]</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.base.intersect_range">
+<code class="sig-prename descclassname">chaco.base.</code><code class="sig-name descname">intersect_range</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">low</em>, <em class="sig-param">high</em>, <em class="sig-param">mask=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base.intersect_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Discard 1D intervals outside of range, with optional mask</p>
+<p>This is an optimized routine for detecting which points are endpoints
+of visible segments in a 1D polyline.  An optional mask can be provided for
+points which should be excluded from consideration for other reasons
+(such as not being selected).  Returns a mask of points which are
+endpoints of intervals which potentially intersect the range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>1d array</em>) – The array of connected interval endpoints.  If the x is
+[x0, x1, x2, …] then the intervals are
+[[x0, x1], [x1, x2], [x2, x3], …].</p></li>
+<li><p><strong>low</strong> (<em>number</em>) – The low end of the range.</p></li>
+<li><p><strong>high</strong> (<em>number</em>) – The high end of the range.</p></li>
+<li><p><strong>mask</strong> (<em>1d array of bools</em><em> or </em><em>None</em>) – The mask of points to consider, or None.  If None then any non-finite
+points will be ignored.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>mask</strong> – A mask array of points which are endpoints of intervals which
+potentially intersect the range.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>1d array of bools</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.base.left_shift">
+<code class="sig-prename descclassname">chaco.base.</code><code class="sig-name descname">left_shift</code><span class="sig-paren">(</span><em class="sig-param">ary</em>, <em class="sig-param">newval</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base.left_shift" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a left-shifted version of <em>ary</em> with <em>newval</em> inserted on the right.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.base.n_gon">
+<code class="sig-prename descclassname">chaco.base.</code><code class="sig-name descname">n_gon</code><span class="sig-paren">(</span><em class="sig-param">center</em>, <em class="sig-param">r</em>, <em class="sig-param">nsides</em>, <em class="sig-param">rot_degrees=0</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base.n_gon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the points of a regular polygon with specified center,
+radius, and number of sides.</p>
+<p>By default the rightmost point of the polygon is (<em>r</em>,0) but a
+rotation about the center may be specified with <em>rot_degrees</em>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.base.point_line_distance">
+<code class="sig-prename descclassname">chaco.base.</code><code class="sig-name descname">point_line_distance</code><span class="sig-paren">(</span><em class="sig-param">pt</em>, <em class="sig-param">p1</em>, <em class="sig-param">p2</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base.point_line_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the perpendicular distance between <em>pt</em> and the line segment
+between the points <em>p1</em> and <em>p2</em>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.base.poly_point">
+<code class="sig-prename descclassname">chaco.base.</code><code class="sig-name descname">poly_point</code><span class="sig-paren">(</span><em class="sig-param">center</em>, <em class="sig-param">r</em>, <em class="sig-param">degrees</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base.poly_point" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="chaco.base.reverse_map_1d">
+<code class="sig-prename descclassname">chaco.base.</code><code class="sig-name descname">reverse_map_1d</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">pt</em>, <em class="sig-param">sort_order</em>, <em class="sig-param">floor_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base.reverse_map_1d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the index of <em>pt</em> in the array <em>data</em>.</p>
+<p>Raises IndexError if <em>pt</em> is outside the range of values in <em>data</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>1-D array</em>) – data to search</p></li>
+<li><p><strong>pt</strong> (<em>scalar value</em>) – value to find, which must be within the value range of <em>data</em></p></li>
+<li><p><strong>sort_order</strong> (<em>string</em>) – “ascending” or “descending”</p></li>
+<li><p><strong>floor_only</strong> (<em>bool</em>) – if true, don’t find “nearest” point, instead find last point
+less (greater) than pt</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.base.right_shift">
+<code class="sig-prename descclassname">chaco.base.</code><code class="sig-name descname">right_shift</code><span class="sig-paren">(</span><em class="sig-param">ary</em>, <em class="sig-param">newval</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base.right_shift" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a right-shifted version of <em>ary</em> with <em>newval</em> inserted on the left.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.base.sort_points">
+<code class="sig-prename descclassname">chaco.base.</code><code class="sig-name descname">sort_points</code><span class="sig-paren">(</span><em class="sig-param">array_of_points</em>, <em class="sig-param">index=&lt;0|1&gt;</em><span class="sig-paren">)</span> &#x2192; sorted_array<a class="headerlink" href="#chaco.base.sort_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes a list of points as an Nx2 array and sorts them according
+to their x- or y-coordinate.  If <em>index</em> is zero, the points are sorted
+on their x-coordinate.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.base.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

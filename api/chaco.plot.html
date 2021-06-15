@@ -1,0 +1,545 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.plot module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.plot module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.plot">
+<span id="chaco-plot-module"></span><h1>chaco.plot module<a class="headerlink" href="#module-chaco.plot" title="Permalink to this headline">¶</a></h1>
+<p>Defines the Plot class.</p>
+<dl class="class">
+<dt id="chaco.plot.Plot">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.plot.</code><code class="sig-name descname">Plot</code><span class="sig-paren">(</span><em class="sig-param">data=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot.Plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.data_view.html#chaco.data_view.DataView" title="chaco.data_view.DataView"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.data_view.DataView</span></code></a></p>
+<p>Represents a correlated set of data, renderers, and axes in a single
+screen region.</p>
+<p>A Plot can reference an arbitrary amount of data and can have an
+unlimited number of renderers on it, but it has a single X-axis and a
+single Y-axis for all of its associated data. Therefore, there is a single
+range in X and Y, although there can be many different data series. A Plot
+also has a single set of grids and a single background layer for all of its
+renderers.  It cannot be split horizontally or vertically; to do so,
+create a VPlotContainer or HPlotContainer and put the Plots inside those.
+Plots can be overlaid as well; be sure to set the <strong>bgcolor</strong> of the
+overlaying plots to “none” or “transparent”.</p>
+<p>A Plot consists of composable sub-plots.  Each of these is created
+or destroyed using the plot() or delplot() methods.  Every time that
+new data is used to drive these sub-plots, it is added to the Plot’s
+list of data and data sources.  Data sources are reused whenever
+possible; in order to have the same actual array drive two de-coupled
+data sources, create those data sources before handing them to the Plot.</p>
+<dl class="method">
+<dt id="chaco.plot.Plot.add_xy_plot">
+<code class="sig-name descname">add_xy_plot</code><span class="sig-paren">(</span><em class="sig-param">index_name</em>, <em class="sig-param">value_name</em>, <em class="sig-param">renderer_factory</em>, <em class="sig-param">name=None</em>, <em class="sig-param">origin=None</em>, <em class="sig-param">**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot.Plot.add_xy_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a BaseXYPlot renderer subclass to this Plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index_name</strong> (<em>str</em>) – The name of the index datasource.</p></li>
+<li><p><strong>value_name</strong> (<em>str</em>) – The name of the value datasource.</p></li>
+<li><p><strong>renderer_factory</strong> (<em>callable</em>) – The callable that creates the renderer.</p></li>
+<li><p><strong>name</strong> (<em>string</em><em> (</em><em>optional</em><em>)</em>) – The name of the plot.  If None, then a default one is created
+(usually “plotNNN”).</p></li>
+<li><p><strong>origin</strong> (<em>string</em><em> (</em><em>optional</em><em>)</em>) – <dl class="simple">
+<dt>Which corner the origin of this plot should occupy:</dt><dd><p>”bottom left”, “top left”, “bottom right”, “top right”</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>**kwds</strong> – Additional keywords to pass to the factory.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot.Plot.auto_colors">
+<code class="sig-name descname">auto_colors</code><em class="property"> = List( …</em><a class="headerlink" href="#chaco.plot.Plot.auto_colors" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of colors to cycle through when auto-coloring is requested. Picked
+and ordered to be red-green color-blind friendly, though should not
+be an issue for blue-yellow.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plot.Plot.candle_plot">
+<code class="sig-name descname">candle_plot</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">name=None</em>, <em class="sig-param">value_scale='linear'</em>, <em class="sig-param">origin=None</em>, <em class="sig-param">**styles</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot.Plot.candle_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new sub-plot using the given data and plot style.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>list</em><em>(</em><em>string</em><em>)</em><em>, </em><em>tuple</em><em>(</em><em>string</em><em>)</em>) – <p>The names of the data to be plotted in the ArrayDataSource.  The
+number of arguments determines how they are interpreted:</p>
+<dl class="simple">
+<dt>(index, bar_min, bar_max)</dt><dd><p>filled or outline-only bar extending from <strong>bar_min</strong> to
+<strong>bar_max</strong></p>
+</dd>
+<dt>(index, bar_min, center, bar_max)</dt><dd><p>above, plus a center line of a different color at <strong>center</strong></p>
+</dd>
+<dt>(index, min, bar_min, bar_max, max)</dt><dd><p>bar extending from <strong>bar_min</strong> to <strong>bar_max</strong>, with thin
+bars at <strong>min</strong> and <strong>max</strong> connected to the bar by a long
+stem</p>
+</dd>
+<dt>(index, min, bar_min, center, bar_max, max)</dt><dd><p>like above, plus a center line of a different color and
+configurable thickness at <strong>center</strong></p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>name</strong> (<em>string</em>) – The name of the plot.  If None, then a default one is created.</p></li>
+<li><p><strong>value_scale</strong> (<em>string</em>) – The type of scale to use for the value axis.  If not “linear”,
+then a log scale is used.</p></li>
+<li><p><strong>Styles</strong> – </p></li>
+<li><p><strong>------</strong> – </p></li>
+<li><p><strong>are all optional keyword arguments.</strong> (<em>These</em>) – </p></li>
+<li><p><strong>bar_color</strong> (<em>string</em><em>, </em><em>3-</em><em> or </em><em>4-tuple</em>) – The fill color of the bar; defaults to “auto”.</p></li>
+<li><p><strong>bar_line_color</strong> (<em>string</em><em>, </em><em>3-</em><em> or </em><em>4-tuple</em>) – The color of the rectangular box forming the bar.</p></li>
+<li><p><strong>stem_color</strong> (<em>string</em><em>, </em><em>3-</em><em> or </em><em>4-tuple</em><em> (</em><em>default = bar_line_color</em><em>)</em>) – The color of the stems reaching from the bar to the min and
+max values.</p></li>
+<li><p><strong>center_color</strong> (<em>string</em><em>, </em><em>3-</em><em> or </em><em>4-tuple</em><em> (</em><em>default = bar_line_color</em><em>)</em>) – The color of the line drawn across the bar at the center values.</p></li>
+<li><p><strong>line_width</strong> (<em>int</em><em> (</em><em>default = 1</em><em>)</em>) – The thickness, in pixels, of the outline around the bar.</p></li>
+<li><p><strong>stem_width</strong> (<em>int</em><em> (</em><em>default = line_width</em><em>)</em>) – The thickness, in pixels, of the stem lines</p></li>
+<li><p><strong>center_width</strong> (<em>int</em><em> (</em><em>default = line_width</em><em>)</em>) – The width, in pixels, of the line drawn across the bar at the
+center values.</p></li>
+<li><p><strong>end_cap</strong> (<em>bool</em><em> (</em><em>default = True</em><em>)</em>) – Whether or not to draw bars at the min and max extents of the
+error bar.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>[renderers] -&gt; list of renderers created in response to this call.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot.Plot.color_mapper">
+<code class="sig-name descname">color_mapper</code><em class="property"> = Instance(AbstractColormap)</em><a class="headerlink" href="#chaco.plot.Plot.color_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional mapper for the color axis.  Not instantiated until first use;
+destroyed if no color plots are on the plot.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plot.Plot.contour_plot">
+<code class="sig-name descname">contour_plot</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">type='line'</em>, <em class="sig-param">name=None</em>, <em class="sig-param">poly_cmap=None</em>, <em class="sig-param">xbounds=None</em>, <em class="sig-param">ybounds=None</em>, <em class="sig-param">origin=None</em>, <em class="sig-param">hide_grids=True</em>, <em class="sig-param">**styles</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot.Plot.contour_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds contour plots to this Plot object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>string</em>) – The name of the data array in self.plot_data, which must be
+floating point data.</p></li>
+<li><p><strong>type</strong> (<em>comma-delimited string of &quot;line&quot;</em><em>, </em><em>&quot;poly&quot;</em>) – The type of contour plot to add. If the value is “poly”
+and no colormap is provided via the <em>poly_cmap</em> argument, then
+a default colormap of ‘Spectral’ is used.</p></li>
+<li><p><strong>name</strong> (<em>string</em>) – The name of the plot; if omitted, then a name is generated.</p></li>
+<li><p><strong>poly_cmap</strong> (<em>string</em>) – The name of the color-map function to call (in
+chaco.default_colormaps) or an AbstractColormap instance
+to use for contour poly plots (ignored for contour line plots)</p></li>
+<li><p><strong>ybounds</strong> (<em>xbounds</em><em>,</em>) – Bounds where this image resides. Bound may be: a) names of
+data in the plot data; b) tuples of (low, high) in data space,
+c) 1D arrays of values representing the pixel boundaries (must
+be 1 element larger than underlying data), or
+d) 2D arrays as obtained from a meshgrid operation</p></li>
+<li><p><strong>origin</strong> (<em>string</em>) – <dl class="simple">
+<dt>Which corner the origin of this plot should occupy:</dt><dd><p>”bottom left”, “top left”, “bottom right”, “top right”</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>hide_grids</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether or not to automatically hide the grid lines on the plot</p></li>
+<li><p><strong>styles</strong> (<em>series of keyword arguments</em>) – Attributes and values that apply to one or more of the
+plot types requested, e.g.,’line_color’ or ‘line_width’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot.Plot.data">
+<code class="sig-name descname">data</code><em class="property"> = Instance(AbstractPlotData)</em><a class="headerlink" href="#chaco.plot.Plot.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>The PlotData instance that drives this plot.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot.Plot.datasources">
+<code class="sig-name descname">datasources</code><em class="property"> = Dict(Str, Instance(AbstractDataSource))</em><a class="headerlink" href="#chaco.plot.Plot.datasources" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mapping of data names from self.data to their respective datasources.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot.Plot.default_index">
+<code class="sig-name descname">default_index</code><em class="property"> = Instance(AbstractDataSource)</em><a class="headerlink" href="#chaco.plot.Plot.default_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default index to use when adding new subplots.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plot.Plot.delplot">
+<code class="sig-name descname">delplot</code><span class="sig-paren">(</span><em class="sig-param">*names</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot.Plot.delplot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes the named sub-plots.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plot.Plot.hideplot">
+<code class="sig-name descname">hideplot</code><span class="sig-paren">(</span><em class="sig-param">*names</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot.Plot.hideplot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function to sets the named plots to be invisible.  Their
+renderers are not removed, and they are still in the list of plots.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plot.Plot.img_plot">
+<code class="sig-name descname">img_plot</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">name=None</em>, <em class="sig-param">colormap=None</em>, <em class="sig-param">xbounds=None</em>, <em class="sig-param">ybounds=None</em>, <em class="sig-param">origin=None</em>, <em class="sig-param">hide_grids=True</em>, <em class="sig-param">**styles</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot.Plot.img_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds image plots to this Plot object.</p>
+<p>If <em>data</em> has shape (N, M, 3) or (N, M, 4), then it is treated as RGB or
+RGBA (respectively) and <em>colormap</em> is ignored.</p>
+<p>If <em>data</em> is an array of floating-point data, then a colormap can
+be provided via the <em>colormap</em> argument, or the default of ‘Spectral’
+will be used.</p>
+<p><em>Data</em> should be in row-major order, so that xbounds corresponds to
+<em>data</em>’s second axis, and ybounds corresponds to the first axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>string</em>) – The name of the data array in self.plot_data</p></li>
+<li><p><strong>name</strong> (<em>string</em>) – The name of the plot; if omitted, then a name is generated.</p></li>
+<li><p><strong>ybounds</strong> (<em>xbounds</em><em>,</em>) – Bounds where this image resides. Bound may be: a) names of
+data in the plot data; b) tuples of (low, high) in data space,
+c) 1D arrays of values representing the pixel boundaries (must
+be 1 element larger than underlying data), or
+d) 2D arrays as obtained from a meshgrid operation</p></li>
+<li><p><strong>origin</strong> (<em>string</em>) – <dl class="simple">
+<dt>Which corner the origin of this plot should occupy:</dt><dd><p>”bottom left”, “top left”, “bottom right”, “top right”</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>hide_grids</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether or not to automatically hide the grid lines on the plot</p></li>
+<li><p><strong>styles</strong> (<em>series of keyword arguments</em>) – Attributes and values that apply to one or more of the
+plot types requested, e.g.,’line_color’ or ‘line_width’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot.Plot.legend">
+<code class="sig-name descname">legend</code><em class="property"> = Instance(Legend)</em><a class="headerlink" href="#chaco.plot.Plot.legend" title="Permalink to this definition">¶</a></dt>
+<dd><p>The legend on the plot.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot.Plot.legend_alignment">
+<code class="sig-name descname">legend_alignment</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.plot.Plot.legend_alignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience attribute for legend.align; can be “ur”, “ul”, “ll”, “lr”.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plot.Plot.new_window">
+<code class="sig-name descname">new_window</code><span class="sig-paren">(</span><em class="sig-param">configure=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot.Plot.new_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function that creates a window containing the Plot</p>
+<p>Don’t call this if the plot is already displayed in a window.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plot.Plot.plot">
+<code class="sig-name descname">plot</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">type='line'</em>, <em class="sig-param">name=None</em>, <em class="sig-param">index_scale='linear'</em>, <em class="sig-param">value_scale='linear'</em>, <em class="sig-param">origin=None</em>, <em class="sig-param">**styles</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot.Plot.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new sub-plot using the given data and plot style.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>string</em><em>, </em><em>tuple</em><em>(</em><em>string</em><em>)</em><em>, </em><em>list</em><em>(</em><em>string</em><em>)</em>) – <p>The data to be plotted. The type of plot and the number of
+arguments determines how the arguments are interpreted:</p>
+<dl class="simple">
+<dt>one item: (line, scatter, segment)</dt><dd><p>The data is treated as the value and self.default_index is
+used as the index.  If <strong>default_index</strong> does not exist, one is
+created from arange(len(<em>data</em>))</p>
+</dd>
+<dt>two or more items: (line, scatter, segment)</dt><dd><p>Interpreted as (index, value1, value2, …).  Each index,value
+pair forms a new plot of the type specified.</p>
+</dd>
+<dt>three items: (cmap_scatter, cmap_segment)</dt><dd><p>Interpreted as (index, value, color)</p>
+</dd>
+<dt>three items: (text)</dt><dd><p>Interpreted as (index, value, text).</p>
+</dd>
+<dt>four items: (cmap_segment)</dt><dd><p>Interpreted as (index, val1, color_val1, width)</p>
+</dd>
+</dl>
+<p>For segment plots index and value arrays alternate between
+coordinates for the start and end points of segments.</p>
+</p></li>
+<li><p><strong>type</strong> (<em>comma-delimited string of plot type</em>) – The types of plots to add.  One of “line”, “scatter”,
+“cmap_scatter”, “polygon”, “bar”, “filled_line”, “segment”, “text”</p></li>
+<li><p><strong>name</strong> (<em>string</em>) – The name of the plot.  If None, then a default one is created
+(usually “plotNNN”).</p></li>
+<li><p><strong>index_scale</strong> (<em>string</em>) – The type of scale to use for the index axis. If not “linear”, then
+a log scale is used.</p></li>
+<li><p><strong>value_scale</strong> (<em>string</em>) – The type of scale to use for the value axis. If not “linear”, then
+a log scale is used.</p></li>
+<li><p><strong>origin</strong> (<em>string</em>) – <dl class="simple">
+<dt>Which corner the origin of this plot should occupy:</dt><dd><p>”bottom left”, “top left”, “bottom right”, “top right”</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>styles</strong> (<em>series of keyword arguments</em>) – attributes and values that apply to one or more of the
+plot types requested, e.g.,’line_color’ or ‘line_width’.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="s2">&quot;my_data&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;myplot&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">lightblue</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x-data&quot;</span><span class="p">,</span> <span class="s2">&quot;y-data&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y1&quot;</span><span class="p">,</span> <span class="s2">&quot;y2&quot;</span><span class="p">,</span> <span class="s2">&quot;y3&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>[renderers] -&gt; list of renderers created in response to this call to plot()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plot.Plot.plot_1d">
+<code class="sig-name descname">plot_1d</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">type='scatter_1d'</em>, <em class="sig-param">name=None</em>, <em class="sig-param">orientation=None</em>, <em class="sig-param">direction=None</em>, <em class="sig-param">scale='linear'</em>, <em class="sig-param">**styles</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot.Plot.plot_1d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new sub-plot using the given data and plot style.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>string</em><em>, </em><em>tuple</em><em>(</em><em>string</em><em>)</em><em>, </em><em>list</em><em>(</em><em>string</em><em>)</em>) – The data to be plotted. The each item generates a separate renderer
+using the named data source</p></li>
+<li><p><strong>type</strong> (<em>string</em>) – The type of plots to add.  One of  of “scatter_1d”,
+“line_scatter_1d”, “textplot_1d”, “jitterplot”</p></li>
+<li><p><strong>name</strong> (<em>string</em>) – The name of the plot.  If None, then a default one is created
+(usually “plotNNN”).</p></li>
+<li><p><strong>scale</strong> (<em>string</em>) – The type of scale to use for the index axis. If not “linear”, then
+a log scale is used.</p></li>
+<li><p><strong>orientation</strong> (<em>string</em>) – Whether the single dimension is horizontal (‘h’) or vertical (‘v’).</p></li>
+<li><p><strong>direction</strong> (<em>string</em>) – Whether data is mapped in the usual direction (left to right or
+bottom to top) or reversed.</p></li>
+<li><p><strong>styles</strong> (<em>series of keyword arguments</em>) – attributes and values that apply to one or more of the
+plot types requested, e.g.,’line_color’ or ‘line_width’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>[renderers] -&gt; list of renderers created in response to this call to plot()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot.Plot.plots">
+<code class="sig-name descname">plots</code><em class="property"> = Dict(Str, List)</em><a class="headerlink" href="#chaco.plot.Plot.plots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mapping of plot names to <em>lists</em> of plot renderers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plot.Plot.quiverplot">
+<code class="sig-name descname">quiverplot</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">name=None</em>, <em class="sig-param">origin=None</em>, <em class="sig-param">**styles</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot.Plot.quiverplot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new sub-plot using the given data and plot style.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>list</em><em>(</em><em>string</em><em>)</em><em>, </em><em>tuple</em><em>(</em><em>string</em><em>)</em>) – <p>The names of the data to be plotted in the ArrayDataSource.  There
+is only one combination accepted by this function:</p>
+<dl class="simple">
+<dt>(index, value, vectors)</dt><dd><p>index and value together determine the start coordinates of
+each vector.  The vectors are an Nx2</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>name</strong> (<em>string</em>) – The name of the plot.  If None, then a default one is created.</p></li>
+<li><p><strong>origin</strong> (<em>string</em>) – <dl class="simple">
+<dt>Which corner the origin of this plot should occupy:</dt><dd><p>”bottom left”, “top left”, “bottom right”, “top right”</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>Styles</strong> – </p></li>
+<li><p><strong>------</strong> – </p></li>
+<li><p><strong>are all optional keyword arguments.</strong> (<em>These</em>) – </p></li>
+<li><p><strong>line_color</strong> (<em>string</em><em> (</em><em>default = &quot;black&quot;</em><em>)</em>) – The color of the arrows</p></li>
+<li><p><strong>line_width</strong> (<em>float</em><em> (</em><em>default = 1.0</em><em>)</em>) – The thickness, in pixels, of the arrows.</p></li>
+<li><p><strong>arrow_size</strong> (<em>int</em><em> (</em><em>default = 5</em><em>)</em>) – The length, in pixels, of the arrowhead</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>[renderers] -&gt; list of renderers created in response to this call.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot.Plot.renderer_map">
+<code class="sig-name descname">renderer_map</code><em class="property"> = Dict( …</em><a class="headerlink" href="#chaco.plot.Plot.renderer_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mapping of renderer type string to renderer class
+This can be overriden to customize what renderer type the Plot
+will instantiate for its various plotting methods.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plot.Plot.showplot">
+<code class="sig-name descname">showplot</code><span class="sig-paren">(</span><em class="sig-param">*names</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot.Plot.showplot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function to sets the named plots to be visible.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot.Plot.title">
+<code class="sig-name descname">title</code><em class="property"> = Property()</em><a class="headerlink" href="#chaco.plot.Plot.title" title="Permalink to this definition">¶</a></dt>
+<dd><p>The title of the plot.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot.Plot.title_font">
+<code class="sig-name descname">title_font</code><em class="property"> = Property()</em><a class="headerlink" href="#chaco.plot.Plot.title_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>The font to use for the title.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot.Plot.title_position">
+<code class="sig-name descname">title_position</code><em class="property"> = Property()</em><a class="headerlink" href="#chaco.plot.Plot.title_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience attribute for title.overlay_position; can be “top”,
+“bottom”, “left”, or “right”.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot.Plot.title_text">
+<code class="sig-name descname">title_text</code><em class="property"> = Delegate(&quot;_title&quot;, prefix=&quot;text&quot;, modify=True)</em><a class="headerlink" href="#chaco.plot.Plot.title_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use delegates to expose the other PlotLabel attributes of the plot title</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.plot.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,420 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.base_xy_plot module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.base_xy_plot module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.base_xy_plot">
+<span id="chaco-base-xy-plot-module"></span><h1>chaco.base_xy_plot module<a class="headerlink" href="#module-chaco.base_xy_plot" title="Permalink to this headline">¶</a></h1>
+<p>Defines the base class for XY plots.</p>
+<dl class="class">
+<dt id="chaco.base_xy_plot.BaseXYPlot">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.base_xy_plot.</code><code class="sig-name descname">BaseXYPlot</code><span class="sig-paren">(</span><em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.abstract_plot_renderer.html#chaco.abstract_plot_renderer.AbstractPlotRenderer" title="chaco.abstract_plot_renderer.AbstractPlotRenderer"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_plot_renderer.AbstractPlotRenderer</span></code></a></p>
+<p>Base class for simple X-vs-Y plots that consist of a single index
+data array and a single value data array.</p>
+<p>Subclasses handle the actual rendering, but this base class takes care of
+most of making sure events are wired up between mappers and data or screen
+space changes, etc.</p>
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.alpha">
+<code class="sig-name descname">alpha</code><em class="property"> = Range(0.0, 1.0, 1.0, requires_redraw=True)</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.bgcolor">
+<code class="sig-name descname">bgcolor</code><em class="property"> = &quot;transparent&quot;</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.bgcolor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides the default background color trait in PlotComponent.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.base_xy_plot.BaseXYPlot.get_closest_line">
+<code class="sig-name descname">get_closest_line</code><span class="sig-paren">(</span><em class="sig-param">screen_pt</em>, <em class="sig-param">threshold=7.0</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.get_closest_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests for proximity in screen-space against lines connecting the
+points in this plot’s dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>screen_pt</strong> (<em>(</em><em>x</em><em>,</em><em>y</em><em>)</em>) – A point to test.</p></li>
+<li><p><strong>threshold</strong> (<em>integer</em>) – Optional maximum screen space distance (pixels) between
+the line and the plot.  If 0.0, then the method returns the closest
+line regardless of distance from the plot.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(x1, y1, x2, y2, dist) of the endpoints of the line segment</em></p></li>
+<li><p><em>closest to *screen_pt</em>.  The <em>dist</em> element is the perpendicular*</p></li>
+<li><p><em>distance from *screen_pt</em> to the line.  If there is only a single point*</p></li>
+<li><p><em>in the renderer’s data, then the method returns the same point twice.</em></p></li>
+<li><p><em>If no data points are within *threshold</em> of <em>screen_pt</em>, returns None.*</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.base_xy_plot.BaseXYPlot.get_closest_point">
+<code class="sig-name descname">get_closest_point</code><span class="sig-paren">(</span><em class="sig-param">screen_pt</em>, <em class="sig-param">threshold=7.0</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.get_closest_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests for proximity in screen-space.</p>
+<p>This method checks only data points, not the line segments connecting
+them; to do the latter use get_closest_line() instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>screen_pt</strong> (<em>(</em><em>x</em><em>,</em><em>y</em><em>)</em>) – A point to test.</p></li>
+<li><p><strong>threshold</strong> (<em>integer</em>) – Optional maximum screen space distance (pixels) between
+<em>screen_pt</em> and the plot.  If 0.0, then no threshold tests
+are performed, and the nearest point is returned.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(x, y, distance) of a datapoint nearest to *screen_pt</em>.*</p></li>
+<li><p><em>If no data points are within *threshold</em> of <em>screen_pt</em>, returns None.*</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.base_xy_plot.BaseXYPlot.get_screen_points">
+<code class="sig-name descname">get_screen_points</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.get_screen_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the currently visible screen-space points.</p>
+<p>Intended for use with overlays.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.hgrid">
+<code class="sig-name descname">hgrid</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.hgrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read-only property for horizontal grid.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.base_xy_plot.BaseXYPlot.hittest">
+<code class="sig-name descname">hittest</code><span class="sig-paren">(</span><em class="sig-param">screen_pt</em>, <em class="sig-param">threshold=7.0</em>, <em class="sig-param">return_distance=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.hittest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs proximity testing between a given screen point and the
+plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>screen_pt</strong> (<em>(</em><em>x</em><em>,</em><em>y</em><em>)</em>) – A point to test.</p></li>
+<li><p><strong>threshold</strong> (<em>integer</em>) – Optional maximum screen space distance (pixels) between
+<em>screen_pt</em> and the plot.</p></li>
+<li><p><strong>return_distance</strong> (<em>Boolean</em>) – If True, also return the distance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>If self.hittest_type is ‘point’, then this method returns the screen</em></p></li>
+<li><p><em>coordinates of the closest point on the plot as a tuple (x,y)</em></p></li>
+<li><p><em>If self.hittest_type is ‘line’, then this method returns the screen</em></p></li>
+<li><p><em>endpoints of the line segment closest to *screen_pt</em>, as*</p></li>
+<li><p><em>((x1,y1), (x2,y2))</em></p></li>
+<li><p><em>If *screen_pt</em> does not fall within <em>threshold</em> of the plot, then this*</p></li>
+<li><p><em>method returns None.</em></p></li>
+<li><p><em>If return_distance is True, return the (x, y, d), where d is the</em></p></li>
+<li><p><em>distance between the distance between the input point and</em></p></li>
+<li><p><em>the closest point (x, y), in screen coordinates.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.hittest_type">
+<code class="sig-name descname">hittest_type</code><em class="property"> = Enum(&quot;point&quot;, &quot;line&quot;)</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.hittest_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>The type of hit-testing that is appropriate for this renderer.</p>
+<ul class="simple">
+<li><p>‘line’: Computes Euclidean distance to the line between the
+nearest adjacent points.</p></li>
+<li><p>‘point’: Checks for adjacency to a marker or point.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.index">
+<code class="sig-name descname">index</code><em class="property"> = Instance(ArrayDataSource)</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>The data source to use for the index coordinate.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.index_mapper">
+<code class="sig-name descname">index_mapper</code><em class="property"> = Instance(AbstractMapper)</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.index_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Screen mapper for index data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.index_range">
+<code class="sig-name descname">index_range</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.index_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for accessing the index data range.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.labels">
+<code class="sig-name descname">labels</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read-only property for labels.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.base_xy_plot.BaseXYPlot.map_data">
+<code class="sig-name descname">map_data</code><span class="sig-paren">(</span><em class="sig-param">screen_pt</em>, <em class="sig-param">all_values=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.map_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps a screen space point into the “index” space of the plot.</p>
+<p>Implements the AbstractPlotRenderer interface.</p>
+<p>If <em>all_values</em> is True, returns an array of (index, value) tuples;
+otherwise, it returns only the index values.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.base_xy_plot.BaseXYPlot.map_index">
+<code class="sig-name descname">map_index</code><span class="sig-paren">(</span><em class="sig-param">screen_pt</em>, <em class="sig-param">threshold=2.0</em>, <em class="sig-param">outside_returns_none=True</em>, <em class="sig-param">index_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.map_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps a screen space point to an index into the plot’s index array(s).</p>
+<p>Implements the AbstractPlotRenderer interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>screen_pt</strong> – Screen space point</p></li>
+<li><p><strong>threshold</strong> (<em>float</em>) – Maximum distance from screen space point to plot data point.
+A value of 0.0 means no threshold (any distance will do).</p></li>
+<li><p><strong>outside_returns_none</strong> (<em>bool</em>) – If True, a screen space point outside the data range returns None.
+Otherwise, it returns either 0 (outside the lower range) or
+the last index (outside the upper range)</p></li>
+<li><p><strong>index_only</strong> (<em>bool</em>) – If True, the threshold is measured on the distance between the
+index values, otherwise as Euclidean distance between the (x,y)
+coordinates.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.base_xy_plot.BaseXYPlot.map_screen">
+<code class="sig-name descname">map_screen</code><span class="sig-paren">(</span><em class="sig-param">data_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.map_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of data points into screen space and returns it as
+an array.</p>
+<p>Implements the AbstractPlotRenderer interface.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.orientation">
+<code class="sig-name descname">orientation</code><em class="property"> = Enum(&quot;h&quot;, &quot;v&quot;)</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The orientation of the index axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.origin_axis_color">
+<code class="sig-name descname">origin_axis_color</code><em class="property"> = black_color_trait</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.origin_axis_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the origin axis color, for testing.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.origin_axis_visible">
+<code class="sig-name descname">origin_axis_visible</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.origin_axis_visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the origin axis visibility, for testing.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.origin_axis_width">
+<code class="sig-name descname">origin_axis_width</code><em class="property"> = Float(1.0)</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.origin_axis_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines a the origin axis width, for testing.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.use_downsampling">
+<code class="sig-name descname">use_downsampling</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.use_downsampling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the plot use downsampling?
+This is not used right now.  It needs an implementation of robust, fast
+downsampling, which does not exist yet.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.use_subdivision">
+<code class="sig-name descname">use_subdivision</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.use_subdivision" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the plot use a spatial subdivision structure for fast hit-testing?
+This makes data updates slower, but makes hit-tests extremely fast.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.value">
+<code class="sig-name descname">value</code><em class="property"> = Instance(AbstractDataSource)</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>The data source to use as value points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.value_mapper">
+<code class="sig-name descname">value_mapper</code><em class="property"> = Instance(AbstractMapper)</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.value_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Screen mapper for value data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.value_range">
+<code class="sig-name descname">value_range</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.value_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for accessing the value data range.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.vgrid">
+<code class="sig-name descname">vgrid</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.vgrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read-only property for vertical grid.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.x_axis">
+<code class="sig-name descname">x_axis</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.x_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read-only property for x-axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.x_mapper">
+<code class="sig-name descname">x_mapper</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.x_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Corresponds to either <strong>index_mapper</strong> or <strong>value_mapper</strong>, depending on
+the orientation of the plot.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.y_axis">
+<code class="sig-name descname">y_axis</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.y_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read-only property for y-axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_xy_plot.BaseXYPlot.y_mapper">
+<code class="sig-name descname">y_mapper</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.base_xy_plot.BaseXYPlot.y_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Corresponds to either <strong>value_mapper</strong> or <strong>index_mapper</strong>, depending on
+the orientation of the plot.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.base_xy_plot.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

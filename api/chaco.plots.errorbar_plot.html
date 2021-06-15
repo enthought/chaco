@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.plots.errorbar_plot module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.plots.errorbar_plot module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.plots.errorbar_plot">
+<span id="chaco-plots-errorbar-plot-module"></span><h1>chaco.plots.errorbar_plot module<a class="headerlink" href="#module-chaco.plots.errorbar_plot" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="chaco.plots.errorbar_plot.ErrorBarPlot">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.plots.errorbar_plot.</code><code class="sig-name descname">ErrorBarPlot</code><span class="sig-paren">(</span><em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.errorbar_plot.ErrorBarPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.plots.lineplot.html#chaco.plots.lineplot.LinePlot" title="chaco.plots.lineplot.LinePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.plots.lineplot.LinePlot</span></code></a></p>
+<p>Renders errorbars at various points.</p>
+<dl class="attribute">
+<dt id="chaco.plots.errorbar_plot.ErrorBarPlot.endcap_size">
+<code class="sig-name descname">endcap_size</code><em class="property"> = Float(5.0)</em><a class="headerlink" href="#chaco.plots.errorbar_plot.ErrorBarPlot.endcap_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The screen-space width of the endcap bars</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.errorbar_plot.ErrorBarPlot.endcap_style">
+<code class="sig-name descname">endcap_style</code><em class="property"> = Enum(&quot;bar&quot;, &quot;none&quot;, None)</em><a class="headerlink" href="#chaco.plots.errorbar_plot.ErrorBarPlot.endcap_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>The kind of encap to render on error bars</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plots.errorbar_plot.ErrorBarPlot.get_screen_points">
+<code class="sig-name descname">get_screen_points</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.errorbar_plot.ErrorBarPlot.get_screen_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the currently visible screen-space points.</p>
+<p>Intended for use with overlays.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plots.errorbar_plot.ErrorBarPlot.map_screen">
+<code class="sig-name descname">map_screen</code><span class="sig-paren">(</span><em class="sig-param">data_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.errorbar_plot.ErrorBarPlot.map_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>data_array can be Nx2 or Nx3.  In the former case, each row is
+treated as (index, value), and this method returns screen X and Y
+coordinates.  In the latter case, each row is treated as (index,
+value_low, value_high), and the method returns either (x, ylow, yhigh)
+or (y, xlow, xhigh) depending on self.orientation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.errorbar_plot.ErrorBarPlot.value_high">
+<code class="sig-name descname">value_high</code><em class="property"> = Instance(AbstractDataSource)</em><a class="headerlink" href="#chaco.plots.errorbar_plot.ErrorBarPlot.value_high" title="Permalink to this definition">¶</a></dt>
+<dd><p>The datasource containing the high values</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.errorbar_plot.ErrorBarPlot.value_low">
+<code class="sig-name descname">value_low</code><em class="property"> = Instance(AbstractDataSource)</em><a class="headerlink" href="#chaco.plots.errorbar_plot.ErrorBarPlot.value_low" title="Permalink to this definition">¶</a></dt>
+<dd><p>The datasource containing the low values</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.plots.errorbar_plot.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

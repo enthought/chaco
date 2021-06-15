@@ -1,0 +1,366 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.data_view module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.data_view module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.data_view">
+<span id="chaco-data-view-module"></span><h1>chaco.data_view module<a class="headerlink" href="#module-chaco.data_view" title="Permalink to this headline">¶</a></h1>
+<p>Defines the DataView class, and associated property traits and property
+functions.</p>
+<dl class="class">
+<dt id="chaco.data_view.DataView">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.data_view.</code><code class="sig-name descname">DataView</code><span class="sig-paren">(</span><em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_view.DataView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.plot_containers.html#chaco.plot_containers.OverlayPlotContainer" title="chaco.plot_containers.OverlayPlotContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.plot_containers.OverlayPlotContainer</span></code></a></p>
+<p>Represents a mapping from 2-D data space into 2-D screen space.</p>
+<p>It can house renderers and other plot components, and otherwise behaves
+just like a normal PlotContainer.</p>
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.auto_axis">
+<code class="sig-name descname">auto_axis</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.data_view.DataView.auto_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to automatically create the x_axis and y_axis if they were not
+already set by the caller.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.auto_grid">
+<code class="sig-name descname">auto_grid</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.data_view.DataView.auto_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to automatically create the x_grid and y_grid if they were not
+already set by the caller.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.bgcolor">
+<code class="sig-name descname">bgcolor</code><em class="property"> = &quot;white&quot;</em><a class="headerlink" href="#chaco.data_view.DataView.bgcolor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Background color (overrides Enable Component)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.default_origin">
+<code class="sig-name descname">default_origin</code><em class="property"> = Enum( …</em><a class="headerlink" href="#chaco.data_view.DataView.default_origin" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default location of the origin  for new plots</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.index_axis">
+<code class="sig-name descname">index_axis</code><em class="property"> = AxisProperty</em><a class="headerlink" href="#chaco.data_view.DataView.index_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for accessing the index axis, which can be X or Y,
+depending on <strong>orientation</strong>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.index_grid">
+<code class="sig-name descname">index_grid</code><em class="property"> = GridProperty</em><a class="headerlink" href="#chaco.data_view.DataView.index_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for accessing the index grid, which can be horizontal
+or vertical, depending on <strong>orientation</strong>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.index_mapper">
+<code class="sig-name descname">index_mapper</code><em class="property"> = Instance(Base1DMapper)</em><a class="headerlink" href="#chaco.data_view.DataView.index_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mapper to use for the index data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.index_range">
+<code class="sig-name descname">index_range</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.data_view.DataView.index_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>The range used for the index data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.index_scale">
+<code class="sig-name descname">index_scale</code><em class="property"> = Enum(&quot;linear&quot;, &quot;log&quot;)</em><a class="headerlink" href="#chaco.data_view.DataView.index_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>For x-y plots, the scale of the index axis.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.data_view.DataView.map_data">
+<code class="sig-name descname">map_data</code><span class="sig-paren">(</span><em class="sig-param">screen_pt</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_view.DataView.map_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps a screen space point into the 2D data space of this plot.
+(Note that this differs from the BaseXYPlot implementation, which by
+default only maps into the 1D index space.)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.data_view.DataView.map_screen">
+<code class="sig-name descname">map_screen</code><span class="sig-paren">(</span><em class="sig-param">data_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_view.DataView.map_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of data points to screen space and returns an array
+of screen space points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.orientation">
+<code class="sig-name descname">orientation</code><em class="property"> = Enum(&quot;h&quot;, &quot;v&quot;)</em><a class="headerlink" href="#chaco.data_view.DataView.orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The orientation of the index axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.origin">
+<code class="sig-name descname">origin</code><em class="property"> = Property(observe=&quot;default_origin&quot;)</em><a class="headerlink" href="#chaco.data_view.DataView.origin" title="Permalink to this definition">¶</a></dt>
+<dd><p>The origin reported to axes, etc</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.padding_top">
+<code class="sig-name descname">padding_top</code><em class="property"> = 50</em><a class="headerlink" href="#chaco.data_view.DataView.padding_top" title="Permalink to this definition">¶</a></dt>
+<dd><p>Padding defaults.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.range2d">
+<code class="sig-name descname">range2d</code><em class="property"> = Instance(DataRange2D)</em><a class="headerlink" href="#chaco.data_view.DataView.range2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>The 2-D data range whose x- and y-ranges are exposed as the
+<strong>index_range</strong> and <strong>value_range</strong> property traits. This allows
+supporting both XY plots and 2-D (image) plots.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.value_axis">
+<code class="sig-name descname">value_axis</code><em class="property"> = AxisProperty</em><a class="headerlink" href="#chaco.data_view.DataView.value_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for accessing the value axis, which can be Y or X,
+depending on <strong>orientation</strong>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.value_grid">
+<code class="sig-name descname">value_grid</code><em class="property"> = GridProperty</em><a class="headerlink" href="#chaco.data_view.DataView.value_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for accessing the value grid, which can be vertical
+or horizontal, depending on <strong>orientation</strong>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.value_mapper">
+<code class="sig-name descname">value_mapper</code><em class="property"> = Instance(Base1DMapper)</em><a class="headerlink" href="#chaco.data_view.DataView.value_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mapper to use for value data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.value_range">
+<code class="sig-name descname">value_range</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.data_view.DataView.value_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>The range used for the value data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.value_scale">
+<code class="sig-name descname">value_scale</code><em class="property"> = Enum(&quot;linear&quot;, &quot;log&quot;)</em><a class="headerlink" href="#chaco.data_view.DataView.value_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>For x-y plots, the scale of the index axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.x_axis">
+<code class="sig-name descname">x_axis</code><em class="property"> = Instance(AbstractOverlay)</em><a class="headerlink" href="#chaco.data_view.DataView.x_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>The horizontal axis.  Its position relative to the plot
+area can be “top”, “bottom”, or “float”.  The default position for a new
+x-axis is “bottom”.</p>
+<p>TODO: For now, this is an instance of AbstractOverlay instead of PlotAxis
+because scales_axis.PlotAxis doesn’t inherit from PlotAxis, but instead is a
+semi-reimplementation.  Thus, rather than making scales_axis.PlotAxis
+inherit a concrete class, I chose to loosen this trait by specifying
+a more general base class of PlotAxis.  This incurs lower risk of subtle
+and difficult-to-catch bugs being introduced by changes to the
+axis.PlotAxis class.  This same comment applies to the y_axis trait
+below.  –pwang
+x_axis = Instance(PlotAxis)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.x_grid">
+<code class="sig-name descname">x_grid</code><em class="property"> = Instance(PlotGrid)</em><a class="headerlink" href="#chaco.data_view.DataView.x_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>The grid that intersects the x-axis, i.e., a set of vertical lines.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.x_mapper">
+<code class="sig-name descname">x_mapper</code><em class="property"> = OrientedMapperProperty</em><a class="headerlink" href="#chaco.data_view.DataView.x_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property that offers access to whatever mapper corresponds
+to the X-axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.y_axis">
+<code class="sig-name descname">y_axis</code><em class="property"> = Instance(AbstractOverlay)</em><a class="headerlink" href="#chaco.data_view.DataView.y_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>The vertical axis.  Its position relative to the plot
+area can be “left”, “right”, or “float”.  The default position for a new
+y-axis is “left”.
+y_axis = Instance(PlotAxis)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.y_grid">
+<code class="sig-name descname">y_grid</code><em class="property"> = Instance(PlotGrid)</em><a class="headerlink" href="#chaco.data_view.DataView.y_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>The grid that intersects the y-axis, i.e., a set of horizontal lines.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_view.DataView.y_mapper">
+<code class="sig-name descname">y_mapper</code><em class="property"> = OrientedMapperProperty</em><a class="headerlink" href="#chaco.data_view.DataView.y_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property that offers access to whatever mapper corresponds
+to the Y-axis</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.data_view.get_axis">
+<code class="sig-prename descclassname">chaco.data_view.</code><code class="sig-name descname">get_axis</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">attr_name</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_view.get_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter function used by AxisProperty.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.data_view.get_grid">
+<code class="sig-prename descclassname">chaco.data_view.</code><code class="sig-name descname">get_grid</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">attr_name</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_view.get_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter function used by GridProperty.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.data_view.get_mapper">
+<code class="sig-prename descclassname">chaco.data_view.</code><code class="sig-name descname">get_mapper</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">attr_name</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_view.get_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter function used by OrientedMapperProperty.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.data_view.set_axis">
+<code class="sig-prename descclassname">chaco.data_view.</code><code class="sig-name descname">set_axis</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">attr_name</em>, <em class="sig-param">new</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_view.set_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setter function used by AxisProperty.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.data_view.set_grid">
+<code class="sig-prename descclassname">chaco.data_view.</code><code class="sig-name descname">set_grid</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">attr_name</em>, <em class="sig-param">new</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_view.set_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setter function used by GridProperty.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.data_view.set_mapper">
+<code class="sig-prename descclassname">chaco.data_view.</code><code class="sig-name descname">set_mapper</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">attr_name</em>, <em class="sig-param">new</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_view.set_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setter function used by OrientedMapperProperty.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.data_view.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

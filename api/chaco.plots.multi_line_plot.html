@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.plots.multi_line_plot module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.plots.multi_line_plot module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.plots.multi_line_plot">
+<span id="chaco-plots-multi-line-plot-module"></span><h1>chaco.plots.multi_line_plot module<a class="headerlink" href="#module-chaco.plots.multi_line_plot" title="Permalink to this headline">¶</a></h1>
+<p>Defines the MultiLinePlot class.</p>
+<dl class="class">
+<dt id="chaco.plots.multi_line_plot.MultiLinePlot">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.plots.multi_line_plot.</code><code class="sig-name descname">MultiLinePlot</code><span class="sig-paren">(</span><em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.multi_line_plot.MultiLinePlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot" title="chaco.base_xy_plot.BaseXYPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.base_xy_plot.BaseXYPlot</span></code></a></p>
+<p>A plot consisting of multiple lines.</p>
+<p>The data to be plotted must come from a two-dimensional array with shape M by N
+stored in a MultiArrayDataSource object.  M is the number of lines to be plotted,
+and N is the number of points in each line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>instance of an ArrayDataSource</em>) – These are the ‘x’ or abscissa coordinates.</p></li>
+<li><p><strong>yindex</strong> (<em>instance of ArrayDataSource</em>) – These are the ‘y’ coordinates.</p></li>
+<li><p><strong>value</strong> (<em>instance of a MultiArrayDataSource</em>) – Note that the <cite>scale</cite>, <cite>offset</cite> and <cite>normalized_amplitude</cite> attributes of the
+MultiLinePlot control the projection of the traces into the (x,y)
+plot.  In simplest case, <cite>scale=1</cite> and <cite>offset=0</cite>, and <cite>normalized_amplitude</cite>
+controls the scaling of the traces relative to their base y value.</p></li>
+<li><p><strong>global_max</strong> (<em>global_min</em><em>,</em>) – The minimum and maximum values of the data in <cite>value</cite>.  For large
+arrays, computing these could take excessive time, so they must be
+provided when an instance is created.</p></li>
+<li><p><strong>normalized_amplitude</strong> (<em>Float</em>) – </p></li>
+<li><p><strong>color</strong> (<em>ColorTrait</em>) – </p></li>
+<li><p><strong>color_func</strong> (<em>Callable</em><em> or </em><em>None</em>) – If not None, this Callable overrides <cite>color</cite>.  The argument to <cite>color_func</cite>
+will be the integer index of the trace to be rendered.  <cite>color_func</cite> must
+return an RGBA 4-tuple.
+Default: None</p></li>
+<li><p><strong>orientation</strong> (<em>str</em>) – Must be ‘v’ or ‘h’ (for ‘vertical’ or ‘horizontal’, respectively).  This is
+the orientation of the index axis (i.e. the ‘x’ axis).
+Default: ‘h’</p></li>
+<li><p><strong>fast_clip</strong> (<em>bool</em>) – If True, traces whose <em>base</em> ‘y’ coordinate is outside the value axis range
+are not plotted, even if some of the data in the curve extends into the plot
+region.
+Default: False</p></li>
+<li><p><strong>line_width</strong> (<em>float</em>) – Width of the plotted lines.</p></li>
+<li><p><strong>line_style</strong> – The style of the trace lines in the plot.</p></li>
+<li><p><strong>following are from the original LinePlot code</strong><strong>, </strong><strong>and are untested</strong> (<em>The</em>) – </p></li>
+<li><p><strong>selected_color</strong> – </p></li>
+<li><p><strong>selected_line_style</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="chaco.plots.multi_line_plot.MultiLinePlot.color">
+<code class="sig-name descname">color</code><em class="property"> = black_color_trait(requires_redraw=True)</em><a class="headerlink" href="#chaco.plots.multi_line_plot.MultiLinePlot.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the lines.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.multi_line_plot.MultiLinePlot.color_func">
+<code class="sig-name descname">color_func</code><em class="property"> = Trait(None, None, Callable)</em><a class="headerlink" href="#chaco.plots.multi_line_plot.MultiLinePlot.color_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that returns the color of lines.  Overrides <cite>color</cite> if not None.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plots.multi_line_plot.MultiLinePlot.get_screen_points">
+<code class="sig-name descname">get_screen_points</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.multi_line_plot.MultiLinePlot.get_screen_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the currently visible screen-space points.</p>
+<p>Intended for use with overlays.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.multi_line_plot.MultiLinePlot.global_max">
+<code class="sig-name descname">global_max</code><em class="property"> = Float</em><a class="headerlink" href="#chaco.plots.multi_line_plot.MultiLinePlot.global_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum value in the <cite>value</cite> data source.  This must be provided
+in the call to the constructor.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.multi_line_plot.MultiLinePlot.global_min">
+<code class="sig-name descname">global_min</code><em class="property"> = Float</em><a class="headerlink" href="#chaco.plots.multi_line_plot.MultiLinePlot.global_min" title="Permalink to this definition">¶</a></dt>
+<dd><p>Minimum value in the <cite>value</cite> data source.  This must be provided
+in the call to the constructor.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.multi_line_plot.MultiLinePlot.line_style">
+<code class="sig-name descname">line_style</code><em class="property"> = LineStyle(requires_redraw=True)</em><a class="headerlink" href="#chaco.plots.multi_line_plot.MultiLinePlot.line_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>The line dash style.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.multi_line_plot.MultiLinePlot.line_width">
+<code class="sig-name descname">line_width</code><em class="property"> = Float(1.0, requires_redraw=True)</em><a class="headerlink" href="#chaco.plots.multi_line_plot.MultiLinePlot.line_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>The thickness of the line.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.multi_line_plot.MultiLinePlot.metadata_name">
+<code class="sig-name descname">metadata_name</code><em class="property"> = Str(&quot;selections&quot;)</em><a class="headerlink" href="#chaco.plots.multi_line_plot.MultiLinePlot.metadata_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the key in self.metadata that holds the selection mask</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.multi_line_plot.MultiLinePlot.normalized_amplitude">
+<code class="sig-name descname">normalized_amplitude</code><em class="property"> = Float(-0.5)</em><a class="headerlink" href="#chaco.plots.multi_line_plot.MultiLinePlot.normalized_amplitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalized amplitude is the value exposed to the user.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.multi_line_plot.MultiLinePlot.scale">
+<code class="sig-name descname">scale</code><em class="property"> = Float(1.0)</em><a class="headerlink" href="#chaco.plots.multi_line_plot.MultiLinePlot.scale" title="Permalink to this definition">¶</a></dt>
+<dd><p><cite>scale</cite> and <cite>offset</cite> provide a more general transformation, but are currently
+untested.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.multi_line_plot.MultiLinePlot.selected_color">
+<code class="sig-name descname">selected_color</code><em class="property"> = ColorTrait(&quot;lightyellow&quot;)</em><a class="headerlink" href="#chaco.plots.multi_line_plot.MultiLinePlot.selected_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color to use to highlight the line when selected.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.multi_line_plot.MultiLinePlot.selected_line_style">
+<code class="sig-name descname">selected_line_style</code><em class="property"> = LineStyle(&quot;solid&quot;)</em><a class="headerlink" href="#chaco.plots.multi_line_plot.MultiLinePlot.selected_line_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>The style of the selected line.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plots.multi_line_plot.MultiLinePlot.trait_view">
+<code class="sig-name descname">trait_view</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.multi_line_plot.MultiLinePlot.trait_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a minimalist View, with just the amplitude and color attributes.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.plots.multi_line_plot.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

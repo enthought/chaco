@@ -1,0 +1,54 @@
+..
+   (C) Copyright 2006-2021 Enthought, Inc., Austin, TX
+   All rights reserved.
+
+   This software is provided without warranty under the terms of the BSD
+   license included in LICENSE.txt and may be redistributed only under
+   the conditions described in the aforementioned license. The license
+   is also available online at http://www.enthought.com/licenses/BSD.txt
+
+   Thanks for using Enthought open source!
+
+chaco.examples.demo package
+===========================
+
+.. automodule:: chaco.examples.demo
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. toctree::
+
+   chaco.examples.demo.bigdata
+   chaco.examples.demo.chaco_trait_editor
+   chaco.examples.demo.coordinate_line_overlay_demo
+   chaco.examples.demo.cursor_tool_demo
+   chaco.examples.demo.data_labels
+   chaco.examples.demo.data_view
+   chaco.examples.demo.edit_line
+   chaco.examples.demo.functionplotter
+   chaco.examples.demo.hyetograph
+   chaco.examples.demo.image_plot_origin_and_orientation
+   chaco.examples.demo.multi_line_plot_demo
+   chaco.examples.demo.nonlinear_color_mapping
+   chaco.examples.demo.qt_example
+   chaco.examples.demo.quiver
+   chaco.examples.demo.range_selection_demo
+   chaco.examples.demo.scales_test
+   chaco.examples.demo.simple_line
+   chaco.examples.demo.simple_polar
+   chaco.examples.demo.stacked_axis
+   chaco.examples.demo.status_overlay
+   chaco.examples.demo.toolbar_plot
+   chaco.examples.demo.tornado
+   chaco.examples.demo.two_plots
+   chaco.examples.demo.vanderwaals
+   chaco.examples.demo.vertical_plot
+   chaco.examples.demo.xray_plot
+
+
+.. toctree::
+
+   chaco.examples.demo.advanced
+   chaco.examples.demo.basic
+   chaco.examples.demo.financial

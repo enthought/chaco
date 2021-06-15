@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.base_2d_plot module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.base_2d_plot module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.base_2d_plot">
+<span id="chaco-base-2d-plot-module"></span><h1>chaco.base_2d_plot module<a class="headerlink" href="#module-chaco.base_2d_plot" title="Permalink to this headline">¶</a></h1>
+<p>Defines the base class for 2-D plots.</p>
+<dl class="class">
+<dt id="chaco.base_2d_plot.Base2DPlot">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.base_2d_plot.</code><code class="sig-name descname">Base2DPlot</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base_2d_plot.Base2DPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.abstract_plot_renderer.html#chaco.abstract_plot_renderer.AbstractPlotRenderer" title="chaco.abstract_plot_renderer.AbstractPlotRenderer"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_plot_renderer.AbstractPlotRenderer</span></code></a></p>
+<p>Base class for 2-D plots.</p>
+<dl class="attribute">
+<dt id="chaco.base_2d_plot.Base2DPlot.alpha">
+<code class="sig-name descname">alpha</code><em class="property"> = Trait(1.0, Range(0.0, 1.0))</em><a class="headerlink" href="#chaco.base_2d_plot.Base2DPlot.alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
+for full intensity.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_2d_plot.Base2DPlot.draw_layer">
+<code class="sig-name descname">draw_layer</code><em class="property"> = &quot;image&quot;</em><a class="headerlink" href="#chaco.base_2d_plot.Base2DPlot.draw_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides PlotComponent; 2-D plots draw on the ‘image’ layer,
+underneath all decorations and annotations, and above only the background
+fill color.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_2d_plot.Base2DPlot.index">
+<code class="sig-name descname">index</code><em class="property"> = Instance(GridDataSource)</em><a class="headerlink" href="#chaco.base_2d_plot.Base2DPlot.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>The data source to use for the index coordinate.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_2d_plot.Base2DPlot.index_data_changed">
+<code class="sig-name descname">index_data_changed</code><em class="property"> = Event</em><a class="headerlink" href="#chaco.base_2d_plot.Base2DPlot.index_data_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event fired when the index data changes. Subclasses can listen for this
+event and take appropriate steps (except for requesting a redraw, which
+is done in this class).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_2d_plot.Base2DPlot.index_mapper">
+<code class="sig-name descname">index_mapper</code><em class="property"> = Instance(GridMapper)</em><a class="headerlink" href="#chaco.base_2d_plot.Base2DPlot.index_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Screen mapper for 2-D structured (gridded) index data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_2d_plot.Base2DPlot.index_mapper_changed">
+<code class="sig-name descname">index_mapper_changed</code><em class="property"> = Event</em><a class="headerlink" href="#chaco.base_2d_plot.Base2DPlot.index_mapper_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event fired when the index mapper changes. Subclasses can listen for this
+event and take appropriate steps (except for requesting a redraw, which
+is done in this class).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_2d_plot.Base2DPlot.index_range">
+<code class="sig-name descname">index_range</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.base_2d_plot.Base2DPlot.index_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for accessing the data range of the mapper.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_2d_plot.Base2DPlot.labels">
+<code class="sig-name descname">labels</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.base_2d_plot.Base2DPlot.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for accessing the plots labels.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.base_2d_plot.Base2DPlot.map_data">
+<code class="sig-name descname">map_data</code><span class="sig-paren">(</span><em class="sig-param">screen_pts</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base_2d_plot.Base2DPlot.map_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps a screen space point into the “index” space of the plot.</p>
+<p>Implements the AbstractPlotRenderer interface.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.base_2d_plot.Base2DPlot.map_index">
+<code class="sig-name descname">map_index</code><span class="sig-paren">(</span><em class="sig-param">screen_pt</em>, <em class="sig-param">threshold=2.0</em>, <em class="sig-param">outside_returns_none=True</em>, <em class="sig-param">index_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base_2d_plot.Base2DPlot.map_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps a screen space point to an index into the plot’s index arrays.</p>
+<p>Implements the AbstractPlotRenderer interface.
+The <em>index_only</em> parameter is ignored because the index is
+intrinsically 2-D.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.base_2d_plot.Base2DPlot.map_screen">
+<code class="sig-name descname">map_screen</code><span class="sig-paren">(</span><em class="sig-param">data_pts</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.base_2d_plot.Base2DPlot.map_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of data points into screen space and returns it as
+an array.</p>
+<p>Implements the AbstractPlotRenderer interface.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_2d_plot.Base2DPlot.orientation">
+<code class="sig-name descname">orientation</code><em class="property"> = Enum(&quot;h&quot;, &quot;v&quot;)</em><a class="headerlink" href="#chaco.base_2d_plot.Base2DPlot.orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The direction that the first array returned by self.index.get_data()
+maps to.</p>
+<ul class="simple">
+<li><p>‘h’: index maps to x-direction</p></li>
+<li><p>‘v’: index maps to y-direction</p></li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_2d_plot.Base2DPlot.value">
+<code class="sig-name descname">value</code><em class="property"> = Instance(ImageData)</em><a class="headerlink" href="#chaco.base_2d_plot.Base2DPlot.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>The data source to use as value points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_2d_plot.Base2DPlot.value_data_changed">
+<code class="sig-name descname">value_data_changed</code><em class="property"> = Event</em><a class="headerlink" href="#chaco.base_2d_plot.Base2DPlot.value_data_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event fired when the value data changes. Subclasses can listen for this
+event and take appropriate steps (except for requesting a redraw, which
+is done in this class).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_2d_plot.Base2DPlot.x_mapper">
+<code class="sig-name descname">x_mapper</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.base_2d_plot.Base2DPlot.x_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for accessing the x-direction mappers regardless
+of orientation.  This provides compatibility with a number of tools.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.base_2d_plot.Base2DPlot.y_mapper">
+<code class="sig-name descname">y_mapper</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.base_2d_plot.Base2DPlot.y_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for accessing the y-direction mappers regardless
+of orientation.  This provides compatibility with a number of tools.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.base_2d_plot.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

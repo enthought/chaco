@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.plots.scatterplot module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.plots.scatterplot module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.plots.scatterplot">
+<span id="chaco-plots-scatterplot-module"></span><h1>chaco.plots.scatterplot module<a class="headerlink" href="#module-chaco.plots.scatterplot" title="Permalink to this headline">¶</a></h1>
+<p>Defines the ScatterPlot class, and associated TraitsUI view and helper
+function.</p>
+<dl class="class">
+<dt id="chaco.plots.scatterplot.ScatterPlot">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.plots.scatterplot.</code><code class="sig-name descname">ScatterPlot</code><span class="sig-paren">(</span><em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.scatterplot.ScatterPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot" title="chaco.base_xy_plot.BaseXYPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.base_xy_plot.BaseXYPlot</span></code></a></p>
+<p>Renders a scatter plot, given an index and value arrays.</p>
+<dl class="method">
+<dt id="chaco.plots.scatterplot.ScatterPlot.map_data">
+<code class="sig-name descname">map_data</code><span class="sig-paren">(</span><em class="sig-param">screen_pt</em>, <em class="sig-param">all_values=True</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.scatterplot.ScatterPlot.map_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps a screen space point into the “index” space of the plot.</p>
+<p>Overrides the BaseXYPlot implementation, and always returns an
+array of (index, value) tuples.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plots.scatterplot.ScatterPlot.map_index">
+<code class="sig-name descname">map_index</code><span class="sig-paren">(</span><em class="sig-param">screen_pt</em>, <em class="sig-param">threshold=0.0</em>, <em class="sig-param">outside_returns_none=True</em>, <em class="sig-param">index_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.scatterplot.ScatterPlot.map_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps a screen space point to an index into the plot’s index array(s).</p>
+<p>Overrides the BaseXYPlot implementation..</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plots.scatterplot.ScatterPlot.map_screen">
+<code class="sig-name descname">map_screen</code><span class="sig-paren">(</span><em class="sig-param">data_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.scatterplot.ScatterPlot.map_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of data points into screen space and returns it as
+an array.</p>
+<p>Implements the AbstractPlotRenderer interface.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.plots.scatterplot.ScatterPlotView">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.plots.scatterplot.</code><code class="sig-name descname">ScatterPlotView</code><a class="headerlink" href="#chaco.plots.scatterplot.ScatterPlotView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traitsui.view.View</span></code></p>
+<p>TraitsUI View for customizing a scatter plot.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.plots.scatterplot.render_markers">
+<code class="sig-prename descclassname">chaco.plots.scatterplot.</code><code class="sig-name descname">render_markers</code><span class="sig-paren">(</span><em class="sig-param">gc</em>, <em class="sig-param">points</em>, <em class="sig-param">marker</em>, <em class="sig-param">marker_size</em>, <em class="sig-param">color</em>, <em class="sig-param">line_width</em>, <em class="sig-param">outline_color</em>, <em class="sig-param">custom_symbol=None</em>, <em class="sig-param">debug=False</em>, <em class="sig-param">point_mask=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.scatterplot.render_markers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function for a PlotComponent instance to render a
+set of (x,y) points onto a graphics context.  Currently, it makes some
+assumptions about the attributes on the plot object; these may be factored
+out eventually.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gc</strong> (<em>GraphicsContext</em>) – The target for rendering the points</p></li>
+<li><p><strong>points</strong> (<em>array of</em><em> (</em><em>x</em><em>,</em><em>y</em><em>) </em><em>points</em>) – The points to render</p></li>
+<li><p><strong>marker</strong> (<em>string</em><em>, </em><em>class</em><em>, or </em><em>instance</em>) – The type of marker to use for the points</p></li>
+<li><p><strong>marker_size</strong> (<em>number</em>) – The size of the markers</p></li>
+<li><p><strong>color</strong> (<em>RGB</em><em>(</em><em>A</em><em>) </em><em>color</em>) – The color of the markers</p></li>
+<li><p><strong>line_width</strong> (<em>number</em>) – The width, in pixels, of the marker outline</p></li>
+<li><p><strong>outline_color</strong> (<em>RGB</em><em>(</em><em>A</em><em>) </em><em>color</em>) – The color of the marker outline</p></li>
+<li><p><strong>custom_symbol</strong> (<em>CompiledPath</em>) – If the marker style is ‘custom’, this is the symbol</p></li>
+<li><p><strong>point_mask</strong> (<em>array of bools</em>) – The mask specifying which points need to be rendered. The <cite>points</cite>
+array is already masked</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.plots.scatterplot.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

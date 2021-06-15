@@ -1,0 +1,839 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Chaco Fundamentals &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">Chaco Fundamentals</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="chaco-fundamentals">
+<span id="fundamentals"></span><h1>Chaco Fundamentals<a class="headerlink" href="#chaco-fundamentals" title="Permalink to this headline">¶</a></h1>
+<p>While you can go a long way using the high-level APIs provided by the
+<a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot" title="chaco.plot.Plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code></a> class, to use Chaco to its full potential
+it helps to have a deeper understanding of the building blocks of the
+library.</p>
+<div class="section" id="foundations">
+<h2>Foundations<a class="headerlink" href="#foundations" title="Permalink to this headline">¶</a></h2>
+<p>Chaco relies on a number of underlying libraries for core capabilities.
+Understanding these libraries is important for writing heavily interactive
+visualizations, as well as new tools, overlays and plot renderers.</p>
+<div class="section" id="traits">
+<h3>Traits<a class="headerlink" href="#traits" title="Permalink to this headline">¶</a></h3>
+<p>Chaco is written using <a class="reference external" href="https://docs.enthought.com/traits/">Traits</a> which not
+only provides basic type-checking of data, but also attribute change
+notification which is key to the interactive updating of Chaco.</p>
+<p>You should be comfortable with Traits when writing any significant
+Chaco-based application or when extending Chaco’s capabilities.</p>
+</div>
+<div class="section" id="traitsui">
+<h3>TraitsUI<a class="headerlink" href="#traitsui" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://docs.enthought.com/traitsui/">TraitsUI</a> is a rapid GUI application
+development library built on top of Traits.  While it is not required for
+the development of applications that use Chaco, it is the most natural way
+of providing other UI elements for your users to interact with your
+visualizations; or alternatively the most natural environment for writing
+applications which embed Chaco plots.  Chaco also provides TraitsUI
+views for configuring some Chaco objects.</p>
+<p>You will need at least a basic familiarity with TraitsUI for most Chaco
+use cases.</p>
+</div>
+<div class="section" id="kiva">
+<h3>Kiva<a class="headerlink" href="#kiva" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://docs.enthought.com/enable/kiva">Kiva</a> provides an abstracted 2D drawing
+API and a number of back-end implementations.  This permits writing of
+drawing code that can be used almost un-modified when rendering to a screen,
+to a vector document format (such as PDF or PostScript), or to a raster file
+format (such as PNG).</p>
+<p>The core object for Kiva code is the “graphics context” which represents a
+2D drawing surface and the current state of the drawing environment.  When
+Chaco classes need to do any drawing they will usually be supplied with an
+appropriate graphics context to render into, but very occasionally (such as
+when saving a plot out to a file) you may want to create your own context to
+draw into.</p>
+<p>If you want to write new Chaco overlays or plot renderers you should develop
+an understanding of Kiva.</p>
+</div>
+<div class="section" id="enable">
+<h3>Enable<a class="headerlink" href="#enable" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://docs.enthought.com/enable/">Enable</a> provides interactivity and layout
+on top of the Kiva drawing library.  Enable is the library that handles the
+interface between Chaco plots and the OS/windowing system, as well as the
+basic hierarchical layout and layering of visible components of a plot.</p>
+<p>Enable provides two base classes that are at the root of much of the Chaco
+code:</p>
+<dl>
+<dt><a class="reference external" href="http://docs.enthought.com/enable/api/enable.component.html#enable.component.Component" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a></dt><dd><p>An object that occupies a rectangular region of the window and knows how
+to
+draw itself and dispatch user interactions.  The
+<a class="reference external" href="http://docs.enthought.com/enable/api/enable.container.html#enable.container.Container" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Container</span></code></a> class is a subclass of
+<a class="reference external" href="http://docs.enthought.com/enable/api/enable.component.html#enable.component.Component" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a> that handles hierarchical layout
+and event dispatch.</p>
+<p>The drawing of <a class="reference external" href="http://docs.enthought.com/enable/api/enable.component.html#enable.component.Component" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a> objects is split
+across a number of layers, so that overlays, underlays, borders and
+background can be rendered in a coherent manner.</p>
+</dd>
+<dt><a class="reference external" href="http://docs.enthought.com/enable/api/enable.base_tool.html#enable.base_tool.BaseTool" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseTool</span></code></a></dt><dd><p>An object that handles a particular type of user interaction (eg. mouse
+events or key presses).  Each tool is a state machine and so the
+interactions can vary depending on the state that the tool is in (eg.
+“normal” vs. “dragging” state for a tool that handles moving
+interactions).</p>
+</dd>
+</dl>
+<p>An understanding of Enable is important for writing new interactive tools, as
+well as for understanding and controlling how components are layered and layed
+out.</p>
+</div>
+</div>
+<div class="section" id="chaco-object-model">
+<h2>Chaco Object Model<a class="headerlink" href="#chaco-object-model" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot" title="chaco.plot.Plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code></a> class provides a fairly simple API for
+creating a plot in an application, but beneath that lies a set of classes
+that handle converting the numbers in the numpy arrays into pixels on the
+screen.  Between the <a class="reference internal" href="../api/chaco.array_plot_data.html#chaco.array_plot_data.ArrayPlotData" title="chaco.array_plot_data.ArrayPlotData"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayPlotData</span></code></a> and the
+<a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot" title="chaco.plot.Plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code></a> are a series of classes which hold state for
+various operations and transformations.</p>
+<div class="section" id="data-flow">
+<h3>Data Flow<a class="headerlink" href="#data-flow" title="Permalink to this headline">¶</a></h3>
+<p>The data flow between these classes can generally be sumarised as follows:</p>
+<div class="graphviz"><img src="../_images/graphviz-eedac508a8d9063b6bdfe20052ac6d85a7fba912.png" alt="digraph dataflow {
+    rankdir=LR;
+    node [shape=plaintext];
+    &quot;Plot Data&quot; -&gt; &quot;Data sources&quot; -&gt; &quot;Ranges&quot; -&gt; &quot;Mappers&quot; -&gt; &quot;Renderers&quot; -&gt; &quot;Plot&quot;;
+    &quot;Data sources&quot; -&gt;  &quot;Renderers&quot;;
+    &quot;Mappers&quot; -&gt; &quot;Axes and Grids&quot;;
+    &quot;Pan and Zoom&quot; -&gt; &quot;Ranges&quot;;
+}" class="graphviz" /></div>
+<dl>
+<dt>Data sources</dt><dd><p>These hold individual data sets from the plot data (ie. something that
+looks like a single NumPy array) and update when the data changes.</p>
+<p>Examples: <a class="reference internal" href="../api/chaco.array_data_source.html#chaco.array_data_source.ArrayDataSource" title="chaco.array_data_source.ArrayDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayDataSource</span></code></a>,
+<a class="reference internal" href="../api/chaco.image_data.html#chaco.image_data.ImageData" title="chaco.image_data.ImageData"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageData</span></code></a>,
+<a class="reference internal" href="../api/chaco.grid_data_source.html#chaco.grid_data_source.GridDataSource" title="chaco.grid_data_source.GridDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridDataSource</span></code></a>.</p>
+</dd>
+<dt>Ranges</dt><dd><p>These hold a range of displayed data values and can be updated either
+by changes to the data or changes in the state of pan or zoom tools.</p>
+<p>Examples: <a class="reference internal" href="../api/chaco.data_range_1d.html#chaco.data_range_1d.DataRange1D" title="chaco.data_range_1d.DataRange1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataRange1D</span></code></a>,
+<a class="reference internal" href="../api/chaco.data_range_2d.html#chaco.data_range_2d.DataRange2D" title="chaco.data_range_2d.DataRange2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataRange2D</span></code></a>.</p>
+</dd>
+<dt>Mappers</dt><dd><p>These are responsible for mapping data values to screen (or color) values.</p>
+<p>Examples: <a class="reference internal" href="../api/chaco.linear_mapper.html#chaco.linear_mapper.LinearMapper" title="chaco.linear_mapper.LinearMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearMapper</span></code></a>,
+<a class="reference internal" href="../api/chaco.log_mapper.html#chaco.log_mapper.LogMapper" title="chaco.log_mapper.LogMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogMapper</span></code></a>,
+<a class="reference internal" href="../api/chaco.grid_mapper.html#chaco.grid_mapper.GridMapper" title="chaco.grid_mapper.GridMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridMapper</span></code></a>.</p>
+</dd>
+<dt>Renderers</dt><dd><p>These are the objects responsible for rendering plot data, such as line
+plots or scatter plots.  They need to be update either when the data they
+are displaying changes, or the mapping from data space to screen space
+changes.</p>
+<p>Examples: <a class="reference internal" href="../api/chaco.plots.lineplot.html#chaco.plots.lineplot.LinePlot" title="chaco.plots.lineplot.LinePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinePlot</span></code></a>,
+<a class="reference internal" href="../api/chaco.plots.scatterplot.html#chaco.plots.scatterplot.ScatterPlot" title="chaco.plots.scatterplot.ScatterPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScatterPlot</span></code></a>,
+<a class="reference internal" href="../api/chaco.plots.cmap_image_plot.html#chaco.plots.cmap_image_plot.CMapImagePlot" title="chaco.plots.cmap_image_plot.CMapImagePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">CMapImagePlot</span></code></a>,
+<a class="reference internal" href="../api/chaco.plots.text_plot_1d.html#chaco.plots.text_plot_1d.TextPlot1D" title="chaco.plots.text_plot_1d.TextPlot1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextPlot1D</span></code></a>.</p>
+</dd>
+<dt>Axes and Grids</dt><dd><p>These are the objects responsible for drawing axes ticks and grid lines,
+and need to know the mapping between data space and screen space.  Axes
+and Grids are examples of Overlays (although they are technically
+underlays).</p>
+<p>Examples: <a class="reference internal" href="../api/chaco.axis.html#chaco.axis.PlotAxis" title="chaco.axis.PlotAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotAxis</span></code></a>,
+<a class="reference internal" href="../api/chaco.label_axis.html#chaco.label_axis.LabelAxis" title="chaco.label_axis.LabelAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">LabelAxis</span></code></a>,
+<a class="reference internal" href="../api/chaco.grid.html#chaco.grid.PlotGrid" title="chaco.grid.PlotGrid"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotGrid</span></code></a>.</p>
+</dd>
+<dt>Pan and Zoom</dt><dd><p>These are pan and zoom commands that come from user interactions, such as
+via a pan or zoom operation, from resizing the plot window, or from other
+application-based setting of the range of values to display.  Pan and zoom
+are commonly initated via Tools.</p>
+<p>Examples: <a class="reference internal" href="../api/chaco.tools.pan_tool.html#chaco.tools.pan_tool.PanTool" title="chaco.tools.pan_tool.PanTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">PanTool</span></code></a>,
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ZoomTool</span></code>.</p>
+</dd>
+</dl>
+<div class="section" id="data-flow-examples">
+<h4>Data Flow Examples<a class="headerlink" href="#data-flow-examples" title="Permalink to this headline">¶</a></h4>
+<p>Consider the following example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_plot</span><span class="p">():</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">amplitude1</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">amplitude2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">plot_data</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span>
+        <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
+        <span class="n">amplitude1</span><span class="o">=</span><span class="n">amplitude1</span><span class="p">,</span>
+        <span class="n">amplitude2</span><span class="o">=</span><span class="n">amplitude2</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plot_data</span><span class="p">)</span>
+    <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;amplitude1&#39;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
+    <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;amplitude2&#39;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">plot</span>
+</pre></div>
+</div>
+<p>This sets up a number of objects and connects them together, so that data
+flows roughly as follows:</p>
+<div class="graphviz"><img src="../_images/graphviz-85691576af8e438bc3d72866e8747213d6e156b5.png" alt="digraph dataflow {
+
+    subgraph cluster_level {
+        node [shape=plaintext];
+        style=invis;
+        &quot;Data source&quot; -&gt; &quot;Range&quot; -&gt; &quot;Mapper&quot; -&gt; &quot;Underlay&quot; -&gt; &quot;Renderer&quot; [style=invis];
+    }
+    node [shape=rectangle];
+
+    subgraph index {
+        color=white;
+        &quot;ArrayDataSource: time&quot; -&gt; &quot;Range1D: index&quot; -&gt; &quot;LinearMapper: index&quot; -&gt; &quot;PlotAxis: index&quot;;
+    }
+    subgraph value {
+        color=white;
+        &quot;ArrayDataSource: amplitude1&quot; -&gt; &quot;Range1D: value&quot;;
+        &quot;ArrayDataSource: amplitude2&quot; -&gt; &quot;Range1D: value&quot;;
+        &quot;Range1D: value&quot; -&gt; &quot;LinearMapper: value&quot; -&gt; &quot;PlotAxis: value&quot;;
+    }
+
+    {rank = same; &quot;Data source&quot;; &quot;ArrayDataSource: time&quot;; &quot;ArrayDataSource: amplitude1&quot;; &quot;ArrayDataSource: amplitude2&quot;}
+    {rank = same; &quot;Range&quot;; &quot;Range1D: index&quot;; &quot;Range1D: value&quot;}
+    {rank = same; &quot;Mapper&quot;; &quot;LinearMapper: index&quot;; &quot;LinearMapper: value&quot;}
+    {rank = same; &quot;Underlay&quot;; &quot;PlotAxis: index&quot;; &quot;PlotAxis: value&quot;}
+    {rank = same; &quot;Renderer&quot;; &quot;LinePlot&quot;; &quot;ScatterPlot&quot;}
+
+    &quot;ArrayPlotData&quot; -&gt; &quot;ArrayDataSource: time&quot;;
+    &quot;ArrayPlotData&quot; -&gt; &quot;ArrayDataSource: amplitude1&quot;;
+    &quot;ArrayPlotData&quot; -&gt; &quot;ArrayDataSource: amplitude2&quot;;
+    &quot;ArrayDataSource: time&quot; -&gt; &quot;LinePlot&quot;;
+    &quot;ArrayDataSource: time&quot; -&gt; &quot;ScatterPlot&quot;;
+    &quot;ArrayDataSource: amplitude1&quot; -&gt; &quot;LinePlot&quot;;
+    &quot;ArrayDataSource: amplitude2&quot; -&gt; &quot;ScatterPlot&quot;;
+    &quot;LinearMapper: value&quot; -&gt; &quot;LinePlot&quot;;
+    &quot;LinearMapper: value&quot; -&gt; &quot;ScatterPlot&quot;;
+    &quot;LinearMapper: index&quot; -&gt; &quot;LinePlot&quot;;
+    &quot;LinearMapper: index&quot; -&gt; &quot;ScatterPlot&quot;;
+    &quot;PlotAxis: index&quot; -&gt; &quot;Plot&quot;;
+    &quot;PlotAxis: value&quot; -&gt; &quot;Plot&quot;;
+    &quot;LinePlot&quot; -&gt; &quot;Plot&quot;;
+    &quot;ScatterPlot&quot; -&gt; &quot;Plot&quot;;
+}" class="graphviz" /></div>
+<p>Updates to the data stored in the array plot data object trigger updates
+through the pathways indicated, first updating the data sources for each
+array, upon which the data ranges depend.  In turn the mappers update their
+state when the data ranges update, and the underlays and plot renderers
+update their state based on changes to the mappers and, for the renderers,
+on the changes to the data sources.  Finally the changes to the state of the
+components are flagged in the Enable drawing system, which will then schedule
+the plot for re-drawing during the GUI event loop’s next paint event.</p>
+<p>Notice also how this diagram shows that mappers and ranges are shared between
+renderers and underlays that share the same physical space.  Plots which don’t
+share the same screen space shouldn’t share mappers, but can share data and/or
+ranges.</p>
+<p>For example, here are two plots which share the same array plot data:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_plot</span><span class="p">():</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">amplitude1</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">amplitude2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">plot_data</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span>
+        <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
+        <span class="n">amplitude1</span><span class="o">=</span><span class="n">amplitude1</span><span class="p">,</span>
+        <span class="n">amplitude2</span><span class="o">=</span><span class="n">amplitude2</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">plot_1</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plot_data</span><span class="p">)</span>
+    <span class="n">plot_1</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;amplitude1&#39;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
+    <span class="n">plot_2</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plot_data</span><span class="p">)</span>
+    <span class="n">plot_2</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;amplitude2&#39;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+    <span class="n">container</span> <span class="o">=</span> <span class="n">HPlotContainer</span><span class="p">(</span><span class="n">plot_1</span><span class="p">,</span> <span class="n">plot2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Which gives rise to the following data flow diagram:</p>
+<div class="graphviz"><img src="../_images/graphviz-b8d283ba6ce7c58d1da6f8c40c2845c6719f3efa.png" alt="digraph dataflow {
+
+    subgraph cluster_level {
+        node [shape=plaintext];
+        style=invis;
+        &quot;Data source&quot; -&gt; &quot;Range&quot; -&gt; &quot;Mapper&quot; -&gt; &quot;Underlay&quot; -&gt; &quot;Renderer&quot; [style=invis];
+    }
+    node [shape=rectangle];
+
+    subgraph index_1 {
+        color=white;
+        &quot;Range1D: index 1&quot; -&gt; &quot;LinearMapper: index 1&quot; -&gt; &quot;PlotAxis: index 1&quot;;
+    }
+    subgraph value_1 {
+        color=white;
+        &quot;Range1D: value 1&quot; -&gt; &quot;LinearMapper: value 1&quot; -&gt; &quot;PlotAxis: value 1&quot;;
+    }
+    subgraph index_2 {
+        color=white;
+        &quot;Range1D: index 2&quot; -&gt; &quot;LinearMapper: index 2&quot; -&gt; &quot;PlotAxis: index 2&quot;;
+    }
+    subgraph value_2 {
+        color=white;
+        &quot;Range1D: value 2&quot; -&gt; &quot;LinearMapper: value 2&quot; -&gt; &quot;PlotAxis: value 2&quot;;
+    }
+
+    {rank = same; &quot;Data source&quot;; &quot;ArrayDataSource: time&quot;; &quot;ArrayDataSource: amplitude1&quot;; &quot;ArrayDataSource: amplitude2&quot;}
+    {rank = same; &quot;Range&quot;; &quot;Range1D: index 1&quot;; &quot;Range1D: value 1&quot;; &quot;Range1D: index 2&quot;; &quot;Range1D: value 2&quot;}
+    {rank = same; &quot;Mapper&quot;; &quot;LinearMapper: index 1&quot;; &quot;LinearMapper: value 1&quot;; &quot;LinearMapper: index 2&quot;; &quot;LinearMapper: value 2&quot;}
+    {rank = same; &quot;Underlay&quot;; &quot;PlotAxis: index 1&quot;; &quot;PlotAxis: value 1&quot;; &quot;PlotAxis: index 2&quot;; &quot;PlotAxis: value 2&quot;}
+    {rank = same; &quot;Renderer&quot;; &quot;LinePlot&quot;; &quot;ScatterPlot&quot;}
+
+    &quot;ArrayPlotData&quot; -&gt; &quot;ArrayDataSource: time&quot;;
+    &quot;ArrayPlotData&quot; -&gt; &quot;ArrayDataSource: amplitude1&quot;;
+    &quot;ArrayPlotData&quot; -&gt; &quot;ArrayDataSource: amplitude2&quot;;
+    &quot;ArrayDataSource: time&quot; -&gt; &quot;Range1D: index 1&quot;
+    &quot;ArrayDataSource: time&quot; -&gt; &quot;Range1D: index 2&quot;
+    &quot;ArrayDataSource: time&quot; -&gt; &quot;LinePlot&quot;;
+    &quot;ArrayDataSource: time&quot; -&gt; &quot;ScatterPlot&quot;;
+    &quot;ArrayDataSource: amplitude1&quot; -&gt; &quot;Range1D: value 1&quot;;
+    &quot;ArrayDataSource: amplitude1&quot; -&gt; &quot;Range1D: value 2&quot;;
+    &quot;ArrayDataSource: amplitude1&quot; -&gt; &quot;LinePlot&quot;;
+    &quot;ArrayDataSource: amplitude2&quot; -&gt; &quot;Range1D: value 1&quot;;
+    &quot;ArrayDataSource: amplitude2&quot; -&gt; &quot;Range1D: value 2&quot;
+    &quot;ArrayDataSource: amplitude2&quot; -&gt; &quot;ScatterPlot&quot;;
+    &quot;LinearMapper: value 1&quot; -&gt; &quot;LinePlot&quot;;
+    &quot;LinearMapper: value 2&quot; -&gt; &quot;ScatterPlot&quot;;
+    &quot;LinearMapper: index 1&quot; -&gt; &quot;LinePlot&quot;;
+    &quot;LinearMapper: index 2&quot; -&gt; &quot;ScatterPlot&quot;;
+    &quot;PlotAxis: index 1&quot; -&gt; &quot;Plot 1&quot;;
+    &quot;PlotAxis: value 1&quot; -&gt; &quot;Plot 1&quot;;
+    &quot;PlotAxis: index 2&quot; -&gt; &quot;Plot 2&quot;;
+    &quot;PlotAxis: value 2&quot; -&gt; &quot;Plot 2&quot;;
+    &quot;LinePlot&quot; -&gt; &quot;Plot 1&quot;;
+    &quot;ScatterPlot&quot; -&gt; &quot;Plot 2&quot;;
+}" class="graphviz" /></div>
+<p>In contrast to the previous example the ranges and mappers are not related
+in any way between the two plots.  This means that changes to the visible
+region in data space for one plot will not affect the other, and because
+the values span a different range initially they will have different value
+scales.</p>
+<p>It is common to want to share one or both of the ranges between plots to
+keep the axes synchronized in data space.</p>
+<p>For example, here are two plots which share the same data ranges:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_plot</span><span class="p">():</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">amplitude1</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">amplitude2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">plot_data</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span>
+        <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
+        <span class="n">amplitude1</span><span class="o">=</span><span class="n">amplitude1</span><span class="p">,</span>
+        <span class="n">amplitude2</span><span class="o">=</span><span class="n">amplitude2</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">plot_1</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plot_data</span><span class="p">)</span>
+    <span class="n">plot_1</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;amplitude1&#39;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
+    <span class="n">plot_2</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plot_data</span><span class="p">)</span>
+    <span class="n">plot_2</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;amplitude2&#39;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+    <span class="n">plot_2</span><span class="o">.</span><span class="n">index_range</span> <span class="o">=</span> <span class="n">plot_1</span><span class="o">.</span><span class="n">index_range</span>
+    <span class="n">plot_2</span><span class="o">.</span><span class="n">value_range</span> <span class="o">=</span> <span class="n">plot_1</span><span class="o">.</span><span class="n">value_range</span>
+    <span class="n">container</span> <span class="o">=</span> <span class="n">HPlotContainer</span><span class="p">(</span><span class="n">plot_1</span><span class="p">,</span> <span class="n">plot2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Which gives rise to the following data flow diagram:</p>
+<div class="graphviz"><img src="../_images/graphviz-b36f35fd1412b92d41f387c1f6d0eab83700d2d6.png" alt="digraph dataflow {
+
+    subgraph cluster_level {
+        node [shape=plaintext];
+        style=invis;
+        &quot;Data source&quot; -&gt; &quot;Range&quot; -&gt; &quot;Mapper&quot; -&gt; &quot;Underlay&quot; -&gt; &quot;Renderer&quot; [style=invis];
+    }
+    node [shape=rectangle];
+
+    subgraph index_1 {
+        color=white;
+        &quot;Range1D: index&quot; -&gt; &quot;LinearMapper: index 1&quot; -&gt; &quot;PlotAxis: index 1&quot;;
+    }
+    subgraph value_1 {
+        color=white;
+        &quot;Range1D: value&quot; -&gt; &quot;LinearMapper: value 1&quot; -&gt; &quot;PlotAxis: value 1&quot;;
+    }
+    subgraph index_2 {
+        color=white;
+        &quot;Range1D: index&quot; -&gt; &quot;LinearMapper: index 2&quot; -&gt; &quot;PlotAxis: index 2&quot;;
+    }
+    subgraph value_2 {
+        color=white;
+        &quot;Range1D: value&quot; -&gt; &quot;LinearMapper: value 2&quot; -&gt; &quot;PlotAxis: value 2&quot;;
+    }
+
+    {rank = same; &quot;Data source&quot;; &quot;ArrayDataSource: time&quot;; &quot;ArrayDataSource: amplitude1&quot;; &quot;ArrayDataSource: amplitude2&quot;}
+    {rank = same; &quot;Range&quot;; &quot;Range1D: index&quot;; &quot;Range1D: value&quot;}
+    {rank = same; &quot;Mapper&quot;; &quot;LinearMapper: index 1&quot;; &quot;LinearMapper: value 1&quot;; &quot;LinearMapper: index 2&quot;; &quot;LinearMapper: value 2&quot;}
+    {rank = same; &quot;Underlay&quot;; &quot;PlotAxis: index 1&quot;; &quot;PlotAxis: value 1&quot;; &quot;PlotAxis: index 2&quot;; &quot;PlotAxis: value 2&quot;}
+    {rank = same; &quot;Renderer&quot;; &quot;LinePlot&quot;; &quot;ScatterPlot&quot;}
+
+    &quot;ArrayPlotData&quot; -&gt; &quot;ArrayDataSource: time&quot;;
+    &quot;ArrayPlotData&quot; -&gt; &quot;ArrayDataSource: amplitude1&quot;;
+    &quot;ArrayPlotData&quot; -&gt; &quot;ArrayDataSource: amplitude2&quot;;
+    &quot;ArrayDataSource: time&quot; -&gt; &quot;Range1D: index&quot;;
+    &quot;ArrayDataSource: time&quot; -&gt; &quot;LinePlot&quot;;
+    &quot;ArrayDataSource: time&quot; -&gt; &quot;ScatterPlot&quot;;
+    &quot;ArrayDataSource: amplitude1&quot; -&gt; &quot;Range1D: value&quot;;
+    &quot;ArrayDataSource: amplitude1&quot; -&gt; &quot;LinePlot&quot;;
+    &quot;ArrayDataSource: amplitude2&quot; -&gt; &quot;Range1D: value&quot;;
+    &quot;ArrayDataSource: amplitude2&quot; -&gt; &quot;ScatterPlot&quot;;
+    &quot;LinearMapper: value 1&quot; -&gt; &quot;LinePlot&quot;;
+    &quot;LinearMapper: value 2&quot; -&gt; &quot;ScatterPlot&quot;;
+    &quot;LinearMapper: index 1&quot; -&gt; &quot;LinePlot&quot;;
+    &quot;LinearMapper: index 2&quot; -&gt; &quot;ScatterPlot&quot;;
+    &quot;PlotAxis: index 1&quot; -&gt; &quot;Plot 1&quot;;
+    &quot;PlotAxis: value 1&quot; -&gt; &quot;Plot 1&quot;;
+    &quot;PlotAxis: index 2&quot; -&gt; &quot;Plot 2&quot;;
+    &quot;PlotAxis: value 2&quot; -&gt; &quot;Plot 2&quot;;
+    &quot;LinePlot&quot; -&gt; &quot;Plot 1&quot;;
+    &quot;ScatterPlot&quot; -&gt; &quot;Plot 2&quot;;
+}" class="graphviz" /></div>
+<p>Here any change to the range will automatically update the mappers
+of both, so the visible ranges will match.  However since the screen
+space of the two plots is different, we don’t want to share mappers
+(mappers can only be shared when the plots are contained in an
+<a class="reference internal" href="../api/chaco.plot_containers.html#chaco.plot_containers.OverlayPlotContainer" title="chaco.plot_containers.OverlayPlotContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">OverlayPlotContainer</span></code></a> or a
+subclass such as <a class="reference internal" href="../api/chaco.data_view.html#chaco.data_view.DataView" title="chaco.data_view.DataView"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataView</span></code></a> or
+<a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot" title="chaco.plot.Plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code></a>)</p>
+</div>
+</div>
+<div class="section" id="data-sources">
+<h3>Data Sources<a class="headerlink" href="#data-sources" title="Permalink to this headline">¶</a></h3>
+<p>At its core, Chaco is about visualizing interactive data.  As such, Chaco has
+a standard API for representing data: all of these classes implement the
+<a class="reference internal" href="../api/chaco.abstract_data_source.html#chaco.abstract_data_source.AbstractDataSource" title="chaco.abstract_data_source.AbstractDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataSource</span></code></a> API.  This class
+has methods for getting and setting the data that is provided by the data
+source, as well as basic information about the data’s size and (for numerical
+data) the numerical bounds of the values.  A data source can also hold a
+dictionary of arbitrary additional metadata.</p>
+<p>The workhorse data source is the
+<a class="reference internal" href="../api/chaco.array_data_source.html#chaco.array_data_source.ArrayDataSource" title="chaco.array_data_source.ArrayDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayDataSource</span></code></a>
+which holds a single NumPy of array of numerical data and which covers almost
+all common use cases.  In most cases where you need to work with an
+<a class="reference internal" href="../api/chaco.array_data_source.html#chaco.array_data_source.ArrayDataSource" title="chaco.array_data_source.ArrayDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayDataSource</span></code></a> you call
+<a class="reference internal" href="../api/chaco.array_data_source.html#chaco.array_data_source.ArrayDataSource.set_data" title="chaco.array_data_source.ArrayDataSource.set_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_data()</span></code></a> to change the
+stored data, listen to the
+<a class="reference internal" href="../api/chaco.abstract_data_source.html#chaco.abstract_data_source.AbstractDataSource.data_changed" title="chaco.abstract_data_source.AbstractDataSource.data_changed"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data_changed</span></code></a> event
+trait for when the data changes and call
+<a class="reference internal" href="../api/chaco.array_data_source.html#chaco.array_data_source.ArrayDataSource.get_data" title="chaco.array_data_source.ArrayDataSource.get_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_data()</span></code></a> to get the
+current value of the data.</p>
+<p>Some users of a data source only care about the range of values that are
+contained in that data.  In this case the data source API provides a
+<a class="reference internal" href="../api/chaco.abstract_data_source.html#chaco.abstract_data_source.AbstractDataSource.bounds_changed" title="chaco.abstract_data_source.AbstractDataSource.bounds_changed"><code class="xref py py-attr docutils literal notranslate"><span class="pre">bounds_changed</span></code></a> trait
+that indicates that the maximum or minimum value of the data has changed, and
+those values can be efficiently retrieved via the
+<a class="reference internal" href="../api/chaco.array_data_source.html#chaco.array_data_source.ArrayDataSource.get_bounds" title="chaco.array_data_source.ArrayDataSource.get_bounds"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_bounds()</span></code></a> trait.</p>
+<p>Similarly there is a
+<a class="reference internal" href="../api/chaco.abstract_data_source.html#chaco.abstract_data_source.AbstractDataSource.metadata_changed" title="chaco.abstract_data_source.AbstractDataSource.metadata_changed"><code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata_changed</span></code></a>
+event trait that is fired when the metadata dictionary is replaced or
+modified.</p>
+<p>A common use case for alternative data sources is to render a computed
+function (such as a curve that has been fit to the data) dynamically
+rather than having to sample a fixed set of points.  This can be done
+by supplying the plot data with an
+<a class="reference internal" href="../api/chaco.function_data_source.html#chaco.function_data_source.FunctionDataSource" title="chaco.function_data_source.FunctionDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionDataSource</span></code></a> and plotting
+that:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_plot</span><span class="p">():</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">amplitude</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">plot_data</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="n">amplitude</span><span class="p">)</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plot_data</span><span class="p">)</span>
+    <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;amplitude&#39;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+
+    <span class="n">data_source</span> <span class="o">=</span> <span class="n">FunctionDataSource</span><span class="p">(</span>
+        <span class="n">func</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">data_range</span><span class="o">=</span><span class="n">plot</span><span class="o">.</span><span class="n">index_range</span>
+    <span class="p">)</span>
+    <span class="n">plot_data</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">data_source</span><span class="p">)</span>
+    <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">plot</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mappers">
+<h3>Mappers<a class="headerlink" href="#mappers" title="Permalink to this headline">¶</a></h3>
+<p>Data as provided by the
+<a class="reference internal" href="../api/chaco.abstract_data_source.html#chaco.abstract_data_source.AbstractDataSource" title="chaco.abstract_data_source.AbstractDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataSource</span></code></a> is not suitable
+for display; it needs to be mapped to an appropriate value for rendering
+into a graphics context.  The most obvious mapping transforms data values
+into Enable’s drawing coordinates (often simply referred to as “screen”
+coordinates, whether or not they are actually rendered to a screen).
+However similar transformations need to be performed to map numerical data
+to color values for displaying on colormapped plots.  There are two
+hierarchies of classes that perform these transformations.</p>
+<p>The abstract base class for mapping data is the
+<a class="reference internal" href="../api/chaco.abstract_mapper.html#chaco.abstract_mapper.AbstractMapper" title="chaco.abstract_mapper.AbstractMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractMapper</span></code></a> and this class
+specifies methods
+<a class="reference internal" href="../api/chaco.abstract_mapper.html#chaco.abstract_mapper.AbstractMapper.map_screen" title="chaco.abstract_mapper.AbstractMapper.map_screen"><code class="xref py py-meth docutils literal notranslate"><span class="pre">map_screen()</span></code></a> for
+mapping data values to screen values,
+<a class="reference internal" href="../api/chaco.abstract_mapper.html#chaco.abstract_mapper.AbstractMapper.map_data" title="chaco.abstract_mapper.AbstractMapper.map_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">map_data()</span></code></a> for
+mapping screen values back to data values, and
+<a class="reference internal" href="../api/chaco.abstract_mapper.html#chaco.abstract_mapper.AbstractMapper.map_data_array" title="chaco.abstract_mapper.AbstractMapper.map_data_array"><code class="xref py py-meth docutils literal notranslate"><span class="pre">map_data_array()</span></code></a>
+for mapping a collection of screen values to data values.  Perhaps
+most importantly, the mapper fires the
+<a class="reference internal" href="../api/chaco.abstract_mapper.html#chaco.abstract_mapper.AbstractMapper.updated" title="chaco.abstract_mapper.AbstractMapper.updated"><code class="xref py py-attr docutils literal notranslate"><span class="pre">updated</span></code></a> event.</p>
+<p>Chaco provides a number of sub-classes of the base class for various
+use-cases.  The most commonly used is the
+<a class="reference internal" href="../api/chaco.linear_mapper.html#chaco.linear_mapper.LinearMapper" title="chaco.linear_mapper.LinearMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearMapper</span></code></a> which provides a one
+dimensional linear transformation between data space and screen space,
+but there is also <a class="reference internal" href="../api/chaco.log_mapper.html#chaco.log_mapper.LogMapper" title="chaco.log_mapper.LogMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogMapper</span></code></a> which provides
+one dimensional logarithmic transformation, and
+<a class="reference internal" href="../api/chaco.grid_mapper.html#chaco.grid_mapper.GridMapper" title="chaco.grid_mapper.GridMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridMapper</span></code></a> which provides a mapping frrom
+a two dimensional data source to a point in screen (x, y) coordinates
+using a combination of two one dimensional mappers.</p>
+<p>For mapping of values to colors, there is the
+<a class="reference internal" href="../api/chaco.abstract_colormap.html#chaco.abstract_colormap.AbstractColormap" title="chaco.abstract_colormap.AbstractColormap"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractColormap</span></code></a> class and
+the two sub-classes <a class="reference internal" href="../api/chaco.color_mapper.html#chaco.color_mapper.ColorMapper" title="chaco.color_mapper.ColorMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorMapper</span></code></a> and
+<a class="reference internal" href="../api/chaco.discrete_color_mapper.html#chaco.discrete_color_mapper.DiscreteColorMapper" title="chaco.discrete_color_mapper.DiscreteColorMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiscreteColorMapper</span></code></a>.  These have
+the same base API as
+<a class="reference internal" href="../api/chaco.abstract_mapper.html#chaco.abstract_mapper.AbstractMapper" title="chaco.abstract_mapper.AbstractMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractMapper</span></code></a> but also provide
+some specialized methods for converting to integer RGB values efficiently.
+Chaco provides a large number of default color maps suitable for various
+visualization types.</p>
+</div>
+<div class="section" id="ranges">
+<h3>Ranges<a class="headerlink" href="#ranges" title="Permalink to this headline">¶</a></h3>
+<p>A common problem to many data mappers is that the range of data values
+may change dynamically, and when data changes it is desirable to have
+the mapper automatically update itself to ensure that the full range of
+data values is mapped to the screen.  This functionality is broken out
+into subclasses of the
+<a class="reference internal" href="../api/chaco.abstract_data_range.html#chaco.abstract_data_range.AbstractDataRange" title="chaco.abstract_data_range.AbstractDataRange"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataRange</span></code></a> class.</p>
+<p>These classes track a collection of
+<a class="reference internal" href="../api/chaco.abstract_data_source.html#chaco.abstract_data_source.AbstractDataSource" title="chaco.abstract_data_source.AbstractDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataSource</span></code></a> instances via
+their <a class="reference internal" href="../api/chaco.abstract_data_range.html#chaco.abstract_data_range.AbstractDataRange.sources" title="chaco.abstract_data_range.AbstractDataRange.sources"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sources</span></code></a>
+trait, and when the bounds of any of those data sources change then
+the range adjusts its upper and lower bound appropriately.  Data mappers
+then listen to the values of the upper and lower bounds of the range and
+use that to adjust the transformation that they apply.  The actual
+values of the upper and lower bounds in data space coordinates are
+provided by the <a class="reference internal" href="../api/chaco.abstract_data_range.html#chaco.abstract_data_range.AbstractDataRange.low" title="chaco.abstract_data_range.AbstractDataRange.low"><code class="xref py py-attr docutils literal notranslate"><span class="pre">low</span></code></a>
+and <a class="reference internal" href="../api/chaco.abstract_data_range.html#chaco.abstract_data_range.AbstractDataRange.high" title="chaco.abstract_data_range.AbstractDataRange.high"><code class="xref py py-attr docutils literal notranslate"><span class="pre">high</span></code></a> traits.</p>
+<p>However there are situations where the behaviour of the range should
+change, for example after a pan or zoom operation the value of the
+bounds should remain fixed to whatever values the user panned or zoomed
+to even if the underlying data changes.  For these purposes, code
+interacting with a data range can set the
+<a class="reference internal" href="../api/chaco.abstract_data_range.html#chaco.abstract_data_range.AbstractDataRange.low_setting" title="chaco.abstract_data_range.AbstractDataRange.low_setting"><code class="xref py py-attr docutils literal notranslate"><span class="pre">low_setting</span></code></a> and
+<a class="reference internal" href="../api/chaco.abstract_data_range.html#chaco.abstract_data_range.AbstractDataRange.high_setting" title="chaco.abstract_data_range.AbstractDataRange.high_setting"><code class="xref py py-attr docutils literal notranslate"><span class="pre">high_setting</span></code></a> traits
+either to an absolute numerical value in the data space, or to a number of
+other values, such as <code class="docutils literal notranslate"><span class="pre">auto</span></code> or <code class="docutils literal notranslate"><span class="pre">track</span></code> that determine the behaviour
+when data changes.</p>
+<p>The most commonly used subclass is
+<a class="reference internal" href="../api/chaco.data_range_1d.html#chaco.data_range_1d.DataRange1D" title="chaco.data_range_1d.DataRange1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataRange1D</span></code></a> which has a number of
+additional affordances to facilitate pleasant appearing plots, such as
+the ability to add some padding above and below the data via the
+<a class="reference internal" href="../api/chaco.data_range_1d.html#chaco.data_range_1d.DataRange1D.margin" title="chaco.data_range_1d.DataRange1D.margin"><code class="xref py py-attr docutils literal notranslate"><span class="pre">margin</span></code></a> trait, or even
+to supply a custom padding calculation function.</p>
+<p>It is worthwhile noting that data ranges can be shared between mappers,
+and this permits linking of axes bounds or color maps ranges across
+different plots.</p>
+</div>
+<div class="section" id="axes-and-grids">
+<h3>Axes and Grids<a class="headerlink" href="#axes-and-grids" title="Permalink to this headline">¶</a></h3>
+<p>Axes and grids are auxilliary objects that draw plot decorations.
+They are underlays (and so inherit from
+<a class="reference internal" href="../api/chaco.abstract_overlay.html#chaco.abstract_overlay.AbstractOverlay" title="chaco.abstract_overlay.AbstractOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractOverlay</span></code></a>) and are
+usually drawn into the underlay layer of a <a class="reference internal" href="../api/chaco.plot.html#chaco.plot.Plot" title="chaco.plot.Plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code></a>
+but they are also able to be used as stand-alone components if needed
+(for example to create multi-axis plots).</p>
+<p>These objects present numerous options for their styling, but perhaps
+more importantly allow control over the algorithm to used for determining
+where tick marks and grid lines should be drawn.  Both classes have a
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">tick_generator</span></code> trait which takes an instance of an
+<a class="reference internal" href="../api/chaco.ticks.html#chaco.ticks.AbstractTickGenerator" title="chaco.ticks.AbstractTickGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractTickGenerator</span></code></a> which has a single
+method <a class="reference internal" href="../api/chaco.ticks.html#chaco.ticks.AbstractTickGenerator.get_ticks" title="chaco.ticks.AbstractTickGenerator.get_ticks"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_ticks()</span></code></a> that
+returns the tick positions for the current data and screen space bounds.</p>
+<p>There are several standard tick generators available for use,
+but in the absence of anything else the
+<a class="reference internal" href="../api/chaco.ticks.html#chaco.ticks.DefaultTickGenerator" title="chaco.ticks.DefaultTickGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultTickGenerator</span></code></a> is used, which tries to
+generate genererally pleasing ticks at round numbers for both linear
+and logarithmic mappings.  The
+<a class="reference internal" href="../api/chaco.ticks.html#chaco.ticks.MinorTickGenerator" title="chaco.ticks.MinorTickGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">MinorTickGenerator</span></code></a> is similar, but generates
+generate denser ticks that are suitable for use as a minor scale.  The
+<a class="reference internal" href="../api/chaco.ticks.html#chaco.ticks.ShowAllTickGenerator" title="chaco.ticks.ShowAllTickGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShowAllTickGenerator</span></code></a> simply shows ticks at
+a list of supplied data values, giving complete control at the expense
+of not being able to dynamically adapt to changes from panning and
+zooming.</p>
+<p>For more complex tick generation, such as time axes where the “natural”
+tick spacings, positions and even label formatting can change as you
+zoom through different levels, the
+<a class="reference internal" href="../api/chaco.scales_tick_generator.html#chaco.scales_tick_generator.ScalesTickGenerator" title="chaco.scales_tick_generator.ScalesTickGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScalesTickGenerator</span></code></a> allows the
+user to specify a multi-leveled
+<a class="reference internal" href="../api/chaco.scales.scales.html#chaco.scales.scales.ScaleSystem" title="chaco.scales.scales.ScaleSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScaleSystem</span></code></a>.  In particular this system
+provides the <a class="reference internal" href="../api/chaco.scales.time_scale.html#chaco.scales.time_scale.CalendarScaleSystem" title="chaco.scales.time_scale.CalendarScaleSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">CalendarScaleSystem</span></code></a>
+which by default correct ticks axes with time values ranging from microseconds
+through to years.</p>
+<p>For example, you can create an hours, minutes, seconds time axis (ignoring
+higher level calendar constructs) for a plot as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">chaco.scales.api</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CalendarScaleSystem</span><span class="p">,</span> <span class="n">HMSScales</span><span class="p">,</span> <span class="n">ScalesTickGenerator</span>
+<span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">create_plot</span><span class="p">():</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3600</span><span class="p">,</span> <span class="mi">36001</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">plot_data</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plot_data</span><span class="p">)</span>
+    <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
+    <span class="n">plot</span><span class="o">.</span><span class="n">index_axis</span><span class="o">.</span><span class="n">tick_generator</span> <span class="o">=</span> <span class="n">ScalesTickGenerator</span><span class="p">(</span>
+        <span class="n">scale</span><span class="o">=</span><span class="n">CalendarScaleSystem</span><span class="p">(</span><span class="o">*</span><span class="n">HMSScales</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">plot</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="plot-renderers">
+<h3>Plot Renderers<a class="headerlink" href="#plot-renderers" title="Permalink to this headline">¶</a></h3>
+<p>The core of the Chaco plotting library are the plot renderers which are
+responsible for drawing the markings that represent the data, all of which
+implement the <a class="reference internal" href="../api/chaco.abstract_plot_renderer.html#chaco.abstract_plot_renderer.AbstractPlotRenderer" title="chaco.abstract_plot_renderer.AbstractPlotRenderer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractPlotRenderer</span></code></a>
+API.  This ABC is a subclass of
+<a class="reference internal" href="../api/chaco.plot_component.html#chaco.plot_component.PlotComponent" title="chaco.plot_component.PlotComponent"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotComponent</span></code></a>, and so all plot renderers
+are expected to implement the key parts of the Enable drawing API. Most
+specialized plot renderers expect a <code class="xref py py-meth docutils literal notranslate"><span class="pre">render()</span></code> method that performs
+actual drawing of the plot into a provided Kiva graphics context.</p>
+<p>Most plot renders have the notion of “index” and “value” data that
+they are plotting. Each item in the index has a corresponding value, so if
+a function were being plotted the index are points in the domain and the
+values are points in the range.  For plot renderers the index usually
+provides a location at which the value should be rendered, and the value
+provides a position offset or color value. Importantly, the index and value
+are not directly linked to horizontal or vertical screen space.</p>
+<p>Different subclasses of the abstract plot renderer implement common
+conventions for handling index and value representation. For example:</p>
+<dl class="simple">
+<dt><a class="reference internal" href="../api/chaco.base_xy_plot.html#chaco.base_xy_plot.BaseXYPlot" title="chaco.base_xy_plot.BaseXYPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseXYPlot</span></code></a></dt><dd><p>This class handles plots like line plots and bar plots where the index
+gives offsets along one axis and the values are along the other axis.</p>
+</dd>
+<dt><a class="reference internal" href="../api/chaco.base_1d_plot.html#chaco.base_1d_plot.Base1DPlot" title="chaco.base_1d_plot.Base1DPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base1DPlot</span></code></a></dt><dd><p>This class handles plots where the index gives the offset along one
+axis, and the values are displayed by markings at or near those points.</p>
+</dd>
+<dt><a class="reference internal" href="../api/chaco.base_2d_plot.html#chaco.base_2d_plot.Base2DPlot" title="chaco.base_2d_plot.Base2DPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base2DPlot</span></code></a></dt><dd><p>This class handles plots like contour and image plots where the
+index lies on a regular 2D grid and values are displayed by markings
+at or near those points.</p>
+</dd>
+</dl>
+<p>There are a number of other plot types that handle special cases like
+candle plots.</p>
+<p>Plot renderers have mappers for each of their data dimensions, but they
+also express convenience APIs mapping data values to and from screen
+(x, y) values using the methods
+<a class="reference internal" href="../api/chaco.abstract_plot_renderer.html#chaco.abstract_plot_renderer.AbstractPlotRenderer.map_data" title="chaco.abstract_plot_renderer.AbstractPlotRenderer.map_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">map_data()</span></code></a>
+and
+<a class="reference internal" href="../api/chaco.abstract_plot_renderer.html#chaco.abstract_plot_renderer.AbstractPlotRenderer.map_screen" title="chaco.abstract_plot_renderer.AbstractPlotRenderer.map_screen"><code class="xref py py-meth docutils literal notranslate"><span class="pre">map_screen()</span></code></a>.
+These are usually simple wrappers around the appropriate mapper calls of
+the same name.</p>
+<p>Plot renderers also have to provide information for tools that want to
+interact with the values on the plot.  They are expected to provide a
+<a class="reference internal" href="../api/chaco.abstract_plot_renderer.html#chaco.abstract_plot_renderer.AbstractPlotRenderer.map_index" title="chaco.abstract_plot_renderer.AbstractPlotRenderer.map_index"><code class="xref py py-meth docutils literal notranslate"><span class="pre">map_index()</span></code></a>
+method which handles mapping a screen point to an index item (ie. an
+integer index into the index data source).</p>
+</div>
+<div class="section" id="tools">
+<h3>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h3>
+<p>Up to this point, all the classes discussed are dynamic in the sense
+that if the underlying data changes then the visualization will update
+appropriately.  However it is often the case that you want to add other
+interactions to a visualization.  The most common of these is the
+ability to pan or zoom the plot to focus on particular details, but
+there number of ways that you might want a user to interact with the
+visualization is potentially vast.  As a result one of the most common
+ways to customize a visualization is by writing new tools.</p>
+<p>Tools are technically a feature of Enable, rather than Chaco, and as
+a result there are a number of tools and base classes there that can
+be used as the foundation or inspiration for custom interactions.  For
+example, the following Enable tools may be of use:</p>
+<dl class="simple">
+<dt><a class="reference external" href="http://docs.enthought.com/enable/api/enable.tools.move_tool.html#enable.tools.move_tool.MoveTool" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.tools.move_tool.MoveTool</span></code></a></dt><dd><p>A tool which changes the screen location of a component by dragging
+with the mouse.  This can be useful for allowing the user to move
+plot decorations such as legends around the plot.</p>
+</dd>
+<dt><a class="reference external" href="http://docs.enthought.com/enable/api/enable.tools.resize_tool.html#enable.tools.resize_tool.ResizeTool" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.tools.resize_tool.ResizeTool</span></code></a></dt><dd><p>A tool which changes the screen size of a component by dragging
+edges or corners.</p>
+</dd>
+<dt><a class="reference external" href="http://docs.enthought.com/enable/api/enable.tools.hover_tool.html#enable.tools.hover_tool.HoverTool" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.tools.hover_tool.HoverTool</span></code></a></dt><dd><p>A tool which calls a callback when the mouse hs not moved
+significantly for a period of time.</p>
+</dd>
+<dt><a class="reference external" href="http://docs.enthought.com/enable/api/enable.tools.button_tool.html#enable.tools.button_tool.ButtonTool" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.tools.button_tool.ButtonTool</span></code></a></dt><dd><p>A tool that makes a component act like a button, with a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">enable.tools.button_tool.ButtonTool.clicked</span></code>
+trait that you can react to via the usual Traits mechanisms.</p>
+</dd>
+<dt><a class="reference external" href="http://docs.enthought.com/enable/api/enable.tools.pyface.context_menu_tool.html#enable.tools.pyface.context_menu_tool.ContextMenuTool" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.tools.pyface.context_menu_tool.ContextMenuTool</span></code></a></dt><dd><p>A tool which displays a context menu at the point where the
+use right-clicks, using Pyface’s menu and action classes.</p>
+</dd>
+<dt><a class="reference external" href="http://docs.enthought.com/enable/api/enable.tools.traits_tool.html#enable.tools.traits_tool.TraitsTool" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.tools.traits_tool.TraitsTool</span></code></a></dt><dd><p>A tool which opens a TraitsUI dialog when a component is
+double-clicked.</p>
+</dd>
+<dt><a class="reference external" href="http://docs.enthought.com/enable/api/enable.tools.base_drop_tool.html#enable.tools.base_drop_tool.BaseDropTool" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.tools.base_drop_tool.BaseDropTool</span></code></a></dt><dd><p>A base tool which responds to operating system drag and drop.
+Must be subclassed to implement methods that indicate whether
+a type of object can be dropped, and what to do if they are
+dropped.</p>
+</dd>
+<dt><a class="reference external" href="http://docs.enthought.com/enable/api/enable.tools.value_drag_tool.html#enable.tools.value_drag_tool.ValueDragTool" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.tools.value_drag_tool.ValueDragTool</span></code></a></dt><dd><p>A base tool which changes a numeric value as the user
+drags the mouse.  Must be subclassed to provide methods to
+get and set the value.  There is a subclass
+<a class="reference external" href="http://docs.enthought.com/enable/api/enable.tools.value_drag_tool.html#enable.tools.value_drag_tool.AttributeDragTool" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.tools.value_drag_tool.AttributeDragTool</span></code></a>
+which sets the values of attributes on an object as the
+mouse moves, which is a common use case.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="overlays-and-underlays">
+<h3>Overlays and Underlays<a class="headerlink" href="#overlays-and-underlays" title="Permalink to this headline">¶</a></h3>
+<p>In some instances you want to render additional decorations that are
+independent of the plot type.  In a similar fashion to the Tool classes
+auxilliary renderers can be attached to plots as “overlays” (and using
+the same mechanism, just rendering into a different layer, as
+“underlays”).  Common use cases for overlays include cursor lines,
+selection regions, hover text, legends and other annotations.  Overlays
+are frequently designed to work together with a particular Tool or class
+of tools, but can frequently be used independently if desired.</p>
+<p>Overlays and underlays which need to render relative to points in
+data space will frequently want to make use of the plot mappers to know
+where in screen space to perform their drawing operations..</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Chaco Fundamentals</a><ul>
+<li><a class="reference internal" href="#foundations">Foundations</a><ul>
+<li><a class="reference internal" href="#traits">Traits</a></li>
+<li><a class="reference internal" href="#traitsui">TraitsUI</a></li>
+<li><a class="reference internal" href="#kiva">Kiva</a></li>
+<li><a class="reference internal" href="#enable">Enable</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chaco-object-model">Chaco Object Model</a><ul>
+<li><a class="reference internal" href="#data-flow">Data Flow</a><ul>
+<li><a class="reference internal" href="#data-flow-examples">Data Flow Examples</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#data-sources">Data Sources</a></li>
+<li><a class="reference internal" href="#mappers">Mappers</a></li>
+<li><a class="reference internal" href="#ranges">Ranges</a></li>
+<li><a class="reference internal" href="#axes-and-grids">Axes and Grids</a></li>
+<li><a class="reference internal" href="#plot-renderers">Plot Renderers</a></li>
+<li><a class="reference internal" href="#tools">Tools</a></li>
+<li><a class="reference internal" href="#overlays-and-underlays">Overlays and Underlays</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/developer_reference/fundamentals.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

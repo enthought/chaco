@@ -1,0 +1,69 @@
+..
+   (C) Copyright 2006-2021 Enthought, Inc., Austin, TX
+   All rights reserved.
+
+   This software is provided without warranty under the terms of the BSD
+   license included in LICENSE.txt and may be redistributed only under
+   the conditions described in the aforementioned license. The license
+   is also available online at http://www.enthought.com/licenses/BSD.txt
+
+   Thanks for using Enthought open source!
+
+chaco.examples.demo.basic package
+=================================
+
+.. automodule:: chaco.examples.demo.basic
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. toctree::
+
+   chaco.examples.demo.basic.bar_plot_configurable
+   chaco.examples.demo.basic.bar_plot_stacked
+   chaco.examples.demo.basic.bounded_grids
+   chaco.examples.demo.basic.candle
+   chaco.examples.demo.basic.cmap_image_aspect_ratio
+   chaco.examples.demo.basic.cmap_image_plot
+   chaco.examples.demo.basic.cmap_image_select
+   chaco.examples.demo.basic.cmap_scatter
+   chaco.examples.demo.basic.cmap_segment_plot
+   chaco.examples.demo.basic.contour_cmap_plot
+   chaco.examples.demo.basic.contour_plot
+   chaco.examples.demo.basic.discrete_cmap_image_plot
+   chaco.examples.demo.basic.discrete_cmap_scatter
+   chaco.examples.demo.basic.draw_layers
+   chaco.examples.demo.basic.grid_container
+   chaco.examples.demo.basic.grid_container_aspect_ratio
+   chaco.examples.demo.basic.hittest_tool
+   chaco.examples.demo.basic.horizon_plot
+   chaco.examples.demo.basic.image_from_file
+   chaco.examples.demo.basic.image_inspector
+   chaco.examples.demo.basic.image_lasso
+   chaco.examples.demo.basic.image_plot
+   chaco.examples.demo.basic.inset_plot
+   chaco.examples.demo.basic.line_drawing
+   chaco.examples.demo.basic.line_plot1
+   chaco.examples.demo.basic.line_plot_hold
+   chaco.examples.demo.basic.log_plot
+   chaco.examples.demo.basic.minard_napoleon
+   chaco.examples.demo.basic.minor_ticks_axis
+   chaco.examples.demo.basic.nans_plot
+   chaco.examples.demo.basic.pandas_data
+   chaco.examples.demo.basic.polygon_move
+   chaco.examples.demo.basic.polygon_plot_demo
+   chaco.examples.demo.basic.regression
+   chaco.examples.demo.basic.scatter
+   chaco.examples.demo.basic.scatter_1d
+   chaco.examples.demo.basic.scatter_alpha
+   chaco.examples.demo.basic.scatter_custom_marker
+   chaco.examples.demo.basic.scatter_inspector
+   chaco.examples.demo.basic.scatter_inspector2
+   chaco.examples.demo.basic.scatter_rect_select
+   chaco.examples.demo.basic.scatter_select
+   chaco.examples.demo.basic.scatter_toggle
+   chaco.examples.demo.basic.scatter_variable_size
+   chaco.examples.demo.basic.scrollbar
+   chaco.examples.demo.basic.segment_plot
+   chaco.examples.demo.basic.tabbed_plots
+   chaco.examples.demo.basic.zoomable_colorbar

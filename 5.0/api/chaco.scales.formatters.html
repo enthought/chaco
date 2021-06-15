@@ -1,0 +1,404 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.scales.formatters module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.scales.formatters module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.scales.formatters">
+<span id="chaco-scales-formatters-module"></span><h1>chaco.scales.formatters module<a class="headerlink" href="#module-chaco.scales.formatters" title="Permalink to this headline">¶</a></h1>
+<p>Classes for formatting labels for values or times.</p>
+<dl class="class">
+<dt id="chaco.scales.formatters.NullFormatter">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.scales.formatters.</code><code class="sig-name descname">NullFormatter</code><a class="headerlink" href="#chaco.scales.formatters.NullFormatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Formatter for empty labels.</p>
+<dl class="method">
+<dt id="chaco.scales.formatters.NullFormatter.estimate_width">
+<code class="sig-name descname">estimate_width</code><span class="sig-paren">(</span><em class="sig-param">end</em>, <em class="sig-param">numlabels=None</em>, <em class="sig-param">char_width=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.formatters.NullFormatter.estimate_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns 0 for width and 0 for number of labels.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.formatters.NullFormatter.format">
+<code class="sig-name descname">format</code><span class="sig-paren">(</span><em class="sig-param">numlabels=None</em>, <em class="sig-param">char_width=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.formatters.NullFormatter.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list containing an empty label for each item in <em>ticks</em>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.scales.formatters.BasicFormatter">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.scales.formatters.</code><code class="sig-name descname">BasicFormatter</code><span class="sig-paren">(</span><em class="sig-param">**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.formatters.BasicFormatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Formatter for numeric labels.</p>
+<dl class="attribute">
+<dt id="chaco.scales.formatters.BasicFormatter.avg_label_width">
+<code class="sig-name descname">avg_label_width</code><em class="property"> = 7.0</em><a class="headerlink" href="#chaco.scales.formatters.BasicFormatter.avg_label_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.formatters.BasicFormatter.estimate_width">
+<code class="sig-name descname">estimate_width</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">numlabels=None</em>, <em class="sig-param">char_width=None</em>, <em class="sig-param">fill_ratio=0.3</em>, <em class="sig-param">ticker=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.formatters.BasicFormatter.estimate_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an estimate of the total number of characters used by the
+the labels for the given set of inputs, as well as the number of labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<em>number</em>) – The beginning of the interval.</p></li>
+<li><p><strong>end</strong> (<em>number</em>) – The end of the interval.</p></li>
+<li><p><strong>numlabels</strong> (<em>number</em>) – The ideal number of labels to generate on the interval.</p></li>
+<li><p><strong>char_width</strong> (<em>number</em>) – The total character width available for labelling the interval.</p></li>
+<li><p><strong>fill_ratio</strong> (<em>0.0 &lt; float &lt;= 1.0</em>) – Ratio of the available width that will be occupied by label text.</p></li>
+<li><p><strong>ticker</strong> (<em>AbstractScale object</em>) – Object that can calculate the number of labels needed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(numlabels, total label width)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.formatters.BasicFormatter.format">
+<code class="sig-name descname">format</code><span class="sig-paren">(</span><em class="sig-param">ticks</em>, <em class="sig-param">numlabels=None</em>, <em class="sig-param">char_width=None</em>, <em class="sig-param">fill_ratio=0.3</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.formatters.BasicFormatter.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does “nice” formatting of floating-point numbers.  <em>numlabels</em> is
+ignored in this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.formatters.BasicFormatter.oldformat">
+<code class="sig-name descname">oldformat</code><span class="sig-paren">(</span><em class="sig-param">ticks</em>, <em class="sig-param">numlabels=None</em>, <em class="sig-param">char_width=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.formatters.BasicFormatter.oldformat" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is adapted from matplotlib’s “OldScalarFormatter”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ticks</strong> (<em>array of numbers</em>) – The tick values to be formatted.</p></li>
+<li><p><strong>numlabels</strong> – Not used.</p></li>
+<li><p><strong>char_width</strong> – Not used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List of formatted labels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.formatters.BasicFormatter.scientific_limits">
+<code class="sig-name descname">scientific_limits</code><em class="property"> = (-3, 5)</em><a class="headerlink" href="#chaco.scales.formatters.BasicFormatter.scientific_limits" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.formatters.BasicFormatter.use_scientific">
+<code class="sig-name descname">use_scientific</code><em class="property"> = True</em><a class="headerlink" href="#chaco.scales.formatters.BasicFormatter.use_scientific" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.scales.formatters.IntegerFormatter">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.scales.formatters.</code><code class="sig-name descname">IntegerFormatter</code><span class="sig-paren">(</span><em class="sig-param">**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.formatters.IntegerFormatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#chaco.scales.formatters.BasicFormatter" title="chaco.scales.formatters.BasicFormatter"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.scales.formatters.BasicFormatter</span></code></a></p>
+<p>Format integer tick labels as integers.</p>
+<dl class="method">
+<dt id="chaco.scales.formatters.IntegerFormatter.format">
+<code class="sig-name descname">format</code><span class="sig-paren">(</span><em class="sig-param">ticks</em>, <em class="sig-param">numlabels=None</em>, <em class="sig-param">char_width=None</em>, <em class="sig-param">fill_ratio=0.3</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.formatters.IntegerFormatter.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats integer tick labels.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.scales.formatters.OffsetFormatter">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.scales.formatters.</code><code class="sig-name descname">OffsetFormatter</code><span class="sig-paren">(</span><em class="sig-param">**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.formatters.OffsetFormatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#chaco.scales.formatters.BasicFormatter" title="chaco.scales.formatters.BasicFormatter"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.scales.formatters.BasicFormatter</span></code></a></p>
+<p>This formatter is like BasicFormatter, but it supports formatting
+ticks using an offset.  This is useful for viewing small ranges within
+big numbers.</p>
+<dl class="attribute">
+<dt id="chaco.scales.formatters.OffsetFormatter.end_label_format">
+<code class="sig-name descname">end_label_format</code><em class="property"> = 'offset'</em><a class="headerlink" href="#chaco.scales.formatters.OffsetFormatter.end_label_format" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.formatters.OffsetFormatter.estimate_width">
+<code class="sig-name descname">estimate_width</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">numlabels=None</em>, <em class="sig-param">char_width=None</em>, <em class="sig-param">fill_ratio=0.3</em>, <em class="sig-param">ticker=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.formatters.OffsetFormatter.estimate_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an estimate of the total number of characters used by the
+the labels for the given set of inputs, as well as the number of labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<em>number</em>) – The beginning of the interval.</p></li>
+<li><p><strong>end</strong> (<em>number</em>) – The end of the interval.</p></li>
+<li><p><strong>numlabels</strong> (<em>number</em>) – The ideal number of labels to generate on the interval.</p></li>
+<li><p><strong>char_width</strong> (<em>number</em>) – The total character width available for labelling the interval.</p></li>
+<li><p><strong>fill_ratio</strong> (<em>0.0 &lt; float &lt;= 1.0</em>) – Ratio of the available width that will be occupied by label text.</p></li>
+<li><p><strong>ticker</strong> (<em>AbstractScale object</em>) – Object that can calculate the number of labels needed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(numlabels, total label width)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.formatters.OffsetFormatter.format">
+<code class="sig-name descname">format</code><span class="sig-paren">(</span><em class="sig-param">ticks</em>, <em class="sig-param">numlabels=None</em>, <em class="sig-param">char_width=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.formatters.OffsetFormatter.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does “nice” formatting of floating-point numbers.  <em>numlabels</em> is
+ignored in this method.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.formatters.OffsetFormatter.offset">
+<code class="sig-name descname">offset</code><em class="property"> = None</em><a class="headerlink" href="#chaco.scales.formatters.OffsetFormatter.offset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.formatters.OffsetFormatter.offset_display">
+<code class="sig-name descname">offset_display</code><em class="property"> = 'firstlast'</em><a class="headerlink" href="#chaco.scales.formatters.OffsetFormatter.offset_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.formatters.OffsetFormatter.offset_format">
+<code class="sig-name descname">offset_format</code><em class="property"> = 'sci'</em><a class="headerlink" href="#chaco.scales.formatters.OffsetFormatter.offset_format" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.formatters.OffsetFormatter.offset_limits">
+<code class="sig-name descname">offset_limits</code><em class="property"> = (-3, 4)</em><a class="headerlink" href="#chaco.scales.formatters.OffsetFormatter.offset_limits" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.formatters.OffsetFormatter.offset_threshold">
+<code class="sig-name descname">offset_threshold</code><em class="property"> = 0.001</em><a class="headerlink" href="#chaco.scales.formatters.OffsetFormatter.offset_threshold" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.formatters.OffsetFormatter.use_offset">
+<code class="sig-name descname">use_offset</code><em class="property"> = False</em><a class="headerlink" href="#chaco.scales.formatters.OffsetFormatter.use_offset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="chaco.scales.formatters.TimeFormatter">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.scales.formatters.</code><code class="sig-name descname">TimeFormatter</code><span class="sig-paren">(</span><em class="sig-param">**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.formatters.TimeFormatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Formatter for time values.</p>
+<dl class="method">
+<dt id="chaco.scales.formatters.TimeFormatter.estimate_width">
+<code class="sig-name descname">estimate_width</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">numlabels=None</em>, <em class="sig-param">char_width=None</em>, <em class="sig-param">fill_ratio=0.2</em>, <em class="sig-param">ticker=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.formatters.TimeFormatter.estimate_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an estimate of the total number of characters used by the
+the labels for the given set of inputs, as well as the number of labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<em>number</em>) – The beginning of the interval.</p></li>
+<li><p><strong>end</strong> (<em>number</em>) – The end of the interval.</p></li>
+<li><p><strong>numlabels</strong> (<em>number</em>) – The ideal number of labels to generate on the interval.</p></li>
+<li><p><strong>char_width</strong> (<em>number</em>) – The total character width available for labelling the interval.</p></li>
+<li><p><strong>fill_ratio</strong> (<em>0.0 &lt; float &lt;= 1.0</em>) – Ratio of the available width that will be occupied by label text.</p></li>
+<li><p><strong>ticker</strong> (<em>AbstractScale object</em>) – Object that can calculate the number of labels needed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(numlabels, total label width)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.scales.formatters.TimeFormatter.format">
+<code class="sig-name descname">format</code><span class="sig-paren">(</span><em class="sig-param">ticks</em>, <em class="sig-param">numlabels=None</em>, <em class="sig-param">char_width=None</em>, <em class="sig-param">fill_ratio=0.3</em>, <em class="sig-param">ticker=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.formatters.TimeFormatter.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats a set of time values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ticks</strong> (<em>array of numbers</em>) – The tick values to be formatted</p></li>
+<li><p><strong>numlabels</strong> – Not used.</p></li>
+<li><p><strong>char_width</strong> (<em>number</em>) – The total character width available for labelling the interval.</p></li>
+<li><p><strong>fill_ratio</strong> (<em>0.0 &lt; float &lt;= 1.0</em>) – Ratio of the available width that will be occupied by label text.</p></li>
+<li><p><strong>ticker</strong> (<em>AbstractScale object</em>) – Object that can calculate the number of labels needed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List of formatted labels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.formatters.TimeFormatter.format_order">
+<code class="sig-name descname">format_order</code><em class="property"> = ['microseconds', 'milliseconds', 'seconds', 'minsec', 'minutes', 'hourmin', 'hours', 'days', 'months', 'years']</em><a class="headerlink" href="#chaco.scales.formatters.TimeFormatter.format_order" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.formatters.TimeFormatter.formats">
+<code class="sig-name descname">formats</code><em class="property"> = {'days': (array([5, 5]), ('%m/%d', '%a%d')), 'hourmin': (array([5]), ('%H:%M',)), 'hours': (array([3, 5]), ('%Hh', '%H:%M')), 'microseconds': (array([5, 9]), ('%(us)us', '%(ms_).%(us)ms')), 'milliseconds': (array([5, 7]), ('%(ms)ms', '%S.%(ms)s')), 'minsec': (array([5]), ('%M:%S',)), 'minutes': (array([3]), ('%Mm',)), 'months': (array([7, 5]), ('%m/%Y', '%b%y')), 'seconds': (array([3, 3]), (':%S', '%Ss')), 'years': (array([3, 4]), (&lt;function _two_digit_year&gt;, &lt;function _four_digit_year&gt;))}</em><a class="headerlink" href="#chaco.scales.formatters.TimeFormatter.formats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.scales.formatters.TimeFormatter.strip_leading_zeros">
+<code class="sig-name descname">strip_leading_zeros</code><em class="property"> = True</em><a class="headerlink" href="#chaco.scales.formatters.TimeFormatter.strip_leading_zeros" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.scales.formatters.strftimeEx">
+<code class="sig-prename descclassname">chaco.scales.formatters.</code><code class="sig-name descname">strftimeEx</code><span class="sig-paren">(</span><em class="sig-param">fmt</em>, <em class="sig-param">t</em>, <em class="sig-param">timetuple=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.scales.formatters.strftimeEx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extends time.strftime() to format milliseconds and microseconds.</p>
+<p>Expects input to be a floating-point number of seconds since epoch.
+The additional formats are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">%(ms)</span></code>:  milliseconds (uses round())</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%(ms_)</span></code>: milliseconds (uses floor())</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%(us)</span></code>:  microseconds (uses round())</p></li>
+</ul>
+<p>The format may also be a callable which will bypass time.strftime() entirely.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.scales.formatters.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

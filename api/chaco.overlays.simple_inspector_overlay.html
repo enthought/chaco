@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.overlays.simple_inspector_overlay module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.overlays.simple_inspector_overlay module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.overlays.simple_inspector_overlay">
+<span id="chaco-overlays-simple-inspector-overlay-module"></span><h1>chaco.overlays.simple_inspector_overlay module<a class="headerlink" href="#module-chaco.overlays.simple_inspector_overlay" title="Permalink to this headline">¶</a></h1>
+<p>A simple inspector overlay for plots</p>
+<p>This module provides the SimpleInspectorOverlay for displaying
+information gathered from an inspector tool in a TextGrid.  By default
+it is configured to work with a SimpleInspectorTool.</p>
+<p>The module also provides some helper factory functions for creating text
+formatters for dictionary values.</p>
+<dl class="class">
+<dt id="chaco.overlays.simple_inspector_overlay.SimpleInspectorOverlay">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.overlays.simple_inspector_overlay.</code><code class="sig-name descname">SimpleInspectorOverlay</code><span class="sig-paren">(</span><em class="sig-param">*components</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.simple_inspector_overlay.SimpleInspectorOverlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.overlays.text_grid_overlay.html#chaco.overlays.text_grid_overlay.TextGridOverlay" title="chaco.overlays.text_grid_overlay.TextGridOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.overlays.text_grid_overlay.TextGridOverlay</span></code></a></p>
+<p>Simple inspector overlay for plots</p>
+<p>This is a simple overlay that listens for new_value events on a
+SimpleInspectorTool and displays formatted values in a grid.</p>
+<p>By default this displays the ‘x’ and ‘y’ values provided by the
+SimpleInspectorTool, but instances can provide a field_formatters
+trait which is a list of lists of callables which extract values
+from a dictionary and formats them.  Each callable corresponds to a
+cell in the underlying TextGrid component.</p>
+<p>Although by default this works with the SimpleInspectorTool, with
+appropriate field_formatters this class can be used with any inspector
+tool that follows the same API.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.overlays.simple_inspector_overlay.basic_formatter">
+<code class="sig-prename descclassname">chaco.overlays.simple_inspector_overlay.</code><code class="sig-name descname">basic_formatter</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">decimals</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.simple_inspector_overlay.basic_formatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a basic ‘&lt;key&gt;: &lt;value&gt;’ formatting function</p>
+<p>This factory creates a function that formats a specified key and with a
+numerical value from a dictionary into a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – The dictionary key to format.</p></li>
+<li><p><strong>decimals</strong> – The number of decimal places to show.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A factory function that takes a dictionary and returns a string.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.overlays.simple_inspector_overlay.date_formatter">
+<code class="sig-prename descclassname">chaco.overlays.simple_inspector_overlay.</code><code class="sig-name descname">date_formatter</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.simple_inspector_overlay.date_formatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a date formatting function</p>
+<p>This factory creates a function that formats a specified key and with a
+timestamp value from a dictionary into a ‘yyyy/mm/dd’ format string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> – The dictionary key to format.  The corresponding value should be a
+timestamp.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A factory function that takes a dictionary and returns a string.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.overlays.simple_inspector_overlay.datetime_formatter">
+<code class="sig-prename descclassname">chaco.overlays.simple_inspector_overlay.</code><code class="sig-name descname">datetime_formatter</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">time_format='%Y/%m/%d %H:%M:%S'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.simple_inspector_overlay.datetime_formatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a datetime formatting function</p>
+<p>This factory creates a function that formats a specified key and with a
+timestamp value from a dictionary into a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – The dictionary key to format.  The corresponding value should be a
+timestamp.</p></li>
+<li><p><strong>time_format</strong> – A format string suitable for strftime().</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A factory function that takes a dictionary and returns a string.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.overlays.simple_inspector_overlay.time_formatter">
+<code class="sig-prename descclassname">chaco.overlays.simple_inspector_overlay.</code><code class="sig-name descname">time_formatter</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.overlays.simple_inspector_overlay.time_formatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a time formatting function</p>
+<p>This factory creates a function that formats a specified key and with a
+timestamp value from a dictionary into a ‘HH:MM:SS’ format string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> – The dictionary key to format.  The corresponding value should be a
+timestamp.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A factory function that takes a dictionary and returns a string.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>format</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.overlays.simple_inspector_overlay.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Tools &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">Tools</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="tools">
+<h1>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="inspector-type-tools">
+<h2>Inspector-type Tools<a class="headerlink" href="#inspector-type-tools" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="imageinspectortool">
+<h3>ImageInspectorTool<a class="headerlink" href="#imageinspectortool" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.api.ImageInspectorTool</span></code> is designed to work with an
+<code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.api.ImagePlot</span></code> renderer to display the data space coordinates and
+data value of the displayed 2D array. The tool is designed to be used in
+conjunction with the <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.overlays.api.ImageInspectorOverlay</span></code>: the
+tool collects mouse position and data values and triggers <cite>Event</cite> emissions,
+and the overlay catches these events and displays the data as an overlay.</p>
+<p>To use it, as for other tools, you need to:</p>
+<ol class="arabic simple">
+<li><p>create a tool object and append it to the <strong>renderer</strong>’s list of tools,</p></li>
+<li><p>create an overlay object and append it to the <strong>renderer</strong>’s list of
+overlays.</p></li>
+</ol>
+<p>For example, a method to build a <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.api.Plot</span></code> object with that tool
+could look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">build_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">img</span><span class="o">=</span><span class="n">img</span><span class="p">))</span>
+    <span class="c1"># Capture the renderer object to pass it to the tool</span>
+    <span class="n">img_plot</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">img_plot</span><span class="p">(</span><span class="s2">&quot;img&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># Tool code to be added here...</span>
+    <span class="k">return</span> <span class="n">plot</span>
+</pre></div>
+</div>
+<p>Note that unlike other <cite>ImagePlot</cite> examples, the renderer returned by the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">chaco.api.Plot.img_plot()</span></code> call is captured since the tool
+will need it. The tool code to be inserted would look something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">imgtool</span> <span class="o">=</span> <span class="n">ImageInspectorTool</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="n">img_plot</span><span class="p">)</span>
+<span class="n">img_plot</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">imgtool</span><span class="p">)</span>
+<span class="n">overlay</span> <span class="o">=</span> <span class="n">ImageInspectorOverlay</span><span class="p">(</span>
+    <span class="n">component</span><span class="o">=</span><span class="n">img_plot</span><span class="p">,</span>
+    <span class="n">image_inspector</span><span class="o">=</span><span class="n">imgtool</span><span class="p">,</span>
+    <span class="n">bgcolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+    <span class="n">border_visible</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">img_plot</span><span class="o">.</span><span class="n">overlays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">overlay</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note the two important connections that are made for the tool/overlay to work
+correctly. The first one is that the component that is passed is the Chaco
+renderer rather than the <cite>Plot</cite> object, since it has access to the data being
+displayed. The second connection is that, for the overlay to update when the
+tool catches a mouse event, it needs to be provided the tool instance as its
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">image_inspector</span></code> attribute.</p>
+<p>In addition to the background color and <code class="xref py py-attr docutils literal notranslate"><span class="pre">border_visible</span></code>, other
+interesting overlay attributes to consider overriding include
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">tooltip_mode</span></code> to control the location of the text box and all of the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.overlays.api.TextBoxOverlay</span></code> attributes (see below).</p>
+<p>Finally, the overlay’s <code class="xref py py-meth docutils literal notranslate"><span class="pre">_build_text_from_event()</span></code> method can be overwritten
+to customize the actual text content. The method should receive a single
+argument, the event data (dictionary), and return the desired text to display.
+The event data contains 3 keys: <cite>indices</cite> with the 2D coordinates of the mouse
+in data space, <cite>color_value</cite> containing the color of the tile where the mouse
+is, and <cite>data_value</cite> with the scalar value being displayed in that tile.</p>
+<p>For a complete example, see <a class="reference download internal" download="" href="../../_downloads/ab494d9e23cece8466413c14bcbf03a9/image_inspector.py"><code class="xref download docutils literal notranslate"><span class="pre">chaco/examples/demo/basic/image_inspector.py</span></code></a>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Tools</a><ul>
+<li><a class="reference internal" href="#inspector-type-tools">Inspector-type Tools</a><ul>
+<li><a class="reference internal" href="#imageinspectortool">ImageInspectorTool</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <div>
+    <a href="../../_sources/user_manual/basic_elements/tools.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

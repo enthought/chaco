@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.tools.range_selection_overlay module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.tools.range_selection_overlay module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.tools.range_selection_overlay">
+<span id="chaco-tools-range-selection-overlay-module"></span><h1>chaco.tools.range_selection_overlay module<a class="headerlink" href="#module-chaco.tools.range_selection_overlay" title="Permalink to this headline">¶</a></h1>
+<p>Defines the RangeSelectionOverlay class.</p>
+<dl class="class">
+<dt id="chaco.tools.range_selection_overlay.RangeSelectionOverlay">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.range_selection_overlay.</code><code class="sig-name descname">RangeSelectionOverlay</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.range_selection_overlay.RangeSelectionOverlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.abstract_overlay.html#chaco.abstract_overlay.AbstractOverlay" title="chaco.abstract_overlay.AbstractOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></code></a></p>
+<p>Highlights the selection region on a component.</p>
+<p>Looks at a given metadata field of self.component for regions to draw as
+selected.</p>
+<dl class="attribute">
+<dt id="chaco.tools.range_selection_overlay.RangeSelectionOverlay.alpha">
+<code class="sig-name descname">alpha</code><em class="property"> = Float(0.3)</em><a class="headerlink" href="#chaco.tools.range_selection_overlay.RangeSelectionOverlay.alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>The transparency of the fill color.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.range_selection_overlay.RangeSelectionOverlay.axis">
+<code class="sig-name descname">axis</code><em class="property"> = Enum(&quot;index&quot;, &quot;value&quot;)</em><a class="headerlink" href="#chaco.tools.range_selection_overlay.RangeSelectionOverlay.axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>The axis to which this tool is perpendicular.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.range_selection_overlay.RangeSelectionOverlay.axis_index">
+<code class="sig-name descname">axis_index</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.tools.range_selection_overlay.RangeSelectionOverlay.axis_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>The element of an (x,y) tuple that corresponds to the axis index.
+By default, this is set based on self.asix and self.plot.orientation,
+but it can be overriden and set to 0 or 1.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.range_selection_overlay.RangeSelectionOverlay.border_color">
+<code class="sig-name descname">border_color</code><em class="property"> = ColorTrait(&quot;dodgerblue&quot;)</em><a class="headerlink" href="#chaco.tools.range_selection_overlay.RangeSelectionOverlay.border_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the selection border line.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.range_selection_overlay.RangeSelectionOverlay.border_style">
+<code class="sig-name descname">border_style</code><em class="property"> = LineStyle(&quot;solid&quot;)</em><a class="headerlink" href="#chaco.tools.range_selection_overlay.RangeSelectionOverlay.border_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>The line style of the selection border line.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.range_selection_overlay.RangeSelectionOverlay.border_width">
+<code class="sig-name descname">border_width</code><em class="property"> = Float(1.0)</em><a class="headerlink" href="#chaco.tools.range_selection_overlay.RangeSelectionOverlay.border_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>The width, in pixels, of the selection border line.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.range_selection_overlay.RangeSelectionOverlay.fill_color">
+<code class="sig-name descname">fill_color</code><em class="property"> = ColorTrait(&quot;lightskyblue&quot;)</em><a class="headerlink" href="#chaco.tools.range_selection_overlay.RangeSelectionOverlay.fill_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color to fill the selection region.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.range_selection_overlay.RangeSelectionOverlay.mapper">
+<code class="sig-name descname">mapper</code><em class="property"> = Instance(AbstractMapper)</em><a class="headerlink" href="#chaco.tools.range_selection_overlay.RangeSelectionOverlay.mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mapper (and associated range) that drive this RangeSelectionOverlay.
+By default, this is the mapper on self.plot that corresponds to self.axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.range_selection_overlay.RangeSelectionOverlay.metadata_name">
+<code class="sig-name descname">metadata_name</code><em class="property"> = Str(&quot;selections&quot;)</em><a class="headerlink" href="#chaco.tools.range_selection_overlay.RangeSelectionOverlay.metadata_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the metadata to look at for dataspace bounds. The metadata
+can be either a tuple (dataspace_start, dataspace_end) in “selections” or
+a boolean array mask of seleted dataspace points with any other name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.range_selection_overlay.RangeSelectionOverlay.overlay">
+<code class="sig-name descname">overlay</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.range_selection_overlay.RangeSelectionOverlay.overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws this component overlaid on another component.</p>
+<p>Overrides AbstractOverlay.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.range_selection_overlay.RangeSelectionOverlay.plot">
+<code class="sig-name descname">plot</code><em class="property"> = Property(observe=&quot;component&quot;)</em><a class="headerlink" href="#chaco.tools.range_selection_overlay.RangeSelectionOverlay.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mapping from screen space to data space. By default, it is just
+self.component.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.tools.range_selection_overlay.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

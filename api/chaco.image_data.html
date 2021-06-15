@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.image_data module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.image_data module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.image_data">
+<span id="chaco-image-data-module"></span><h1>chaco.image_data module<a class="headerlink" href="#module-chaco.image_data" title="Permalink to this headline">¶</a></h1>
+<p>Defines the ImageData class.</p>
+<dl class="class">
+<dt id="chaco.image_data.ImageData">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.image_data.</code><code class="sig-name descname">ImageData</code><a class="headerlink" href="#chaco.image_data.ImageData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.abstract_data_source.html#chaco.abstract_data_source.AbstractDataSource" title="chaco.abstract_data_source.AbstractDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_data_source.AbstractDataSource</span></code></a></p>
+<p>Represents a grid of data to be plotted using a Numpy 2-D grid.</p>
+<p>The data array has dimensions NxM, but it may have more than just 2
+dimensions.  The appropriate dimensionality of the value array depends
+on the context in which the ImageData instance will be used.</p>
+<dl class="attribute">
+<dt id="chaco.image_data.ImageData.data">
+<code class="sig-name descname">data</code><em class="property"> = Property(ImageTrait)</em><a class="headerlink" href="#chaco.image_data.ImageData.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Holds the grid data that forms the image.  The shape of the array is
+(N, M, D) where:</p>
+<ul class="simple">
+<li><p>D is 1, 3, or 4.</p></li>
+<li><p>N is the length of the y-axis.</p></li>
+<li><p>M is the length of the x-axis.</p></li>
+</ul>
+<p>Thus, data[0,:,:] must be the first row of data.  If D is 1, then
+the array must be of type float; if D is 3 or 4, then the array
+must be of type uint8.</p>
+<p>NOTE: If this ImageData was constructed with a transposed data array,
+then internally it is still transposed (i.e., the x-axis is the first axis
+and the y-axis is the second), and the <strong>data</strong> array property might not be
+contiguous.  If contiguousness is required and calling copy() is too
+expensive, use the <strong>raw_value</strong> attribute. Also note that setting this
+trait does not change the value of <strong>transposed</strong>,
+so be sure to set it to its proper value when using the same ImageData
+instance interchangeably to store transposed and non-transposed data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.image_data.ImageData.dimension">
+<code class="sig-name descname">dimension</code><em class="property"> = ReadOnly(DimensionTrait(&quot;image&quot;))</em><a class="headerlink" href="#chaco.image_data.ImageData.dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dimensionality of the data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.image_data.ImageData.fromfile">
+<em class="property">classmethod </em><code class="sig-name descname">fromfile</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.image_data.ImageData.fromfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alternate constructor to create an ImageData from an image file
+on disk. ‘filename’ may be a file path or a file object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.image_data.ImageData.get_array_bounds">
+<code class="sig-name descname">get_array_bounds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.image_data.ImageData.get_array_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Always returns ((0, width), (0, height)) for x-bounds and y-bounds.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.image_data.ImageData.get_bounds">
+<code class="sig-name descname">get_bounds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.image_data.ImageData.get_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the minimum and maximum values of the data source’s data.</p>
+<p>Implements AbstractDataSource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.image_data.ImageData.get_data">
+<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.image_data.ImageData.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the data for this data source.</p>
+<p>Implements AbstractDataSource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.image_data.ImageData.get_height">
+<code class="sig-name descname">get_height</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.image_data.ImageData.get_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the shape of the y-axis.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.image_data.ImageData.get_size">
+<code class="sig-name descname">get_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#chaco.image_data.ImageData.get_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements AbstractDataSource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.image_data.ImageData.get_width">
+<code class="sig-name descname">get_width</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.image_data.ImageData.get_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the shape of the x-axis.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.image_data.ImageData.is_masked">
+<code class="sig-name descname">is_masked</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; False<a class="headerlink" href="#chaco.image_data.ImageData.is_masked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements AbstractDataSource.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.image_data.ImageData.raw_value">
+<code class="sig-name descname">raw_value</code><em class="property"> = Property(ImageTrait)</em><a class="headerlink" href="#chaco.image_data.ImageData.raw_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>A read-only attribute that exposes the underlying array.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.image_data.ImageData.set_data">
+<code class="sig-name descname">set_data</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.image_data.ImageData.set_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the data for this data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>array</em>) – The data to use.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.image_data.ImageData.transposed">
+<code class="sig-name descname">transposed</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.image_data.ImageData.transposed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is <strong>raw_value</strong>, the actual underlying image data
+array, transposed from <strong>data</strong>? (I.e., does the first axis correspond to
+the x-direction and the second axis correspond to the y-direction?)</p>
+<p>Rather than transposing or swapping axes on the data and destroying
+continuity, this class exposes the data as both <strong>data</strong> and <strong>raw_value</strong>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.image_data.ImageData.value_depth">
+<code class="sig-name descname">value_depth</code><em class="property"> = Int(1)  # TODO: Modify ImageData to explicitly support scalar</em><a class="headerlink" href="#chaco.image_data.ImageData.value_depth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Depth of the values at each i,j. Values that are used include:</p>
+<ul class="simple">
+<li><p>3: color images, without alpha channel</p></li>
+<li><p>4: color images, with alpha channel</p></li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.image_data.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

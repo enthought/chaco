@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.plot_component module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.plot_component module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.plot_component">
+<span id="chaco-plot-component-module"></span><h1>chaco.plot_component module<a class="headerlink" href="#module-chaco.plot_component" title="Permalink to this headline">¶</a></h1>
+<p>Defines the PlotComponent class.</p>
+<dl class="class">
+<dt id="chaco.plot_component.PlotComponent">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.plot_component.</code><code class="sig-name descname">PlotComponent</code><span class="sig-paren">(</span><em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plot_component.PlotComponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.enthought.com/enable/api/enable.component.html#enable.component.Component" title="(in enable v5.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.component.Component</span></code></a></p>
+<p>PlotComponent is the base class for all plot-related visual components.
+It defines the various methods related to layout and tool handling,
+which virtually every subclass uses or needs to be aware of.</p>
+<p>Several of these top-level layout and draw methods have implementations
+that must not be overridden; instead, subclasses implement various
+protected stub methods.</p>
+<p>Additionally, this class sets up the machinery for having changes to
+specific traits trigger a call to the invalidate_and_redraw method (defined
+on the Component base class).  To use this, simply set the metadata
+requires_redraw=True in the definition of the trait.</p>
+<dl class="attribute">
+<dt id="chaco.plot_component.PlotComponent.draw_layer">
+<code class="sig-name descname">draw_layer</code><em class="property"> = Str(&quot;plot&quot;)</em><a class="headerlink" href="#chaco.plot_component.PlotComponent.draw_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default draw layer for Chaco plot components is the “plot” layer</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plot_component.PlotComponent.draw_order">
+<code class="sig-name descname">draw_order</code><em class="property"> = Instance(list, args=(DEFAULT_DRAWING_ORDER,))</em><a class="headerlink" href="#chaco.plot_component.PlotComponent.draw_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>The order in which various rendering classes on this component are drawn.
+Note that if this component is placed in a container, in most cases
+the container’s draw order is used, since the container calls
+each of its contained components for each rendering pass.
+Typically, the definitions of the layers are:</p>
+<ol class="arabic simple">
+<li><p>‘background’: Background image, shading</p></li>
+<li><p>‘image’: A special layer for plots that render as images.  This is in
+a separate layer since these plots must all render before non-image
+plots.</p></li>
+<li><p>‘underlay’: Axes and grids</p></li>
+<li><p>‘plot’: The main plot area itself</p></li>
+<li><p>‘selection’: Selected content are rendered above normal plot elements
+to make them stand out</p></li>
+<li><p>‘border’: Plot borders</p></li>
+<li><p>‘annotation’: Lines and text that are conceptually part of the “plot”
+but need to be rendered on top of everything else in the plot</p></li>
+<li><p>‘overlay’: Legends, selection regions, and other tool-drawn visual
+elements</p></li>
+</ol>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.plot_component.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

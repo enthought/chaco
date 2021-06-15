@@ -1,0 +1,768 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.default_colormaps module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.default_colormaps module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.default_colormaps">
+<span id="chaco-default-colormaps-module"></span><h1>chaco.default_colormaps module<a class="headerlink" href="#module-chaco.default_colormaps" title="Permalink to this headline">¶</a></h1>
+<p>A collection of pre-defined colormap generator functions.</p>
+<p>Each of the functions can be called with <em>min_value</em> and <em>max_value</em> parameters.
+In that case, they produce a Colormap which linearly maps over the specified
+range and has the color palette indicated by the function name.</p>
+<dl class="function">
+<dt id="chaco.default_colormaps.reverse">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">reverse</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.reverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modify a colormap factory to reverse the color sequence</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>callable</em>) – A colormap factory function like those provided in this module.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>cmap</strong> – A wrapper factory function that can be used in place of the original
+factory function.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.center">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">center</code><span class="sig-paren">(</span><em class="sig-param">func</em>, <em class="sig-param">center=0.0</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.center" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modify the range of a colormap to be centered around the given value.</p>
+<p>For example, when passed a DataRange1D(low=-0.5, high=1.0), a colormap would
+usually have its lowest color at -0.5 and its highest at 1.0. Some colormaps
+are designed such that the middle color is special. Using this modifier, the
+example range would be modified to -1.0 and 1.0 to make 0.0 correspond with
+the middle color.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>func</strong> (<em>callable</em>) – A colormap factory function like those provided in this module.</p></li>
+<li><p><strong>center</strong> (<em>float</em><em>, </em><em>optional</em>) – The center value in dataspace.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>cmap</strong> – A wrapper factory function that can be used in place of the original
+factory function.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.autumn">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">autumn</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.autumn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the ‘autumn’ colormap.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.binary">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">binary</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the ‘binary’ colormap.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.bone">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">bone</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.bone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the ‘bone’ colormap.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.cool">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">cool</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.cool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the ‘cool’ colormap.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.copper">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">copper</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.copper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the ‘copper’ colormap.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.flag">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">flag</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.flag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the ‘flag’ colormap.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.seismic">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">seismic</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.seismic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for ‘seismic’ colormap from matplotlib</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.terrain">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">terrain</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.terrain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for ‘terrain’ colormap from matplotlib</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.gray">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">gray</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.gray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the ‘gray’ colormap.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.yarg">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">yarg</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.yarg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the ‘yarg’ colormap.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.hot">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">hot</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.hot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the ‘hot’ colormap.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.hsv">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">hsv</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.hsv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the ‘hsv’ colormap.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.jet">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">jet</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.jet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the ‘jet’ colormap.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.pink">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">pink</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.pink" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the ‘pink’ colormap.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.prism">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">prism</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.prism" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the ‘prism’ colormap.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.spring">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">spring</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.spring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the ‘spring’ colormap.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.summer">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">summer</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.summer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the ‘summer’ colormap.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.winter">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">winter</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.winter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the ‘winter’ colormap.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.cw1_004">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">cw1_004</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.cw1_004" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the Crumblingwalls cw1-004 gradient</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.cw1_005">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">cw1_005</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.cw1_005" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the Crumblingwalls cw1-005 gradient</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.cw1_006">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">cw1_006</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.cw1_006" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the Crumblingwalls cw1-006 gradient</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.cw1_028">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">cw1_028</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.cw1_028" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function for the Crumblingwalls cw1-058 gradient</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.gmt_drywet">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">gmt_drywet</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.gmt_drywet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.Blues">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">Blues</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.Blues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘Blues’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.BrBG">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">BrBG</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.BrBG" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘BrBG’ colormap from ColorBrewer.</p>
+<p>This is a diverging colormap. It is good for data which is centered around
+a “special” value, like 0.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.BuGn">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">BuGn</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.BuGn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘BuGn’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.BuPu">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">BuPu</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.BuPu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘BuPu’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.GnBu">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">GnBu</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.GnBu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘GnBu’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.Greens">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">Greens</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.Greens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘Greens’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.Greys">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">Greys</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.Greys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘Greys’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.OrRd">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">OrRd</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.OrRd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘OrRd’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.Oranges">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">Oranges</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.Oranges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘Oranges’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.PRGn">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">PRGn</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.PRGn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘PRGn’ colormap from ColorBrewer.</p>
+<p>This is a diverging colormap. It is good for data which is centered around
+a “special” value, like 0.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.PiYG">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">PiYG</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.PiYG" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘PiYG’ colormap from ColorBrewer.</p>
+<p>This is a diverging colormap. It is good for data which is centered around
+a “special” value, like 0.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.PuBu">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">PuBu</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.PuBu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘PuBu’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.PuBuGn">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">PuBuGn</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.PuBuGn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘PuBuGn’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.PuOr">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">PuOr</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.PuOr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘PuOr’ colormap from ColorBrewer.</p>
+<p>This is a diverging colormap. It is good for data which is centered around
+a “special” value, like 0.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.PuRd">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">PuRd</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.PuRd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘PuRd’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.Purples">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">Purples</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.Purples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘Purples’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.RdBu">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">RdBu</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.RdBu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘RdBu’ colormap from ColorBrewer.</p>
+<p>This is a diverging colormap. It is good for data which is centered around
+a “special” value, like 0.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.RdGy">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">RdGy</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.RdGy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘RdGy’ colormap from ColorBrewer.</p>
+<p>This is a diverging colormap. It is good for data which is centered around
+a “special” value, like 0.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.RdPu">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">RdPu</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.RdPu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘RdPu’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.RdYlBu">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">RdYlBu</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.RdYlBu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘RdYlBu’ colormap from ColorBrewer.</p>
+<p>This is a diverging colormap. It is good for data which is centered around
+a “special” value, like 0.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.RdYlGn">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">RdYlGn</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.RdYlGn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘RdYlGn’ colormap from ColorBrewer.</p>
+<p>This is a diverging colormap. It is good for data which is centered around
+a “special” value, like 0.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.Reds">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">Reds</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.Reds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘Reds’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.Spectral">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">Spectral</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.Spectral" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘Spectral’ colormap from ColorBrewer.</p>
+<p>This is a diverging colormap. It is good for data which is centered around
+a “special” value, like 0.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.YlGn">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">YlGn</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.YlGn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘YlGn’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.YlGnBu">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">YlGnBu</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.YlGnBu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘YlGnBu’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.YlOrBr">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">YlOrBr</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.YlOrBr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘YlOrBr’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.YlOrRd">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">YlOrRd</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.YlOrRd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘YlOrRd’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.gist_earth">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">gist_earth</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.gist_earth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘gist_earth’ colormap from GIST.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.gist_gray">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">gist_gray</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.gist_gray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘gist_gray’ colormap from GIST.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.gist_heat">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">gist_heat</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.gist_heat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘gist_heat’ colormap from GIST.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.gist_ncar">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">gist_ncar</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.gist_ncar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘gist_ncar’ colormap from GIST.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.gist_rainbow">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">gist_rainbow</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.gist_rainbow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘gist_rainbow’ colormap from GIST.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.gist_stern">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">gist_stern</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.gist_stern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘gist_stern’ colormap from GIST.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.gist_yarg">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">gist_yarg</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.gist_yarg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘gist_yarg’ colormap from GIST.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.CubicYF">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">CubicYF</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.CubicYF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator of the ‘CubicYF’ colormap from Matteo Niccoli.</p>
+<p>Lab-based rainbow scheme with cubic-law luminance.</p>
+<p><a class="reference external" href="http://mycarta.wordpress.com/color-palettes/">http://mycarta.wordpress.com/color-palettes/</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.CubicL">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">CubicL</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.CubicL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator of the ‘CubicL’ colormap from Matteo Niccoli.</p>
+<p>Lab-based rainbow scheme with cubic-law luminance, like <cite>CubicYF</cite>
+but with red at the high end, a modest deviation from being
+completely perceptual.</p>
+<p><a class="reference external" href="http://mycarta.wordpress.com/color-palettes/">http://mycarta.wordpress.com/color-palettes/</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.LinearL">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">LinearL</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.LinearL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator of the ‘LinearL’ colormap from Matteo Niccoli.</p>
+<p>Lab-based linear lightness rainbow.</p>
+<p><a class="reference external" href="http://mycarta.wordpress.com/color-palettes/">http://mycarta.wordpress.com/color-palettes/</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.LinearLHot">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">LinearLHot</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.LinearLHot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator of the ‘LinearLHot’ colormap from Matteo Niccoli.</p>
+<p>Linear lightness modification of the <cite>hot</cite> colormap.</p>
+<p><a class="reference external" href="http://mycarta.wordpress.com/color-palettes/">http://mycarta.wordpress.com/color-palettes/</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.CoolWarm">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">CoolWarm</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.CoolWarm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator of Kenneth Moreland’s CoolWarm colormap.</p>
+<p>Blue-White-Red with smooth lightness transitions. Good for applying to 3D
+surfaces or otherwise have extra shading applied.</p>
+<p><a class="reference external" href="http://www.sandia.gov/~kmorel/documents/ColorMaps/ColorMapsExpanded.pdf">http://www.sandia.gov/~kmorel/documents/ColorMaps/ColorMapsExpanded.pdf</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.CubeHelix">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">CubeHelix</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.CubeHelix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator of Dave Green’s CubeHelix colormap.</p>
+<p>Sequential colormap with a linear lightness increasing from black to white
+deviating away from gray in a tapered helix.</p>
+<p><a class="reference external" href="https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/">https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.wistia">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">wistia</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.wistia" title="Permalink to this definition">¶</a></dt>
+<dd><p>An MIT licensed, colorblind-friendly heatmap from Wistia</p>
+<dl class="simple">
+<dt>See:</dt><dd><p><a class="reference external" href="https://github.com/wistia/heatmap-palette">https://github.com/wistia/heatmap-palette</a>
+<a class="reference external" href="http://wistia.com/blog/heatmaps-for-colorblindness">http://wistia.com/blog/heatmaps-for-colorblindness</a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.magma">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">magma</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.magma" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘magma’ colormap from matplolib</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.inferno">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">inferno</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.inferno" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘inferno’ colormap from matplolib</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.plasma">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">plasma</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.plasma" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘plasma’ colormap from matplolib</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.viridis">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">viridis</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.viridis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘viridis’ colormap from matplolib</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.accent">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">accent</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.accent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘accent’ colormap from ColorBrewer.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.Dark2">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">Dark2</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.Dark2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘Dark2’ colormap from ColorBrewer.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.Paired">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">Paired</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.Paired" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘Paired’ colormap from ColorBrewer.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.Pastel1">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">Pastel1</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.Pastel1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘Pastel1’ colormap from ColorBrewer.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.Pastel2">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">Pastel2</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.Pastel2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘Pastel2’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.Set1">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">Set1</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.Set1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘Set1’ colormap from ColorBrewer.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.Set2">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">Set2</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.Set2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘Set1’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.default_colormaps.Set3">
+<code class="sig-prename descclassname">chaco.default_colormaps.</code><code class="sig-name descname">Set3</code><span class="sig-paren">(</span><em class="sig-param">range</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.default_colormaps.Set3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the ‘Set1’ colormap from ColorBrewer.</p>
+<p>Although the ColorBrewer colormaps are defined as discrete colormaps, we
+create continuous colormaps from them by linear interpolation in RGB
+colorspace.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.default_colormaps.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.data_range_1d module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.data_range_1d module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.data_range_1d">
+<span id="chaco-data-range-1d-module"></span><h1>chaco.data_range_1d module<a class="headerlink" href="#module-chaco.data_range_1d" title="Permalink to this headline">¶</a></h1>
+<p>Defines the DataRange1D class.</p>
+<dl class="class">
+<dt id="chaco.data_range_1d.DataRange1D">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.data_range_1d.</code><code class="sig-name descname">DataRange1D</code><span class="sig-paren">(</span><em class="sig-param">*datasources</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_range_1d.DataRange1D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.base_data_range.html#chaco.base_data_range.BaseDataRange" title="chaco.base_data_range.BaseDataRange"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.base_data_range.BaseDataRange</span></code></a></p>
+<p>Represents a 1-D data range.</p>
+<dl class="method">
+<dt id="chaco.data_range_1d.DataRange1D.bound_data">
+<code class="sig-name descname">bound_data</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.bound_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a tuple of indices for the start and end of the first run
+of <em>data</em> that falls within the range.</p>
+<p>Implements AbstractDataRange.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_range_1d.DataRange1D.bounds_func">
+<code class="sig-name descname">bounds_func</code><em class="property"> = Callable</em><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.bounds_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>A user supplied function returning the proper bounding interval.
+bounds_func takes (data_low, data_high, margin, tight_bounds)
+and returns (low, high)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.data_range_1d.DataRange1D.clip_data">
+<code class="sig-name descname">clip_data</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.clip_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of data values that are within the range.</p>
+<p>Implements AbstractDataRange.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_range_1d.DataRange1D.default_state">
+<code class="sig-name descname">default_state</code><em class="property"> = Enum(&quot;auto&quot;, &quot;high_track&quot;, &quot;low_track&quot;)</em><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.default_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default tracking state. This value is used when self.reset() is called.</p>
+<ul class="simple">
+<li><p>‘auto’: Both bounds reset to ‘auto’.</p></li>
+<li><p>‘high_track’: The high bound resets to ‘track’, and the low bound
+resets to ‘auto’.</p></li>
+<li><p>‘low_track’: The low bound resets to ‘track’, and the high bound
+resets to ‘auto’.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_range_1d.DataRange1D.default_tracking_amount">
+<code class="sig-name descname">default_tracking_amount</code><em class="property"> = CFloat(20.0)</em><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.default_tracking_amount" title="Permalink to this definition">¶</a></dt>
+<dd><p>When either <strong>high</strong> or <strong>low</strong> tracks the other, track by this amount.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_range_1d.DataRange1D.epsilon">
+<code class="sig-name descname">epsilon</code><em class="property"> = CFloat(1.0e-10)</em><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.epsilon" title="Permalink to this definition">¶</a></dt>
+<dd><p>The minimum percentage difference between low and high.  That is,
+(high-low) &gt;= epsilon * low.
+Used to be 1.0e-20 but chaco cannot plot at such a precision!</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_range_1d.DataRange1D.fit_to_subset">
+<code class="sig-name descname">fit_to_subset</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.fit_to_subset" title="Permalink to this definition">¶</a></dt>
+<dd><p>FIXME: this attribute is not used anywhere, is it safe to remove it?
+Is this range dependent upon another range?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_range_1d.DataRange1D.high">
+<code class="sig-name descname">high</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.high" title="Permalink to this definition">¶</a></dt>
+<dd><p>The actual value of the upper bound of this range (overrides
+AbstractDataRange). To set it, use <strong>high_setting</strong>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_range_1d.DataRange1D.high_setting">
+<code class="sig-name descname">high_setting</code><em class="property"> = Property(Trait(&quot;auto&quot;, &quot;auto&quot;, &quot;track&quot;, CFloat))</em><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.high_setting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property for the upper bound of this range (overrides AbstractDataRange).</p>
+<ul class="simple">
+<li><p>‘auto’: The upper bound is automatically set at or above the maximum
+of the data.</p></li>
+<li><p>‘track’: The upper bound tracks the lower bound by <strong>tracking_amount</strong>.</p></li>
+<li><p>CFloat: An explicit value for the upper bound</p></li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_range_1d.DataRange1D.low">
+<code class="sig-name descname">low</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.low" title="Permalink to this definition">¶</a></dt>
+<dd><p>The actual value of the lower bound of this range (overrides
+AbstractDataRange). To set it, use <strong>low_setting</strong>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_range_1d.DataRange1D.low_setting">
+<code class="sig-name descname">low_setting</code><em class="property"> = Property(Trait(&quot;auto&quot;, &quot;auto&quot;, &quot;track&quot;, CFloat))</em><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.low_setting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property for the lower bound of this range (overrides AbstractDataRange).</p>
+<ul class="simple">
+<li><p>‘auto’: The lower bound is automatically set at or below the minimum
+of the data.</p></li>
+<li><p>‘track’: The lower bound tracks the upper bound by <strong>tracking_amount</strong>.</p></li>
+<li><p>CFloat: An explicit value for the lower bound</p></li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_range_1d.DataRange1D.margin">
+<code class="sig-name descname">margin</code><em class="property"> = Float(0.05)</em><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.margin" title="Permalink to this definition">¶</a></dt>
+<dd><p>The amount of margin to place on either side of the data, expressed as
+a percentage of the full data width</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.data_range_1d.DataRange1D.mask_data">
+<code class="sig-name descname">mask_data</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.mask_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a mask array, indicating whether values in the given array
+are inside the range.</p>
+<p>Implements AbstractDataRange.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.data_range_1d.DataRange1D.refresh">
+<code class="sig-name descname">refresh</code><span class="sig-paren">(</span><em class="sig-param">event=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>If any of the bounds is ‘auto’, this method refreshes the actual
+low and high values from the set of the view filters’ data sources.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.data_range_1d.DataRange1D.reset">
+<code class="sig-name descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the bounds of this range, based on <strong>default_state</strong>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.data_range_1d.DataRange1D.scale_tracking_amount">
+<code class="sig-name descname">scale_tracking_amount</code><span class="sig-paren">(</span><em class="sig-param">multiplier</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.scale_tracking_amount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the <strong>tracking_amount</strong> to a new value, scaled by <em>multiplier</em>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.data_range_1d.DataRange1D.set_bounds">
+<code class="sig-name descname">set_bounds</code><span class="sig-paren">(</span><em class="sig-param">low</em>, <em class="sig-param">high</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.set_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets all the bounds of the range simultaneously.</p>
+<p>Implements AbstractDataRange.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.data_range_1d.DataRange1D.set_default_tracking_amount">
+<code class="sig-name descname">set_default_tracking_amount</code><span class="sig-paren">(</span><em class="sig-param">amount</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.set_default_tracking_amount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the <strong>default_tracking_amount</strong> to a new value, <em>amount</em>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.data_range_1d.DataRange1D.set_tracking_amount">
+<code class="sig-name descname">set_tracking_amount</code><span class="sig-paren">(</span><em class="sig-param">amount</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.set_tracking_amount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the <strong>tracking_amount</strong> to a new value, <em>amount</em>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_range_1d.DataRange1D.tight_bounds">
+<code class="sig-name descname">tight_bounds</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.tight_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do “auto” bounds imply an exact fit to the data? If False,
+they pad a little bit of margin on either side.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.data_range_1d.DataRange1D.tracking_amount">
+<code class="sig-name descname">tracking_amount</code><em class="property"> = default_tracking_amount</em><a class="headerlink" href="#chaco.data_range_1d.DataRange1D.tracking_amount" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current tracking amount. This value changes with zooming.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.data_range_1d.calc_bounds">
+<code class="sig-prename descclassname">chaco.data_range_1d.</code><code class="sig-name descname">calc_bounds</code><span class="sig-paren">(</span><em class="sig-param">low_set</em>, <em class="sig-param">high_set</em>, <em class="sig-param">mins</em>, <em class="sig-param">maxes</em>, <em class="sig-param">epsilon</em>, <em class="sig-param">tight_bounds</em>, <em class="sig-param">margin=0.08</em>, <em class="sig-param">track_amount=0</em>, <em class="sig-param">bounds_func=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.data_range_1d.calc_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates bounds for a given 1-D set of data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>low_set</strong> (<em>'auto'</em><em>, </em><em>'track'</em><em>, or </em><em>number</em>) – Current low setting</p></li>
+<li><p><strong>high_set</strong> (<em>'auto'</em><em>, </em><em>'track'</em><em>, or </em><em>number</em>) – Current high setting</p></li>
+<li><p><strong>mins</strong> (<em>list of numbers</em>) – Potential minima.</p></li>
+<li><p><strong>maxes</strong> (<em>list</em>) – Potential maxima.</p></li>
+<li><p><strong>epsilon</strong> (<em>number</em>) – Minimum percentage difference between bounds</p></li>
+<li><p><strong>tight_bounds</strong> (<em>Boolean</em>) – Do ‘auto’ bounds imply an exact fit to the data? If False, they pad a
+little bit of margin on either side.</p></li>
+<li><p><strong>margin</strong> (<em>float</em><em> (</em><em>default=0.08</em><em>)</em>) – The margin, expressed as a percentage of total data width, to place
+on either side of the data if tight_bounds is False.</p></li>
+<li><p><strong>track_amount</strong> (<em>number</em>) – The amount by which a ‘track’ bound tracks another bound.</p></li>
+<li><p><strong>bounds_func</strong> (<em>Callable</em>) – A callable which can override the bounds calculation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(min, max) for the new bounds. If either of the calculated bounds is NaN,</em></p></li>
+<li><p><em>returns (0,0).</em></p></li>
+<li><p><em>Description</em></p></li>
+<li><p><em>———–</em></p></li>
+<li><p><em>Setting both *low_set</em> and <em>high_set</em> to ‘track’ is an invalid state;*</p></li>
+<li><p><em>the method copes by setting *high_set</em> to ‘auto’, and proceeding.*</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.data_range_1d.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

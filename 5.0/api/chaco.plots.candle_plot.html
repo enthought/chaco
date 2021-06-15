@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.plots.candle_plot module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.plots.candle_plot module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.plots.candle_plot">
+<span id="chaco-plots-candle-plot-module"></span><h1>chaco.plots.candle_plot module<a class="headerlink" href="#module-chaco.plots.candle_plot" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="chaco.plots.candle_plot.CandlePlot">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.plots.candle_plot.</code><code class="sig-name descname">CandlePlot</code><span class="sig-paren">(</span><em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.candle_plot.CandlePlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.base_candle_plot.html#chaco.base_candle_plot.BaseCandlePlot" title="chaco.base_candle_plot.BaseCandlePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.base_candle_plot.BaseCandlePlot</span></code></a></p>
+<p>A plot consisting of a filled bar with an optional centerline and
+stems extending to extrema.  Usually used to represent some statistics
+on bins of data, with the centerline representing the mean, the bar
+extents representing +/- 1 standard dev or 10th/90th percentiles, and
+the stems extents representing the minimum and maximum samples.</p>
+<p>The values in the <strong>index</strong> datasource indicate the centers of the bins;
+the widths of the bins are <em>not</em> specified in data space, and are
+determined by the minimum space between adjacent index values.</p>
+<dl class="attribute">
+<dt id="chaco.plots.candle_plot.CandlePlot.bar_max">
+<code class="sig-name descname">bar_max</code><em class="property"> = Instance(AbstractDataSource)</em><a class="headerlink" href="#chaco.plots.candle_plot.CandlePlot.bar_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>The “upper” extent of the “bar”, i.e. the value closest to the
+corresponding value in max_values at each index.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.candle_plot.CandlePlot.bar_min">
+<code class="sig-name descname">bar_min</code><em class="property"> = Instance(AbstractDataSource)</em><a class="headerlink" href="#chaco.plots.candle_plot.CandlePlot.bar_min" title="Permalink to this definition">¶</a></dt>
+<dd><p>The “lower” extent of the “bar”, i.e. the value closest to the
+corresponding value in min_values at each index.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.candle_plot.CandlePlot.center_values">
+<code class="sig-name descname">center_values</code><em class="property"> = Instance(AbstractDataSource)</em><a class="headerlink" href="#chaco.plots.candle_plot.CandlePlot.center_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Values that appear inside the bar, between bar_min and bar_max.  These
+Are usually mean or median values, and are rendered with a solid line
+of a different color than the bar fill color.  This can be None.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plots.candle_plot.CandlePlot.map_data">
+<code class="sig-name descname">map_data</code><span class="sig-paren">(</span><em class="sig-param">screen_pt</em>, <em class="sig-param">all_values=True</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.candle_plot.CandlePlot.map_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps a screen space point into the “index” space of the plot.</p>
+<p>Overrides the BaseXYPlot implementation, and always returns an
+array of (index, value) tuples.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.plots.candle_plot.CandlePlot.map_index">
+<code class="sig-name descname">map_index</code><span class="sig-paren">(</span><em class="sig-param">screen_pt</em>, <em class="sig-param">threshold=0.0</em>, <em class="sig-param">outside_returns_none=True</em>, <em class="sig-param">index_only=True</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.candle_plot.CandlePlot.map_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps a screen space point to an index into the plot’s index array(s).</p>
+<p>Implements the AbstractPlotRenderer interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>screen_pt</strong> – Screen space point</p></li>
+<li><p><strong>threshold</strong> (<em>float</em>) – Maximum distance from screen space point to plot data point.
+A value of 0.0 means no threshold (any distance will do).</p></li>
+<li><p><strong>outside_returns_none</strong> (<em>bool</em>) – If True, a screen space point outside the data range returns None.
+Otherwise, it returns either 0 (outside the lower range) or
+the last index (outside the upper range)</p></li>
+<li><p><strong>index_only</strong> (<em>bool</em>) – If True, the threshold is measured on the distance between the
+index values, otherwise as Euclidean distance between the (x,y)
+coordinates.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.candle_plot.CandlePlot.max_values">
+<code class="sig-name descname">max_values</code><em class="property"> = Instance(AbstractDataSource)</em><a class="headerlink" href="#chaco.plots.candle_plot.CandlePlot.max_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>The maximum value at each index point.  If None, then no stem and no
+endcap line will be drawn above each bar.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.plots.candle_plot.CandlePlot.min_values">
+<code class="sig-name descname">min_values</code><em class="property"> = Instance(AbstractDataSource)</em><a class="headerlink" href="#chaco.plots.candle_plot.CandlePlot.min_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>The minimum values at each index point.  If None, then no stem and no
+endcap line will be drawn below each bar.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.plots.candle_plot.broaden">
+<code class="sig-prename descclassname">chaco.plots.candle_plot.</code><code class="sig-name descname">broaden</code><span class="sig-paren">(</span><em class="sig-param">mask</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.plots.candle_plot.broaden" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes a 1D boolean mask array and returns a copy with all the non-zero
+runs widened by 1.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.plots.candle_plot.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

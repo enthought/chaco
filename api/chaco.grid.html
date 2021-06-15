@@ -1,0 +1,299 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>chaco.grid module &mdash; chaco 5.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="chaco 5.0.0 documentation" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">chaco 5.0.0 documentation</a></li>
+	
+  
+    <li><a href="#">chaco.grid module</a></li>
+  
+
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-chaco.grid">
+<span id="chaco-grid-module"></span><h1>chaco.grid module<a class="headerlink" href="#module-chaco.grid" title="Permalink to this headline">¶</a></h1>
+<p>Defines the PlotGrid class, and associated TraitsUI View and validator
+function.</p>
+<dl class="function">
+<dt id="chaco.grid.Alias">
+<code class="sig-prename descclassname">chaco.grid.</code><code class="sig-name descname">Alias</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.grid.Alias" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="chaco.grid.PlotGrid">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.grid.</code><code class="sig-name descname">PlotGrid</code><span class="sig-paren">(</span><em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.grid.PlotGrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="chaco.abstract_overlay.html#chaco.abstract_overlay.AbstractOverlay" title="chaco.abstract_overlay.AbstractOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></code></a></p>
+<p>An overlay that represents a grid.</p>
+<p>A grid is a set of parallel lines, horizontal or vertical. You can use
+multiple grids with different settings for the horizontal and vertical
+lines in a plot.</p>
+<dl class="attribute">
+<dt id="chaco.grid.PlotGrid.data_max">
+<code class="sig-name descname">data_max</code><em class="property"> = Trait(None, None, Float)</em><a class="headerlink" href="#chaco.grid.PlotGrid.data_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dataspace value at which to end this grid.  If None, then uses
+the mapper.range.high.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.grid.PlotGrid.data_min">
+<code class="sig-name descname">data_min</code><em class="property"> = Trait(None, None, Float)</em><a class="headerlink" href="#chaco.grid.PlotGrid.data_min" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dataspace value at which to start this grid.  If None, then
+uses the mapper.range.low.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.grid.PlotGrid.do_layout">
+<code class="sig-name descname">do_layout</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.grid.PlotGrid.do_layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tells this component to do layout at a given size.</p>
+<p>Overrides PlotComponent.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.grid.PlotGrid.flip_axis">
+<code class="sig-name descname">flip_axis</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.grid.PlotGrid.flip_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw the ticks starting at the end of the mapper range? If False, the
+ticks are drawn starting at 0. This setting can be useful to keep the
+grid from from “flashing” as the user resizes the plot area.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.grid.PlotGrid.grid_interval">
+<code class="sig-name descname">grid_interval</code><em class="property"> = Trait(&quot;auto&quot;, &quot;auto&quot;, Float)</em><a class="headerlink" href="#chaco.grid.PlotGrid.grid_interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dataspace interval between grid lines.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.grid.PlotGrid.invalidate">
+<code class="sig-name descname">invalidate</code><span class="sig-paren">(</span><em class="sig-param">event=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.grid.PlotGrid.invalidate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invalidate cached information about the grid.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.grid.PlotGrid.line_color">
+<code class="sig-name descname">line_color</code><em class="property"> = black_color_trait</em><a class="headerlink" href="#chaco.grid.PlotGrid.line_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the grid lines.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.grid.PlotGrid.line_style">
+<code class="sig-name descname">line_style</code><em class="property"> = LineStyle(&quot;solid&quot;)</em><a class="headerlink" href="#chaco.grid.PlotGrid.line_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>The style (i.e., dash pattern) of the grid lines.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.grid.PlotGrid.line_width">
+<code class="sig-name descname">line_width</code><em class="property"> = CInt(1)</em><a class="headerlink" href="#chaco.grid.PlotGrid.line_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>The thickness, in pixels, of the grid lines.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.grid.PlotGrid.mapper">
+<code class="sig-name descname">mapper</code><em class="property"> = Instance(AbstractMapper)</em><a class="headerlink" href="#chaco.grid.PlotGrid.mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mapper (and associated range) that drive this PlotGrid.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.grid.PlotGrid.mapper_updated">
+<code class="sig-name descname">mapper_updated</code><span class="sig-paren">(</span><em class="sig-param">event=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.grid.PlotGrid.mapper_updated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event handler that is bound to this mapper’s <strong>updated</strong> event.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.grid.PlotGrid.orientation">
+<code class="sig-name descname">orientation</code><em class="property"> = Enum(&quot;horizontal&quot;, &quot;vertical&quot;)</em><a class="headerlink" href="#chaco.grid.PlotGrid.orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The orientation of the grid lines.  “horizontal” means that the grid
+lines are parallel to the X axis and the ticker and grid interval
+refer to the Y axis.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.grid.PlotGrid.overlay">
+<code class="sig-name descname">overlay</code><span class="sig-paren">(</span><em class="sig-param">other_component</em>, <em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.grid.PlotGrid.overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws this component overlaid on another component.</p>
+<p>Overrides AbstractOverlay.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.grid.PlotGrid.resizable">
+<code class="sig-name descname">resizable</code><em class="property"> = &quot;hv&quot;</em><a class="headerlink" href="#chaco.grid.PlotGrid.resizable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dimensions that the grid is resizable in (overrides PlotComponent).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.grid.PlotGrid.tick_generator">
+<code class="sig-name descname">tick_generator</code><em class="property"> = Instance(AbstractTickGenerator)</em><a class="headerlink" href="#chaco.grid.PlotGrid.tick_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>A callable that implements the AbstractTickGenerator Interface.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.grid.PlotGrid.traits_view">
+<code class="sig-name descname">traits_view</code><em class="property"> = None</em><a class="headerlink" href="#chaco.grid.PlotGrid.traits_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default TraitsUI View for modifying grid attributes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.grid.PlotGrid.transverse_bounds">
+<code class="sig-name descname">transverse_bounds</code><em class="property"> = Trait(None, Tuple, Callable)</em><a class="headerlink" href="#chaco.grid.PlotGrid.transverse_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional specification of the grid bounds in the dimension transverse
+to the ticking/gridding dimension, i.e. along the direction specified
+by self.orientation.  If this is specified but transverse_mapper is
+not specified, then there is no effect.</p>
+<blockquote>
+<div><p>None : use self.bounds or self.component.bounds (if overlay)
+Tuple : (low, high) extents, used for every grid line
+Callable : Function that takes an array of dataspace grid ticks</p>
+<blockquote>
+<div><p>and returns either an array of shape (N,2) of (starts,ends)
+for each grid point or a single tuple (low, high)</p>
+</div></blockquote>
+</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.grid.PlotGrid.transverse_mapper">
+<code class="sig-name descname">transverse_mapper</code><em class="property"> = Instance(AbstractMapper)</em><a class="headerlink" href="#chaco.grid.PlotGrid.transverse_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mapper in the direction corresponding to self.orientation, i.e. transverse
+to the direction of self.mapper.  This is used to compute the screen
+position of transverse_bounds.  If this is not specified, then
+transverse_bounds has no effect, and vice versa.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.grid.PlotGrid.visual_attr_changed">
+<code class="sig-name descname">visual_attr_changed</code><span class="sig-paren">(</span><em class="sig-param">event=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.grid.PlotGrid.visual_attr_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when an attribute that affects the appearance of the grid
+is changed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="chaco.grid.float_or_auto">
+<code class="sig-prename descclassname">chaco.grid.</code><code class="sig-name descname">float_or_auto</code><span class="sig-paren">(</span><em class="sig-param">val</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.grid.float_or_auto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validator function that returns <em>val</em> if <em>val</em> is either a number or
+the word ‘auto’.  This is used as a validator for the text editor
+in the traits UI for the tick_interval trait.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/chaco.grid.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2019, Enthought, Inc.
+      </li>
+      <li>
+      Last updated on Jun 15, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>
