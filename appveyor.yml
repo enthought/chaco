@@ -9,7 +9,7 @@ environment:
 
   matrix:
     - RUNTIME: '3.6'
-      TOOLKITS: "null pyqt pyqt5 pyside2"
+      TOOLKITS: "null pyqt5 pyside2"
 
 branches:
   only:
