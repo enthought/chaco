@@ -127,7 +127,7 @@ in data space, `color_value` containing the color of the tile where the mouse
 is, and `data_value` with the scalar value being displayed in that tile.
 
 For a complete example, see :download:`chaco/examples/demo/basic/image_inspector.py
-<../../../chaco/examples/demo/basic/image_inspector.py>`.
+<../../../../chaco/examples/demo/basic/image_inspector.py>`.
 
 .. todo:: Fill in the below sections
 
