@@ -45,16 +45,6 @@ TRIM_RENDERED = (slice(1, -1), slice(1, -1), 0)
 is_null = ETSConfig.toolkit == "null"
 
 
-def is_qt4():
-    if not ETSConfig.toolkit.startswith('qt'):
-        return False
-
-    # Only AFTER confirming Qt's availability...
-    # We lean on Pyface here since the check is complicated.
-    import pyface.qt
-    return pyface.qt.is_qt4
-
-
 @contextmanager
 def temp_image_file(suffix=".tif", prefix="test", dir=None):
     fd, filename = tempfile.mkstemp(suffix=suffix, prefix=prefix, dir=dir)
@@ -197,7 +187,7 @@ class TestResultImage(unittest.TestCase):
         )
 
     # regression test for enthought/chaco#528
-    @unittest.skipIf(is_null or is_qt4(), "Skip on 'null' or 'qt4' toolkit")
+    @unittest.skipIf(is_null, "Skip on 'null' toolkit")
     def test_resize_to_zero(self):
         class TestResize(HasTraits):
             plot = Instance(Component)

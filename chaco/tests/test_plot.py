@@ -24,16 +24,6 @@ from chaco.default_colormaps import viridis
 from chaco.tools.api import PanTool, ZoomTool
 
 
-def is_qt4():
-    if not ETSConfig.toolkit.startswith('qt'):
-        return False
-
-    # Only AFTER confirming Qt's availability...
-    # We lean on Pyface here since the check is complicated.
-    import pyface.qt
-    return pyface.qt.is_qt4
-
-
 class PlotTestCase(unittest.TestCase):
     def test_plot_from_unsupported_array_shape(self):
         arr = arange(8).reshape(2, 2, 2)
@@ -143,7 +133,6 @@ class EmptyLinePlot(HasTraits):
 @unittest.skipIf(ETSConfig.toolkit == "null", "Skip on 'null' toolkit")
 class TestEmptyPlot(unittest.TestCase, EnableTestAssistant):
 
-    @unittest.skipIf(is_qt4(), "Test breaks on pyqt")
     def test_dont_crash_on_click(self):
         from traitsui.testing.api import UITester
         tester = UITester()
