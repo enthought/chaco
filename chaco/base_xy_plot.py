@@ -26,7 +26,7 @@ from .array_data_source import ArrayDataSource
 from .axis import PlotAxis
 from .base import point_line_distance, reverse_map_1d
 from .grid import PlotGrid
-from .plot_label import PlotLabel
+from .overlays.plot_label import PlotLabel
 
 
 class BaseXYPlot(AbstractPlotRenderer):
