@@ -143,7 +143,7 @@ Implementation of a standard financial plot visualization using Chaco renderers
 and scales. Right-clicking and selecting an area in the top window zooms in
 the corresponding area in the lower window.
 
-source: `financial_plot.py <https://github.com/enthought/chaco/tree/master/chaco/examples/demo/financial_plot.py>`_
+source: `financial_plot.py <https://github.com/enthought/chaco/tree/master/examples/demo/financial_plot.py>`_
 
 .. image:: example_images/financial_plot.png
 
@@ -155,7 +155,7 @@ the corresopnding area in the lower window.
 This differs from the financial_plot.py example in that it uses a date-oriented
 axis.
 
-source: `financial_plot_dates.py <https://github.com/enthought/chaco/tree/master/chaco/examples/demo/financial_plot_dates.py>`_
+source: `financial_plot_dates.py <https://github.com/enthought/chaco/tree/master/examples/demo/financial_plot_dates.py>`_
 
 .. image:: example_images/financial_plot_dates.png
 
@@ -250,7 +250,7 @@ Draws several overlapping line plots like simple_line.py, but uses a separate
 Y range for each plot.  Also has a second Y-axis on the right hand side.
 Demonstrates use of the BroadcasterTool.
 
-source: `multiaxis.py <https://github.com/enthought/chaco/tree/master/chaco/examples/demo/multiaxis.py>`_
+source: `multiaxis.py <https://github.com/enthought/chaco/tree/master/examples/demo/multiaxis.py>`_
 
 .. image:: example_images/multiaxis.png
 
@@ -264,7 +264,7 @@ Draws some x-y line and scatter plots. On the left hand plot:
    and alt-right-arrow moves you forwards and backwards through the "zoom
    history".
 
-source: `multiaxis_using_Plot.py <https://github.com/enthought/chaco/tree/master/chaco/examples/demo/multiaxis_using_Plot.py>`_
+source: `multiaxis_using_Plot.py <https://github.com/enthought/chaco/tree/master/examples/demo/multiaxis_using_Plot.py>`_
 
 .. image:: example_images/multiaxis_using_Plot.png
 
@@ -281,7 +281,7 @@ source: `nans_plot.py <https://github.com/enthought/chaco/tree/master/chaco/exam
 This demonstrates how to create a plot offscreen and save it to an image file
 on disk. The image is what is saved.
 
-source: `noninteractive.py <https://github.com/enthought/chaco/tree/master/chaco/examples/demo/noninteractive.py>`_
+source: `noninteractive.py <https://github.com/enthought/chaco/tree/master/examples/demo/noninteractive.py>`_
 
 .. image:: example_images/noninteractive.png
 
@@ -410,7 +410,7 @@ source: `simple_line.py <https://github.com/enthought/chaco/tree/master/chaco/ex
 --------------------------------------
 This plot displays the audio spectrum from the microphone.
 
-source: `spectrum.py <https://github.com/enthought/chaco/tree/master/chaco/examples/demo/advanced/spectrum.py>`_
+source: `spectrum.py <https://github.com/enthought/chaco/tree/master/examples/demo/advanced/spectrum.py>`_
 
 .. image:: example_images/spectrum.png
 
@@ -473,6 +473,6 @@ Right-click and drag on the upper plot to select a region to view in detail
 in the lower plot.  The selected region can be moved around by dragging,
 or resized by clicking on one of its edges and dragging.
 
-source: `zoomed_plot <https://github.com/enthought/chaco/tree/master/chaco/examples/demo/zoomed_plot/>`_
+source: `zoomed_plot <https://github.com/enthought/chaco/tree/master/examples/demo/zoomed_plot/>`_
 
 .. image:: example_images/zoomed_plot.png
