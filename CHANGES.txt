@@ -5,6 +5,24 @@ Chaco CHANGELOG
 Release 5.0.0
 -------------
 
+Thanks to all who contributed to the release:
+* Aaron Ayres
+* Alex Chabot-Leclerc
+* Kit Choi
+* Nicola De Mitri
+* Mark Dickinson
+* Matt Hancock
+* Midhun Madhusoodanan
+* Shoeb Mohammed
+* Rahul Poruri
+* Martin Renou
+* Jonathan Rocher
+* Kuya Takami
+* Joris Vankerschaver
+* Corran Webster
+* John Wiggins
+* Xiaoyu Wu
+
 New features/Improvements
 
 * Add rectangular selection tool (#482)
