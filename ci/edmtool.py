@@ -218,25 +218,6 @@ def install(runtime, toolkit, environment, editable, source):
     click.echo("Creating environment '{environment}'".format(**parameters))
     execute(commands, parameters)
 
-    # NOTE : temporary code to install enable from source instead of relying on
-    # enable 5.1.1. This should be removed immediately after enable 5.2.0 is
-    # released.
-    command = "edm plumbing remove-package --environment {environment} --force enable"  # noqa
-    execute([command], parameters)
-    source_pkgs = [
-        "git+http://github.com/enthought/enable.git@maint/5.2#egg=enable"
-    ]
-    # Without the --no-dependencies flag such that new dependencies on
-    # master are brought in.
-    commands = [
-        "python -m pip install --force-reinstall {pkg} ".format(pkg=pkg)
-        for pkg in source_pkgs
-    ]
-    commands = [
-        "edm run -e {environment} -- " + command for command in commands
-    ]
-    execute(commands, parameters)
-
     if source:
         # Remove EDM ETS packages and install them from source
         cmd_fmt = (
