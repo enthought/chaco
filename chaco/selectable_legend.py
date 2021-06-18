@@ -11,7 +11,7 @@
 from chaco.tools.select_tool import SelectTool
 from traits.api import List
 
-from .legend import Legend
+from .overlays.legend import Legend
 
 
 class SelectableLegend(Legend, SelectTool):

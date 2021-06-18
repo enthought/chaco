@@ -186,10 +186,10 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
         self.assertEqual(bounds, (-np.inf, np.inf))
 
     def test_bounds_non_numeric(self):
-        myarray = np.array([u"abc", u"foo", u"bar", u"def"], dtype=str)
+        myarray = np.array(["abc", "foo", "bar", "def"], dtype=str)
         data_source = ArrayDataSource(myarray)
         bounds = data_source.get_bounds()
-        self.assertEqual(bounds, (u"abc", u"def"))
+        self.assertEqual(bounds, ("abc", "def"))
 
     def test_data_size(self):
         # We know that ArrayDataTestCase always returns the exact length of

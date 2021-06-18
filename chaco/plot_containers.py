@@ -126,15 +126,6 @@ class HPlotContainer(HStackedContainer):
 
     _cached_preferred_size = Tuple(transient=True)
 
-    ### Persistence ###########################################################
-
-    # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
-    def __getstate__(self):
-        state = super().__getstate__()
-        if "stack_index" in state:
-            del state["stack_index"]
-        return state
-
 
 class VPlotContainer(VStackedContainer):
     """
@@ -150,15 +141,6 @@ class VPlotContainer(VStackedContainer):
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
     _cached_preferred_size = Tuple(transient=True)
-
-    ### Persistence ###########################################################
-
-    # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
-    def __getstate__(self):
-        state = super().__getstate__()
-        if "stack_index" in state:
-            del state["stack_index"]
-        return state
 
 
 class GridPlotContainer(BasePlotContainer):
