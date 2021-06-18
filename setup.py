@@ -312,7 +312,10 @@ if __name__ == "__main__":
         include_dirs=[numpy_include_dir],
     )
 
-    cython_extensions = cythonize([cython_speedups, downsampling_lttb])
+    cython_extensions = cythonize(
+        [cython_speedups, downsampling_lttb],
+        language_level="3",
+    )
     extensions = [contour] + cython_extensions
 
     setup(
