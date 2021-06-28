@@ -60,14 +60,8 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest, windows-latest]
-        toolkit: ['null', 'pyqt', 'pyqt5', 'pyside2']
+        toolkit: ['null', 'pyqt5', 'pyside2']
     runs-on: ${{ matrix.os }}
-    env:
-      # Set root directory, mainly for Windows, so that the EDM Python
-      # environment lives in the same drive as the cloned source. Otherwise
-      # 'pip install' raises an error while trying to compute
-      # relative path between the site-packages and the source directory.
-      EDM_ROOT_DIRECTORY: ${{ github.workspace }}/.edm
     steps:
       - uses: actions/checkout@v2
       - name: Cache EDM packages
