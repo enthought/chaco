@@ -7,7 +7,7 @@ from enable.testing import EnableTestAssistant
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, View
 
-from chaco.api import ArrayPlotData, create_line_plot, DataLabel, Plot
+from chaco.api import ArrayPlotData, DataLabel, Plot
 from chaco.tools.api import DataLabelTool
 
 IMAGE = np.random.random_integers(0, 255, size=(100, 200)).astype(np.uint8)
