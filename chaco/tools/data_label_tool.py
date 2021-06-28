@@ -71,7 +71,7 @@ class DataLabelTool(DragTool):
         """
         if self.component:
             label = self.component
-            pointx, pointy = label.component.map_screen(label.data_point)
+            pointx, pointy = label.component.map_screen(label.data_point)[0]
             self._original_offset = (label.x - pointx, label.y - pointy)
             event.window.set_mouse_owner(self, event.net_transform())
             event.handled = True
