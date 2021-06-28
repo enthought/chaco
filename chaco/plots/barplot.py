@@ -16,6 +16,7 @@ from numpy import (
     array,
     compress,
     column_stack,
+    empty,
     invert,
     isnan,
     transpose,
@@ -176,9 +177,12 @@ class BarPlot(AbstractPlotRenderer):
 
         Implements the AbstractPlotRenderer interface.
         """
+        # ensure data_array is an Nx2 ndarray
+        data_array = array(data_array)
+        data_array = data_array.reshape(-1,2)
         # data_array is Nx2 array
         if len(data_array) == 0:
-            return []
+            return empty(shape=(0,2))
         x_ary, y_ary = transpose(data_array)
         sx = self.index_mapper.map_screen(x_ary)
         sy = self.value_mapper.map_screen(y_ary)
