@@ -10,6 +10,7 @@
 
 import unittest
 
+import numpy as np
 from numpy import alltrue, arange, array
 
 from enable.api import ComponentEditor
@@ -109,6 +110,29 @@ class PlotTestCase(unittest.TestCase):
         actual = gc.bmp_array[:, :, :]
         self.assertFalse(alltrue(actual == 255))
 
+    def check_map_screen(self, renderer):
+        arr = arange(10)
+        data = ArrayPlotData(x=arr, y=arr)
+        plot = Plot(data)
+        plot_renderer = plot.add_xy_plot(
+            'x', 'y', plot.renderer_map[renderer]
+        )[0]
+
+        screen_point = plot_renderer.map_screen((-1, 1))
+
+        self.assertEqual(type(screen_point), np.ndarray)
+        self.assertEqual(screen_point.shape, (1, 2))
+
+        screen_point = plot_renderer.map_screen([])
+
+        self.assertEqual(type(screen_point), np.ndarray)
+        self.assertEqual(screen_point.shape, (0, 2))
+
+    # serves as a regression test for enthought/chaco#272
+    def test_xy_plot_map_screen(self):
+        renderers = ["line", "scatter", "bar", "polygon"]
+        for renderer in renderers:
+            self.check_map_screen(renderer)
 
 class EmptyLinePlot(HasTraits):
     plot = Instance(Plot)
