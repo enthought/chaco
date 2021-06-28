@@ -146,6 +146,7 @@ class PlotTestCase(unittest.TestCase):
         for renderer in renderers:
             self.check_map_screen(renderer)
 
+
 class EmptyLinePlot(HasTraits):
     plot = Instance(Plot)
     x = []
