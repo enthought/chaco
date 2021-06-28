@@ -96,6 +96,18 @@ class PlotTestCase(unittest.TestCase):
         actual = gc.bmp_array[:, :, :]
         self.assertFalse(alltrue(actual == 255))
 
+    def test_segment_plot_map_screen(self):
+        x = arange(10)
+        y = arange(1, 11)
+        data = ArrayPlotData(x=x, y=y)
+        plot = Plot(data)
+        plot_renderer = plot.plot(("x", "y"), "segment")[0]
+
+        screen_point = plot_renderer.map_screen([(0, 1), (1, 2)])
+
+        self.assertEqual(type(screen_point), np.ndarray)
+        self.assertEqual(screen_point.shape, (1, 2, 2))
+
     def test_text_plot(self):
         x = arange(10)
         y = arange(1, 11)
