@@ -17,7 +17,7 @@ jobs:
   test-with-edm:
     strategy:
       matrix:
-        os: ubuntu-latest
+        os: [ubuntu-latest]
         toolkit: ['null', 'pyqt5', 'pyside2']
     runs-on: ${{ matrix.os }}
     steps:
