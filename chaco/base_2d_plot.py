@@ -11,7 +11,7 @@
 """ Defines the base class for 2-D plots.
 """
 # Standard library imports
-from numpy import asarray, isnan
+from numpy import asarray, empty, isnan
 
 # Enthought library imports.
 from traits.api import Enum, Event, Instance, Property, Range, Trait
@@ -121,7 +121,7 @@ class Base2DPlot(AbstractPlotRenderer):
         """
         # data_pts is Nx2 array
         if len(data_pts) == 0:
-            return []
+            return empty(shape=(0,2))
         return asarray(self.index_mapper.map_screen(data_pts))
 
     def map_data(self, screen_pts):

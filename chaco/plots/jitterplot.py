@@ -46,7 +46,7 @@ class JitterPlot(ScatterPlot1D):
         Implements the AbstractPlotRenderer interface.
         """
         if len(data_array) == 0:
-            return np.zeros(0)
+            return np.empty(shape=(0,))
 
         if self._screen_cache_valid:
             sm = self._cached_screen_map

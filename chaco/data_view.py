@@ -11,7 +11,7 @@
 """ Defines the DataView class, and associated property traits and property
 functions.
 """
-from numpy import array, transpose
+from numpy import array, empty, transpose
 
 from traits.api import Bool, Enum, Instance, Property
 from enable.api import color_table
@@ -244,7 +244,7 @@ class DataView(OverlayPlotContainer):
         """
         # data_array is Nx2 array
         if len(data_array) == 0:
-            return []
+            return empty(shape=(0,2))
         x_ary, y_ary = transpose(data_array)
         sx = self.index_mapper.map_screen(x_ary)
         sy = self.value_mapper.map_screen(y_ary)

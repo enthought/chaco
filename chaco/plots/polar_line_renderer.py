@@ -13,7 +13,7 @@
 
 
 # Major library imports
-from numpy import array, cos, pi, sin, transpose
+from numpy import array, cos, empty, pi, sin, transpose
 
 # Enthought library imports
 from enable.api import black_color_trait, LineStyle
@@ -98,7 +98,7 @@ class PolarLineRenderer(AbstractPlotRenderer):
         """
 
         if len(data_array) == 0:
-            return []
+            return empty(shape=(0, 2))
         elif len(data_array) == 1:
             xtmp, ytmp = transpose(data_array)
             x_ary = xtmp
