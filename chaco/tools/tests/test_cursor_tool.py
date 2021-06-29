@@ -70,8 +70,6 @@ class TestCursorTool(unittest.TestCase, EnableTestAssistant):
                 plot = Plot(data)
                 renderer = plot.plot(
                     ("x", "y"),
-                    #index_scale="log",
-                    #value_scale="log"
                 )[0]
 
                 cursor = CursorTool(renderer)
