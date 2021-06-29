@@ -14,7 +14,7 @@ env:
 jobs:
 
   # Test against EDM packages from source on Linux
-  test-with-edm:
+  test-ets-source-linux:
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -57,8 +57,8 @@ jobs:
           run: --server-args="-screen 0 1024x768x24" edm run -- python ci/edmtool.py test --toolkit=${{ matrix.toolkit }}
 
 
-# Test against EDM packages on Windows and OSX
-  test-with-edm:
+# Test against EDM packages from source on Windows and OSX
+  test-ets-source:
     strategy:
       matrix:
         os: [macos-latest, windows-latest]
