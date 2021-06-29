@@ -40,7 +40,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.cache
-          key: ${{ runner.os }}-${{ matrix.toolkit }}-${{ hashFiles('etstool.py') }}
+          key: ${{ runner.os }}-${{ matrix.toolkit }}-${{ hashFiles('ci/edmtool.py') }}
       - name: Set up EDM
         uses: enthought/setup-edm-action@v1
         with:
@@ -48,7 +48,7 @@ jobs:
       - name: Install click to the default EDM environment
         run: edm install -y wheel click coverage
       - name: Install test environment
-        run: edm run -- python etstool.py install --toolkit=${{ matrix.toolkit }} --source
+        run: edm run -- python ci/edmtool.py install --toolkit=${{ matrix.toolkit }} --source
       - name: Run tests
         uses: GabrielBB/xvfb-action@v1
         with:
