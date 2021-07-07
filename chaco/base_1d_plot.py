@@ -12,7 +12,7 @@
 Abstract base class for 1-D plots which only use one axis
 """
 # Standard library imports
-from numpy import argsort, asarray
+from numpy import argsort, asarray, empty
 
 # Enthought library imports
 from traits.api import (

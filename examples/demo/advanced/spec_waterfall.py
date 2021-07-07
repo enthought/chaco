@@ -5,7 +5,7 @@ Based on updating_plot.py
 """
 # Major library imports
 import pyaudio
-from numpy import zeros, linspace, short, fromstring, transpose, array
+from numpy import zeros, linspace, short, fromstring, transpose, array, empty
 from scipy import fft
 
 # Enthought library imports
