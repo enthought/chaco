@@ -53,7 +53,7 @@ class HittestTool(BaseTool, AbstractOverlay):
     def overlay(self, plot, gc, view_bounds=None, mode="normal"):
         # If we have a point, draw it to the screen as a small square
         if self.pt is not None:
-            x, y = plot.map_screen(self.pt)
+            x, y = plot.map_screen(self.pt)[0]
             gc.draw_rect((int(x) - 2, int(y) - 2, 4, 4))
 
 
