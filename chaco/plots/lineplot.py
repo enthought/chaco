@@ -122,7 +122,7 @@ class LinePlot(BaseXYPlot):
             # screen_pt is one of the points in the lineplot
             data_pt = (self.index.get_data()[ndx], self.value.get_data()[ndx])
             if return_distance:
-                scrn_pt = self.map_screen(data_pt)
+                scrn_pt = self.map_screen(data_pt)[0]
                 dist = sqrt(
                     (screen_pt[0] - scrn_pt[0]) ** 2
                     + (screen_pt[1] - scrn_pt[1]) ** 2
