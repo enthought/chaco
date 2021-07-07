@@ -1,22 +1,24 @@
-# This workflow targets stable released dependencies from EDM.
-# Note that some packages may not actually be installed from EDM but from
-# PyPI, see ci/edmtool.py implementations.
+name: Test with ETS packages from source
 
-name: Test with EDM
-
-on: pull_request
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  schedule:
+    # Every Friday at 00:00 UTC
+    - cron:  '0 0 * * 5'
 
 env:
   INSTALL_EDM_VERSION: 3.2.3
 
 jobs:
 
-  # Test against EDM packages on Linux
-  test-edm-linux:
+  # Test against EDM packages from source on Linux
+  test-ets-source-linux:
     strategy:
       matrix:
+        os: [ubuntu-latest]
         toolkit: ['null', 'pyqt5', 'pyside2']
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       - name: Install Qt dependencies for Linux
@@ -31,23 +33,21 @@ jobs:
           sudo apt-get install libxcb-randr0
           sudo apt-get install libxcb-render-util0
           sudo apt-get install libxcb-xinerama0
-        if: matrix.toolkit != 'null'
+        shell: bash
+        if: runner.os == 'Linux'
       - name: Cache EDM packages
         uses: actions/cache@v2
         with:
           path: ~/.cache
           key: ${{ runner.os }}-${{ matrix.toolkit }}-${{ hashFiles('ci/edmtool.py') }}
-      - name: Setup EDM
+      - name: Set up EDM
         uses: enthought/setup-edm-action@v1
         with:
           edm-version: ${{ env.INSTALL_EDM_VERSION }}
       - name: Install click to the default EDM environment
         run: edm install -y wheel click coverage
       - name: Install test environment
-        run: edm run -- python ci/edmtool.py install --toolkit=${{ matrix.toolkit }}
-      - name: Flake8
-        run: edm run -- python ci/edmtool.py flake8 --toolkit=${{ matrix.toolkit }}
-        if: matrix.toolkit == 'null'
+        run: edm run -- python ci/edmtool.py install --toolkit=${{ matrix.toolkit }} --source
       - name: Run tests
         uses: GabrielBB/xvfb-action@v1
         with:
@@ -55,8 +55,9 @@ jobs:
           # The --server-args assumes xvfb-run is called, hence Linux only.
           run: --server-args="-screen 0 1024x768x24" edm run -- python ci/edmtool.py test --toolkit=${{ matrix.toolkit }}
 
-  # Test against EDM packages on Windows and OSX
-  test-with-edm:
+
+# Test against EDM packages from source on Windows and OSX
+  test-ets-source:
     strategy:
       matrix:
         os: [macos-latest, windows-latest]
@@ -76,6 +77,6 @@ jobs:
       - name: Install click to the default EDM environment
         run: edm install -y wheel click coverage
       - name: Install test environment
-        run: edm run -- python ci/edmtool.py install --toolkit=${{ matrix.toolkit }}
+        run: edm run -- python ci/edmtool.py install --toolkit=${{ matrix.toolkit }} --source
       - name: Run tests
         run: edm run -- python ci/edmtool.py test --toolkit=${{ matrix.toolkit }}

@@ -26,7 +26,7 @@ from .array_data_source import ArrayDataSource
 from .axis import PlotAxis
 from .base import point_line_distance, reverse_map_1d
 from .grid import PlotGrid
-from .plot_label import PlotLabel
+from .overlays.plot_label import PlotLabel
 
 
 class BaseXYPlot(AbstractPlotRenderer):
@@ -361,7 +361,6 @@ class BaseXYPlot(AbstractPlotRenderer):
         if data_array.shape[-1] != 2:
             raise ValueError("Input to map_screen must have shape (..., 2)")
 
-        # data_array is Nx2 array
         if len(data_array) == 0:
             return empty(shape=(0, 2))
 
@@ -492,12 +491,6 @@ class BaseXYPlot(AbstractPlotRenderer):
 
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
         """Draws the 'plot' layer."""
-        self._draw_component(gc, view_bounds, mode)
-
-    def _draw_component(self, gc, view_bounds=None, mode="normal"):
-        # This method should be folded into self._draw_plot(), but is here for
-        # backwards compatibilty with non-draw-order stuff.
-
         pts = self.get_screen_points()
         self._render(gc, pts)
 

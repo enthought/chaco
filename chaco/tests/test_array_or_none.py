@@ -15,11 +15,11 @@ import numpy as np
 
 from chaco.array_data_source import ArrayDataSource
 from chaco.axis import PlotAxis
-from chaco.data_label import DataLabel
 from chaco.data_range_1d import DataRange1D
 from chaco.label_axis import LabelAxis
-from chaco.legend import Legend
 from chaco.linear_mapper import LinearMapper
+from chaco.overlays.data_label import DataLabel
+from chaco.overlays.legend import Legend
 from chaco.plots.scatterplot import ScatterPlot
 
 

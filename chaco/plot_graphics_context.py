@@ -34,8 +34,8 @@ class PlotGraphicsContextMixin(object):
         scale = kw.pop("dpi", 72.0) / 72.0
         if type(size_or_ary) in (list, tuple) and len(size_or_ary) == 2:
             size_or_ary = (
-                size_or_ary[0] * scale + 1,
-                size_or_ary[1] * scale + 1,
+                int(size_or_ary[0] * scale + 1),
+                int(size_or_ary[1] * scale + 1),
             )
 
         super().__init__(

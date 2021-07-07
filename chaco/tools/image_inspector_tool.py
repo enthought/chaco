@@ -17,8 +17,8 @@ from traits.api import Any, Bool, Enum, Event, Tuple
 
 # Chaco imports
 from chaco.abstract_overlay import AbstractOverlay
+from chaco.overlays.text_box_overlay import TextBoxOverlay
 from chaco.plots.image_plot import ImagePlot
-from chaco.text_box_overlay import TextBoxOverlay
 
 
 class ImageInspectorTool(BaseTool):

@@ -132,11 +132,6 @@ class PolarLineRenderer(AbstractPlotRenderer):
 
     def _draw_plot(self, *args, **kw):
         """Draws the 'plot' layer."""
-        # Simple compatibility with new-style rendering loop
-        return self._draw_component(*args, **kw)
-
-    def _draw_component(self, gc, view_bounds=None, mode="normal"):
-        """Renders the component."""
         self._gather_points()
         self._render(gc, self._cached_data_pts)
 
