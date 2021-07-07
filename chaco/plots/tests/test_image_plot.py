@@ -186,6 +186,25 @@ class TestResultImage(unittest.TestCase):
             RGB, (IMAGE.T)[::-1, ::-1], origin="bottom right", orientation="v"
         )
 
+    def test_map_screen(self):
+        data_source = ImageData(data=RGB)
+        index, index_mapper = get_image_index_and_mapper(RGB)
+        renderer = ImagePlot(
+            value=data_source,
+            index=index,
+            index_mapper=index_mapper,
+        )
+
+        # ImagePlot map screen is used to find the screen_bbox, not on data
+        # itself.
+        screen_pt = renderer.map_screen([(0, 0)])
+        self.assertEqual(type(screen_pt), np.ndarray)
+        self.assertEqual(screen_pt.shape, (1, 2))
+
+        screen_pt = renderer.map_screen([])
+        self.assertEqual(type(screen_pt), np.ndarray)
+        self.assertEqual(screen_pt.shape, (0, 2))
+
     # regression test for enthought/chaco#528
     @unittest.skipIf(is_null, "Skip on 'null' toolkit")
     def test_resize_to_zero(self):
