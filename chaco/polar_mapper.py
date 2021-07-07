@@ -62,6 +62,8 @@ class PolarMapper(AbstractMapper):
             else:
                 return array([self.low_pos])
         else:
+            if not isinstance(data_array, ndarray):
+                data_array = array(data_array, ndmin=1)
             return (data_array - self.range.low) * self._scale + self.low_pos
 
     def map_data(self, screen_val):
