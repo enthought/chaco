@@ -18,7 +18,6 @@ from numpy import (
     column_stack,
     empty,
     invert,
-    empty,
     isnan,
     transpose,
     zeros,
