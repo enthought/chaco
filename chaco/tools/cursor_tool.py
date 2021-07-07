@@ -200,7 +200,7 @@ class CursorTool1D(BaseCursorTool):
         if plot is None:
             return
 
-        sx, sy = plot.map_screen(self.current_position)
+        sx, sy = plot.map_screen(self.current_position)[0]
         orientation = plot.orientation
 
         if orientation == "h" and sx is not None:
@@ -221,7 +221,7 @@ class CursorTool1D(BaseCursorTool):
         plot = self.component
         if plot is not None:
             orientation = plot.orientation
-            sx, sy = plot.map_screen(self.current_position)
+            sx, sy = plot.map_screen(self.current_position)[0]
             if orientation == "h" and numpy.abs(sx - x) <= self.threshold:
                 return True
             elif orientation == "v" and numpy.abs(sy - y) <= self.threshold:
