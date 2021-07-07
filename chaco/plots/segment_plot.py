@@ -142,6 +142,27 @@ class SegmentPlot(BaseXYPlot):
     def map_index(self, *args, **kwargs):
         raise NotImplementedError()
 
+    def map_screen(self, data_array):
+        """Maps an Nx2x2 array of data points into screen space and returns it
+        as an array.
+        Implements the AbstractPlotRenderer interface.
+        """
+        # ensure data_array is an Nx2x2 ndarray
+        data_array = np.asarray(data_array)
+        data_array = data_array.reshape(-1, 2, 2)
+
+        if len(data_array) == 0:
+            return np.empty(shape=(0, 2, 2))
+
+        x_ary, y_ary = np.transpose(data_array)
+
+        sx = self.index_mapper.map_screen(x_ary)
+        sy = self.value_mapper.map_screen(y_ary)
+        if self.orientation == "h":
+            return np.transpose(np.array((sx, sy)))
+        else:
+            return np.transpose(np.array((sy, sx)))
+
     def _gather_points(self):
         """Collects the data points that are within the bounds of the plot and
         caches them.
