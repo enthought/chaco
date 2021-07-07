@@ -5,7 +5,7 @@ Based on updating_plot.py
 """
 # Major library imports
 import pyaudio
-from numpy import zeros, linspace, short, fromstring, transpose, array
+from numpy import zeros, linspace, short, fromstring, transpose, array, empty
 from scipy import fft
 
 # Enthought library imports
@@ -78,7 +78,7 @@ class WaterfallRenderer(LinePlot):
         provided, then y2_mapper is used.
         """
         if len(data_array) == 0:
-            return []
+            return empty(shape=(0,2))
         x_ary, y_ary = transpose(data_array)
         sx = self.index_mapper.map_screen(x_ary)
         if data_offset is not None:

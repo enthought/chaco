@@ -12,7 +12,7 @@
 Abstract base class for 1-D plots which only use one axis
 """
 # Standard library imports
-from numpy import argsort, asarray
+from numpy import argsort, asarray, empty
 
 # Enthought library imports
 from traits.api import (
@@ -121,7 +121,7 @@ class Base1DPlot(AbstractPlotRenderer):
         """
         # data_array is 1D array of length N
         if len(data_array) == 0:
-            return []
+            return empty(shape=(0,))
         return asarray(self.index_mapper.map_screen(data_array))
 
     def map_data(self, screen_pts):
