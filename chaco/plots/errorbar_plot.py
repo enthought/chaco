@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 
 # Major library imports
-from numpy import column_stack, compress, invert, isnan, transpose
+from numpy import column_stack, compress, empty, invert, isnan, transpose
 import logging
 
 # Enthought library imports
@@ -49,7 +49,7 @@ class ErrorBarPlot(LinePlot):
         or (y, xlow, xhigh) depending on self.orientation.
         """
         if len(data_array) == 0:
-            return []
+            return empty(shape=(0, 2))
         elif data_array.shape[1] == 2:
             return LinePlot.map_screen(self, data_array)
         else:
