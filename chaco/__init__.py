@@ -15,5 +15,6 @@ __requires__ = [
 
 
 __extras_require__ = {
+    "docs": ["enthought-sphinx-theme", "sphinx"],
     'examples': ['encore', 'scipy', 'pandas']
 }
