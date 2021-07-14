@@ -55,7 +55,6 @@ jobs:
           # The --server-args assumes xvfb-run is called, hence Linux only.
           run: --server-args="-screen 0 1024x768x24" edm run -- python ci/edmtool.py test --toolkit=${{ matrix.toolkit }}
 
-
 # Test against EDM packages from source on Windows and OSX
   test-ets-source:
     strategy:
@@ -80,3 +79,31 @@ jobs:
         run: edm run -- python ci/edmtool.py install --toolkit=${{ matrix.toolkit }} --source
       - name: Run tests
         run: edm run -- python ci/edmtool.py test --toolkit=${{ matrix.toolkit }}
+
+  notify-on-failure:
+    needs: [test-ets-source-linux, test-ets-source]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Slack channel on failure
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel_id: ${{ secrets.ETS_BOTS_SLACK_CHANNEL_ID }}
+          status: FAILED
+          color: danger
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_ACTION_SECRET }}
+
+  notify-on-success:
+    needs: [test-ets-source-linux, test-ets-source]
+    if: success()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Slack channel on success
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel_id: ${{ secrets.ETS_BOTS_SLACK_CHANNEL_ID }}
+          status: SUCCESS
+          color: good
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_ACTION_SECRET }}
