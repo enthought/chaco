@@ -207,16 +207,21 @@ class DataView(OverlayPlotContainer):
     #: Background color (overrides Enable Component)
     bgcolor = "white"
 
-    #: Padding defaults.
+    # Padding defaults. These were converted to properties as a hacky fix for
+    # enthought/chaco#564
+    #: Top Padding default
     padding_top = Property(
         observe='y_axis.[title,orientation], x_axis.[title,orientation]'
     )
+    #: Bottom Padding default
     padding_bottom = Property(
         observe='y_axis.[title,orientation], x_axis.[title,orientation]'
     )
+    #: Left Padding default
     padding_left = Property(
         observe='y_axis.[title,orientation], x_axis.[title,orientation]'
     )
+    #: Right Padding default
     padding_right = Property(
         observe='y_axis.[title,orientation], x_axis.[title,orientation]'
     )
@@ -255,7 +260,7 @@ class DataView(OverlayPlotContainer):
 
     def _get_padding_right(self):
         return self._find_padding("right")
-    
+
     def _set_padding_top(self, value):
         self._padding_top = value
 
