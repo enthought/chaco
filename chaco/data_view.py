@@ -13,7 +13,7 @@ functions.
 """
 from numpy import array, empty, transpose
 
-from traits.api import Bool, Enum, Instance, Property
+from traits.api import Bool, Enum, Instance, Int, observe, Property, Union
 from enable.api import color_table
 
 from .abstract_overlay import AbstractOverlay
@@ -217,11 +217,71 @@ class DataView(OverlayPlotContainer):
     #: Background color (overrides Enable Component)
     bgcolor = "white"
 
-    #: Padding defaults.
-    padding_top = 50
-    padding_bottom = 50
-    padding_left = 50
-    padding_right = 50
+    # Padding defaults. These were converted to properties as a hacky fix for
+    # enthought/chaco#564
+    #: Top Padding default
+    padding_top = Property(
+        observe='y_axis.[title,orientation], x_axis.[title,orientation]'
+    )
+    #: Bottom Padding default
+    padding_bottom = Property(
+        observe='y_axis.[title,orientation], x_axis.[title,orientation]'
+    )
+    #: Left Padding default
+    padding_left = Property(
+        observe='y_axis.[title,orientation], x_axis.[title,orientation]'
+    )
+    #: Right Padding default
+    padding_right = Property(
+        observe='y_axis.[title,orientation], x_axis.[title,orientation]'
+    )
+
+    _padding_top = Union(None, Int())
+    _padding_bottom= Union(None, Int())
+    _padding_left = Union(None, Int())
+    _padding_right = Union(None, Int())
+
+    def _find_padding(self, side):
+        SIDE_TO_TRAIT_MAP = {
+            "top": "_padding_top",
+            "bottom": "_padding_bottom",
+            "left": "_padding_left",
+            "right": "_padding_right",
+        }
+        if getattr(self, SIDE_TO_TRAIT_MAP[side]) is not None:
+            return getattr(self, SIDE_TO_TRAIT_MAP[side])
+        else:
+            if self.y_axis:
+                if (self.y_axis.title and self.y_axis.orientation == side):
+                    return 80
+            if self.x_axis:
+                if (self.x_axis.title and self.x_axis.orientation == side):
+                    return 80
+            return 50
+
+    def _get_padding_top(self):
+        return self._find_padding("top")
+
+    def _get_padding_bottom(self):
+        return self._find_padding("bottom")
+
+    def _get_padding_left(self):
+        return self._find_padding("left")
+
+    def _get_padding_right(self):
+        return self._find_padding("right")
+
+    def _set_padding_top(self, value):
+        self._padding_top = value
+
+    def _set_padding_bottom(self, value):
+        self._padding_bottom = value
+
+    def _set_padding_left(self, value):
+        self._padding_left = value
+
+    def _set_padding_right(self, value):
+        self._padding_right = value
 
     border_visible = True
 

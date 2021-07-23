@@ -10,7 +10,38 @@
 
 import unittest
 
-from chaco.api import DataRange2D, DataView, GridDataSource
+from numpy import linspace, sin
+
+from traits.api import Enum, HasTraits, Instance
+from traitsui.api import UItem, View
+from chaco.api import (
+    ArrayPlotData, DataRange2D, DataView, GridDataSource, Plot
+)
+from enable.api import ComponentEditor
+
+
+class DummyPaddingPlot(HasTraits):
+    orientation = Enum("top", "bottom", "left", "right")
+    plot = Instance(Plot)
+
+    traits_view = View(
+        UItem(
+            'plot',
+            editor=ComponentEditor()
+        ),
+    )
+
+    def _plot_default(self):
+        x = linspace(0, 10, 10)
+        plotdata = ArrayPlotData(x=x, y=x)
+
+        plot = Plot(plotdata)
+        plot.plot(("x", "y"), type="line", color="blue")
+
+        plot.x_axis.title = "X AXIS"
+        plot.x_axis.orientation = self.orientation
+
+        return plot
 
 
 class DataViewTestCase(unittest.TestCase):
@@ -45,3 +76,11 @@ class DataViewTestCase(unittest.TestCase):
         self.assertTrue(old_range.sources == [])
         self.assertTrue(dv.range2d.x_range is dv.index_mapper.range)
         self.assertTrue(dv.range2d.y_range is dv.value_mapper.range)
+
+    # regression test for enthought/chaco#735
+    def test_padding_with_axis_title(self):
+        for orientation in ["top", "bottom", "left", "right"]:
+            dummy_plot = DummyPaddingPlot(orientation=orientation)
+            self.assertEqual(
+                getattr(dummy_plot.plot, "padding_" + orientation), 80
+            )
