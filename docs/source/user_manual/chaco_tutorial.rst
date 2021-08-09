@@ -1290,7 +1290,8 @@ Final words
 This concludes this tutorial. You can download :download:`a PDF version of the slides <../resources/scipy08_tutorial.pdf>`
 For further information, visit the :ref:`user_guide`. You can find the examples
 for this tutorial in the :file:`examples/tutorials/scipy2008/` directory of the
-Chaco source code. You can browse it online in the `GitHub repository <https://github.com/enthought/chaco/tree/master/examples/tutorials>`_
+Chaco source code. You can browse it online in the
+`GitHub repository <https://github.com/enthought/chaco/tree/main/examples/tutorials>`_
 if you don't have a local copy. They are numbered and introduce concepts one at
 a time, going from a simple line plot to building a custom overlay with its own
 trait editor and reusing an existing tool from the built-in set of tools.
