@@ -17,7 +17,7 @@ examples as starting points for their own applications.
 -----------------------
 An example showing Chaco's BarPlot class.
 
-source: `bar_plot_stacked.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/bar_plot_stacked.py>`_
+source: :github-demo:`bar_plot_stacked.py <chaco/examples/demo/basic/bar_plot_stacked.py>`.
 
 .. image:: example_images/bar_plot.png
 
@@ -33,7 +33,7 @@ of the backbuffering built into chaco.
 Zooming with the mousewheel and the zoombox (as described in simple_line.py)
 is also available, but panning is not.
 
-source: `bigdata.py <https://github.com/enthought/chaco/tree/main/examples/demo/bigdata.py>`_
+source: :github-demo:`bigdata.py <chaco/examples/demo/bigdata.py>`.
 
 .. image:: example_images/bigdata.png
 
@@ -41,7 +41,7 @@ source: `bigdata.py <https://github.com/enthought/chaco/tree/main/examples/demo/
 ----------------------
 Draws a colormapped image plot.
 
-source: `cmap_image_plot.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/cmap_image_plot.py>`_
+source: :github-demo:`cmap_image_plot.py <chaco/examples/demo/basic/cmap_image_plot.py>`.
 
 .. image:: example_images/cmap_image_plot.png
 
@@ -50,7 +50,7 @@ source: `cmap_image_plot.py <https://github.com/enthought/chaco/tree/main/exampl
 Draws a colormapped image plot. Selecting colors in the spectrum on the right
 highlights the corresponding colors in the color map.
 
-source: `cmap_image_select.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/cmap_image_select.py>`_
+source: :github-demo:`cmap_image_select.py <chaco/examples/demo/basic/cmap_image_select.py>`.
 
 .. image:: example_images/cmap_image_select.png
 
@@ -58,7 +58,7 @@ source: `cmap_image_select.py <https://github.com/enthought/chaco/tree/main/exam
 -------------------
 Draws a colormapped scatterplot of some random data. Selection works the same as in cmap_image_select.py.
 
-source: `cmap_scatter.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/cmap_scatter.py>`_
+source: :github-demo:`cmap_scatter.py <chaco/examples/demo/basic/cmap_scatter.py>`.
 
 .. image:: example_images/cmap_scatter.png
 
@@ -66,7 +66,7 @@ source: `cmap_scatter.py <https://github.com/enthought/chaco/tree/main/examples/
 --------------------------
 Renders some contoured and colormapped images of a scalar value field.
 
-source: `countour_cmap_plot.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/contour_cmap_plot.py>`_
+source: :github-demo:`countour_cmap_plot.py <chaco/examples/demo/basic/contour_cmap_plot.py>`.
 
 .. image:: example_images/contour_cmap_plot.png
 
@@ -74,7 +74,7 @@ source: `countour_cmap_plot.py <https://github.com/enthought/chaco/tree/main/exa
 -------------------
 Draws an contour polygon plot with a contour line plot on top.
 
-source: `countour_plot.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/contour_plot.py>`_
+source: :github-demo:`countour_plot.py <chaco/examples/demo/basic/contour_plot.py>`.
 
 .. image:: example_images/contour_plot.png
 
@@ -85,7 +85,7 @@ A Demonstration of the CursorTool functionality
 Left-button drag to move the cursors round.
 Right-drag to pan the plots. 'z'-key to Zoom
 
-source: `cursor_tool_demo.py <https://github.com/enthought/chaco/tree/main/examples/demo/cursor_tool_demo.py>`_
+source: :github-demo:`cursor_tool_demo.py <chaco/examples/demo/cursor_tool_demo.py>`.
 
 .. image:: example_images/cursor_tool_demo.png
 
@@ -93,7 +93,7 @@ source: `cursor_tool_demo.py <https://github.com/enthought/chaco/tree/main/examp
 ----------------
 Allows isometric viewing of a 3-D data cube (downloads the necessary data, about 7.8 MB)
 
-source: `data_cube.py <https://github.com/enthought/chaco/tree/main/examples/demo/advanced/data_cube.py>`_
+source: :github-demo:`data_cube.py <chaco/examples/demo/advanced/data_cube.py>`.
 
 .. image:: example_images/data_cube.png
 
@@ -102,7 +102,7 @@ source: `data_cube.py <https://github.com/enthought/chaco/tree/main/examples/dem
 Draws a line plot with several points labelled.  Demonstrates how to annotate
 plots.
 
-source: `data_labels.py <https://github.com/enthought/chaco/tree/main/examples/demo/data_labels.py>`_
+source: :github-demo:`data_labels.py <chaco/examples/demo/data_labels.py>`.
 
 .. image:: example_images/data_labels.png
 
@@ -117,7 +117,7 @@ device from which the data is being acquired; in this case, it is a mockup
 random number generator whose mean and standard deviation can be controlled
 by the user.
 
-source: `data_stream.py <https://github.com/enthought/chaco/tree/main/examples/demo/advanced/data_stream.py>`_
+source: :github-demo:`data_stream.py <chaco/examples/demo/advanced/data_stream.py>`.
 
 .. image:: example_images/data_stream.png
 
@@ -125,7 +125,7 @@ source: `data_stream.py <https://github.com/enthought/chaco/tree/main/examples/d
 ----------------
 Example of how to use a DataView and bare renderers to create plots.
 
-source: `data_view.py <https://github.com/enthought/chaco/tree/main/examples/demo/data_view.py>`_
+source: :github-demo:`data_view.py <chaco/examples/demo/data_view.py>`.
 
 .. image:: example_images/data_view.png
 
@@ -133,7 +133,7 @@ source: `data_view.py <https://github.com/enthought/chaco/tree/main/examples/dem
 ----------------
 Allows editing of a line plot.
 
-source: `edit_line.py <https://github.com/enthought/chaco/tree/main/examples/demo/edit_line.py>`_
+source: :github-demo:`edit_line.py <chaco/examples/demo/edit_line.py>`.
 
 .. image:: example_images/edit_line.png
 
@@ -143,7 +143,7 @@ Implementation of a standard financial plot visualization using Chaco renderers
 and scales. Right-clicking and selecting an area in the top window zooms in
 the corresponding area in the lower window.
 
-source: `financial_plot.py <https://github.com/enthought/chaco/tree/main/examples/demo/financial_plot.py>`_
+source: :github-demo:`financial_plot.py <examples/demo/financial_plot.py>`.
 
 .. image:: example_images/financial_plot.png
 
@@ -155,7 +155,7 @@ the corresopnding area in the lower window.
 This differs from the financial_plot.py example in that it uses a date-oriented
 axis.
 
-source: `financial_plot_dates.py <https://github.com/enthought/chaco/tree/main/examples/demo/financial_plot_dates.py>`_
+source: :github-demo:`financial_plot_dates.py <examples/demo/financial_plot_dates.py>`.
 
 .. image:: example_images/financial_plot_dates.png
 
@@ -163,7 +163,7 @@ source: `financial_plot_dates.py <https://github.com/enthought/chaco/tree/main/e
 ---------------------
 Draws several overlapping line plots.
 
-source: `grid_container.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/grid_container.py>`_
+source: :github-demo:`grid_container.py <chaco/examples/demo/basic/grid_container.py>`.
 
 .. image:: example_images/grid_container.png
 
@@ -172,7 +172,7 @@ source: `grid_container.py <https://github.com/enthought/chaco/tree/main/example
 Similar to grid_container.py, but demonstrates Chaco's capability to used a
 fixed screen space aspect ratio for plot components.
 
-source: `grid_container_aspect_ratio.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/grid_container_aspect_ratio.py>`_
+source: :github-demo:`grid_container_aspect_ratio.py <chaco/examples/demo/basic/grid_container_aspect_ratio.py>`.
 
 .. image:: example_images/grid_container_aspect_ratio.png
 
@@ -180,7 +180,7 @@ source: `grid_container_aspect_ratio.py <https://github.com/enthought/chaco/tree
 ----------------------
 Loads and saves RGB images from disk.
 
-source: `image_from_file.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/image_from_file.py>`_
+source: :github-demo:`image_from_file.py <chaco/examples/demo/basic/image_from_file.py>`.
 
 .. image:: example_images/image_from_file.png
 
@@ -189,7 +189,7 @@ source: `image_from_file.py <https://github.com/enthought/chaco/tree/main/exampl
 Demonstrates the ImageInspectorTool and overlay on a colormapped image plot.
 The underlying plot is similar to the one in cmap_image_plot.py.
 
-source: `image_inspector.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/image_inspector.py>`_
+source: :github-demo:`image_inspector.py <chaco/examples/demo/basic/image_inspector.py>`.
 
 .. image:: example_images/image_inspector.png
 
@@ -197,7 +197,7 @@ source: `image_inspector.py <https://github.com/enthought/chaco/tree/main/exampl
 -----------------
 Draws a simple RGB image
 
-source: `image_plot.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/image_plot.py>`_
+source: :github-demo:`image_plot.py <chaco/examples/demo/basic/image_plot.py>`.
 
 .. image:: example_images/image_plot.png
 
@@ -207,7 +207,7 @@ A modification of line_plot1.py that shows the second plot as a subwindow of
 the first.  You can pan and zoom the second plot just like the first, and you
 can move it around my right-click and dragging in the smaller plot.
 
-source: `inset_plot.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/inset_plot.py>`_
+source: :github-demo:`inset_plot.py <chaco/examples/demo/basic/inset_plot.py>`.
 
 .. image:: example_images/inset_plot.png
 
@@ -216,7 +216,7 @@ source: `inset_plot.py <https://github.com/enthought/chaco/tree/main/examples/de
 Demonstrates using a line segment drawing tool on top of the scatter plot from
 simple_scatter.py.
 
-source: `line_drawing.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/line_drawing.py>`_
+source: :github-demo:`line_drawing.py <chaco/examples/demo/basic/line_drawing.py>`.
 
 .. image:: example_images/line_drawing.png
 
@@ -224,7 +224,7 @@ source: `line_drawing.py <https://github.com/enthought/chaco/tree/main/examples/
 -----------------
 Draws some x-y line and scatter plots.
 
-source: `line_plot1.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/line_plot1.py>`_
+source: :github-demo:`line_plot1.py <chaco/examples/demo/basic/line_plot1.py>`.
 
 .. image:: example_images/line_plot1.png
 
@@ -232,7 +232,7 @@ source: `line_plot1.py <https://github.com/enthought/chaco/tree/main/examples/de
 ---------------------
 Demonstrates the different 'hold' styles of LinePlot.
 
-source: `line_plot_hold.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/line_plot_hold.py>`_
+source: :github-demo:`line_plot_hold.py <chaco/examples/demo/basic/line_plot_hold.py>`.
 
 .. image:: example_images/line_plot_hold.png
 
@@ -240,7 +240,7 @@ source: `line_plot_hold.py <https://github.com/enthought/chaco/tree/main/example
 -----------------
 Draws some x-y log plots. (No Tools).
 
-source: `log_plot.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/log_plot.py>`_
+source: :github-demo:`log_plot.py <chaco/examples/demo/basic/log_plot.py>`.
 
 .. image:: example_images/log_plot.png
 
@@ -250,7 +250,7 @@ Draws several overlapping line plots like simple_line.py, but uses a separate
 Y range for each plot.  Also has a second Y-axis on the right hand side.
 Demonstrates use of the BroadcasterTool.
 
-source: `multiaxis.py <https://github.com/enthought/chaco/tree/main/examples/demo/multiaxis.py>`_
+source: :github-demo:`multiaxis.py <examples/demo/multiaxis.py>`.
 
 .. image:: example_images/multiaxis.png
 
@@ -264,7 +264,7 @@ Draws some x-y line and scatter plots. On the left hand plot:
    and alt-right-arrow moves you forwards and backwards through the "zoom
    history".
 
-source: `multiaxis_using_Plot.py <https://github.com/enthought/chaco/tree/main/examples/demo/multiaxis_using_Plot.py>`_
+source: :github-demo:`multiaxis_using_Plot.py <examples/demo/multiaxis_using_Plot.py>`.
 
 .. image:: example_images/multiaxis_using_Plot.png
 
@@ -272,7 +272,7 @@ source: `multiaxis_using_Plot.py <https://github.com/enthought/chaco/tree/main/e
 ----------------
 This plot displays chaco's ability to handle data interlaced with NaNs.
 
-source: `nans_plot.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/nans_plot.py>`_
+source: :github-demo:`nans_plot.py <chaco/examples/demo/basic/nans_plot.py>`.
 
 .. image:: example_images/nans_plot.png
 
@@ -281,7 +281,7 @@ source: `nans_plot.py <https://github.com/enthought/chaco/tree/main/examples/dem
 This demonstrates how to create a plot offscreen and save it to an image file
 on disk. The image is what is saved.
 
-source: `noninteractive.py <https://github.com/enthought/chaco/tree/main/examples/demo/noninteractive.py>`_
+source: :github-demo:`noninteractive.py <examples/demo/noninteractive.py>`.
 
 .. image:: example_images/noninteractive.png
 
@@ -290,7 +290,7 @@ source: `noninteractive.py <https://github.com/enthought/chaco/tree/main/example
 Shares same basic interactions as polygon_plot.py, but adds a new one:
 right-click and drag to move a polygon around.
 
-source: `polygon_move.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/polygon_move.py>`_
+source: :github-demo:`polygon_move.py <chaco/examples/demo/basic/polygon_move.py>`.
 
 .. image:: example_images/polygon_move.png
 
@@ -298,7 +298,7 @@ source: `polygon_move.py <https://github.com/enthought/chaco/tree/main/examples/
 ------------------------
 Draws some different polygons.
 
-source: `polygon_plot_demo.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/polygon_plot_demo.py>`_
+source: :github-demo:`polygon_plot_demo.py <chaco/examples/demo/basic/polygon_plot_demo.py>`.
 
 .. image:: example_images/polygon_plot.png
 
@@ -308,7 +308,7 @@ Demo of the RangeSelection on a line plot.  Left-click and drag creates a
 horizontal range selection; this selection can then be dragged around, or
 resized by dragging its edges.
 
-source: `range_selection_demo.py <https://github.com/enthought/chaco/tree/main/examples/demo/range_selection_demo.py>`_
+source: :github-demo:`range_selection_demo.py <chaco/examples/demo/range_selection_demo.py>`.
 
 .. image:: example_images/range_selection_demo.png
 
@@ -321,7 +321,7 @@ around some points, and a line fit is drawn through the center of the points.
 The parameters of the line are displayed at the bottom of the plot region.  You
 can do this repeatedly to draw different regions.
 
-source: `regression.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/regression.py>`_
+source: :github-demo:`regression.py <chaco/examples/demo/basic/regression.py>`.
 
 .. image:: example_images/regression.png
 
@@ -330,7 +330,7 @@ source: `regression.py <https://github.com/enthought/chaco/tree/main/examples/de
 Renders a colormapped image of a scalar value field, and a cross section
 chosen by a line interactor.
 
-source: `scalar_image_function_inspector.py <https://github.com/enthought/chaco/tree/main/examples/demo/advanced/scalar_image_function_inspector.py>`_
+source: :github-demo:`scalar_image_function_inspector.py <chaco/examples/demo/advanced/scalar_image_function_inspector.py>`.
 
 .. image:: example_images/scalar_image_function_inspector.png
 
@@ -340,7 +340,7 @@ Draws several overlapping line plots.
 
 Double-clicking on line or scatter plots opens a Traits editor for the plot.
 
-source: `scales_test.py <https://github.com/enthought/chaco/tree/main/examples/demo/scales_test.py>`_
+source: :github-demo:`scales_test.py <chaco/examples/demo/scales_test.py>`.
 
 .. image:: example_images/scales_test.png
 
@@ -348,7 +348,7 @@ source: `scales_test.py <https://github.com/enthought/chaco/tree/main/examples/d
 -------------------
 Draws a simple scatterplot of a set of random points.
 
-source: `scatter.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/scatter.py>`_
+source: :github-demo:`scatter.py <chaco/examples/demo/basic/scatter.py>`.
 
 .. image:: example_images/scatter.png
 
@@ -356,7 +356,7 @@ source: `scatter.py <https://github.com/enthought/chaco/tree/main/examples/demo/
 ------------------------
 Example of using tooltips on Chaco plots.
 
-source: `scatter_inspector.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/scatter_inspector.py>`_
+source: :github-demo:`scatter_inspector.py <chaco/examples/demo/basic/scatter_inspector.py>`.
 
 .. image:: example_images/scatter_inspector.png
 
@@ -367,7 +367,7 @@ the lasso selector, which allows you to circle a set of points.  Upon
 completion of the lasso operation, the indices of the selected points are
 printed to the console.
 
-source: `scatter_select.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/scatter_select.py>`_
+source: :github-demo:`scatter_select.py <chaco/examples/demo/basic/scatter_select.py>`.
 
 .. image:: example_images/scatter_select.png
 
@@ -382,7 +382,7 @@ console output::
 -------------------
 Draws some x-y line and scatter plots.
 
-source: `scrollbar.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/scrollbar.py>`_
+source: :github-demo:`scrollbar.py <chaco/examples/demo/basic/scrollbar.py>`.
 
 .. image:: example_images/scrollbar.png
 
@@ -392,7 +392,7 @@ Draws several overlapping line plots.
 
 Double-clicking on line or scatter plots opens a Traits editor for the plot.
 
-source: `simple_line.py <https://github.com/enthought/chaco/tree/main/examples/demo/simple_line.py>`_
+source: :github-demo:`simple_line.py <chaco/examples/demo/simple_line.py>`.
 
 .. image:: images/simple_line.png
 
@@ -402,7 +402,7 @@ source: `simple_line.py <https://github.com/enthought/chaco/tree/main/examples/d
     -------------------
     Draws a static polar plot.
 
-    source: `simple_polar.py <https://github.com/enthought/chaco/tree/main/examples/demo/simple_polar.py>`_
+    source: :github-demo:`simple_polar.py <chaco/examples/demo/simple_polar.py>`.
 
     .. image:: example_images/simple_polar.png
 
@@ -410,7 +410,7 @@ source: `simple_line.py <https://github.com/enthought/chaco/tree/main/examples/d
 --------------------------------------
 This plot displays the audio spectrum from the microphone.
 
-source: `spectrum.py <https://github.com/enthought/chaco/tree/main/examples/demo/advanced/spectrum.py>`_
+source: :github-demo:`spectrum.py <examples/demo/advanced/spectrum.py>`.
 
 .. image:: example_images/spectrum.png
 
@@ -418,7 +418,7 @@ source: `spectrum.py <https://github.com/enthought/chaco/tree/main/examples/demo
 -------------------
 Draws some x-y line and scatter plots.
 
-source: `tabbed_plots.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/tabbed_plots.py>`_
+source: :github-demo:`tabbed_plots.py <chaco/examples/demo/basic/tabbed_plots.py>`.
 
 .. image:: example_images/tabbed_plots1.png
 .. image:: example_images/tabbed_plots2.png
@@ -427,7 +427,7 @@ source: `tabbed_plots.py <https://github.com/enthought/chaco/tree/main/examples/
 --------------
 Tornado plot example from Brennan Williams.
 
-source: `tornado.py <https://github.com/enthought/chaco/tree/main/examples/demo/tornado.py>`_
+source: :github-demo:`tornado.py <chaco/examples/demo/tornado.py>`.
 
 .. image:: example_images/tornado.png
 
@@ -435,7 +435,7 @@ source: `tornado.py <https://github.com/enthought/chaco/tree/main/examples/demo/
 ----------------
 Demonstrates plots sharing datasources, ranges, etc...
 
-source: `two_plots.py <https://github.com/enthought/chaco/tree/main/examples/demo/two_plots.py>`_
+source: :github-demo:`two_plots.py <chaco/examples/demo/two_plots.py>`.
 
 .. image:: example_images/two_plots.png
 
@@ -446,7 +446,7 @@ Draws a static plot of bessel functions, oriented vertically, side-by-side.
 You can experiment with using different containers (uncomment lines 32-33)
 or different orientations on the plots (comment out line 43 and uncomment 44).
 
-source: `vertical_plot.py <https://github.com/enthought/chaco/tree/main/examples/demo/vertical_plot.py>`_
+source: :github-demo:`vertical_plot.py <chaco/examples/demo/vertical_plot.py>`.
 
 .. image:: example_images/vertical_plot.png
 
@@ -461,7 +461,7 @@ Left-click pans the colorbar's data region.  Right-click-drag
 selects a zoom range.  Mousewheel up and down zoom in and out on
 the data bounds of the color bar.
 
-source: `zoomable_colorbar.py <https://github.com/enthought/chaco/tree/main/examples/demo/basic/zoomable_colorbar.py>`_
+source: :github-demo:`zoomable_colorbar.py <chaco/examples/demo/basic/zoomable_colorbar.py>`.
 
 .. image:: example_images/zoomable_colorbar.png
 
@@ -473,6 +473,6 @@ Right-click and drag on the upper plot to select a region to view in detail
 in the lower plot.  The selected region can be moved around by dragging,
 or resized by clicking on one of its edges and dragging.
 
-source: `zoomed_plot <https://github.com/enthought/chaco/tree/main/examples/demo/zoomed_plot/>`_
+source: :github-demo:`zoomed_plot <examples/demo/zoomed_plot/>`.
 
 .. image:: example_images/zoomed_plot.png

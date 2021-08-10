@@ -29,6 +29,7 @@ BUILD_DOCSET = get_build_docset()
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
   'sphinx.ext.autodoc',
+  'sphinx.ext.extlinks',
   'sphinx.ext.napoleon',
   'sphinx.ext.graphviz',
   'sphinx.ext.intersphinx',
@@ -223,6 +224,11 @@ latex_documents = [
 # If false, no module index is generated.
 #latex_use_modindex = True
 
+extlinks = {
+    'github-demo': (
+        f'https://github.com/enthought/chaco/tree/{version}/%s', ''
+    )
+}
 
 intersphinx_mapping = {
     'enable': ('http://docs.enthought.com/enable', None)
