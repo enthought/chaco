@@ -18,6 +18,7 @@ from numpy import (
     array,
     cumsum,
     hstack,
+    resize,
     sum,
     zeros,
     zeros_like,
@@ -512,7 +513,7 @@ class GridPlotContainer(BasePlotContainer):
             numrows, numcols = divmod(len(self.components), self.shape[0])
             self.shape = (numrows, numcols)
         grid = array(self.components, dtype=object)
-        grid.resize(self.shape)
+        grid = resize(grid, self.shape)
         grid[grid == 0] = None
         self._grid = grid
         self._layout_needed = True
