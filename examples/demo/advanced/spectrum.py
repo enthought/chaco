@@ -14,7 +14,7 @@ except ImportError:
     sys.exit("You need pyaudio installed to run this demo.")
 
 from numpy import zeros, linspace, short, fromstring, hstack, transpose
-from scipy import fft
+from scipy.fft import fft
 
 # Enthought library imports
 from chaco.default_colormaps import hot
@@ -37,7 +37,7 @@ SPECTROGRAM_LENGTH = 100
 
 def _create_plot_component(obj):
     # Setup the spectrum plot
-    frequencies = linspace(0.0, float(SAMPLING_RATE) / 2, num=NUM_SAMPLES / 2)
+    frequencies = linspace(0.0, float(SAMPLING_RATE) // 2, num=NUM_SAMPLES // 2)
     obj.spectrum_data = ArrayPlotData(frequency=frequencies)
     empty_amplitude = zeros(NUM_SAMPLES // 2)
     obj.spectrum_data.set_data("amplitude", empty_amplitude)
