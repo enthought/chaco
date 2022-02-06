@@ -344,7 +344,7 @@ class ColorMapper(AbstractColormap):
             self._recalculate()
 
         luts = [self._red_lut, self._green_lut, self._blue_lut]
-        if self.color_depth is "rgba":
+        if self.color_depth == "rgba":
             luts.append(self._alpha_lut)
 
         result = list(zip(*luts))

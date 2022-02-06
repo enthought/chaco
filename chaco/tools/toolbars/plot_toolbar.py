@@ -235,7 +235,7 @@ class PlotToolbar(Container, AbstractOverlay):
             # Overlay positions are not relative to the component's position,
             # so we have to add in the component's position
             cx, cy = component.outer_position
-            if self.location is "top":
+            if self.location == "top":
                 self.x = (
                     cx
                     + (component.width - self.width) / 2
@@ -248,14 +248,14 @@ class PlotToolbar(Container, AbstractOverlay):
                     - height
                     - 2
                 )
-            elif self.location is "bottom":
+            elif self.location == "bottom":
                 self.x = (
                     cx
                     + (component.width - self.width) / 2
                     + component.padding_left
                 )
                 self.y = cy + component.padding_bottom + 2
-            elif self.location is "left":
+            elif self.location == "left":
                 self.x = cx + component.padding_left + 2
                 self.y = (
                     cy
