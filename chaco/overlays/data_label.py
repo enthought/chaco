@@ -17,7 +17,7 @@ from numpy.linalg import norm
 
 # Enthought library imports
 from traits.api import Any, ArrayOrNone, Bool, Enum, Float, Int, List, \
-     Str, Tuple, Trait, observe, Property
+     Str, Tuple, Union, observe, Property
 from enable.api import ColorTrait, MarkerTrait
 
 # Local, relative imports
@@ -29,11 +29,15 @@ from chaco.plots.scatterplot import render_markers
 # be one of the text strings indicated, or a tuple or list of floats
 # representing the (x_offset, y_offset) in screen space of the label's
 # lower left corner.
-LabelPositionTrait = Trait("top right",
-                           Enum("bottom", "left", "right", "top",
-                                "top right", "top left",
-                                "bottom left", "bottom right"),
-                           Tuple, List)
+LabelPositionTrait = Union(
+    Enum(
+        "bottom", "left", "right", "top", "top right", "top left",
+        "bottom left", "bottom right"
+    ),
+    Tuple,
+    List,
+    default_value="top right",
+)
 
 
 def draw_arrow(gc, pt1, pt2, color, arrowhead_size=10.0, offset1=0,
@@ -132,8 +136,8 @@ def find_region(px, py, x, y, x2, y2):
               +----------+  # noqa
          left |  inside  | right  # noqa
               +----------+  # noqa
-             /            \  # noqa 
-            /    bottom    \  # noqa 
+             /            \  # noqa
+            /    bottom    \  # noqa
 
     """
     if px < x:
@@ -251,9 +255,10 @@ class DataLabel(ToolTip):
     #: is 'auto', then the label uses **label_position**.  Otherwise, it
     #: treats the label as if it were at the label position indicated by
     #: this attribute.
-    arrow_root = Trait("auto", "auto", "top left", "top right", "bottom left",
-                       "bottom right", "top center", "bottom center",
-                       "left center", "right center")
+    arrow_root = Enum(
+        "auto", "top left", "top right", "bottom left", "bottom right",
+        "top center", "bottom center", "left center", "right center",
+    )
 
     #: The minimum length of the arrow before it will be drawn.  By default,
     #: the arrow will be drawn regardless of how short it is.

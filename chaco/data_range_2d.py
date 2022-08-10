@@ -21,7 +21,6 @@ from traits.api import (
     CFloat,
     Instance,
     Property,
-    Trait,
     Tuple,
     observe,
 )
@@ -41,15 +40,15 @@ class DataRange2D(BaseDataRange):
 
     #: The actual value of the lower bound of this range. To set it, use
     #: **low_setting**.
-    low = Property  # (2,) array of lower-left x,y
+    low = Property()  # (2,) array of lower-left x,y
     #: The actual value of the upper bound of this range. To set it, use
     #: **high_setting**.
-    high = Property  # (2,) array of upper-right x,y
+    high = Property()  # (2,) array of upper-right x,y
 
     #: Property for the lower bound of this range (overrides AbstractDataRange).
-    low_setting = Property
+    low_setting = Property()
     #: Property for the upper bound of this range (overrides AbstractDataRange).
-    high_setting = Property
+    high_setting = Property()
 
     # The 2-D grid range is actually implemented as two 1-D ranges, which can
     # be accessed individually.  They can also be set to new DataRange1D
@@ -57,9 +56,9 @@ class DataRange2D(BaseDataRange):
     # its old 1-D dataranges and added to the new one.
 
     #: Property for the range in the x-dimension.
-    x_range = Property
+    x_range = Property()
     #: Property for the range in the y-dimension.
-    y_range = Property
+    y_range = Property()
 
     #: Do "auto" bounds imply an exact fit to the data? (One Boolean per
     #: dimension) If False, the bounds pad a little bit of margin on either

@@ -3,12 +3,11 @@ from traits.api import (
     Any,
     Bool,
     Dict,
-    Enum,
     HasTraits,
     Int,
     List,
-    Trait,
     Tuple,
+    Union,
 )
 
 
@@ -66,7 +65,7 @@ class AxisTool(BaseTool):
     down_tick_label_color = ColorTrait("red")
     down_bgcolor = ColorTrait("lightgray")
     down_border_visible = Bool(True)
-    down_border_color = Trait(None, None, ColorTrait)
+    down_border_color = Union(None, ColorTrait)
 
     _cached_tick_color = ColorTrait
     _cached_axis_line_color = ColorTrait

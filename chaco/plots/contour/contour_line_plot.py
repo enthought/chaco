@@ -17,7 +17,7 @@ from numpy import array, isfinite, meshgrid, transpose
 # Enthought library imports
 from enable.api import LineStyle
 from kiva import constants
-from traits.api import Bool, Dict, Float, List, Str, Trait
+from traits.api import Any, Bool, Dict, Float, List, Str, Union
 
 # Local relative imports
 from chaco.base_contour_plot import BaseContourPlot
@@ -40,10 +40,10 @@ class ContourLinePlot(BaseContourPlot):
     #: of widths. If the list is too short with respect to then number of
     #: contour lines, the values are repeated from the beginning of the list.
     #: Widths are associated with levels of increasing value.
-    widths = Trait(1.0, Float, List)
+    widths = Union(Float(1.0), List(Float))
 
     #: The line dash style(s).
-    styles = Trait("signed", Str, List)
+    styles = Union(Str("signed"), List)
 
     #: Line style for positive levels.
     positive_style = LineStyle("solid")
@@ -59,7 +59,7 @@ class ContourLinePlot(BaseContourPlot):
     _contour_cache_valid = Bool(False, transient=True)
 
     # Cached collection of traces.
-    _cached_contours = Dict(transient=True)
+    _cached_contours = Dict(Any, Any, transient=True)
 
     # Is the cached width data valid?
     _widths_cache_valid = Bool(False, transient=True)

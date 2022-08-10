@@ -17,7 +17,7 @@ from numpy import array
 
 # Enthought library imports
 from enable.api import Component, Pointer, Line
-from traits.api import Any, Bool, Enum, Instance, Int, List, Trait, Tuple
+from traits.api import Any, Bool, Enum, Instance, Int, List, Tuple, Union
 
 # Chaco imports
 from chaco.abstract_overlay import AbstractOverlay
@@ -55,10 +55,10 @@ class LineSegmentTool(AbstractOverlay):
 
     #: The data (index, value) position of the mouse cursor; this is used by various
     #: draw() routines.
-    mouse_position = Trait(None, None, Tuple)
+    mouse_position = Union(None, Tuple)
 
     # The index of the vertex being dragged, if any.
-    _dragged = Trait(None, None, Int)
+    _dragged = Union(None, Int)
 
     # Is the point being dragged is a newly placed point? This informs the
     # "dragging" state about what to do if the user presses Escape while

@@ -29,15 +29,14 @@ from traits.api import (
     Array,
     Either,
     Enum,
-    Float,
     Instance,
+    Int,
     List,
     Property,
     Str,
     String,
-    Trait,
     Tuple,
-    Int,
+    Union,
 )
 from enable.api import OverlayContainer
 from enable.stacked_container import HStackedContainer, VStackedContainer
@@ -171,7 +170,7 @@ class GridPlotContainer(BasePlotContainer):
     #: specification.  If there are fewer components than cells, the remaining
     #: cells are filled in with spaces.  If there are more components than cells,
     #: the remainder wrap onto new rows as appropriate.
-    shape = Trait((0, 0), Either(Tuple, List, Array))
+    shape = Union(Tuple, List, Array, default_value=(0, 0))
 
     #: This property exposes the underlying grid structure of the container,
     #: and is the preferred way of setting and reading its contents.

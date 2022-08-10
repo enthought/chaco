@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-from traits.api import Bool, Enum, Float, Int, CList, Property, Trait, observe
+from traits.api import Bool, CList, Enum, Float, Int, Property, observe
 from enable.api import ColorTrait
 from chaco.abstract_overlay import AbstractOverlay
 
@@ -45,7 +45,7 @@ class DataBox(AbstractOverlay):
     # named colors from Enable, this attribute allows the specification of a
     # separate alpha value that replaces the alpha value of **color** at draw
     # time.
-    alpha = Trait(0.3, None, Float)
+    alpha = Float(0.3)
 
     # The color of the outside selection rectangle.
     border_color = ColorTrait("dodgerblue")
@@ -57,8 +57,8 @@ class DataBox(AbstractOverlay):
     # Private Traits
     # -------------------------------------------------------------------------
 
-    _data_position = CList([0, 0])
-    _data_bounds = CList([0, 0])
+    _data_position = CList(Float, [0, 0])
+    _data_bounds = CList(Float, [0, 0])
     _position_valid = False
     _bounds_valid = False
 

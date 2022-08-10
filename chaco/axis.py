@@ -29,20 +29,18 @@ from numpy import (
 from enable.api import ColorTrait, LineStyle
 from kiva.trait_defs.kiva_font_trait import KivaFont
 from traits.api import (
-    Any,
-    Float,
-    Int,
-    Str,
-    Trait,
-    Unicode,
-    Bool,
-    Event,
-    List,
     Array,
-    Instance,
-    Enum,
-    Callable,
     ArrayOrNone,
+    Bool,
+    Callable,
+    Enum,
+    Event,
+    Float,
+    Instance,
+    Int,
+    List,
+    Str,
+    Union,
     observe
 )
 
@@ -79,13 +77,13 @@ class PlotAxis(AbstractOverlay):
     origin = Enum("bottom left", "top left", "bottom right", "top right")
 
     #: The text of the axis title.
-    title = Trait("", Str, Unicode)  # May want to add PlotLabel option
+    title = Str()  # May want to add PlotLabel option
 
     #: The font of the title.
     title_font = KivaFont("modern 12")
 
     #: The spacing between the axis line and the title
-    title_spacing = Trait("auto", "auto", Float)
+    title_spacing = Union(Enum("auto"), Float)
 
     #: The color of the title.
     title_color = ColorTrait("black")
@@ -134,7 +132,7 @@ class PlotAxis(AbstractOverlay):
     tick_visible = Bool(True)
 
     #: The dataspace interval between ticks.
-    tick_interval = Trait("auto", "auto", Float)
+    tick_interval = Union(Enum("auto"), Float)
 
     #: A callable that implements the AbstractTickGenerator interface.
     tick_generator = Instance(AbstractTickGenerator)
@@ -188,11 +186,10 @@ class PlotAxis(AbstractOverlay):
 
     # Cached position calculations
 
-    _tick_list = List(transient=True)  # These are caches of their respective positions
     _tick_positions = ArrayOrNone(transient=True)
     _tick_label_list = ArrayOrNone(transient=True)
     _tick_label_positions = ArrayOrNone(transient=True)
-    _tick_label_bounding_boxes = List(transient=True)
+    _tick_label_bounding_boxes = List(Array, transient=True)
     _major_axis_size = Float(transient=True)
     _minor_axis_size = Float(transient=True)
     _major_axis = Array(transient=True)
@@ -204,7 +201,7 @@ class PlotAxis(AbstractOverlay):
     _axis_pixel_vector = Array(transient=True)
     _end_axis_point = Array(transient=True)
 
-    ticklabel_cache = List(transient=True)
+    ticklabel_cache = List(Instance(Label), transient=True)
     _cache_valid = Bool(False, transient=True)
 
     # ------------------------------------------------------------------------

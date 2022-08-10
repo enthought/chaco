@@ -12,7 +12,7 @@ import numpy
 
 from chaco.abstract_overlay import AbstractOverlay
 from enable.api import ColorTrait, KeySpec
-from traits.api import Bool, Enum, Trait, Int, Float, Tuple, Instance, Property
+from traits.api import Bool, Enum, Int, Instance, Range, Tuple, Union
 
 from .better_zoom import BetterZoom
 from .tool_states import SelectedZoomState
@@ -71,7 +71,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     #: named colors from Enable, this attribute allows the specification of a
     #: separate alpha value that replaces the alpha value of **color** at draw
     #: time.
-    alpha = Trait(0.4, None, Float)
+    alpha = Range(0.0, 1.0, 0.4)
 
     #: The color of the outside selection rectangle.
     border_color = ColorTrait("dodgerblue")
@@ -83,10 +83,10 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     event_state = Enum("normal", "selecting", "pre_selecting")
 
     # The (x,y) screen point where the mouse went down.
-    _screen_start = Trait(None, None, Tuple)
+    _screen_start = Union(None, Tuple)
 
     # The (x,,y) screen point of the last seen mouse move event.
-    _screen_end = Trait(None, None, Tuple)
+    _screen_end = Union(None, Tuple)
 
     # If **always_on** is False, this attribute indicates whether the tool
     # is currently enabled.

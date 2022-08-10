@@ -5,15 +5,17 @@ from numpy import asarray, dot, sqrt
 
 # Enthought library imports
 from traits.api import (
+    Any,
+    CArray,
     Delegate,
     Dict,
     Enum,
+    Float,
     Instance,
     Int,
     Property,
-    Trait,
     Tuple,
-    CArray,
+    Union,
 )
 
 # Chaco imports
@@ -62,20 +64,20 @@ class MPPanTool(PanTool):
 
 class MPDragZoom(DragZoom):
 
-    speed = 1.0
+    speed = Float(1.0)
 
     # The original dataspace points where blobs 1 and 2 went down
-    _orig_low = CArray  # Trait(None, None, Tuple)
-    _orig_high = CArray  # Trait(None, None, Tuple)
+    _orig_low = CArray()  # Union(None, Tuple)
+    _orig_high = CArray()  # Union(None, Tuple)
 
     # Dataspace center of the zoom action
-    _center_pt = Trait(None, None, Tuple)
+    _center_pt = Union(None, Tuple)
 
     # Maps blob ID numbers to the (x,y) coordinates that came in.
-    _blobs = Dict()
+    _blobs = Dict(Int, Any)
 
     # Maps blob ID numbers to the (x0,y0) coordinates from blob_move events.
-    _moves = Dict()
+    _moves = Dict(Int, Any)
 
     # Properties to convert the dictionaries to map from blob ID numbers to
     # a single coordinate appropriate for the axis the range selects on.

@@ -14,7 +14,7 @@
 from numpy import asarray, empty, isnan
 
 # Enthought library imports.
-from traits.api import Enum, Event, Instance, Property, Range, Trait
+from traits.api import Enum, Event, Instance, Property, Range
 
 # Local relative imports
 from .abstract_plot_renderer import AbstractPlotRenderer
@@ -68,7 +68,7 @@ class Base2DPlot(AbstractPlotRenderer):
 
     #: Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
     #: for full intensity.
-    alpha = Trait(1.0, Range(0.0, 1.0))
+    alpha = Range(0.0, 1.0, 1.0)
 
     #: Event fired when the index data changes. Subclasses can listen for this
     #: event and take appropriate steps (except for requesting a redraw, which

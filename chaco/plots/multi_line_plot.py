@@ -23,16 +23,16 @@ from numpy import argsort, array, invert, isnan, take, transpose
 # Enthought library imports
 from enable.api import black_color_trait, ColorTrait, LineStyle
 from traits.api import (
-    Float,
-    List,
-    Str,
-    Trait,
+    Array,
     Bool,
     Callable,
-    Property,
-    cached_property,
+    Float,
     Instance,
-    Array,
+    List,
+    Property,
+    Str,
+    Union,
+    cached_property,
 )
 from traitsui.api import Item, View, ScrubberEditor, HGroup
 
@@ -118,7 +118,7 @@ class MultiLinePlot(BaseXYPlot):
     color = black_color_trait(requires_redraw=True)
 
     #: A function that returns the color of lines.  Overrides `color` if not None.
-    color_func = Trait(None, None, Callable)
+    color_func = Union(None, Callable)
 
     #: The color to use to highlight the line when selected.
     selected_color = ColorTrait("lightyellow")
@@ -186,10 +186,10 @@ class MultiLinePlot(BaseXYPlot):
     # Cached list of non-NaN arrays of (x,y) data-space points; regardless of
     # self.orientation, this is always stored as (index_pt, value_pt).  This is
     # different from the default BaseXYPlot definition.
-    _cached_data_pts = List
+    _cached_data_pts = List(Array)
 
     # Cached list of non-NaN arrays of (x,y) screen-space points.
-    _cached_screen_pts = List
+    _cached_screen_pts = List(Array)
 
     # ------------------------------------------------------------------------
     #

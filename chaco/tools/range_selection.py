@@ -28,7 +28,7 @@ from traits.api import (
     observe,
     Property,
     Str,
-    Trait,
+    Union,
 )
 from enable.api import KeySpec
 
@@ -48,14 +48,14 @@ class RangeSelection(AbstractController):
 
     #: The selected region, expressed as a tuple in data space.  This updates
     #: and fires change-events as the user is dragging.
-    selection = Property
+    selection = Property()
 
     selection_mode = Enum("set", "append")
 
     #: This event is fired whenever the user completes the selection, or when a
     #: finalized selection gets modified.  The value of the event is the data
     #: space range.
-    selection_completed = Event
+    selection_completed = Event()
 
     #: The name of the metadata on the datasource that we will write
     #: self.selection to
@@ -98,18 +98,18 @@ class RangeSelection(AbstractController):
 
     #: The plot associated with this tool By default, this is just
     #: self.component.
-    plot = Property
+    plot = Property()
 
     #: The mapper for associated with this tool. By default, this is the mapper
     #: on **plot** that corresponds to **axis**.
-    mapper = Property
+    mapper = Property()
 
     #: The index to use for **axis**. By default, this is self.plot.orientation,
     #: but it can be overriden and set to 0 or 1.
-    axis_index = Property
+    axis_index = Property()
 
     #: List of listeners that listen to selection events.
-    listeners = List
+    listeners = List(Any)
 
     # ------------------------------------------------------------------------
     # Configuring interaction control
@@ -146,21 +146,21 @@ class RangeSelection(AbstractController):
 
     # The value of the override plot to use, if any.  If None, then uses
     # self.component.
-    _plot = Trait(None, Any)
+    _plot = Any()
 
     # The value of the override mapper to use, if any.  If None, then uses the
     # mapper on self.component.
-    _mapper = Trait(None, Any)
+    _mapper = Any()
 
     # Shadow trait for the **axis_index** property.
-    _axis_index = Trait(None, None, Int)
+    _axis_index = Union(None, Int)
 
     # The data space start and end coordinates of the selected region,
     # expressed as an array.
     _selection = ArrayOrNone()
 
     # The selection in mask form.
-    _selection_mask = Array
+    _selection_mask = Array()
 
     # The end of the selection that is being actively modified by the mouse.
     _drag_edge = Enum("high", "low")
@@ -171,13 +171,13 @@ class RangeSelection(AbstractController):
     # ------------------------------------------------------------------------
 
     # The position of the initial user click for moving the selection.
-    _down_point = Array  # (x,y)
+    _down_point = Array()  # (x,y)
 
     # The data space coordinates of **_down_point**.
-    _down_data_coord = Float
+    _down_data_coord = Float()
 
     # The original selection when the mouse went down to move the selection.
-    _original_selection = Any
+    _original_selection = Any()
 
     # ------------------------------------------------------------------------
     # Public methods

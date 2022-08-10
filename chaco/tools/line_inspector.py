@@ -14,7 +14,7 @@
 
 # Enthought library imports
 from enable.api import BaseTool, ColorTrait, LineStyle
-from traits.api import Any, Bool, Enum, Float, Str, Trait
+from traits.api import Any, Bool, Enum, Float, Str
 
 # Chaco imports
 from chaco.base_xy_plot import BaseXYPlot
@@ -59,6 +59,7 @@ class LineInspector(BaseTool):
 
     #: This tool is visible (overrides BaseTool).
     visible = True
+
     #: This tool is drawn as an overlay (overrides BaseTool).
     draw_mode = "overlay"
 
@@ -66,13 +67,15 @@ class LineInspector(BaseTool):
 
     #: Color of the line.
     color = ColorTrait("black")
+
     #: Width in pixels of the line.
     line_width = Float(1.0)
+
     #: Dash style of the line.
     line_style = LineStyle("solid")
 
     # Last recorded position of the mouse
-    _last_position = Trait(None, Any)
+    _last_position = Any()
 
     def draw(self, gc, view_bounds=None):
         """Draws this tool on a graphics context.

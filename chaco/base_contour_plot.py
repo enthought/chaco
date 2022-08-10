@@ -14,14 +14,16 @@ from numpy import array, isscalar, issubsctype, linspace, number
 from enable.api import ColorTrait
 from traits.api import (
     Bool,
+    Enum,
+    Float,
     Instance,
     Int,
     List,
     Property,
     Range,
     Str,
-    Trait,
     Tuple,
+    Union,
 )
 
 # Local relative imports
@@ -43,7 +45,7 @@ class BaseContourPlot(Base2DPlot):
     #: the value of the function at the contours; a positive integer, in which
     #: case the range of the value is divided in the given number of equally
     #: spaced levels; or "auto" (default), which divides the range in 10 levels
-    levels = Trait("auto", Int, List)
+    levels = Union(Enum("auto"), Int, List)
 
     #: The color(s) of the lines.
     #: ``colors`` can be given as a color name, in which case all contours have
@@ -51,13 +53,13 @@ class BaseContourPlot(Base2DPlot):
     #: colors is shorter than the number of levels, the values are repeated
     #: from the beginning of the list. Default is black.
     #: Colors are associated with levels of increasing value.
-    colors = Trait(None, Str, Instance(ColorMapper), List, Tuple)
+    colors = Union(None, Str, Instance(ColorMapper), List, Tuple)
 
     #: If present, the color mapper for the colorbar to look at.
     color_mapper = Property(Instance(ColorMapper))
 
     #: A global alpha value to apply to all the contours
-    alpha = Trait(1.0, Range(0.0, 1.0))
+    alpha = Range(0.0, 1.0, 1.0)
 
     # ------------------------------------------------------------------------
     # Private traits
@@ -70,7 +72,7 @@ class BaseContourPlot(Base2DPlot):
     _colors_cache_valid = Bool(False, transient=True)
 
     # List of levels and their associated line properties.
-    _levels = List
+    _levels = List(List(Float))
 
     # List of colors
     _colors = List

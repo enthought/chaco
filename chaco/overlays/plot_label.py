@@ -13,7 +13,7 @@
 
 
 from enable.font_metrics_provider import font_metrics_provider
-from traits.api import DelegatesTo, Enum, Instance, Str, Trait
+from traits.api import DelegatesTo, Enum, Instance, Str
 
 from chaco.abstract_overlay import AbstractOverlay
 from chaco.label import Label
@@ -63,7 +63,7 @@ class PlotLabel(AbstractOverlay):
     #: Examples:
     #:     inside top
     #:     outside right
-    overlay_position = Trait("outside top", Str, None)
+    overlay_position = Str("outside top")
 
     # Should this PlotLabel modify the padding on its underlying component
     # if there is not enough room to lay out the text?

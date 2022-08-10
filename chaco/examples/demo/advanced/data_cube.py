@@ -21,7 +21,7 @@ from chaco.api import (
     GridPlotContainer,
     DataRange1D,
 )
-from chaco.default_colormaps import *
+from chaco.default_colormaps import viridis
 from chaco.tools.api import LineInspector, ZoomTool
 from enable.example_support import DemoFrame, demo_main
 from enable.api import BaseTool, Window
@@ -36,7 +36,6 @@ from traits.api import (
     Float,
     HasTraits,
     Int,
-    Trait,
     observe,
 )
 from traits.observation.api import match
@@ -64,14 +63,14 @@ class Model(HasTraits):
     min_z = CFloat(-pi)
     max_z = CFloat(pi)
 
-    xs = Array
-    ys = Array
-    vals = Array
+    xs = Array()
+    ys = Array()
+    vals = Array()
 
-    minval = Float
-    maxval = Float
+    minval = Float()
+    maxval = Float()
 
-    model_changed = Event
+    model_changed = Event()
 
     def __init__(self, *args, **kwargs):
         super(Model, self).__init__(*args, **kwargs)
@@ -195,14 +194,14 @@ class Demo(DemoFrame):
     slice_z = 10
 
     num_levels = Int(15)
-    colormap = Any
-    colorcube = Any
+    colormap = Any()
+    colorcube = Any()
 
     # ---------------------------------------------------------------------------
     # Private Traits
     # ---------------------------------------------------------------------------
 
-    _cmap = Trait(viridis, Callable)
+    _cmap = Callable(viridis)
 
     def _index_callback(self, tool, x_index, y_index):
         plane = tool.token

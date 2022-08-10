@@ -34,10 +34,10 @@ from traits.api import (
     Float,
     Instance,
     CInt,
-    Trait,
     Property,
     TraitError,
     Tuple,
+    Union,
     observe,
 )
 from traitsui.api import HGroup, Item, VGroup, View, TextEditor
@@ -105,15 +105,15 @@ class PlotGrid(AbstractOverlay):
     mapper = Instance(AbstractMapper)
 
     #: The dataspace interval between grid lines.
-    grid_interval = Trait("auto", "auto", Float)
+    grid_interval = Union(Enum("auto"), Float)
 
     #: The dataspace value at which to start this grid.  If None, then
     #: uses the mapper.range.low.
-    data_min = Trait(None, None, Float)
+    data_min = Union(None, Float)
 
     #: The dataspace value at which to end this grid.  If None, then uses
     #: the mapper.range.high.
-    data_max = Trait(None, None, Float)
+    data_max = Union(None, Float)
 
     #: A callable that implements the AbstractTickGenerator Interface.
     tick_generator = Instance(AbstractTickGenerator)
@@ -142,7 +142,7 @@ class PlotGrid(AbstractOverlay):
     #:   Callable : Function that takes an array of dataspace grid ticks
     #:              and returns either an array of shape (N,2) of (starts,ends)
     #:              for each grid point or a single tuple (low, high)
-    transverse_bounds = Trait(None, Tuple, Callable)
+    transverse_bounds = Union(Callable, Tuple, default_value=None)
 
     #: Mapper in the direction corresponding to self.orientation, i.e. transverse
     #: to the direction of self.mapper.  This is used to compute the screen
@@ -395,7 +395,7 @@ class PlotGrid(AbstractOverlay):
         if not self.visible:
             return
         self._compute_ticks(other_component)
-        
+
         if not self._cache_valid:
             self._compute_ticks()
 

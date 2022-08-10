@@ -5,7 +5,7 @@ import numpy as np
 
 from chaco.api import ArrayPlotData, Plot
 from enable.api import ComponentEditor
-from traits.api import Array, HasStrictTraits, Instance, Range, on_trait_change
+from traits.api import Array, HasStrictTraits, Instance, Range, observe
 from traitsui.api import Item, VGroup, View
 
 
@@ -52,18 +52,18 @@ class PowerFunctionExample(HasStrictTraits):
 
     # Trait change handlers -------------------------------------------------
 
-    @on_trait_change("power")
-    def _update_y(self):
+    @observe("power")
+    def _update_y(self, event):
         y = self.x ** self.power
         self.plot.data.set_data("y", y)
 
-    @on_trait_change("x")
-    def _update_data(self):
+    @observe("x")
+    def _update_data(self, event):
         y = self.x ** self.power
         self.plot.data.update_data(x=self.x, y=y)
 
-    @on_trait_change("power")
-    def _update_title(self):
+    @observe("power")
+    def _update_title(self, event):
         self.plot.title = "Power Function n={}".format(self.power)
 
     # TraitsUI view ---------------------------------------------------------
