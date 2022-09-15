@@ -16,7 +16,7 @@ Defines the DataRange1D class.
 # Major library imports
 from math import ceil, floor, log
 
-from numpy import compress, inf, isinf, isnan, ndarray
+from numpy import compress, errstate, inf, isinf, isnan, ndarray
 
 # Enthought library imports
 from traits.api import Bool, CFloat, Enum, Float, Property, Trait, Callable
@@ -123,9 +123,15 @@ class DataRange1D(BaseDataRange):
 
         Implements AbstractDataRange.
         """
-        return (data.view(ndarray) >= self._low_value) & (
-            data.view(ndarray) <= self._high_value
-        )
+        with errstate(invalid="ignore"):
+            # Running under context because the data array may contain NaNs.
+            # These are strictly invalid for comparison and Numpy would emit
+            # a warning. Since we are happy with the default behavior (NaNs
+            # become "False" in the mask), we silence the warning.
+            mask = (data.view(ndarray) >= self._low_value) & (
+                data.view(ndarray) <= self._high_value
+            )
+        return mask
 
     def bound_data(self, data):
         """Returns a tuple of indices for the start and end of the first run

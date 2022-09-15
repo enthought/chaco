@@ -9,11 +9,14 @@
 # Thanks for using Enthought open source!
 
 import unittest
+import warnings
 
 from numpy import alltrue, arange, array, ravel, transpose, zeros, inf, isinf
 from numpy.testing import assert_equal, assert_
 
 from chaco.api import DataRange2D, GridDataSource, PointDataSource
+
+NAN = float("nan")
 
 
 class DataRange2DTestCase(unittest.TestCase):
@@ -204,6 +207,41 @@ class DataRange2DTestCase(unittest.TestCase):
 
         r = DataRange2D(low=[2.0, 5.0], high=[2.5, 9.0])
         assert_equal(r.mask_data(ary), zeros(len(ary)))
+
+    def test_mask_data_containing_nans(self):
+        # Given
+        r = DataRange2D(low=[2.0, 3.0], high=[12.0, 13.0])
+        ary_1 = array(
+            [
+                [NAN, 1.0],
+                [NAN, 4.0],
+                [NAN, NAN],
+                [25.1, NAN],
+                [5.0, 6.0],
+                [12.5, 6.0]
+            ]
+        )
+        expected_mask_1 = array([0, 0, 0, 0, 1, 0], "b")
+        ary_2 = array([[NAN, NAN], [NAN, NAN]])
+        expected_mask_2 = array([0, 0], "b")
+
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+
+            # When
+            mask_1 = r.mask_data(ary_1)
+            mask_2 = r.mask_data(ary_2)
+
+        # Then
+        assert_equal(mask_1, expected_mask_1)
+        assert_equal(mask_2, expected_mask_2)
+
+        # This assertion may pass because the warning has been correctly
+        # silenced by us (useful test), but it may also pass because the
+        # warning has been inactivated by the "only warn once" Python rule
+        # (test ineffective, false negative). Clearing the registry only for
+        # test purposes is not feasible: https://bugs.python.org/issue21724
+        self.assertEqual(len(w), 0)
 
 
 def assert_close_(desired, actual):

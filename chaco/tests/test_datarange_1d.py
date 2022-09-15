@@ -9,6 +9,7 @@
 # Thanks for using Enthought open source!
 
 import unittest
+import warnings
 
 from numpy import arange, array, zeros, inf
 from numpy.testing import assert_equal
@@ -16,6 +17,8 @@ from numpy.testing import assert_equal
 from traits.api import HasTraits, Instance, Bool, observe
 
 from chaco.api import DataRange1D, ArrayDataSource
+
+NAN = float("nan")
 
 
 class Foo(HasTraits):
@@ -232,6 +235,15 @@ class DataRangeTestCase(unittest.TestCase):
         r = DataRange1D(low=2.0, high=2.5)
         assert_equal(len(r.clip_data(ary)), 0)
 
+        # Test the case with nans. Additionally require that no warnings are
+        # emitted.
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            r = DataRange1D(low=2.0, high=10.0)
+            ary = array([1, 3, NAN, 9.8, 10.2, 12])
+            assert_equal(r.clip_data(ary), array([3.0, 9.8]))
+        self.assertEqual(len(w), 0)
+
     def test_mask_data(self):
         r = DataRange1D(low=2.0, high=10.0)
         ary = array([1, 3, 4, 9.8, 10.2, 12])
@@ -246,6 +258,30 @@ class DataRangeTestCase(unittest.TestCase):
         r = DataRange1D(low=2.0, high=2.5)
         assert_equal(r.mask_data(ary), zeros(len(ary)))
 
+    def test_mask_data_containing_nans(self):
+        # Given
+        r = DataRange1D(low=2.0, high=10.0)
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+
+            # When
+            has_nans = array([1, 3, 9.8, NAN, 12])
+            # Then
+            assert_equal(r.mask_data(has_nans), array([0, 1, 1, 0, 0], "b"))
+
+            # When
+            all_nans = array([NAN, NAN, NAN])
+            # Then
+            assert_equal(r.mask_data(all_nans), array([0, 0, 0], "b"))
+
+        # Then (treating nans should come with no warnings)
+        # NOTE: This assertion may pass because the warning has been correctly
+        # silenced by us (useful test), but it may also pass because the
+        # warning has been inactivated by the "only warn once" Python rule
+        # (test ineffective, false negative). Clearing the registry only for
+        # test purposes is not feasible: https://bugs.python.org/issue21724
+        self.assertEqual(len(w), 0)
+
     def test_bound_data(self):
         r = DataRange1D(low=2.9, high=6.1)
         ary = arange(10)
@@ -255,6 +291,14 @@ class DataRangeTestCase(unittest.TestCase):
         ary = array([-5, -4, -7, -8, -2, 1, 2, 3, 4, 5, 4, 3, 8, 9, 10, 9, 8])
         bounds = r.bound_data(ary)
         assert_equal(bounds, (7, 11))
+
+        # test data with nan (expected: nan breaks a run)
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            ary = array([1, 2, 3, 4, NAN, 6, 7])
+            bounds = r.bound_data(ary)
+            assert_equal(bounds, (2, 3))
+        self.assertEqual(len(w), 0)
 
     def test_custom_bounds_func(self):
         def custom_func(low, high, margin, tight_bounds):
