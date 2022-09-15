@@ -258,7 +258,7 @@ class DataRangeTestCase(unittest.TestCase):
         r = DataRange1D(low=2.0, high=2.5)
         assert_equal(r.mask_data(ary), zeros(len(ary)))
 
-    def test_mask_data_contains_nans(self):
+    def test_mask_data_containing_nans(self):
         # Given
         r = DataRange1D(low=2.0, high=10.0)
         with warnings.catch_warnings(record=True) as w:

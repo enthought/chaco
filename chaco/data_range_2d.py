@@ -12,16 +12,14 @@
 Defines the DataRange2D class.
 """
 
-from numpy import compress, inf, transpose
+from numpy import compress, transpose
 
 # Enthought library imports
 from traits.api import (
-    Any,
     Bool,
     CFloat,
     Instance,
     Property,
-    Trait,
     Tuple,
     observe,
 )

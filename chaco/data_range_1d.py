@@ -16,7 +16,7 @@ Defines the DataRange1D class.
 # Major library imports
 from math import ceil, floor, log
 
-from numpy import compress, inf, isinf, isnan, ndarray, errstate
+from numpy import compress, errstate, inf, isinf, isnan, ndarray
 
 # Enthought library imports
 from traits.api import Bool, CFloat, Enum, Float, Property, Trait, Callable
