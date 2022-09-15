@@ -12,7 +12,7 @@
 Defines the DataRange2D class.
 """
 
-from numpy import compress, transpose
+from numpy import compress, errstate, transpose
 
 # Enthought library imports
 from traits.api import (
@@ -94,8 +94,13 @@ class DataRange2D(BaseDataRange):
         Implements AbstractDataRange.
         """
         x_points, y_points = transpose(data)
-        x_mask = (x_points >= self.low[0]) & (x_points <= self.high[0])
-        y_mask = (y_points >= self.low[1]) & (y_points <= self.high[1])
+        with errstate(invalid="ignore"):
+            # Silence possible warnings that may result from NaNs being in the
+            # arrays. It is not strictly needed because apparently comparisons
+            # on arrays resulting from transpose() don't trigger the warning
+            # in the first place. 
+            x_mask = (x_points >= self.low[0]) & (x_points <= self.high[0])
+            y_mask = (y_points >= self.low[1]) & (y_points <= self.high[1])
         return x_mask & y_mask
 
     def bound_data(self, data):
