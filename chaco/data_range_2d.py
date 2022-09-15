@@ -95,10 +95,10 @@ class DataRange2D(BaseDataRange):
         """
         x_points, y_points = transpose(data)
         with errstate(invalid="ignore"):
-            # Silence possible warnings that may result from NaNs being in the
-            # arrays. It is not strictly needed because apparently comparisons
-            # on arrays resulting from transpose() don't trigger the warning
-            # in the first place. 
+            # Running under context because the data array may contain NaNs.
+            # These are strictly invalid for comparison and Numpy would emit
+            # a warning. Since we are happy with the default behavior (NaNs
+            # become "False" in the mask), we silence the warning.
             x_mask = (x_points >= self.low[0]) & (x_points <= self.high[0])
             y_mask = (y_points >= self.low[1]) & (y_points <= self.high[1])
         return x_mask & y_mask

@@ -124,10 +124,10 @@ class DataRange1D(BaseDataRange):
         Implements AbstractDataRange.
         """
         with errstate(invalid="ignore"):
-            # The data array may contain NaNs. These are strictly invalid for
-            # comparison and Numpy would emit a warning. Since we are happy
-            # with the defaul behavior (NaNs are "False" in the mask), we
-            # silence the warning.
+            # Running under context because the data array may contain NaNs.
+            # These are strictly invalid for comparison and Numpy would emit
+            # a warning. Since we are happy with the default behavior (NaNs
+            # become "False" in the mask), we silence the warning.
             mask = (data.view(ndarray) >= self._low_value) & (
                 data.view(ndarray) <= self._high_value
             )
