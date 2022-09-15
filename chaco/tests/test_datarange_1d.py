@@ -275,6 +275,11 @@ class DataRangeTestCase(unittest.TestCase):
             assert_equal(r.mask_data(all_nans), array([0, 0, 0], "b"))
 
         # Then (treating nans should come with no warnings)
+        # NOTE: This assertion may pass because the warning has been correctly
+        # silenced by us (useful test), but it may also pass because the
+        # warning has been inactivated by the "only warn once" Python rule
+        # (test ineffective, false negative). Clearing the registry only for
+        # test purposes is not feasible: https://bugs.python.org/issue21724
         self.assertEqual(len(w), 0)
 
     def test_bound_data(self):

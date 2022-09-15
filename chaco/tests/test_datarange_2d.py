@@ -235,6 +235,12 @@ class DataRange2DTestCase(unittest.TestCase):
         # Then
         assert_equal(mask_1, expected_mask_1)
         assert_equal(mask_2, expected_mask_2)
+
+        # This assertion may pass because the warning has been correctly
+        # silenced by us (useful test), but it may also pass because the
+        # warning has been inactivated by the "only warn once" Python rule
+        # (test ineffective, false negative). Clearing the registry only for
+        # test purposes is not feasible: https://bugs.python.org/issue21724
         self.assertEqual(len(w), 0)
 
 
