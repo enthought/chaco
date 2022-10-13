@@ -4,7 +4,7 @@ Makes a copy of the plot in the overlay and adds it to the canvas.
 
 
 # Enthought library imports
-from traits.api import Bool, Callable, Enum, Float, Instance, Int, Trait, Tuple
+from traits.api import Bool, Callable, Enum, Float, Instance, Int, Tuple, Union
 from enable.api import Container
 
 # Chaco imports
@@ -34,7 +34,7 @@ class PlotCloneTool(AbstractOverlay, DragTool):
     capture_mouse = True
 
     # The (x,y) position of the "last" mouse position we received
-    _offset = Trait(None, None, Tuple)
+    _offset = Union(None, Tuple)
 
     # The relative position of the mouse_down_position to the origin
     # of the plot's coordinate system

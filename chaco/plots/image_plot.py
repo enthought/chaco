@@ -21,15 +21,14 @@ import numpy as np
 # Enthought library imports.
 from traits.api import (
     Bool,
-    Either,
     Enum,
     Instance,
     List,
     Range,
-    Trait,
     Tuple,
     Property,
     cached_property,
+    Union,
 )
 from kiva.agg import GraphicsContextArray
 
@@ -62,7 +61,7 @@ class ImagePlot(Base2DPlot):
 
     #: Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
     #: for full intensity.
-    alpha = Trait(1.0, Range(0.0, 1.0))
+    alpha = Range(0.0, 1.0, 1.0)
 
     #: The interpolation method to use when rendering an image onto the GC.
     interpolation = Enum("nearest", "bilinear", "bicubic")
@@ -85,7 +84,7 @@ class ImagePlot(Base2DPlot):
 
     # Tuple-defined rectangle (x, y, dx, dy) in screen space in which the
     # **_cached_image** is to be drawn.
-    _cached_dest_rect = Either(Tuple, List, transient=True)
+    _cached_dest_rect = Union(Tuple, List, transient=True)
 
     # Bool indicating whether the origin is top-left or bottom-right.
     # The name "principal diagonal" is borrowed from linear algebra.

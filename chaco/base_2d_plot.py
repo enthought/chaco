@@ -68,7 +68,7 @@ class Base2DPlot(AbstractPlotRenderer):
 
     #: Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
     #: for full intensity.
-    alpha = Trait(1.0, Range(0.0, 1.0))
+    alpha = Range(0.0, 1.0, 1.0)
 
     #: Event fired when the index data changes. Subclasses can listen for this
     #: event and take appropriate steps (except for requesting a redraw, which
@@ -121,7 +121,7 @@ class Base2DPlot(AbstractPlotRenderer):
         """
         # data_pts is Nx2 array
         if len(data_pts) == 0:
-            return empty(shape=(0,2))
+            return empty(shape=(0, 2))
         return asarray(self.index_mapper.map_screen(data_pts))
 
     def map_data(self, screen_pts):

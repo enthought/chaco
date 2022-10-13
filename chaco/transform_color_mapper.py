@@ -11,7 +11,7 @@
 from numpy import clip, isinf, ones_like, empty
 
 from chaco.color_mapper import ColorMapper
-from traits.api import Trait, Callable, Tuple, Float, observe
+from traits.api import Callable, Tuple, Float, observe, Union
 
 from .speedups import map_colors, map_colors_uint8
 
@@ -35,12 +35,12 @@ class TransformColorMapper(ColorMapper):
     unit interval [0,1] to itself (e.g. x^2 or sin(pi*x/2)).
     """
 
-    data_func = Trait(None, None, Callable)
+    data_func = Union(None, Callable)
 
-    unit_func = Trait(None, None, Callable)
+    unit_func = Union(None, Callable)
 
     transformed_bounds = Tuple(
-        Trait(None, None, Float), Trait(None, None, Float)
+        Union(None, Float), Union(None, Float)
     )
 
     # -------------------------------------------------------------------

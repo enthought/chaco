@@ -19,7 +19,8 @@ from math import ceil, floor, log
 from numpy import compress, errstate, inf, isinf, isnan, ndarray
 
 # Enthought library imports
-from traits.api import Bool, CFloat, Enum, Float, Property, Trait, Callable
+from traits.api import (
+    Bool, CFloat, Constant, Enum, Float, Property, Callable, Union)
 
 # Local relative imports
 from .base import arg_find_runs
@@ -43,14 +44,14 @@ class DataRange1D(BaseDataRange):
     #:   of the data.
     #: * 'track': The lower bound tracks the upper bound by **tracking_amount**.
     #: * CFloat: An explicit value for the lower bound
-    low_setting = Property(Trait("auto", "auto", "track", CFloat))
+    low_setting = Property(Union(Constant("auto"), Constant("track"), CFloat))
     #: Property for the upper bound of this range (overrides AbstractDataRange).
     #:
     #: * 'auto': The upper bound is automatically set at or above the maximum
     #:   of the data.
     #: * 'track': The upper bound tracks the lower bound by **tracking_amount**.
     #: * CFloat: An explicit value for the upper bound
-    high_setting = Property(Trait("auto", "auto", "track", CFloat))
+    high_setting = Property(Union(Constant("auto"), Constant("track"), CFloat))
 
     #: Do "auto" bounds imply an exact fit to the data? If False,
     #: they pad a little bit of margin on either side.
@@ -98,11 +99,11 @@ class DataRange1D(BaseDataRange):
     # setting.
 
     # The user-specified low setting.
-    _low_setting = Trait("auto", "auto", "track", CFloat)
+    _low_setting = Union(Enum("auto", "track"), CFloat)
     # The actual numerical value for the low setting.
     _low_value = CFloat(-inf)
     # The user-specified high setting.
-    _high_setting = Trait("auto", "auto", "track", CFloat)
+    _high_setting = Union(Enum("auto", "track"), CFloat)
     # The actual numerical value for the high setting.
     _high_value = CFloat(inf)
 
@@ -413,7 +414,7 @@ class DataRange1D(BaseDataRange):
         self._sources_changed(None, self.sources)
 
 
-###### method to calculate bounds for a given 1-dimensional set of data
+# method to calculate bounds for a given 1-dimensional set of data
 def calc_bounds(
     low_set,
     high_set,

@@ -30,10 +30,10 @@ from enable.api import ColorTrait, LineStyle
 from kiva.trait_defs.kiva_font_trait import KivaFont
 from traits.api import (
     Any,
+    Constant,
     Float,
     Int,
     Str,
-    Trait,
     Unicode,
     Bool,
     Event,
@@ -43,7 +43,8 @@ from traits.api import (
     Enum,
     Callable,
     ArrayOrNone,
-    observe
+    observe,
+    Union,
 )
 
 # Local relative imports
@@ -79,13 +80,13 @@ class PlotAxis(AbstractOverlay):
     origin = Enum("bottom left", "top left", "bottom right", "top right")
 
     #: The text of the axis title.
-    title = Trait("", Str, Unicode)  # May want to add PlotLabel option
+    title = Str()  # May want to add PlotLabel option
 
     #: The font of the title.
     title_font = KivaFont("modern 12")
 
     #: The spacing between the axis line and the title
-    title_spacing = Trait("auto", "auto", Float)
+    title_spacing = Union(Constant("auto"), Float)
 
     #: The color of the title.
     title_color = ColorTrait("black")
@@ -134,7 +135,7 @@ class PlotAxis(AbstractOverlay):
     tick_visible = Bool(True)
 
     #: The dataspace interval between ticks.
-    tick_interval = Trait("auto", "auto", Float)
+    tick_interval = Union(Constant("auto"), Float)
 
     #: A callable that implements the AbstractTickGenerator interface.
     tick_generator = Instance(AbstractTickGenerator)
@@ -188,7 +189,8 @@ class PlotAxis(AbstractOverlay):
 
     # Cached position calculations
 
-    _tick_list = List(transient=True)  # These are caches of their respective positions
+    # These are caches of their respective positions
+    _tick_list = List(transient=True)
     _tick_positions = ArrayOrNone(transient=True)
     _tick_label_list = ArrayOrNone(transient=True)
     _tick_label_positions = ArrayOrNone(transient=True)

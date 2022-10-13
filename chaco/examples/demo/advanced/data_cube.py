@@ -9,7 +9,9 @@ import warnings
 from numpy import amin, amax, zeros, fromfile, transpose, uint8
 
 # Standard library imports
-import os, sys, shutil
+import os
+import sys
+import shutil
 
 # Major library imports
 from numpy import arange, linspace, nanmin, nanmax, newaxis, pi, sin, cos
@@ -36,7 +38,6 @@ from traits.api import (
     Float,
     HasTraits,
     Int,
-    Trait,
     observe,
 )
 from traits.observation.api import match
@@ -202,7 +203,7 @@ class Demo(DemoFrame):
     # Private Traits
     # ---------------------------------------------------------------------------
 
-    _cmap = Trait(viridis, Callable)
+    _cmap = Callable(viridis)
 
     def _index_callback(self, tool, x_index, y_index):
         plane = tool.token
@@ -399,7 +400,9 @@ def download_data():
         data_good = False
 
     if not data_good:
-        import urllib.request, urllib.parse, urllib.error
+        import urllib.request
+        import urllib.parse
+        import urllib.error
         import tarfile
 
         if len(dl_path) > 0 and not os.path.exists(dl_path):

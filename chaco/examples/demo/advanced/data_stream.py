@@ -25,7 +25,6 @@ from traits.api import (
     Instance,
     Int,
     observe,
-    Trait,
 )
 from traitsui.api import Group, HGroup, Item, UItem, View, spring, Handler
 from pyface.timer.api import Timer
@@ -107,7 +106,7 @@ class Controller(HasTraits):
     # just means that self._generator should be initialized to
     # random.normal, which is a random number function, and in the future
     # it can be set to any callable object.
-    _generator = Trait(np.random.normal, Callable)
+    _generator = Callable(np.random.normal)
 
     view = View(
         Group(

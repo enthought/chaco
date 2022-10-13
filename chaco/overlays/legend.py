@@ -164,7 +164,7 @@ class Legend(AbstractOverlay):
     resizable = "hv"
 
     #: An optional title string to show on the legend.
-    title = Str("")
+    title = Str()
 
     #: If True, title is at top, if False then at bottom.
     title_at_top = Bool(True)
