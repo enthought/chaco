@@ -80,7 +80,7 @@ class PlotAxis(AbstractOverlay):
     origin = Enum("bottom left", "top left", "bottom right", "top right")
 
     #: The text of the axis title.
-    title = Str("")  # May want to add PlotLabel option
+    title = Str()  # May want to add PlotLabel option
 
     #: The font of the title.
     title_font = KivaFont("modern 12")

@@ -484,7 +484,8 @@ class MultiLinePlot(BaseXYPlot):
                 # Existence of self.color_func overrides self.color.
                 color_func = self.color_func
             else:
-                def color_func(k): return self.color_
+                def color_func(k):
+                    return self.color_
 
             tmp = list(enumerate(line_points))
             # Note: the list is reversed for testing with _render_filled.
