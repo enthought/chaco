@@ -62,7 +62,7 @@ class ImagePlot(Base2DPlot):
 
     #: Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
     #: for full intensity.
-    alpha = Trait(1.0, Range(0.0, 1.0))
+    alpha = Range(0.0, 1.0, 1.0)
 
     #: The interpolation method to use when rendering an image onto the GC.
     interpolation = Enum("nearest", "bilinear", "bicubic")

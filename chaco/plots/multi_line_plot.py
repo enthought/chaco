@@ -26,13 +26,13 @@ from traits.api import (
     Float,
     List,
     Str,
-    Trait,
     Bool,
     Callable,
     Property,
     cached_property,
     Instance,
     Array,
+    Union,
 )
 from traitsui.api import Item, View, ScrubberEditor, HGroup
 
@@ -118,7 +118,7 @@ class MultiLinePlot(BaseXYPlot):
     color = black_color_trait(requires_redraw=True)
 
     #: A function that returns the color of lines.  Overrides `color` if not None.
-    color_func = Trait(None, None, Callable)
+    color_func = Union(None, Callable)
 
     #: The color to use to highlight the line when selected.
     selected_color = ColorTrait("lightyellow")
@@ -226,8 +226,8 @@ class MultiLinePlot(BaseXYPlot):
     # ------------------------------------------------------------------------
 
     # See base_xy_plot.py for these:
-    ## def hittest(self, screen_pt, threshold=7.0):
-    ## def interpolate(self, index_value):
+    # def hittest(self, screen_pt, threshold=7.0):
+    # def interpolate(self, index_value):
 
     def get_screen_points(self):
         self._gather_points()
@@ -427,8 +427,8 @@ class MultiLinePlot(BaseXYPlot):
                     z = transpose(
                         array(
                             (
-                                sorted_index[ndx : ndx + 2],
-                                sorted_value[ndx : ndx + 2],
+                                sorted_index[ndx: ndx + 2],
+                                sorted_value[ndx: ndx + 2],
                             )
                         )
                     )
@@ -460,8 +460,8 @@ class MultiLinePlot(BaseXYPlot):
         self._cache_valid = True
 
     # See base_xy_plot.py for:
-    ## def _downsample(self):
-    ## def _downsample_vectorized(self):
+    # def _downsample(self):
+    # def _downsample_vectorized(self):
 
     def _render(self, gc, line_points, selected_points=None):
 
@@ -484,7 +484,7 @@ class MultiLinePlot(BaseXYPlot):
                 # Existence of self.color_func overrides self.color.
                 color_func = self.color_func
             else:
-                color_func = lambda k: self.color_
+                def color_func(k): return self.color_
 
             tmp = list(enumerate(line_points))
             # Note: the list is reversed for testing with _render_filled.

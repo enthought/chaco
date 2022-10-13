@@ -40,6 +40,7 @@ from traits.api import (
     Array,
     Bool,
     Dict,
+    Either,
     Event,
     Float,
     HasTraits,
@@ -67,9 +68,9 @@ class ColorMapTemplate(HasTraits):
     #: The number of steps in the color map.
     steps = Int(256)
     #: Low end of the color map range.
-    range_low_setting = Trait("auto", "auto", Float)
+    range_low_setting = Either("auto", Float, default="auto")
     #: High end of the color map range.
-    range_high_setting = Trait("auto", "auto", Float)
+    range_high_setting = Either("auto", Float, default="auto")
 
     def __init__(self, colormap=None, **kwtraits):
         """

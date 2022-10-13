@@ -1,5 +1,5 @@
 from enable.api import Component
-from traits.api import Enum, Float, Instance, Trait, Tuple
+from traits.api import Enum, Float, Instance, Tuple, Union
 
 from chaco.api import AbstractOverlay, BasePlotContainer
 
@@ -19,7 +19,7 @@ class TransientPlotOverlay(BasePlotContainer, AbstractOverlay):
     margin = Float(10)
 
     # An offset to apply in X and Y
-    offset = Trait(None, None, Tuple)
+    offset = Union(None, Tuple)
 
     # Override default values of some inherited traits
     unified_draw = True

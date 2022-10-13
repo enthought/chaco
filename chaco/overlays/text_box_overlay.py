@@ -15,7 +15,7 @@
 # Enthought library imports
 from enable.api import ColorTrait
 from kiva.trait_defs.kiva_font_trait import KivaFont
-from traits.api import Any, Enum, Int, Str, Float, Trait, Bool
+from traits.api import Any, Enum, Int, Str, Float, Bool, Union
 
 # Local, relative imports
 from chaco.abstract_overlay import AbstractOverlay
@@ -37,7 +37,7 @@ class TextBoxOverlay(AbstractOverlay):
     bgcolor = ColorTrait("transparent")
 
     #: The alpha value to apply to **bgcolor**
-    alpha = Trait(1.0, None, Float)
+    alpha = Union(Float(1.0), None)
 
     #: The color of the outside box.
     border_color = ColorTrait("dodgerblue")

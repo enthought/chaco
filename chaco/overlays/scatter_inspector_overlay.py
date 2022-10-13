@@ -13,7 +13,7 @@ from numpy import array, asarray
 
 # Enthought library imports
 from enable.api import ColorTrait, MarkerTrait
-from traits.api import Float, Int, Str, Trait
+from traits.api import Float, Int, Str, Union
 from traits.observation.events import TraitChangeEvent
 
 # Local, relative imports
@@ -32,19 +32,19 @@ class ScatterInspectorOverlay(AbstractOverlay):
 
     #: The style to use when a point is hovered over
     hover_metadata_name = Str("hover")
-    hover_marker = Trait(None, None, MarkerTrait)
-    hover_marker_size = Trait(None, None, Int)
-    hover_line_width = Trait(None, None, Float)
-    hover_color = Trait(None, None, ColorTrait)
-    hover_outline_color = Trait(None, None, ColorTrait)
+    hover_marker = Union(None, MarkerTrait)
+    hover_marker_size = Union(None, Int)
+    hover_line_width = Union(None, Float)
+    hover_color = Union(None, ColorTrait)
+    hover_outline_color = Union(None, ColorTrait)
 
     #: The style to use when a point has been selected by a click
     selection_metadata_name = Str("selections")
-    selection_marker = Trait(None, None, MarkerTrait)
-    selection_marker_size = Trait(None, None, Int)
-    selection_line_width = Trait(None, None, Float)
-    selection_color = Trait(None, None, ColorTrait)
-    selection_outline_color = Trait(None, None, ColorTrait)
+    selection_marker = Union(None, MarkerTrait)
+    selection_marker_size = Union(None, Int)
+    selection_line_width = Union(None, Float)
+    selection_color = Union(None, ColorTrait)
+    selection_outline_color = Union(None, ColorTrait)
 
     # For now, implement the equivalent of this Traits 3 feature manually
     # using a series of trait change handlers (defined at the end of the

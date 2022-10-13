@@ -13,7 +13,7 @@ functions.
 """
 from numpy import array, empty, transpose
 
-from traits.api import Bool, Enum, Instance, Int, observe, Property, Union
+from traits.api import Bool, Enum, Instance, Int, Property, Union
 from enable.api import color_table
 
 from .abstract_overlay import AbstractOverlay
@@ -237,7 +237,7 @@ class DataView(OverlayPlotContainer):
     )
 
     _padding_top = Union(None, Int())
-    _padding_bottom= Union(None, Int())
+    _padding_bottom = Union(None, Int())
     _padding_left = Union(None, Int())
     _padding_right = Union(None, Int())
 
@@ -304,7 +304,7 @@ class DataView(OverlayPlotContainer):
         """
         # data_array is Nx2 array
         if len(data_array) == 0:
-            return empty(shape=(0,2))
+            return empty(shape=(0, 2))
         x_ary, y_ary = transpose(data_array)
         sx = self.index_mapper.map_screen(x_ary)
         sy = self.value_mapper.map_screen(y_ary)

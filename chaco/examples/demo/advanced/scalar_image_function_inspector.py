@@ -195,7 +195,7 @@ class PlotUI(HasTraits):
     _image_index = Instance(GridDataSource)
     _image_value = Instance(ImageData)
 
-    _cmap = Trait(default_colormaps.viridis, Callable)
+    _cmap = Callable(default_colormaps.viridis)
 
     # ---------------------------------------------------------------------------
     # Public View interface

@@ -13,7 +13,7 @@ from numpy import array, column_stack
 
 # Enthought library imports
 from enable.api import ColorTrait
-from traits.api import Bool, Float, Int, List, Property, Trait
+from traits.api import Bool, Float, Int, List, Property, Union
 
 # Chaco imports
 from .base_xy_plot import BaseXYPlot
@@ -54,11 +54,11 @@ class BaseCandlePlot(BaseXYPlot):
     #: The color of the stems reaching from the bar ends to the min and max
     #: values.  Also the color of the endcap line segments at min and max.  If
     #: None, this defaults to **bar_line_color**.
-    stem_color = Trait(None, None, ColorTrait("black"))
+    stem_color = Union(None, ColorTrait("black"))
 
     #: The color of the line drawn across the bar at the center values.
     #: If None, this defaults to **bar_line_color**.
-    center_color = Trait(None, None, ColorTrait("black"))
+    center_color = Union(None, ColorTrait("black"))
 
     #: The color of the outline to draw around the bar.
     outline_color = ColorTrait("black")
@@ -69,11 +69,11 @@ class BaseCandlePlot(BaseXYPlot):
 
     #: The thickness, in pixels, of the stem lines.  If None, this defaults
     #: to **line_width**.
-    stem_width = Trait(None, None, Int(1))
+    stem_width = Union(None, Int(1))
 
     #: The thickeness, in pixels, of the line drawn across the bar at the
     #: center values.  If None, this defaults to **line_width**.
-    center_width = Trait(None, None, Int(1))
+    center_width = Union(None, Int(1))
 
     #: Whether or not to draw bars at the min and max extents of the error bar
     end_cap = Bool(True)

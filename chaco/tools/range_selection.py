@@ -29,6 +29,7 @@ from traits.api import (
     Property,
     Str,
     Trait,
+    Union
 )
 from enable.api import KeySpec
 
@@ -146,14 +147,14 @@ class RangeSelection(AbstractController):
 
     # The value of the override plot to use, if any.  If None, then uses
     # self.component.
-    _plot = Trait(None, Any)
+    _plot = Any(None)
 
     # The value of the override mapper to use, if any.  If None, then uses the
     # mapper on self.component.
-    _mapper = Trait(None, Any)
+    _mapper = Any(None)
 
     # Shadow trait for the **axis_index** property.
-    _axis_index = Trait(None, None, Int)
+    _axis_index = Union(None, Int)
 
     # The data space start and end coordinates of the selected region,
     # expressed as an array.
