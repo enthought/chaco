@@ -51,8 +51,8 @@ from traits.api import (
     Callable,
     Property,
     Tuple,
-    Either,
     cached_property,
+    Union,
 )
 from traitsui.api import View, VGroup, Item
 
@@ -228,7 +228,7 @@ class ScatterPlot(BaseXYPlot):
     # The pixel size of the markers, not including the thickness of the outline.
     # Default value is 4.0.
     # TODO: for consistency, there should be a size data source and a mapper
-    marker_size = Either(Float, Array, requires_redraw=True)
+    marker_size = Union(Float, Array, requires_redraw=True)
 
     # The function which actually renders the markers
     render_markers_func = Callable(render_markers)
@@ -300,7 +300,7 @@ class ScatterPlot(BaseXYPlot):
         """
         # data_array is Nx2 array
         if len(data_array) == 0:
-            return empty(shape=(0,2))
+            return empty(shape=(0, 2))
 
         data_array = asarray(data_array)
         if len(data_array.shape) == 1:
