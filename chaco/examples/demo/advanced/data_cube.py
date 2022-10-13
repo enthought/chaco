@@ -38,7 +38,6 @@ from traits.api import (
     Float,
     HasTraits,
     Int,
-    Trait,
     observe,
 )
 from traits.observation.api import match

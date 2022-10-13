@@ -34,7 +34,6 @@ from traits.api import (
     Float,
     Int,
     Str,
-    Trait,
     Unicode,
     Bool,
     Event,

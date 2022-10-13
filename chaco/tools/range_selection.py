@@ -28,7 +28,6 @@ from traits.api import (
     observe,
     Property,
     Str,
-    Trait,
     Union
 )
 from enable.api import KeySpec

@@ -15,7 +15,6 @@ from enable.api import ColorTrait, KeySpec
 from traits.api import (
     Bool,
     Enum,
-    Trait,
     Int,
     Float,
     Tuple,

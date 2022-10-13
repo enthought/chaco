@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-from traits.api import Any, Enum, Int, Property, Trait, Union
+from traits.api import Any, Enum, Int, Property, Union
 
 from enable.api import NativeScrollBar
 

@@ -47,7 +47,6 @@ from traits.api import (
     Int,
     Property,
     Str,
-    Trait,
     Union,
 )
 

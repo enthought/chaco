@@ -50,7 +50,6 @@ from traits.api import (
     Int,
     Instance,
     Str,
-    Trait,
     observe,
     Button,
     Bool,

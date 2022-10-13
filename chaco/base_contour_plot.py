@@ -21,7 +21,6 @@ from traits.api import (
     Property,
     Range,
     Str,
-    Trait,
     Tuple,
     Union,
 )

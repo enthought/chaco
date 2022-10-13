@@ -24,7 +24,6 @@ from traits.api import (
     Instance,
     Property,
     Str,
-    Trait,
     List,
 )
 from kiva.api import points_in_polygon
