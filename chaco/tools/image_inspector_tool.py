@@ -13,7 +13,7 @@ ImageInspectorColorbarOverlay classes.
 """
 # Enthought library imports
 from enable.api import BaseTool, KeySpec
-from traits.api import Any, Bool, Enum, Event, Tuple
+from traits.api import Any, Bool, Enum, Event, Tuple, Union
 
 # Chaco imports
 from chaco.abstract_overlay import AbstractOverlay
@@ -42,7 +42,7 @@ class ImageInspectorTool(BaseTool):
 
     # Stores the value of self.visible when the mouse leaves the tool,
     # so that it can be restored when the mouse enters again.
-    _old_visible = Enum(None, True, False)
+    _old_visible = Union(None, Bool)
 
     def normal_key_pressed(self, event):
         if self.inspector_key.match(event):

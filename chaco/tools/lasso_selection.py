@@ -102,7 +102,7 @@ class LassoSelection(AbstractController):
     # ----------------------------------------------------------------------
 
     # The PlotComponent associated with this tool.
-    _plot = Any(None)
+    _plot = Any()
 
     # To support multiple selections, a list of cached selections and the
     # active selection are maintained. A single list is not used because the

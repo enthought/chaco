@@ -72,7 +72,7 @@ class LineInspector(BaseTool):
     line_style = LineStyle("solid")
 
     # Last recorded position of the mouse
-    _last_position = Any(None)
+    _last_position = Any()
 
     def draw(self, gc, view_bounds=None):
         """Draws this tool on a graphics context.

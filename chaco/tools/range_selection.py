@@ -146,11 +146,11 @@ class RangeSelection(AbstractController):
 
     # The value of the override plot to use, if any.  If None, then uses
     # self.component.
-    _plot = Any(None)
+    _plot = Any()
 
     # The value of the override mapper to use, if any.  If None, then uses the
     # mapper on self.component.
-    _mapper = Any(None)
+    _mapper = Any()
 
     # Shadow trait for the **axis_index** property.
     _axis_index = Union(None, Int)

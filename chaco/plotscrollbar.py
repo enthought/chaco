@@ -36,11 +36,11 @@ class PlotScrollBar(NativeScrollBar):
 
     # The value of the override plot to use, if any.  If None, then uses
     # self.component.
-    _plot = Any(None)
+    _plot = Any()
 
     # The value of the override mapper to use, if any.  If None, then uses the
     # mapper on self.component.
-    _mapper = Any(None)
+    _mapper = Any()
 
     # Stores the index (0 or 1) corresponding to self.axis
     _axis_index = Union(None, Int)
