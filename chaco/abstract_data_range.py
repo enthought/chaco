@@ -13,7 +13,7 @@ Defines the base class for data ranges.
 """
 
 # Enthought library imports
-from traits.api import Event, Float, HasTraits, Instance, List, Trait
+from traits.api import Either, Event, Float, HasTraits, Instance, List
 
 # Local relative imports
 from .abstract_data_source import AbstractDataSource
@@ -43,9 +43,9 @@ class AbstractDataRange(HasTraits):
     high = Float(1.0)
 
     #: Setting for the lower bound of this range.
-    low_setting = Trait("auto", "auto", Float)
+    low_setting = Either("auto", Float, default="auto")
     #: Setting for the upper bound of this range.
-    high_setting = Trait("auto", "auto", Float)
+    high_setting = Either("auto", Float, default="auto")
 
     #: Event that is fired when the actual bounds values change; the value
     #: of the event is a tuple (low_bound, high_bound)
