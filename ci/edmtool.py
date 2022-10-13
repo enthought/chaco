@@ -95,6 +95,8 @@ dependencies = {
     "swig",
 }
 
+pypi_dependencies = {"sphinx-copybutton"}
+
 # Dependencies we install from source for cron tests
 # Order from packages with the most dependencies to one with the least
 # dependencies. Packages are forced re-installed in this order.
@@ -214,6 +216,12 @@ def install(runtime, toolkit, environment, editable, source):
         ("edm run -e {environment} -- pip install -r ci/requirements.txt"
          " --no-dependencies"),
     ]
+
+    if pypi_dependencies:
+        commands.extend([
+            "edm run -e {environment} -- python -m pip install " + dep
+            for dep in pypi_dependencies
+        ])
 
     click.echo("Creating environment '{environment}'".format(**parameters))
     execute(commands, parameters)
