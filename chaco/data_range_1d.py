@@ -19,7 +19,8 @@ from math import ceil, floor, log
 from numpy import compress, errstate, inf, isinf, isnan, ndarray
 
 # Enthought library imports
-from traits.api import Bool, CFloat, Either, Enum, Float, Property, Callable
+from traits.api import (
+    Bool, CFloat, Constant, Enum, Float, Property, Callable, Union)
 
 # Local relative imports
 from .base import arg_find_runs
@@ -43,14 +44,14 @@ class DataRange1D(BaseDataRange):
     #:   of the data.
     #: * 'track': The lower bound tracks the upper bound by **tracking_amount**.
     #: * CFloat: An explicit value for the lower bound
-    low_setting = Property(Either("auto", "track", CFloat, default="auto"))
+    low_setting = Property(Union(Constant("auto"), Constant("track"), CFloat))
     #: Property for the upper bound of this range (overrides AbstractDataRange).
     #:
     #: * 'auto': The upper bound is automatically set at or above the maximum
     #:   of the data.
     #: * 'track': The upper bound tracks the lower bound by **tracking_amount**.
     #: * CFloat: An explicit value for the upper bound
-    high_setting = Property(Either("auto", "track", CFloat, default="auto"))
+    high_setting = Property(Union(Constant("auto"), Constant("track"), CFloat))
 
     #: Do "auto" bounds imply an exact fit to the data? If False,
     #: they pad a little bit of margin on either side.
@@ -98,11 +99,11 @@ class DataRange1D(BaseDataRange):
     # setting.
 
     # The user-specified low setting.
-    _low_setting = Either("auto", "track", CFloat, default="auto")
+    _low_setting = Union(Enum("auto", "track"), CFloat)
     # The actual numerical value for the low setting.
     _low_value = CFloat(-inf)
     # The user-specified high setting.
-    _high_setting = Either("auto", "track", CFloat, default="auto")
+    _high_setting = Union(Enum("auto", "track"), CFloat)
     # The actual numerical value for the high setting.
     _high_value = CFloat(inf)
 

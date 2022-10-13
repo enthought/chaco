@@ -30,7 +30,7 @@ from traits.api import (
     Any,
     Bool,
     Callable,
-    Either,
+    Constant,
     Enum,
     Float,
     Instance,
@@ -106,7 +106,7 @@ class PlotGrid(AbstractOverlay):
     mapper = Instance(AbstractMapper)
 
     #: The dataspace interval between grid lines.
-    grid_interval = Either("auto", Float, default="auto")
+    grid_interval = Union(Constant("auto"), Float)
 
     #: The dataspace value at which to start this grid.  If None, then
     #: uses the mapper.range.low.

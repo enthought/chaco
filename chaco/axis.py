@@ -30,7 +30,7 @@ from enable.api import ColorTrait, LineStyle
 from kiva.trait_defs.kiva_font_trait import KivaFont
 from traits.api import (
     Any,
-    Either,
+    Constant,
     Float,
     Int,
     Str,
@@ -44,7 +44,8 @@ from traits.api import (
     Enum,
     Callable,
     ArrayOrNone,
-    observe
+    observe,
+    Union,
 )
 
 # Local relative imports
@@ -86,7 +87,7 @@ class PlotAxis(AbstractOverlay):
     title_font = KivaFont("modern 12")
 
     #: The spacing between the axis line and the title
-    title_spacing = Either("auto", Float, default="auto")
+    title_spacing = Union(Constant("auto"), Float)
 
     #: The color of the title.
     title_color = ColorTrait("black")
@@ -135,7 +136,7 @@ class PlotAxis(AbstractOverlay):
     tick_visible = Bool(True)
 
     #: The dataspace interval between ticks.
-    tick_interval = Either("auto", Float, default="auto")
+    tick_interval = Union(Constant("auto"), Float)
 
     #: A callable that implements the AbstractTickGenerator interface.
     tick_generator = Instance(AbstractTickGenerator)

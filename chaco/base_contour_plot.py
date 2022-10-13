@@ -14,7 +14,7 @@ from numpy import array, isscalar, issubsctype, linspace, number
 from enable.api import ColorTrait
 from traits.api import (
     Bool,
-    Either,
+    Constant,
     Instance,
     Int,
     List,
@@ -45,7 +45,7 @@ class BaseContourPlot(Base2DPlot):
     #: the value of the function at the contours; a positive integer, in which
     #: case the range of the value is divided in the given number of equally
     #: spaced levels; or "auto" (default), which divides the range in 10 levels
-    levels = Either("auto", Int, List, default="auto")
+    levels = Union(Constant("auto"), Int, List)
 
     #: The color(s) of the lines.
     #: ``colors`` can be given as a color name, in which case all contours have

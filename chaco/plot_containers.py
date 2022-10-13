@@ -27,7 +27,6 @@ from numpy import (
 from traits.api import (
     Any,
     Array,
-    Either,
     Enum,
     Instance,
     List,
@@ -157,7 +156,7 @@ class GridPlotContainer(BasePlotContainer):
 
     #: The amount of space to put on either side of each component, expressed
     #: as a tuple (h_spacing, v_spacing).
-    spacing = Either(Tuple, List, Array)
+    spacing = Union(Tuple, List, Array)
 
     #: The vertical alignment of objects that don't span the full height.
     valign = Enum("bottom", "top", "center")
