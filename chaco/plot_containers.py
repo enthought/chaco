@@ -156,7 +156,7 @@ class GridPlotContainer(BasePlotContainer):
 
     #: The amount of space to put on either side of each component, expressed
     #: as a tuple (h_spacing, v_spacing).
-    spacing = Union(Tuple, List, Array)
+    spacing = Union(None, Tuple, List, Array)
 
     #: The vertical alignment of objects that don't span the full height.
     valign = Enum("bottom", "top", "center")
@@ -169,7 +169,7 @@ class GridPlotContainer(BasePlotContainer):
     #: specification.  If there are fewer components than cells, the remaining
     #: cells are filled in with spaces.  If there are more components than cells,
     #: the remainder wrap onto new rows as appropriate.
-    shape = Union(None, Tuple((0, 0)), List, Array)
+    shape = Union(Tuple((0, 0)), List, Array)
 
     #: This property exposes the underlying grid structure of the container,
     #: and is the preferred way of setting and reading its contents.
