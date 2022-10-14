@@ -13,7 +13,7 @@ from numpy import array, asarray
 
 # Enthought library imports
 from enable.api import ColorTrait, MarkerTrait
-from traits.api import Float, Int, Str, Union
+from traits.api import Float, Int, Str
 from traits.observation.events import TraitChangeEvent
 
 # Local, relative imports

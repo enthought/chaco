@@ -13,7 +13,6 @@ from traits.api import (
     Property,
     Tuple,
     CArray,
-    Union,
 )
 
 # Chaco imports
