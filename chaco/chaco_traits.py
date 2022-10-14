@@ -39,6 +39,8 @@ class MappedUnion(Union):
         post_setattrs = []
         mapped_traits = []
         for trait in traits:
+            if trait is None:
+                continue
             post_setattr = getattr(trait, "post_setattr", None)
             if post_setattr is not None:
                 post_setattrs.append(post_setattr)
