@@ -169,7 +169,7 @@ class GridPlotContainer(BasePlotContainer):
     #: specification.  If there are fewer components than cells, the remaining
     #: cells are filled in with spaces.  If there are more components than cells,
     #: the remainder wrap onto new rows as appropriate.
-    shape = Union(Tuple((0, 0)), List, Array)
+    shape = Union(None, Tuple((0, 0)), List, Array)
 
     #: This property exposes the underlying grid structure of the container,
     #: and is the preferred way of setting and reading its contents.

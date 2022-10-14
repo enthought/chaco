@@ -144,7 +144,7 @@ class PlotGrid(AbstractOverlay):
     #:   Callable : Function that takes an array of dataspace grid ticks
     #:              and returns either an array of shape (N,2) of (starts,ends)
     #:              for each grid point or a single tuple (low, high)
-    transverse_bounds = Union(Tuple, Callable)
+    transverse_bounds = Union(None, Tuple, Callable)
 
     #: Mapper in the direction corresponding to self.orientation, i.e. transverse
     #: to the direction of self.mapper.  This is used to compute the screen
