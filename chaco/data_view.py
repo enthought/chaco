@@ -20,6 +20,7 @@ from .abstract_overlay import AbstractOverlay
 from .axis import PlotAxis
 from .base_1d_mapper import Base1DMapper
 from .base_2d_plot import Base2DPlot
+from .chaco_traits import Optional
 from .data_range_2d import DataRange2D
 from .grid import PlotGrid
 from .linear_mapper import LinearMapper
@@ -236,10 +237,10 @@ class DataView(OverlayPlotContainer):
         observe='y_axis.[title,orientation], x_axis.[title,orientation]'
     )
 
-    _padding_top = Union(None, Int())
-    _padding_bottom = Union(None, Int())
-    _padding_left = Union(None, Int())
-    _padding_right = Union(None, Int())
+    _padding_top = Optional(Int())
+    _padding_bottom = Optional(Int())
+    _padding_left = Optional(Int())
+    _padding_right = Optional(Int())
 
     def _find_padding(self, side):
         SIDE_TO_TRAIT_MAP = {

@@ -34,6 +34,7 @@ from enable.api import KeySpec
 
 # Chaco imports
 from chaco.abstract_controller import AbstractController
+from chaco.chaco_traits import Optional
 
 
 class RangeSelection(AbstractController):
@@ -153,7 +154,7 @@ class RangeSelection(AbstractController):
     _mapper = Any()
 
     # Shadow trait for the **axis_index** property.
-    _axis_index = Union(None, Int)
+    _axis_index = Optional(Int)
 
     # The data space start and end coordinates of the selected region,
     # expressed as an array.

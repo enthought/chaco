@@ -21,6 +21,7 @@ from traits.api import Any, Bool, Enum, Instance, Int, List, Tuple, Union
 
 # Chaco imports
 from chaco.abstract_overlay import AbstractOverlay
+from chaco.chaco_traits import Optional
 
 
 class LineSegmentTool(AbstractOverlay):
@@ -55,10 +56,10 @@ class LineSegmentTool(AbstractOverlay):
 
     #: The data (index, value) position of the mouse cursor; this is used by various
     #: draw() routines.
-    mouse_position = Union(None, Tuple)
+    mouse_position = Optional(Tuple)
 
     # The index of the vertex being dragged, if any.
-    _dragged = Union(None, Int)
+    _dragged = Optional(Int)
 
     # Is the point being dragged is a newly placed point? This informs the
     # "dragging" state about what to do if the user presses Escape while

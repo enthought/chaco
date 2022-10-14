@@ -12,6 +12,8 @@ from traits.api import Any, Enum, Int, Property, Union
 
 from enable.api import NativeScrollBar
 
+from .chaco_traits import Optional
+
 
 class PlotScrollBar(NativeScrollBar):
     """
@@ -43,7 +45,7 @@ class PlotScrollBar(NativeScrollBar):
     _mapper = Any()
 
     # Stores the index (0 or 1) corresponding to self.axis
-    _axis_index = Union(None, Int)
+    _axis_index = Optional(Int)
 
     # ----------------------------------------------------------------------
     # Public methods

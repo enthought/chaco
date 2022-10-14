@@ -17,6 +17,7 @@ from traits.api import Any, Bool, Enum, Event, Tuple, Union
 
 # Chaco imports
 from chaco.abstract_overlay import AbstractOverlay
+from chaco.chaco_traits import Optional
 from chaco.overlays.text_box_overlay import TextBoxOverlay
 from chaco.plots.image_plot import ImagePlot
 
@@ -42,7 +43,7 @@ class ImageInspectorTool(BaseTool):
 
     # Stores the value of self.visible when the mouse leaves the tool,
     # so that it can be restored when the mouse enters again.
-    _old_visible = Union(None, Bool)
+    _old_visible = Optional(Bool)
 
     def normal_key_pressed(self, event):
         if self.inspector_key.match(event):

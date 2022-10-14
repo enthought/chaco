@@ -39,6 +39,7 @@ from traitsui.api import Item, View, ScrubberEditor, HGroup
 from chaco.array_data_source import ArrayDataSource
 from chaco.base import arg_find_runs, bin_search
 from chaco.base_xy_plot import BaseXYPlot
+from chaco.chaco_traits import Optional
 
 
 class MultiLinePlot(BaseXYPlot):
@@ -118,7 +119,7 @@ class MultiLinePlot(BaseXYPlot):
     color = black_color_trait(requires_redraw=True)
 
     #: A function that returns the color of lines.  Overrides `color` if not None.
-    color_func = Union(None, Callable)
+    color_func = Optional(Callable)
 
     #: The color to use to highlight the line when selected.
     selected_color = ColorTrait("lightyellow")

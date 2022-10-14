@@ -27,6 +27,7 @@ from traits.api import (
 
 # Local relative imports
 from .base_2d_plot import Base2DPlot
+from .chaco_traits import Optional
 from .color_mapper import ColorMapper
 
 
@@ -52,7 +53,7 @@ class BaseContourPlot(Base2DPlot):
     #: colors is shorter than the number of levels, the values are repeated
     #: from the beginning of the list. Default is black.
     #: Colors are associated with levels of increasing value.
-    colors = Union(None, Str, Instance(ColorMapper), List, Tuple)
+    colors = Optional(Str, Instance(ColorMapper), List, Tuple)
 
     #: If present, the color mapper for the colorbar to look at.
     color_mapper = Property(Instance(ColorMapper))

@@ -47,6 +47,7 @@ except ImportError:
 
 # Local relative imports
 from .base_plot_container import BasePlotContainer
+from .chaco_traits import Optional
 
 
 __all__ = [
@@ -156,7 +157,7 @@ class GridPlotContainer(BasePlotContainer):
 
     #: The amount of space to put on either side of each component, expressed
     #: as a tuple (h_spacing, v_spacing).
-    spacing = Union(None, Tuple, List, Array)
+    spacing = Optional(Tuple, List, Array)
 
     #: The vertical alignment of objects that don't span the full height.
     valign = Enum("bottom", "top", "center")
