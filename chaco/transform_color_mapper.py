@@ -11,7 +11,7 @@
 from numpy import clip, isinf, ones_like, empty
 
 from chaco.color_mapper import ColorMapper
-from traits.api import Callable, Tuple, Float, observe, Union
+from traits.api import Callable, Tuple, Float, observe
 
 from .chaco_traits import Optional
 from .speedups import map_colors, map_colors_uint8
