@@ -68,11 +68,11 @@ class MappedUnion(Union):
             try:
                 post_setattr(object, name, value)
                 return
-            except TraitError:
+            except Exception:
                 pass
 
-        # I am not sure about this
-        setattr(object, name + "_", value)
+        if self.is_mapped:
+            setattr(object, name + "_", value)
 
 
 class Optional(MappedUnion):
