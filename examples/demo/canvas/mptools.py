@@ -65,8 +65,8 @@ class MPDragZoom(DragZoom):
     speed = 1.0
 
     # The original dataspace points where blobs 1 and 2 went down
-    _orig_low = CArray  # Optional(Tuple)
-    _orig_high = CArray  # Optional(Tuple)
+    _orig_low = CArray
+    _orig_high = CArray
 
     # Dataspace center of the zoom action
     _center_pt = Optional(Tuple)
