@@ -13,11 +13,11 @@ from traits.api import (
     Property,
     Tuple,
     CArray,
-    Union,
 )
 
 # Chaco imports
 from chaco.api import BaseTool
+from chaco.chaco_traits import Optional
 from chaco.tools.api import PanTool, DragZoom, LegendTool, RangeSelection
 
 
@@ -65,11 +65,11 @@ class MPDragZoom(DragZoom):
     speed = 1.0
 
     # The original dataspace points where blobs 1 and 2 went down
-    _orig_low = CArray  # Union(None, Tuple)
-    _orig_high = CArray  # Union(None, Tuple)
+    _orig_low = CArray
+    _orig_high = CArray
 
     # Dataspace center of the zoom action
-    _center_pt = Union(None, Tuple)
+    _center_pt = Optional(Tuple)
 
     # Maps blob ID numbers to the (x,y) coordinates that came in.
     _blobs = Dict()

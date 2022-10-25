@@ -9,6 +9,7 @@ from enable.api import Container
 
 # Chaco imports
 from chaco.api import AbstractOverlay
+from chaco.chaco_traits import Optional
 from enable.tools.api import DragTool
 
 
@@ -34,7 +35,7 @@ class PlotCloneTool(AbstractOverlay, DragTool):
     capture_mouse = True
 
     # The (x,y) position of the "last" mouse position we received
-    _offset = Union(None, Tuple)
+    _offset = Optional(Tuple)
 
     # The relative position of the mouse_down_position to the origin
     # of the plot's coordinate system

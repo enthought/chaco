@@ -46,6 +46,7 @@ from traitsui.api import HGroup, Item, VGroup, View, TextEditor
 # Local, relative imports
 from .abstract_overlay import AbstractOverlay
 from .abstract_mapper import AbstractMapper
+from .chaco_traits import Optional
 from .log_mapper import LogMapper
 from .ticks import AbstractTickGenerator, DefaultTickGenerator
 
@@ -110,11 +111,11 @@ class PlotGrid(AbstractOverlay):
 
     #: The dataspace value at which to start this grid.  If None, then
     #: uses the mapper.range.low.
-    data_min = Union(None, Float)
+    data_min = Optional(Float)
 
     #: The dataspace value at which to end this grid.  If None, then uses
     #: the mapper.range.high.
-    data_max = Union(None, Float)
+    data_max = Optional(Float)
 
     #: A callable that implements the AbstractTickGenerator Interface.
     tick_generator = Instance(AbstractTickGenerator)

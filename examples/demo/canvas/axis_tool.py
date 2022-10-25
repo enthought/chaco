@@ -1,4 +1,5 @@
 from enable.api import BaseTool, ColorTrait
+from chaco.chaco_traits import Optional
 from traits.api import (
     Any,
     Bool,
@@ -64,7 +65,7 @@ class AxisTool(BaseTool):
     down_tick_label_color = ColorTrait("red")
     down_bgcolor = ColorTrait("lightgray")
     down_border_visible = Bool(True)
-    down_border_color = Union(None, ColorTrait)
+    down_border_color = Optional(ColorTrait)
 
     _cached_tick_color = ColorTrait
     _cached_axis_line_color = ColorTrait

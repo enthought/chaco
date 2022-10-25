@@ -13,11 +13,12 @@ from numpy import array, asarray
 
 # Enthought library imports
 from enable.api import ColorTrait, MarkerTrait
-from traits.api import Float, Int, Str, Union
+from traits.api import Float, Int, Str
 from traits.observation.events import TraitChangeEvent
 
 # Local, relative imports
 from chaco.abstract_overlay import AbstractOverlay
+from chaco.chaco_traits import Optional
 from chaco.plots.scatterplot import render_markers
 
 
@@ -32,19 +33,19 @@ class ScatterInspectorOverlay(AbstractOverlay):
 
     #: The style to use when a point is hovered over
     hover_metadata_name = Str("hover")
-    hover_marker = Union(None, MarkerTrait)
-    hover_marker_size = Union(None, Int)
-    hover_line_width = Union(None, Float)
-    hover_color = Union(None, ColorTrait)
-    hover_outline_color = Union(None, ColorTrait)
+    hover_marker = Optional(MarkerTrait)
+    hover_marker_size = Optional(Int)
+    hover_line_width = Optional(Float)
+    hover_color = Optional(ColorTrait)
+    hover_outline_color = Optional(ColorTrait)
 
     #: The style to use when a point has been selected by a click
     selection_metadata_name = Str("selections")
-    selection_marker = Union(None, MarkerTrait)
-    selection_marker_size = Union(None, Int)
-    selection_line_width = Union(None, Float)
-    selection_color = Union(None, ColorTrait)
-    selection_outline_color = Union(None, ColorTrait)
+    selection_marker = Optional(MarkerTrait)
+    selection_marker_size = Optional(Int)
+    selection_line_width = Optional(Float)
+    selection_color = Optional(ColorTrait)
+    selection_outline_color = Optional(ColorTrait)
 
     # For now, implement the equivalent of this Traits 3 feature manually
     # using a series of trait change handlers (defined at the end of the
