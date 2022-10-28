@@ -9,4 +9,4 @@ skip = "pp* *-manylinux_i686 *_ppc64le *_s390x *-musllinux*"
 archs = "x86_64 universal2"
 
 [tool.cibuildwheel.linux]
-archs = ['x86_64', 'aarch64']
+archs = 'x86_64 aarch64'
