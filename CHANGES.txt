@@ -2,6 +2,58 @@
 Chaco CHANGELOG
 ===============
 
+This is an incremental release which modernises the usage of Traits in a
+number of places, and fixes a number of bugs.
+
+Release 5.1.0
+-------------
+
+Thanks to all who contributed to the release:
+
+* Chris Angell
+* Aaron Ayres
+* Nicola De Mitri
+* Mark Dickinson
+* Rahul Poruri
+* Joris Vankerschaver
+* Corran Webster
+
+New features/Improvements
+
+* Create and use an Optional() trait type that understands mapped traits (#838)
+* Correctly handle NaNs in DataRange classes to avoid NumPy warnings (#835)
+* Add tests for ImagePlot map_screen (#809)
+* Have map_screen return an empty array rather than list on empty input (#805)
+
+Removals/Deprecations
+
+* Update code to remove usage of Trait() and Either() constructs (#837)
+
+Fixes
+
+* Fix spectrum demo (#827)
+* Replace some identity checks (#826)
+* Force use of NumPy arrays in certain mappers (#810)
+* Fix hittest_tool (#808)
+* Fix DataLabelTool (#804)
+* Fix CursorTool usage with LogMapper (#803)
+* Fix map_screen for BaseXYPlot (#802)
+
+Documentation/examples
+
+* Add Sphinx copybutton to documentation (#832)
+* Link to examples at correct point GitHub tag for documentation version (#816)
+* Add a Read the Docs configuration file (#812)
+* Fix broken links (#793, #794)
+
+Build/CI
+
+* Automate PyPI release process (#839)
+* Report Cron Job CI to internal Enthought channels (#811, #830)
+* Default Git branch is now "main" (#815)
+* Stop using Appveyor and TravisCI (#807)
+* Use Enable from EDM rather than source (#795)
+
 Release 5.0.0
 -------------
 
@@ -229,7 +281,7 @@ Release 4.7.1
 
 New features/Improvements
 
-* Add a inspector_event attribute to ScatterInspector to get 
+* Add a inspector_event attribute to ScatterInspector to get
   notifications when both (un)hovering or (de)selecting (PR#395).
 
 Fixes
