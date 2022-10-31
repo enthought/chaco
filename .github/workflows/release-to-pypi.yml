@@ -19,7 +19,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Set up QEMU
-      uses: docker/setup-qemu-action@v1
+      uses: docker/setup-qemu-action@v2
       with:
         platforms: arm64
       if: runner.os == 'Linux'
@@ -34,10 +34,6 @@ jobs:
 
     - name: Build wheels
       uses: pypa/cibuildwheel@v2.11.2
-      env:
-        CIBW_SKIP: 'pp*'
-        CIBW_ARCHS_LINUX: "auto aarch64"
-        CIBW_ARCHS_MACOS: "auto universal2"
 
     - name: Check and upload wheels
       env:
@@ -61,16 +57,15 @@ jobs:
         python-version: '3.10'
 
     - name: Install Python packages needed for sdist build and upload
-      run: python -m pip install twine
+      run: python -m pip install build twine
 
     - name: Build sdist
-      run: |
-        python setup.py sdist
+      run: python -m build --sdist
 
     - name: Publish sdist to PyPI
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
-        python -m twine check --strict dist/*.tar.gz
-        python -m twine upload dist/*.tar.gz
+        python -m twine check --strict dist/*
+        python -m twine upload dist/*

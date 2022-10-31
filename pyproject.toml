@@ -1,3 +1,12 @@
 [build-system]
 requires = ["cython", "oldest-supported-numpy", "setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.cibuildwheel]
+skip = "pp* *-manylinux_i686 *_ppc64le *_s390x *-musllinux*"
+
+[tool.cibuildwheel.macos]
+archs = "x86_64 universal2"
+
+[tool.cibuildwheel.linux]
+archs = 'x86_64 aarch64'

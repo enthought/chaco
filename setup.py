@@ -358,6 +358,7 @@ if __name__ == "__main__":
         },
         description='interactive 2-dimensional plotting',
         long_description=open('README.rst').read(),
+        long_description_content_type="text/x-rst",
         ext_modules=extensions,
         include_package_data=True,
         install_requires=__requires__,
