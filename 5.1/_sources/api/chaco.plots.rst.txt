@@ -1,0 +1,48 @@
+..
+   (C) Copyright 2006-2021 Enthought, Inc., Austin, TX
+   All rights reserved.
+
+   This software is provided without warranty under the terms of the BSD
+   license included in LICENSE.txt and may be redistributed only under
+   the conditions described in the aforementioned license. The license
+   is also available online at http://www.enthought.com/licenses/BSD.txt
+
+   Thanks for using Enthought open source!
+
+chaco.plots package
+===================
+
+.. automodule:: chaco.plots
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. toctree::
+
+   chaco.plots.api
+   chaco.plots.barplot
+   chaco.plots.candle_plot
+   chaco.plots.cmap_image_plot
+   chaco.plots.color_bar
+   chaco.plots.colormapped_scatterplot
+   chaco.plots.errorbar_plot
+   chaco.plots.filled_line_plot
+   chaco.plots.horizon_plot
+   chaco.plots.image_plot
+   chaco.plots.jitterplot
+   chaco.plots.line_scatterplot_1d
+   chaco.plots.lineplot
+   chaco.plots.multi_line_plot
+   chaco.plots.polar_line_renderer
+   chaco.plots.polygon_plot
+   chaco.plots.quiverplot
+   chaco.plots.scatterplot
+   chaco.plots.scatterplot_1d
+   chaco.plots.segment_plot
+   chaco.plots.text_plot
+   chaco.plots.text_plot_1d
+
+
+.. toctree::
+
+   chaco.plots.contour

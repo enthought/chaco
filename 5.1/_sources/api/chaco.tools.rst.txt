@@ -1,0 +1,62 @@
+..
+   (C) Copyright 2006-2021 Enthought, Inc., Austin, TX
+   All rights reserved.
+
+   This software is provided without warranty under the terms of the BSD
+   license included in LICENSE.txt and may be redistributed only under
+   the conditions described in the aforementioned license. The license
+   is also available online at http://www.enthought.com/licenses/BSD.txt
+
+   Thanks for using Enthought open source!
+
+chaco.tools package
+===================
+
+.. automodule:: chaco.tools
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. toctree::
+
+   chaco.tools.api
+   chaco.tools.better_selecting_zoom
+   chaco.tools.better_zoom
+   chaco.tools.broadcaster
+   chaco.tools.cursor_tool
+   chaco.tools.data_label_tool
+   chaco.tools.dataprinter
+   chaco.tools.drag_zoom
+   chaco.tools.draw_points_tool
+   chaco.tools.highlight_tool
+   chaco.tools.image_inspector_tool
+   chaco.tools.lasso_selection
+   chaco.tools.legend_highlighter
+   chaco.tools.legend_tool
+   chaco.tools.line_inspector
+   chaco.tools.line_segment_tool
+   chaco.tools.move_tool
+   chaco.tools.pan_tool
+   chaco.tools.pan_tool2
+   chaco.tools.point_marker
+   chaco.tools.range_selection
+   chaco.tools.range_selection_2d
+   chaco.tools.range_selection_overlay
+   chaco.tools.rect_zoom
+   chaco.tools.rectangular_selection
+   chaco.tools.regression_lasso
+   chaco.tools.save_tool
+   chaco.tools.scatter_inspector
+   chaco.tools.select_tool
+   chaco.tools.simple_inspector
+   chaco.tools.tool_history_mixin
+   chaco.tools.tool_states
+   chaco.tools.tracking_pan_tool
+   chaco.tools.tracking_zoom
+   chaco.tools.traits_tool
+   chaco.tools.zoom_tool
+
+
+.. toctree::
+
+   chaco.tools.toolbars
