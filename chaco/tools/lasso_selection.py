@@ -158,11 +158,11 @@ class LassoSelection(AbstractController):
         """
         # We may want to generalize this for the n-dimensional case...
 
-        self._active_selection = empty((0, 2), dtype=numpy.bool)
+        self._active_selection = empty((0, 2), dtype=bool)
 
         if self.selection_datasource is not None:
             self.selection_datasource.metadata[self.metadata_name] = zeros(
-                len(self.selection_datasource.get_data()), dtype=numpy.bool
+                len(self.selection_datasource.get_data()), dtype=bool
             )
         self.selection_mode = "include"
         self.event_state = "selecting"
@@ -197,7 +197,7 @@ class LassoSelection(AbstractController):
         self._update_selection()
 
         self._previous_selections.append(self._active_selection)
-        self._active_selection = empty((0, 2), dtype=numpy.bool)
+        self._active_selection = empty((0, 2), dtype=bool)
 
     def selecting_mouse_move(self, event):
         """Handles the mouse moving when the tool is in the 'selecting' state.
@@ -246,12 +246,12 @@ class LassoSelection(AbstractController):
     # ----------------------------------------------------------------------
 
     def _dataspace_points_default(self):
-        return empty((0, 2), dtype=numpy.bool)
+        return empty((0, 2), dtype=bool)
 
     def _reset(self):
         """Resets the selection"""
         self.event_state = "normal"
-        self._active_selection = empty((0, 2), dtype=numpy.bool)
+        self._active_selection = empty((0, 2), dtype=bool)
         self._previous_selections = []
         self._update_selection()
 
@@ -279,7 +279,7 @@ class LassoSelection(AbstractController):
             return
 
         selected_mask = zeros(
-            self.selection_datasource._data.shape, dtype=numpy.bool
+            self.selection_datasource._data.shape, dtype=bool
         )
         data = self._get_data()
 

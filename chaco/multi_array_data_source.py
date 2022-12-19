@@ -13,7 +13,7 @@
 import warnings
 
 # Major package imports
-from numpy import nanmax, nanmin, array, shape, ones, bool, newaxis, nan_to_num
+from numpy import nanmax, nanmin, array, shape, ones, newaxis, nan_to_num
 
 # Enthought library imports
 from traits.api import Any, Int, Tuple
