@@ -305,6 +305,8 @@ def auto_ticks(
 
     if upper > end:
         end += tick_interval
+    if isnan([start, end]).any():
+        return []
     ticks = arange(start, end + (tick_interval / 2.0), tick_interval)
 
     if len(ticks) < 2:
