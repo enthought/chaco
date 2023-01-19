@@ -500,7 +500,7 @@ class PlotAxis(AbstractOverlay):
             screenlow, screenhigh = screenhigh, screenlow
 
         if (
-            (datalow == datahigh)
+            (datalow >= datahigh)
             or (screenlow == screenhigh)
             or (datalow in [inf, -inf])
             or (datahigh in [inf, -inf])
@@ -508,11 +508,6 @@ class PlotAxis(AbstractOverlay):
             self._reset_cache()
             self._cache_valid = True
             return
-
-        if datalow > datahigh:
-            raise RuntimeError(
-                "DataRange low is greater than high; unable to compute axis ticks."
-            )
 
         if not self.tick_generator:
             return
