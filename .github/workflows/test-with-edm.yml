@@ -22,7 +22,11 @@ jobs:
       - name: Install Qt dependencies for Linux
         run: |
           sudo apt-get update
-          sudo apt-get install qt5-default
+          sudo apt-get install qtbase5-dev
+          sudo apt-get install qtchooser
+          sudo apt-get install qt5-qmake
+          sudo apt-get install qtbase5-dev-tools
+          sudo apt-get install libegl1
           sudo apt-get install libxkbcommon-x11-0
           sudo apt-get install libglu1-mesa-dev
           sudo apt-get install libxcb-icccm4
@@ -31,6 +35,7 @@ jobs:
           sudo apt-get install libxcb-randr0
           sudo apt-get install libxcb-render-util0
           sudo apt-get install libxcb-xinerama0
+          sudo apt-get install libxcb-shape0
         if: matrix.toolkit != 'null'
       - name: Cache EDM packages
         uses: actions/cache@v2
