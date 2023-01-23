@@ -96,7 +96,7 @@ dependencies = {
     "swig",
 }
 
-pypi_dependencies = {"sphinx-copybutton"}
+pypi_dependencies = {}
 
 # Dependencies we install from source for cron tests
 # Order from packages with the most dependencies to one with the least
@@ -120,7 +120,8 @@ extra_dependencies = {
 
 doc_dependencies = {
     "sphinx",
-    "enthought_sphinx_theme"
+    "enthought_sphinx_theme",
+    "sphinx-copybutton",
 }
 
 doc_ignore = {
