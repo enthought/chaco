@@ -10,6 +10,8 @@
 
 """ Defines the PlotAxis class, and associated validator and UI.
 """
+import logging
+
 # Major library import
 from numpy import (
     array,
@@ -57,6 +59,8 @@ from .abstract_mapper import AbstractMapper
 from .abstract_overlay import AbstractOverlay
 from .label import Label
 from .log_mapper import LogMapper
+
+logger = logging.getLogger(__name__)
 
 
 def DEFAULT_TICK_FORMATTER(val):
@@ -500,19 +504,20 @@ class PlotAxis(AbstractOverlay):
             screenlow, screenhigh = screenhigh, screenlow
 
         if (
-            (datalow == datahigh)
+            (datalow >= datahigh)
             or (screenlow == screenhigh)
             or (datalow in [inf, -inf])
             or (datahigh in [inf, -inf])
         ):
+            if datalow > datahigh:
+                logger.warning(
+                    "{self.mapper} has an invalid data range with "
+                    "low={datalow} > high={datahigh}; unable to compute axis "
+                    "ticks."
+                )
             self._reset_cache()
             self._cache_valid = True
             return
-
-        if datalow > datahigh:
-            raise RuntimeError(
-                "DataRange low is greater than high; unable to compute axis ticks."
-            )
 
         if not self.tick_generator:
             return
