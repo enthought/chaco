@@ -16,21 +16,23 @@ jobs:
     strategy:
       matrix:
         toolkit: ['null', 'pyqt5', 'pyside2']
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Install Qt dependencies for Linux
         run: |
           sudo apt-get update
-          sudo apt-get install qt5-default
+          sudo apt-get install libegl1
           sudo apt-get install libxkbcommon-x11-0
-          sudo apt-get install libglu1-mesa-dev
           sudo apt-get install libxcb-icccm4
           sudo apt-get install libxcb-image0
           sudo apt-get install libxcb-keysyms1
           sudo apt-get install libxcb-randr0
           sudo apt-get install libxcb-render-util0
           sudo apt-get install libxcb-xinerama0
+          sudo apt-get install libxcb-shape0
+          # Needed to work around https://bugreports.qt.io/browse/PYSIDE-1547
+          sudo apt-get install libopengl0
         if: matrix.toolkit != 'null'
       - name: Cache EDM packages
         uses: actions/cache@v2
@@ -49,11 +51,7 @@ jobs:
         run: edm run -- python ci/edmtool.py flake8 --toolkit=${{ matrix.toolkit }}
         if: matrix.toolkit == 'null'
       - name: Run tests
-        uses: GabrielBB/xvfb-action@v1
-        with:
-          # kiva agg requires at least 15-bit color depth.
-          # The --server-args assumes xvfb-run is called, hence Linux only.
-          run: --server-args="-screen 0 1024x768x24" edm run -- python ci/edmtool.py test --toolkit=${{ matrix.toolkit }}
+        run: xvfb-run --server-args="-screen 0 1024x768x24" edm run -- python ci/edmtool.py test --toolkit=${{ matrix.toolkit }}
 
   # Test against EDM packages on Windows and OSX
   test-with-edm:
