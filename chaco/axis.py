@@ -512,7 +512,8 @@ class PlotAxis(AbstractOverlay):
             if datalow > datahigh:
                 logger.warning(
                     "{self.mapper} has an invalid data range with "
-                    "low={datalow} > high={datahigh}"
+                    "low={datalow} > high={datahigh}; unable to compute axis "
+                    "ticks."
                 )
             self._reset_cache()
             self._cache_valid = True
