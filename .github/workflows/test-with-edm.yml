@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         toolkit: ['null', 'pyqt5', 'pyside2']
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Install Qt dependencies for Linux
