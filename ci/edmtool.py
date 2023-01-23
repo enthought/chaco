@@ -77,7 +77,8 @@ from contextlib import contextmanager
 import click
 
 supported_combinations = {
-    '3.6': {'pyside2', 'pyqt', 'pyqt5', 'null'},
+    '3.6': {'pyside2', 'pyqt5', 'null'},
+    '3.8': {'pyside6', 'null'},
 }
 
 dependencies = {
@@ -111,6 +112,7 @@ github_url_fmt = "git+http://github.com/enthought/{0}.git#egg={0}"
 
 extra_dependencies = {
     'pyside2': {'pyside2'},
+    'pyside6': {'pyside6'},
     'pyqt': {'pyqt'},
     'pyqt5': {'pyqt5'},
     'null': set()
@@ -161,6 +163,7 @@ doc_ignore = {
 
 environment_vars = {
     'pyside2': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside2'},
+    'pyside6': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside6'},
     'pyqt': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt'},
     'pyqt5': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt5'},
     'null': {'ETS_TOOLKIT': 'null.image'},
@@ -204,7 +207,7 @@ def install(runtime, toolkit, environment, editable, source):
         | ci_dependencies
     )
 
-    if toolkit == "pyside2":
+    if toolkit.startswith("pyside"):
         addn_repositories = "--add-repository enthought/lgpl"
     else:
         addn_repositories = ""

@@ -47,9 +47,9 @@ jobs:
       - name: Install click to the default EDM environment
         run: edm install -y wheel click coverage
       - name: Install test environment
-        run: edm run -- python ci/edmtool.py install --toolkit=${{ matrix.toolkit }}
+        run: edm run -- python ci/edmtool.py install --runtime=3.8 --toolkit=${{ matrix.toolkit }}
       - name: Flake8
-        run: edm run -- python ci/edmtool.py flake8 --toolkit=${{ matrix.toolkit }}
+        run: edm run -- python ci/edmtool.py flake8 --runtime=3.8 --toolkit=${{ matrix.toolkit }}
         if: matrix.toolkit == 'null'
       - name: Run tests
         run: xvfb-run --server-args="-screen 0 1024x768x24" edm run -- python ci/edmtool.py test --toolkit=${{ matrix.toolkit }}
@@ -75,6 +75,6 @@ jobs:
       - name: Install click to the default EDM environment
         run: edm install -y wheel click coverage
       - name: Install test environment
-        run: edm run -- python ci/edmtool.py install --toolkit=${{ matrix.toolkit }}
+        run: edm run -- python ci/edmtool.py install --runtime=3.8 --toolkit=${{ matrix.toolkit }}
       - name: Run tests
-        run: edm run -- python ci/edmtool.py test --toolkit=${{ matrix.toolkit }}
+        run: edm run -- python ci/edmtool.py test --runtime=3.8 --toolkit=${{ matrix.toolkit }}
