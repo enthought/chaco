@@ -18,6 +18,7 @@ from numpy import (
     array,
     cumsum,
     hstack,
+    resize,
     sum,
     zeros,
     zeros_like,
@@ -182,7 +183,7 @@ class GridPlotContainer(BasePlotContainer):
 
     # The internal component grid, in row-major order.  This gets updated
     # when any of the following traits change: shape, components, grid_components
-    _grid = Array
+    _grid = Array()
 
     _cached_total_size = Any
     _h_size_prefs = Any
@@ -510,7 +511,7 @@ class GridPlotContainer(BasePlotContainer):
             numrows, numcols = divmod(len(self.components), self.shape[0])
             self.shape = (numrows, numcols)
         grid = array(self.components, dtype=object)
-        grid.resize(self.shape)
+        grid = resize(grid, self.shape)
         grid[grid == 0] = None
         self._grid = grid
         self._layout_needed = True
