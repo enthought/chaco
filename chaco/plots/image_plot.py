@@ -22,13 +22,12 @@ import numpy as np
 from traits.api import (
     Bool,
     Enum,
+    Float,
     Instance,
-    List,
     Range,
     Tuple,
     Property,
     cached_property,
-    Union,
 )
 from kiva.agg import GraphicsContextArray
 
@@ -84,7 +83,7 @@ class ImagePlot(Base2DPlot):
 
     # Tuple-defined rectangle (x, y, dx, dy) in screen space in which the
     # **_cached_image** is to be drawn.
-    _cached_dest_rect = Union(Tuple, List, transient=True)
+    _cached_dest_rect = Tuple(Float, Float, Float, Float, transient=True)
 
     # Bool indicating whether the origin is top-left or bottom-right.
     # The name "principal diagonal" is borrowed from linear algebra.
@@ -285,7 +284,7 @@ class ImagePlot(Base2DPlot):
 
         # Update cached image and rectangle.
         self._cached_image = self._kiva_array_from_numpy_array(data)
-        self._cached_dest_rect = screen_rect
+        self._cached_dest_rect = tuple(screen_rect)
         self._image_cache_valid = True
 
     def _kiva_array_from_numpy_array(self, data):
