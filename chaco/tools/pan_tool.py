@@ -231,8 +231,10 @@ class PanTool(BaseTool):
                     newlow = mapper.map_data(screenlow + screen_delta)
 
                 # Use .set_bounds() so that we don't generate two range_changed
-                # events on the DataRange
-                mapper.range.set_bounds(newlow, newhigh)
+                # events on the DataRange.
+                # Do an explicit conversion to float because raw values may not
+                # be floating-point types, which makes NumPy unhappy (#854).
+                mapper.range.set_bounds(float(newlow), float(newhigh))
 
         event.handled = True
 
