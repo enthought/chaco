@@ -37,7 +37,7 @@ from chaco.api import (
 # The Quartz backend rescales pixel values, so use a higher threshold.
 MAX_RMS_ERROR = 16 if ETSConfig.kiva_backend == "quartz" else 1
 
-IMAGE = np.random.random_integers(0, 255, size=(100, 200)).astype(np.uint8)
+IMAGE = np.random.randint(0, 256, size=(100, 200)).astype(np.uint8)
 RGB = np.dstack([IMAGE] * 3)
 # Rendering adds rows and columns for some reason.
 TRIM_RENDERED = (slice(1, -1), slice(1, -1), 0)
