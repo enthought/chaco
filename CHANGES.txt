@@ -1,12 +1,33 @@
-
 Chaco CHANGELOG
 ===============
 
-This is an incremental release which modernises the usage of Traits in a
-number of places, and fixes a number of bugs.
+Release 5.1.1
+-------------
+
+This is a small bugfix release centered around Python 3.8+ support.
+
+Thanks to all who contributed to the release:
+
+* Aaron Ayres
+* Rahul Poruri
+* Corran Webster
+
+Fixes
+
+* Fix various warnings on Python 3.8 (#856)
+* Remove uses of deprecated np.bool (#852)
+* Prevent exceptions when plot size too small (#848)
+
+Build/CI
+
+* Get CI running on Python 3.8 (#851)
+* Fix CI for changes to GitHub infrastructure (#849)
 
 Release 5.1.0
 -------------
+
+This is an incremental release which modernises the usage of Traits in a
+number of places, and fixes a number of bugs.
 
 Thanks to all who contributed to the release:
 
