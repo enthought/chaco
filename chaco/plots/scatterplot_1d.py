@@ -32,7 +32,7 @@ class ScatterPlot1D(Base1DPlot):
     marker = MarkerTrait
 
     # The pixel size of the marker, not including the thickness of the outline.
-    marker_size = Union(Float, Int, Array(Float), Array(Int), None)
+    marker_size = Union(Float, Int, Array(Float), Array(Int), default=None)
 
     # The CompiledPath to use if **marker** is set to "custom". This attribute
     # must be a compiled path for the Kiva context onto which this plot will
