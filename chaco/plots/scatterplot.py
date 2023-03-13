@@ -149,10 +149,6 @@ def render_markers(
 
         gc.begin_path()
 
-        # check for None marker size and give a default value
-        if marker_size is None:
-            marker_size = 4.0
-
         # try to invoke optimized routines if only one size and gc supports
         if not isinstance(marker_size, ndarray):
             # try fastest routine

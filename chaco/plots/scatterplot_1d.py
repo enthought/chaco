@@ -111,6 +111,10 @@ class ScatterPlot1D(Base1DPlot):
         self._render(gc, pts)
 
     def _render(self, gc, pts):
+        # check for None marker size and give a default value
+        if self.marker_size is None:
+            self.marker_size = 4.0
+
         with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
             if not self.index:
