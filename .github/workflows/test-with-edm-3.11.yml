@@ -55,7 +55,7 @@ jobs:
         run: xvfb-run --server-args="-screen 0 1024x768x24" edm run -- python ci/edmtool.py test --runtime=3.11 --toolkit=${{ matrix.toolkit }}
 
   # Test against EDM packages on Windows and OSX
-  test-with-edm-38:
+  test-with-edm-311:
     strategy:
       matrix:
         os: [macos-latest, windows-latest]
