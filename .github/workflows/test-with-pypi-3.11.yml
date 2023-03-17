@@ -11,7 +11,7 @@ jobs:
   test-with-pypi:
     strategy:
       matrix:
-        os: [['ubuntu-latest', 'macos-latest', 'windows-latest']]
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
         toolkit: ['pyside6']
         python-version: ['3.11']
     steps:
