@@ -11,9 +11,9 @@ jobs:
   test-with-pypi:
     strategy:
       matrix:
+        os: [['ubuntu-latest', 'macos-latest', 'windows-latest']]
         toolkit: ['pyside6']
         python-version: ['3.11']
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Install Qt dependencies for Linux
