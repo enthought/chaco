@@ -34,7 +34,7 @@ class ScatterPlot1D(Base1DPlot):
     # The pixel size of the marker, not including the thickness of the outline.
     marker_size = Union(Float, Int,
                         Array(Float), Array(Int),
-                        default_value=None)
+                        default_value=4.0)
 
     # The CompiledPath to use if **marker** is set to "custom". This attribute
     # must be a compiled path for the Kiva context onto which this plot will
@@ -113,10 +113,6 @@ class ScatterPlot1D(Base1DPlot):
         self._render(gc, pts)
 
     def _render(self, gc, pts):
-        # check for None marker size and give a default value
-        if self.marker_size is None:
-            self.marker_size = 4.0
-
         with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
             if not self.index:
