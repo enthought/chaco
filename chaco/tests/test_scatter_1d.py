@@ -17,6 +17,7 @@ from numpy.random import random, randint, uniform
 import unittest
 from chaco.api import ArrayPlotData, Plot
 
+
 class Scatter1DTestCase(unittest.TestCase):
     # test the default value 4.0
     def test_default(self):
