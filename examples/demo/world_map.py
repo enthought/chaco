@@ -8,10 +8,6 @@ negative values.
    region to zoom.  If you use a sequence of zoom boxes, pressing alt-left-arrow
    and alt-right-arrow moves you forwards and backwards through the "zoom
    history".
-
-The image in this demo is an image from wikipedia
-https://commons.wikimedia.org/wiki/File:Winkel_triple_projection_SW.jpg
-Copyright Attribution: Strebe, Public domain, via Wikimedia Commons
 """
 
 # Standard library imports
