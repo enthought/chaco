@@ -6,7 +6,7 @@ Based on updating_plot.py
 # Major library imports
 import pyaudio
 from numpy import zeros, linspace, short, fromstring, transpose, array, empty
-from scipy import fft
+from scipy.fft import fft
 
 # Enthought library imports
 from enable.api import Window, Component, ComponentEditor
