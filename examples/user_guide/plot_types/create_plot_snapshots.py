@@ -149,9 +149,9 @@ get_line_plot_connectedhold = partial(get_line_plot, "connectedhold")
 
 
 def get_scatter_plot():
-    boston = datasets.load_boston()
-    prices = boston["target"]
-    lower_status = boston["data"][:, -1]
+    diabetes = datasets.load_diabetes()
+    prices = diabetes["target"]
+    lower_status = diabetes["data"][:, -1]
 
     x, y = get_data_sources(x=lower_status, y=prices)
     x_mapper, y_mapper = get_mappers(x, y)
@@ -176,10 +176,10 @@ def get_scatter_plot():
 
 
 def get_cmap_scatter_plot():
-    boston = datasets.load_boston()
-    prices = boston["target"]
-    lower_status = boston["data"][:, -1]
-    nox = boston["data"][:, 4]
+    diabetes = datasets.load_diabetes()
+    prices = diabetes["target"]
+    lower_status = diabetes["data"][:, -1]
+    nox = diabetes["data"][:, 4]
 
     x, y = get_data_sources(x=lower_status, y=prices)
     x_mapper, y_mapper = get_mappers(x, y)
@@ -212,11 +212,11 @@ def get_cmap_scatter_plot():
 
 
 def get_4d_scatter_plot():
-    boston = datasets.load_boston()
-    prices = boston["target"]
-    lower_status = boston["data"][:, -1]
-    tax = boston["data"][:, 9]
-    nox = boston["data"][:, 4]
+    diabetes = datasets.load_diabetes()
+    prices = diabetes["target"]
+    lower_status = diabetes["data"][:, -1]
+    tax = diabetes["data"][:, 9]
+    nox = diabetes["data"][:, 4]
 
     x, y = get_data_sources(x=lower_status, y=prices)
     x_mapper, y_mapper = get_mappers(x, y)
@@ -255,10 +255,10 @@ def get_4d_scatter_plot():
 
 
 def get_variable_size_scatter_plot():
-    boston = datasets.load_boston()
-    prices = boston["target"]
-    lower_status = boston["data"][:, -1]
-    tax = boston["data"][:, 9]
+    diabetes = datasets.load_diabetes()
+    prices = diabetes["target"]
+    lower_status = diabetes["data"][:, -1]
+    tax = diabetes["data"][:, 9]
 
     x, y = get_data_sources(x=lower_status, y=prices)
     x_mapper, y_mapper = get_mappers(x, y)
@@ -288,8 +288,8 @@ def get_variable_size_scatter_plot():
 
 
 def get_jitter_plot():
-    boston = datasets.load_boston()
-    prices = boston["target"]
+    diabetes = datasets.load_diabetes()
+    prices = diabetes["target"]
 
     x, y = get_data_sources(y=prices)
     x_mapper, y_mapper = get_mappers(x, y)
@@ -566,8 +566,8 @@ def get_polygon_plot():
 
 
 def get_bar_plot():
-    boston = datasets.load_boston()
-    prices = boston["target"]
+    diabetes = datasets.load_diabetes()
+    prices = diabetes["target"]
 
     ys, bin_edges = np.histogram(prices, bins=10)
     ys = ys.astype("d") / ys.sum()
