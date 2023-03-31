@@ -24,7 +24,7 @@ from chaco.api import VPlotContainer, ArrayPlotData, Plot, PlotGrid, PlotAxis
 from chaco.tools.api import RangeSelection
 
 # Relative imports
-from .zoom_overlay import ZoomOverlay
+from zoom_overlay import ZoomOverlay
 
 sample_path = os.path.join("examples", "data", "sample.wav")
 alt_path = os.path.join("..", "data", "sample.wav")
