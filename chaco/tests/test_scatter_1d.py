@@ -19,8 +19,7 @@ from chaco.api import ArrayPlotData, Plot
 
 
 class Scatter1DTestCase(unittest.TestCase):
-    # test the default value 4.0
-    def test_default(self):
+    def test_default_marker_size(self):
         # Create some data
         numpts = 50
         x = sort(random(numpts))
@@ -42,8 +41,7 @@ class Scatter1DTestCase(unittest.TestCase):
             alignment="left"
         )
 
-    # test integer marker size
-    def test_int(self):
+    def test_int_marker_size(self):
         # Create some data
         numpts = 50
         x = sort(random(numpts))
@@ -66,8 +64,7 @@ class Scatter1DTestCase(unittest.TestCase):
             marker_size=5
         )
 
-    # test float marker size
-    def test_float(self):
+    def test_float_marker_size(self):
         # Create some data
         numpts = 50
         x = sort(random(numpts))
@@ -90,8 +87,7 @@ class Scatter1DTestCase(unittest.TestCase):
             marker_size=5.0
         )
 
-    # test array of integer marker size
-    def test_int_arr(self):
+    def test_int_arr_marker_size(self):
         # Create some data
         numpts = 50
         x = sort(random(numpts))
@@ -114,8 +110,7 @@ class Scatter1DTestCase(unittest.TestCase):
             marker_size=randint(1, 5, numpts)
         )
 
-    # test array of float marker size
-    def test_float_arr(self):
+    def test_float_arr_marker_size(self):
         # Create some data
         numpts = 50
         x = sort(random(numpts))

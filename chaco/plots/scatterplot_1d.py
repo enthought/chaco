@@ -33,7 +33,7 @@ class ScatterPlot1D(Base1DPlot):
 
     # The pixel size of the marker, not including the thickness of the outline.
     marker_size = Union(Float,
-                        Array(float),
+                        Array(dtype=float),
                         default_value=4.0)
 
     # The CompiledPath to use if **marker** is set to "custom". This attribute
