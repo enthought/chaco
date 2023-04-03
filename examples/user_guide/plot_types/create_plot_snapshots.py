@@ -434,9 +434,9 @@ def get_image_plot():
 
 
 def get_image_from_file():
-    import os.path
+    from importlib import resources
 
-    filename = os.path.join("..", "..", "demo", "basic", "capitol.jpg")
+    filename = resources.files('chaco.examples.demo.basic').joinpath('capitol.jpg')
     image_source = ImageData.fromfile(filename)
 
     w, h = image_source.get_width(), image_source.get_height()
