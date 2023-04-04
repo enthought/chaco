@@ -133,6 +133,7 @@ class PolarLineRenderer(AbstractPlotRenderer):
     def _draw_plot(self, *args, **kw):
         """Draws the 'plot' layer."""
         self._gather_points()
+        gc = args[0]
         self._render(gc, self._cached_data_pts)
 
     def _bounds_changed(self, old, new):
