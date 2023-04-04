@@ -38,8 +38,8 @@ class ImagePlotTraits(HasTraits):
         self.renderer = plot.img_plot(
             "imagedata",
             name="plot1",
-            xbounds=(0, 6),
-            ybounds=(0, 8),
+            xbounds=(0, 8),
+            ybounds=(0, 6),
             colormap=viridis,
         )[0]
         self.plot = plot
