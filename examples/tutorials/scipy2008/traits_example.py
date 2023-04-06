@@ -1,7 +1,7 @@
 from numpy import linspace, sin
 
-from enable.api import ColorTrait
-from chaco.api import ArrayPlotData, Plot, marker_trait
+from enable.api import ColorTrait, marker_trait
+from chaco.api import ArrayPlotData, Plot
 from enable.api import ComponentEditor
 from traits.api import HasTraits, Instance, Int
 from traitsui.api import Group, Item, View
