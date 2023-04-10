@@ -38,7 +38,7 @@ class WorldMapPlot(HasTraits):
 
     # The URL which points to the world map image to be downloaded
     image_url = Str(
-        "https://upload.wikimedia.org/wikipedia/commons/9/91/Winkel_triple_projection_SW.jpg"
+        "https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57752/land_shallow_topo_2048.jpg"
     )
 
     ### Private Traits #########################################################
