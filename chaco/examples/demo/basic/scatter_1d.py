@@ -69,15 +69,6 @@ def _create_plot_component():
         alignment="left",
     )
 
-    plot.plot_1d(
-        "value",
-        type="scatter_1d",
-        orientation="v",
-        marker="plus",
-        alignment="left",
-        marker_size=randint(1,5, numpts)
-    )
-
     plot.plot(
         ("index", "value"),
         type="scatter",

@@ -17,7 +17,7 @@ from numpy import empty
 
 # Enthought library imports
 from enable.api import black_color_trait, ColorTrait, MarkerTrait
-from traits.api import Any, Array, Bool, Callable, Enum, Float, Str, Union
+from traits.api import Any, Bool, Callable, Enum, Float, Str
 
 # local imports
 from chaco.base_1d_plot import Base1DPlot
@@ -32,9 +32,7 @@ class ScatterPlot1D(Base1DPlot):
     marker = MarkerTrait
 
     # The pixel size of the marker, not including the thickness of the outline.
-    marker_size = Union(Float,
-                        Array(dtype=float),
-                        default_value=4.0)
+    marker_size = Float(4.0)
 
     # The CompiledPath to use if **marker** is set to "custom". This attribute
     # must be a compiled path for the Kiva context onto which this plot will
