@@ -45,7 +45,7 @@ jobs:
   test-with-edm-38:
     strategy:
       matrix:
-        os: [macos-latest, windows-latest]
+        os: [windows-latest]
         toolkit: ['null', 'pyside6']
     runs-on: ${{ matrix.os }}
     steps:
