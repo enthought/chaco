@@ -2,20 +2,20 @@
 # Note that some packages may not actually be installed from EDM but from
 # PyPI, see ci/edmtool.py implementations.
 
-name: Test with EDM
+name: Test with EDM on Python 3.8
 
 on: pull_request
 
 env:
-  INSTALL_EDM_VERSION: 3.2.3
+  INSTALL_EDM_VERSION: 3.5.0
 
 jobs:
 
   # Test against EDM packages on Linux
-  test-edm-linux:
+  test-edm-linux-38:
     strategy:
       matrix:
-        toolkit: ['null', 'pyqt5', 'pyside2']
+        toolkit: ['null', 'pyside6']
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -26,7 +26,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.cache
-          key: ${{ runner.os }}-${{ matrix.toolkit }}-${{ hashFiles('ci/edmtool.py') }}
+          key: ${{ runner.os }}-3.8-${{ matrix.toolkit }}-${{ hashFiles('ci/edmtool.py') }}
       - name: Setup EDM
         uses: enthought/setup-edm-action@v2
         with:
@@ -34,21 +34,19 @@ jobs:
       - name: Install click to the default EDM environment
         run: edm install -y wheel click coverage
       - name: Install test environment
-        run: edm run -- python ci/edmtool.py install --toolkit=${{ matrix.toolkit }}
+        run: edm run -- python ci/edmtool.py install --runtime=3.8 --toolkit=${{ matrix.toolkit }}
       - name: Flake8
-        run: edm run -- python ci/edmtool.py flake8 --toolkit=${{ matrix.toolkit }}
+        run: edm run -- python ci/edmtool.py flake8 --runtime=3.8 --toolkit=${{ matrix.toolkit }}
         if: matrix.toolkit == 'null'
       - name: Run tests
-        # kiva agg requires at least 15-bit color depth.
-        # The --server-args assumes xvfb-run is called, hence Linux only.
-        run: xvfb-run -a --server-args="-screen 0 1024x768x24" edm run -- python ci/edmtool.py test --toolkit=${{ matrix.toolkit }}
+        run: xvfb-run -a --server-args="-screen 0 1024x768x24" edm run -- python ci/edmtool.py test --runtime=3.8 --toolkit=${{ matrix.toolkit }}
 
   # Test against EDM packages on Windows and OSX
-  test-with-edm:
+  test-with-edm-38:
     strategy:
       matrix:
-        os: [macos-latest, windows-latest]
-        toolkit: ['null', 'pyqt5', 'pyside2']
+        os: [windows-latest]
+        toolkit: ['null', 'pyside6']
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -56,7 +54,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.cache
-          key: ${{ runner.os }}-${{ matrix.toolkit }}-${{ hashFiles('ci/edmtool.py') }}
+          key: ${{ runner.os }}-3.8-${{ matrix.toolkit }}-${{ hashFiles('ci/edmtool.py') }}
       - name: Setup EDM
         uses: enthought/setup-edm-action@v1
         with:
@@ -64,6 +62,6 @@ jobs:
       - name: Install click to the default EDM environment
         run: edm install -y wheel click coverage
       - name: Install test environment
-        run: edm run -- python ci/edmtool.py install --toolkit=${{ matrix.toolkit }}
+        run: edm run -- python ci/edmtool.py install --runtime=3.8 --toolkit=${{ matrix.toolkit }}
       - name: Run tests
-        run: edm run -- python ci/edmtool.py test --toolkit=${{ matrix.toolkit }}
+        run: edm run -- python ci/edmtool.py test --runtime=3.8 --toolkit=${{ matrix.toolkit }}
