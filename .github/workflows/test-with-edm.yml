@@ -18,24 +18,9 @@ jobs:
         toolkit: ['null', 'pyqt5', 'pyside2']
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Install Qt dependencies for Linux
-        run: |
-          sudo apt-get update
-          sudo apt-get install qtbase5-dev
-          sudo apt-get install qtchooser
-          sudo apt-get install qt5-qmake
-          sudo apt-get install qtbase5-dev-tools
-          sudo apt-get install libegl1
-          sudo apt-get install libxkbcommon-x11-0
-          sudo apt-get install libglu1-mesa-dev
-          sudo apt-get install libxcb-icccm4
-          sudo apt-get install libxcb-image0
-          sudo apt-get install libxcb-keysyms1
-          sudo apt-get install libxcb-randr0
-          sudo apt-get install libxcb-render-util0
-          sudo apt-get install libxcb-xinerama0
-          sudo apt-get install libxcb-shape0
+      - uses: actions/checkout@v3
+      - name: Install Qt dependencies
+        uses: ./.github/actions/install-qt-support
         if: matrix.toolkit != 'null'
       - name: Cache EDM packages
         uses: actions/cache@v2
@@ -43,7 +28,7 @@ jobs:
           path: ~/.cache
           key: ${{ runner.os }}-${{ matrix.toolkit }}-${{ hashFiles('ci/edmtool.py') }}
       - name: Setup EDM
-        uses: enthought/setup-edm-action@v1
+        uses: enthought/setup-edm-action@v2
         with:
           edm-version: ${{ env.INSTALL_EDM_VERSION }}
       - name: Install click to the default EDM environment
@@ -54,11 +39,9 @@ jobs:
         run: edm run -- python ci/edmtool.py flake8 --toolkit=${{ matrix.toolkit }}
         if: matrix.toolkit == 'null'
       - name: Run tests
-        uses: GabrielBB/xvfb-action@v1
-        with:
-          # kiva agg requires at least 15-bit color depth.
-          # The --server-args assumes xvfb-run is called, hence Linux only.
-          run: --server-args="-screen 0 1024x768x24" edm run -- python ci/edmtool.py test --toolkit=${{ matrix.toolkit }}
+        # kiva agg requires at least 15-bit color depth.
+        # The --server-args assumes xvfb-run is called, hence Linux only.
+        run: xvfb-run -a --server-args="-screen 0 1024x768x24" edm run -- python ci/edmtool.py test --toolkit=${{ matrix.toolkit }}
 
   # Test against EDM packages on Windows and OSX
   test-with-edm:

@@ -18,22 +18,9 @@ jobs:
         toolkit: ['null', 'pyside6']
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Install Qt dependencies for Linux
-        run: |
-          sudo apt-get update
-          sudo apt-get install libegl1
-          sudo apt-get install libxkbcommon-x11-0
-          sudo apt-get install libglu1-mesa-dev
-          sudo apt-get install libxcb-icccm4
-          sudo apt-get install libxcb-image0
-          sudo apt-get install libxcb-keysyms1
-          sudo apt-get install libxcb-randr0
-          sudo apt-get install libxcb-render-util0
-          sudo apt-get install libxcb-xinerama0
-          sudo apt-get install libxcb-shape0
-          # Needed to work around https://bugreports.qt.io/browse/PYSIDE-1547
-          sudo apt-get install libopengl0
+      - uses: actions/checkout@v3
+      - name: Install Qt dependencies
+        uses: ./.github/actions/install-qt-support
         if: matrix.toolkit != 'null'
       - name: Cache EDM packages
         uses: actions/cache@v2
@@ -41,7 +28,7 @@ jobs:
           path: ~/.cache
           key: ${{ runner.os }}-3.8-${{ matrix.toolkit }}-${{ hashFiles('ci/edmtool.py') }}
       - name: Setup EDM
-        uses: enthought/setup-edm-action@v1
+        uses: enthought/setup-edm-action@v2
         with:
           edm-version: ${{ env.INSTALL_EDM_VERSION }}
       - name: Install click to the default EDM environment
@@ -52,7 +39,7 @@ jobs:
         run: edm run -- python ci/edmtool.py flake8 --runtime=3.8 --toolkit=${{ matrix.toolkit }}
         if: matrix.toolkit == 'null'
       - name: Run tests
-        run: xvfb-run --server-args="-screen 0 1024x768x24" edm run -- python ci/edmtool.py test --runtime=3.8 --toolkit=${{ matrix.toolkit }}
+        run: xvfb-run -a --server-args="-screen 0 1024x768x24" edm run -- python ci/edmtool.py test --runtime=3.8 --toolkit=${{ matrix.toolkit }}
 
   # Test against EDM packages on Windows and OSX
   test-with-edm-38:
