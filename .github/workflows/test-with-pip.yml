@@ -14,7 +14,7 @@ jobs:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
         toolkit: ['pyside6']
-        kiva-backend: ['image', 'celiagg']
+        kiva-backend: ['image']
         python-version: ['3.8', '3.10', '3.11']
         exclude:
           # No Wx wheels available for Python 3.11
@@ -82,7 +82,7 @@ jobs:
       matrix:
         os: ['macos-latest','windows-latest']
         toolkit: ['wx']
-        kiva-backend: ['image', 'celiagg']
+        kiva-backend: ['image']
         python-version: ['3.8', '3.10']
     runs-on: ${{ matrix.os }}
     env:
@@ -133,7 +133,7 @@ jobs:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
         toolkit: ['null']
-        kiva-backend: ['image', 'celiagg']
+        kiva-backend: ['image', 'celiagg', 'svg', 'pdf']
         python-version: ['3.8', '3.11']
     runs-on: ${{ matrix.os }}
     env:
