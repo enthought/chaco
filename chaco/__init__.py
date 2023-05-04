@@ -21,6 +21,7 @@ __requires__ = [
 __extras_require__ = {
     "docs": ["enthought-sphinx-theme", "sphinx", "sphinx-copybutton"],
     'examples': ['encore', 'scipy', 'pandas'],
+    'tests': ['pandas'],
     'pyside2': ['enable[pyside2]'],
     'pyside6': ['enable[pyside6]'],
     'pyqt5': ['enable[pyqt5]'],

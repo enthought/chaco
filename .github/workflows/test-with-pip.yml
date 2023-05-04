@@ -13,7 +13,8 @@ jobs:
     strategy:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
-        toolkit: ['null.image', 'null.celiagg', 'pyside6', 'wx']
+        toolkit: ['null', 'pyside6', 'wx']
+        kiva-backend: ['image', 'celiagg']
         python-version: ['3.8', '3.10', '3.11']
         exclude:
           # No Wx wheels available for Python 3.11
@@ -29,6 +30,8 @@ jobs:
             toolkit: 'wx'
             python-version: '3.11'
     runs-on: ${{ matrix.os }}
+    env:
+      ETS_TOOLKIT: ${{ matrix.toolkit }}.${{ matrix.kiva-backend }}
     steps:
       - name: Check out
         uses: actions/checkout@v3
@@ -56,7 +59,7 @@ jobs:
       - name: Install local enable main (temporary)
         run: pip install --force "enable[celiagg,layout,svg] @ git+https://github.com/enthought/enable.git"
       - name: Install local packages
-        run: pip install .
+        run: pip install ".[tests,${{ matrix.toolkit }}]"
       - name: Sanity check package version
         run: pip list
       - name: Run chaco test suite (Linux)
