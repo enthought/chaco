@@ -54,7 +54,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip wheel
       - name: Install local enable main (temporary)
-        run: pip install --force "enable[celiagg,layout,svg] @ git+https://github.com/enthought/enable.git
+        run: pip install --force "enable[celiagg,layout,svg] @ git+https://github.com/enthought/enable.git"
       - name: Install local packages
         run: pip install .
       - name: Sanity check package version
