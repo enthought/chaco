@@ -31,7 +31,7 @@ jobs:
             python-version: '3.11'
     runs-on: ${{ matrix.os }}
     env:
-      ETS_TOOLKIT: qt.${{ matrix.kiva-backend }}
+      ETS_TOOLKIT: qt4.${{ matrix.kiva-backend }}
       QT_API: ${{ matrix.toolkit }}
     steps:
       - name: Check out
