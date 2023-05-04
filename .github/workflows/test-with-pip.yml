@@ -69,6 +69,6 @@ jobs:
       - name: Run enable test suite (not Linux)
         env:
           PYTHONFAULTHANDLER: 1
-        run: python -m unittest discover -v chaci
+        run: python -m unittest discover -v chaco
         if: matrix.os != 'ubuntu-latest'
         working-directory: ${{ runner.temp }}
