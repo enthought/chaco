@@ -9,11 +9,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-ets:
+  test-qt:
     strategy:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
-        toolkit: ['null', 'pyside6', 'wx']
+        toolkit: ['pyside6']
         kiva-backend: ['image', 'celiagg']
         python-version: ['3.8', '3.10', '3.11']
         exclude:
@@ -31,7 +31,8 @@ jobs:
             python-version: '3.11'
     runs-on: ${{ matrix.os }}
     env:
-      ETS_TOOLKIT: ${{ matrix.toolkit }}.${{ matrix.kiva-backend }}
+      ETS_TOOLKIT: qt.${{ matrix.kiva-backend }}
+      QT_API: ${{ matrix.toolkit }}
     steps:
       - name: Check out
         uses: actions/checkout@v3
@@ -42,6 +43,108 @@ jobs:
       - name: Install Qt dependencies
         uses: ./.github/actions/install-qt-support
         if: matrix.toolkit == 'pyside6'
+      - name: Install dependencies for Linux
+        run: |
+          # needed for Celiagg
+          sudo apt-get install libfreetype-dev libharfbuzz-dev
+          # needed for Cairo
+          sudo apt-get install libcairo2-dev
+        if: matrix.os == 'ubuntu-latest'
+      - name: Install dependencies for Mac
+        run: |
+          brew install cairo
+        if: matrix.os == 'macos-latest'
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip wheel
+      - name: Install local enable main (temporary)
+        run: pip install --force "enable[celiagg,layout,svg] @ git+https://github.com/enthought/enable.git"
+      - name: Install local packages
+        run: pip install ".[tests,${{ matrix.toolkit }}]"
+      - name: Sanity check package version
+        run: pip list
+      - name: Run chaco test suite (Linux)
+        env:
+          PYTHONFAULTHANDLER: 1
+        # kiva agg requires at least 15-bit color depth.
+        run: xvfb-run -a --server-args="-screen 0 1024x768x24" python -m unittest discover -v chaco
+        if: matrix.os == 'ubuntu-latest'
+        working-directory: ${{ runner.temp }}
+      - name: Run enable test suite (not Linux)
+        env:
+          PYTHONFAULTHANDLER: 1
+        run: python -m unittest discover -v chaco
+        if: matrix.os != 'ubuntu-latest'
+        working-directory: ${{ runner.temp }}
+
+  test-wx:
+    strategy:
+      matrix:
+        os: ['macos-latest','windows-latest']
+        toolkit: ['wx']
+        kiva-backend: ['image', 'celiagg']
+        python-version: ['3.8', '3.10']
+    runs-on: ${{ matrix.os }}
+    env:
+      ETS_TOOLKIT: ${{ matrix.toolkit }}.${{ matrix.kiva-backend }}
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies for Linux
+        run: |
+          # needed for Celiagg
+          sudo apt-get install libfreetype-dev libharfbuzz-dev
+          # needed for Cairo
+          sudo apt-get install libcairo2-dev
+        if: matrix.os == 'ubuntu-latest'
+      - name: Install dependencies for Mac
+        run: |
+          brew install cairo
+        if: matrix.os == 'macos-latest'
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip wheel
+      - name: Install local enable main (temporary)
+        run: pip install --force "enable[celiagg,layout,svg] @ git+https://github.com/enthought/enable.git"
+      - name: Install local packages
+        run: pip install ".[tests,${{ matrix.toolkit }}]"
+      - name: Sanity check package version
+        run: pip list
+      - name: Run chaco test suite (Linux)
+        env:
+          PYTHONFAULTHANDLER: 1
+        # kiva agg requires at least 15-bit color depth.
+        run: xvfb-run -a --server-args="-screen 0 1024x768x24" python -m unittest discover -v chaco
+        if: matrix.os == 'ubuntu-latest'
+        working-directory: ${{ runner.temp }}
+      - name: Run enable test suite (not Linux)
+        env:
+          PYTHONFAULTHANDLER: 1
+        run: python -m unittest discover -v chaco
+        if: matrix.os != 'ubuntu-latest'
+        working-directory: ${{ runner.temp }}
+
+  test-null:
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        toolkit: ['null']
+        kiva-backend: ['image', 'celiagg']
+        python-version: ['3.8', '3.11']
+    runs-on: ${{ matrix.os }}
+    env:
+      ETS_TOOLKIT: ${{ matrix.toolkit }}.${{ matrix.kiva-backend }}
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
       - name: Install dependencies for Linux
         run: |
           # needed for Celiagg
