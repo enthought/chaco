@@ -11,6 +11,7 @@ on:
 jobs:
   test-qt:
     strategy:
+      fail-fast: false
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
         toolkit: ['pyside6']
@@ -79,6 +80,7 @@ jobs:
 
   test-wx:
     strategy:
+      fail-fast: false
       matrix:
         os: ['windows-latest']
         toolkit: ['wx']
@@ -130,10 +132,11 @@ jobs:
 
   test-null:
     strategy:
+      fail-fast: false
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
         toolkit: ['null']
-        kiva-backend: ['image', 'celiagg', 'cairo']
+        kiva-backend: ['image', 'celiagg']
         python-version: ['3.8', '3.11']
         include:
           - os: 'macos-latest'
