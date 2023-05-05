@@ -35,6 +35,7 @@ class DrawBorderTestCase(unittest.TestCase):
         container = Plot(padding=1, border_visible=True)
         container.outer_bounds = list(size)
         gc = PlotGraphicsContext(size)
+        gc.clear()
         gc.render_component(container)
 
         desired = array(
