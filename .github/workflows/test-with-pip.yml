@@ -14,21 +14,12 @@ jobs:
       fail-fast: false
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
-        toolkit: ['pyside6']
+        toolkit: ['pyqt5', 'pyside6']
         kiva-backend: ['image']
         python-version: ['3.8', '3.10', '3.11']
         exclude:
-          # No Wx wheels available for Python 3.11
-          - toolkit: 'wx'
-            python-version: '3.11'
-          # No Wx wheels available for Python 3.11
-          - toolkit: 'wx'
-            python-version: '3.11'
-          # No Wx wheels available for ubuntu or macos
-          - os: 'ubuntu-latest'
-            toolkit: 'wx'
-          - os: 'macos-latest'
-            toolkit: 'wx'
+          # No PyQt5 wheels available for Python 3.11
+          - toolkit: 'pyqt5'
             python-version: '3.11'
     runs-on: ${{ matrix.os }}
     env:
