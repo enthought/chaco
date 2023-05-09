@@ -138,15 +138,6 @@ jobs:
         toolkit: ['null']
         kiva-backend: ['image', 'celiagg']
         python-version: ['3.8', '3.11']
-        include:
-          - os: 'macos-latest'
-            toolkit: 'null'
-            kiva-backend: 'quartz'
-            python-version: '3.8'
-          - os: 'macos-latest'
-            toolkit: 'null'
-            kiva-backend: 'quartz'
-            python-version: '3.11'
     runs-on: ${{ matrix.os }}
     env:
       ETS_TOOLKIT: ${{ matrix.toolkit }}.${{ matrix.kiva-backend }}
