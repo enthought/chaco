@@ -149,9 +149,9 @@ get_line_plot_connectedhold = partial(get_line_plot, "connectedhold")
 
 
 def get_scatter_plot():
-    boston = datasets.load_boston()
-    prices = boston["target"]
-    lower_status = boston["data"][:, -1]
+    diabetes = datasets.load_diabetes()
+    prices = diabetes["target"]
+    lower_status = diabetes["data"][:, -1]
 
     x, y = get_data_sources(x=lower_status, y=prices)
     x_mapper, y_mapper = get_mappers(x, y)
@@ -176,10 +176,10 @@ def get_scatter_plot():
 
 
 def get_cmap_scatter_plot():
-    boston = datasets.load_boston()
-    prices = boston["target"]
-    lower_status = boston["data"][:, -1]
-    nox = boston["data"][:, 4]
+    diabetes = datasets.load_diabetes()
+    prices = diabetes["target"]
+    lower_status = diabetes["data"][:, -1]
+    nox = diabetes["data"][:, 4]
 
     x, y = get_data_sources(x=lower_status, y=prices)
     x_mapper, y_mapper = get_mappers(x, y)
@@ -212,11 +212,11 @@ def get_cmap_scatter_plot():
 
 
 def get_4d_scatter_plot():
-    boston = datasets.load_boston()
-    prices = boston["target"]
-    lower_status = boston["data"][:, -1]
-    tax = boston["data"][:, 9]
-    nox = boston["data"][:, 4]
+    diabetes = datasets.load_diabetes()
+    prices = diabetes["target"]
+    lower_status = diabetes["data"][:, -1]
+    tax = diabetes["data"][:, 9]
+    nox = diabetes["data"][:, 4]
 
     x, y = get_data_sources(x=lower_status, y=prices)
     x_mapper, y_mapper = get_mappers(x, y)
@@ -255,10 +255,10 @@ def get_4d_scatter_plot():
 
 
 def get_variable_size_scatter_plot():
-    boston = datasets.load_boston()
-    prices = boston["target"]
-    lower_status = boston["data"][:, -1]
-    tax = boston["data"][:, 9]
+    diabetes = datasets.load_diabetes()
+    prices = diabetes["target"]
+    lower_status = diabetes["data"][:, -1]
+    tax = diabetes["data"][:, 9]
 
     x, y = get_data_sources(x=lower_status, y=prices)
     x_mapper, y_mapper = get_mappers(x, y)
@@ -288,8 +288,8 @@ def get_variable_size_scatter_plot():
 
 
 def get_jitter_plot():
-    boston = datasets.load_boston()
-    prices = boston["target"]
+    diabetes = datasets.load_diabetes()
+    prices = diabetes["target"]
 
     x, y = get_data_sources(y=prices)
     x_mapper, y_mapper = get_mappers(x, y)
@@ -434,28 +434,38 @@ def get_image_plot():
 
 
 def get_image_from_file():
-    import os.path
+    # importlib.resources is new in Python 3.7, and
+    # importlib.resources.files is new in Python 3.9,
+    # so for Python < 3.9 we must rely on the 3rd party
+    # importlib_resources package.
+    try:
+        from importlib.resources import as_file, files
+    except ImportError:
+        from importlib_resources import as_file, files
 
-    filename = os.path.join("..", "..", "demo", "basic", "capitol.jpg")
-    image_source = ImageData.fromfile(filename)
+    image_resource = files(
+        'chaco.examples.demo.basic'
+    ).joinpath('capitol.jpg')
 
-    w, h = image_source.get_width(), image_source.get_height()
-    index = GridDataSource(np.arange(w), np.arange(h))
-    index_mapper = GridMapper(
-        range=DataRange2D(low=(0, 0), high=(w - 1, h - 1))
-    )
+    with as_file(image_resource) as filename:
+        image_content = ImageData.fromfile(filename)
+        w, h = image_content.get_width(), image_content.get_height()
+        index = GridDataSource(np.arange(w), np.arange(h))
+        index_mapper = GridMapper(
+            range=DataRange2D(low=(0, 0), high=(w - 1, h - 1))
+        )
 
-    image_plot = ImagePlot(
-        index=index,
-        value=image_source,
-        index_mapper=index_mapper,
-        origin="top left",
-        **PLOT_DEFAULTS
-    )
+        image_plot = ImagePlot(
+            index=index,
+            value=image_content,
+            index_mapper=index_mapper,
+            origin="top left",
+            **PLOT_DEFAULTS
+        )
 
-    add_axes(image_plot, x_label="x", y_label="y")
+        add_axes(image_plot, x_label="x", y_label="y")
 
-    return image_plot
+        return image_plot
 
 
 def get_cmap_image_plot():
@@ -566,8 +576,8 @@ def get_polygon_plot():
 
 
 def get_bar_plot():
-    boston = datasets.load_boston()
-    prices = boston["target"]
+    diabetes = datasets.load_diabetes()
+    prices = diabetes["target"]
 
     ys, bin_edges = np.histogram(prices, bins=10)
     ys = ys.astype("d") / ys.sum()

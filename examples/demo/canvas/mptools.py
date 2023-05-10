@@ -15,8 +15,9 @@ from traits.api import (
     CArray,
 )
 
+from enable.api import BaseTool
+
 # Chaco imports
-from chaco.api import BaseTool
 from chaco.chaco_traits import Optional
 from chaco.tools.api import PanTool, DragZoom, LegendTool, RangeSelection
 

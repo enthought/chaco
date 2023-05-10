@@ -26,7 +26,7 @@ Date: November 21, 2008.
 """
 # Standard library imports
 import os, sys, webbrowser, io
-from base64 import encodestring
+from base64 import encodebytes
 
 # Major library imports
 from PIL import Image
@@ -537,12 +537,12 @@ def make_palettized_png_str(gc):
     if format != "RGBA":
         gc = gc.convert_pixel_format("rgba32")
     img = Image.frombytes(
-        "RGBA", (gc.width(), gc.height()), gc.bmp_array.tostring()
+        "RGBA", (gc.width(), gc.height()), gc.bmp_array.tobytes()
     )
     img2 = img.convert("P")
     output_buf = io.BytesIO()
     img2.save(output_buf, "png")
-    output = encodestring(output_buf.getvalue())
+    output = encodebytes(output_buf.getvalue())
     output_buf.close()
     return output
 
