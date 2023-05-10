@@ -183,6 +183,7 @@ class DemoController(Handler):
         Overridden here to assign the 'view' trait.
         """
         self.view = info.object
+        return True
 
     def save(self, ui_info):
         """
