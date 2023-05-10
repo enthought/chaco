@@ -10,14 +10,27 @@ except ImportError:
 
 
 __requires__ = [
-    "traits>=6.2.0", "traitsui", "pyface>=7.2.0", "numpy", "enable>=5.2.0"
+    "traits>=6.2.0",
+    "traitsui",
+    "pyface>=7.2.0",
+    "numpy",
+    "enable[layout,svg]>=5.2.0"
 ]
 
 
 __extras_require__ = {
     "docs": ["enthought-sphinx-theme", "sphinx", "sphinx-copybutton"],
-    'examples': ["encore",
-                 "importlib_resources; python_version<'3.9'",
-                 "scipy",
-                 "pandas"]
+    'examples': [
+        'encore',
+        "importlib_resources; python_version<'3.9'",
+        'scipy',
+        'pandas',
+    ],
+    'tests': ['pandas'],
+    'pyside2': ['enable[pyside2]'],
+    'pyside6': ['enable[pyside6]'],
+    'pyqt5': ['enable[pyqt5]'],
+    'pyqt6': ['enable[pyqt6]'],
+    'wx': ['enable[wx]'],
+    'null': [],
 }
