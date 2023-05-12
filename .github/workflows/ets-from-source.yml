@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        toolkit: ['null', 'pyqt5', 'pyside2']
+        toolkit: ['null', 'pyside6']
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -47,7 +47,7 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest]
-        toolkit: ['null', 'pyqt5', 'pyside2']
+        toolkit: ['null', 'pyside6']
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
