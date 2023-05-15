@@ -196,7 +196,7 @@ class CopyToClipboardButton(ToolbarButton):
     def _perform_wx(self, width, height, gc):
         import wx
 
-        bitmap = wx.BitmapFromBufferRGBA(
+        bitmap = wx.Bitmap.FromBufferRGBA(
             width + 1, height + 1, gc.bmp_array.flatten()
         )
         data = wx.BitmapDataObject()
