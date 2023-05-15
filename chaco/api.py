@@ -537,7 +537,10 @@ def __getattr__(name):
     if name in {'marker_trait'}:
         from warnings import warn
         import enable.api
-        warn(f"Please import {name} from enable.api instead of chaco.api.")
+        warn(
+            f"Please import {name} from enable.api instead of chaco.api.",
+            DeprecationWarning,
+        )
         return getattr(enable.api, name)
 
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
