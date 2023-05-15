@@ -195,7 +195,7 @@ class DataGridView(HasTraits):
             Item("colormap_scale"),
             Item(
                 "power",
-                editor=RangeEditor(low=0.1, high=3.0, format="%4.2f"),
+                editor=RangeEditor(low=0.1, high=3.0, format_str="%4.2f"),
                 visible_when='colormap_scale.startswith("power")',
                 springy=True,
             ),
