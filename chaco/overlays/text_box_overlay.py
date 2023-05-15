@@ -31,7 +31,7 @@ class TextBoxOverlay(AbstractOverlay):
     text = Str
 
     #: The font to use for the text.
-    font = KivaFont("modern 12")
+    font = KivaFont("sans-serif 12")
 
     #: The background color for the box (overrides AbstractOverlay).
     bgcolor = ColorTrait("transparent")

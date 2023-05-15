@@ -37,6 +37,6 @@ class TextGridOverlay(AlignedContainerOverlay):
             self.add(new)
 
     def _text_grid_default(self):
-        text_grid = TextGrid(font="modern 12", cell_border_width=0)
+        text_grid = TextGrid(font="sans-serif 12", cell_border_width=0)
         self.add(text_grid)
         return text_grid

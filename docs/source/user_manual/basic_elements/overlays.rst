@@ -45,8 +45,8 @@ given an X-Y plot renderer, ``plot``, we can define a new x-axis as: ::
     AXIS_DEFAULTS = {
         'axis_line_weight': 2,
         'tick_weight': 2,
-        'tick_label_font': 'modern 16',
-        'title_font': 'modern 20',
+        'tick_label_font': 'sans-serif 16',
+        'title_font': 'sans-serif 20',
     }
 
     x_axis = PlotAxis(

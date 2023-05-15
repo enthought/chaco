@@ -91,7 +91,7 @@ class Legend(AbstractOverlay):
     """A legend for a plot."""
 
     #: The font to use for the legend text.
-    font = KivaFont("modern 12")
+    font = KivaFont("sans-serif 12")
 
     #: The amount of space between the content of the legend and the border.
     border_padding = Int(10)
