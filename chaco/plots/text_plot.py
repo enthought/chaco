@@ -34,25 +34,25 @@ class TextPlot(BaseXYPlot):
     text = Instance(ArrayDataSource)
 
     #: The font of the tick labels.
-    text_font = KivaFont("sans-serif 10")
+    text_font = KivaFont("sans-serif 10", redraw=True)
 
     #: The color of the tick labels.
-    text_color = black_color_trait
+    text_color = black_color_trait(redraw=True)
 
     #: The rotation of the tick labels.
-    text_rotate_angle = Float(0)
+    text_rotate_angle = Float(0, redraw=True)
 
     #: The margin around the label.
-    text_margin = Int(2)
+    text_margin = Int(2, redraw=True)
 
     #: horizontal position of text relative to target point
-    h_position = Enum("center", "left", "right")
+    h_position = Enum("center", "left", "right", redraw=True)
 
     #: vertical position of text relative to target point
-    v_position = Enum("center", "top", "bottom")
+    v_position = Enum("center", "top", "bottom", redraw=True)
 
     #: offset of text relative to non-index direction in pixels
-    text_offset = Tuple(Float, Float)
+    text_offset = Tuple(Float, Float, redraw=True)
 
     # ------------------------------------------------------------------------
     # Private traits
@@ -173,6 +173,6 @@ class TextPlot(BaseXYPlot):
         self._screen_cache_valid = False
         self._label_cache_valid = False
 
-    @observe("value.data_changed")
+    @observe("value.data_changed,+redraw")
     def _invalidate_labels(self, event):
         self._label_cache_valid = False
