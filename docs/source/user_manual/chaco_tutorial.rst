@@ -559,8 +559,8 @@ of these capabilities.  Here is the full listing of the modified code::
     from numpy import linspace, sin
     from traits.api import HasTraits, Instance, Int
     from traitsui.api import Item, Group, View
-    from chaco.api import ArrayPlotData, marker_trait, Plot
-    from enable.api import ColorTrait, ComponentEditor
+    from chaco.api import ArrayPlotData, Plot
+    from enable.api import ColorTrait, ComponentEditor, marker_trait
 
     class ScatterPlotTraits(HasTraits):
 
