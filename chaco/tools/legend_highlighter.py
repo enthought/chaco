@@ -30,10 +30,7 @@ def get_hit_plots(legend, event):
         return []
 
     try:
-        # FIXME: The size of the legend is not being computed correctly, so
-        # always look at the front of the label where we know we'll get a hit.
-        label = legend.get_label_at(legend.x + 20, event.y)
-
+        label = legend.get_label_at(event.x, event.y)
     except:
         raise
         label = None
