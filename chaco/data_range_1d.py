@@ -352,6 +352,7 @@ class DataRange1D(BaseDataRange):
                 self._high_value = inf
             else:
                 self._high_value = self._high_setting
+            self.updated = (self._low_value, self._high_value)
             return
         else:
             mins, maxes = zip(*bounds_list)
