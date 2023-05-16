@@ -31,7 +31,7 @@ class ToolTip(AbstractOverlay):
     """An overlay that is a toolip."""
 
     #: The font to render the tooltip.
-    font = KivaFont("modern 10")
+    font = KivaFont("sans-serif 10")
 
     #: The color of the text in the tooltip
     text_color = black_color_trait

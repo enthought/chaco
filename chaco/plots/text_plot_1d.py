@@ -34,7 +34,7 @@ class TextPlot1D(Base1DPlot):
     value = Instance(ArrayDataSource)
 
     #: The font of the tick labels.
-    text_font = KivaFont("modern 10")
+    text_font = KivaFont("sans-serif 10")
 
     #: The color of the tick labels.
     text_color = black_color_trait
