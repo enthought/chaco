@@ -15,6 +15,7 @@ from numpy import arange, array, zeros, inf
 from numpy.testing import assert_equal
 
 from traits.api import HasTraits, Instance, Bool, observe
+from traits.testing.api import UnittestTools
 
 from chaco.api import DataRange1D, ArrayDataSource
 
@@ -35,7 +36,7 @@ class Foo(HasTraits):
         self.range_updated = True
 
 
-class DataRangeTestCase(unittest.TestCase):
+class DataRangeTestCase(UnittestTools, unittest.TestCase):
     def test_empty_range(self):
         r = DataRange1D()
         self.assertEqual(r.low, -inf)
@@ -335,5 +336,30 @@ class DataRangeTestCase(unittest.TestCase):
         self.assertEqual(r.high, 1.0)
 
         r.sources.append(ds1)
+        self.assertEqual(r.low, -inf)
+        self.assertEqual(r.high, inf)
+
+    def test_sources_changed_auto(self):
+        ds1 = ArrayDataSource(array([3, 4, 5, 6, 7]))
+        ds2 = ArrayDataSource(array([5, 10, 15, 20]))
+        r = DataRange1D()
+        events = []
+        r.observe(events.append, 'updated')
+
+        self.assertEqual(r.low, -inf)
+        self.assertEqual(r.high, inf)
+
+        with self.assertTraitChanges(r, "updated", count=1):
+            r.add(ds1)
+
+        self.assertEqual(events[-1].new, (3, 7))
+        self.assertEqual(r.low, 3)
+        self.assertEqual(r.high, 7)
+
+
+        with self.assertTraitChanges(r, "updated", count=1):
+            r.remove(ds1)
+
+        self.assertEqual(events[-1].new, (-inf, inf))
         self.assertEqual(r.low, -inf)
         self.assertEqual(r.high, inf)

@@ -75,8 +75,8 @@ def _create_plot_component():
     plot.padding = 50
     plot.x_grid.visible = False
     plot.y_grid.visible = False
-    plot.x_axis.font = "modern 16"
-    plot.y_axis.font = "modern 16"
+    plot.x_axis.font = "sans-serif 16"
+    plot.y_axis.font = "sans-serif 16"
 
     # Right now, some of the tools are a little invasive, and we need the
     # actual ColomappedSegmentPlot object to give to them

@@ -69,8 +69,8 @@ def _create_plot_component():
     plot.padding = 50
     plot.x_grid.visible = False
     plot.y_grid.visible = False
-    plot.x_axis.font = "modern 16"
-    plot.y_axis.font = "modern 16"
+    plot.x_axis.font = "sans-serif 16"
+    plot.y_axis.font = "sans-serif 16"
 
     # Add pan and zoom to the plot
     plot.tools.append(PanTool(plot, constrain_key="shift"))

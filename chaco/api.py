@@ -498,7 +498,7 @@ from .default_colormaps import (
     YlGn,
     YlGnBu,
     YlOrBr,
-    YlOrRd,  
+    YlOrRd,
     gist_earth,
     gist_gray,
     gist_heat,
@@ -527,3 +527,20 @@ from .default_colormaps import (
     Set3,
 )
 from .default_colors import cbrewer, palette11, palette14, PALETTES
+
+
+def __getattr__(name):
+    """Backward compatibility lazy imports.
+
+    These imports warn about backwards incompatible changes.
+    """
+    if name in {'marker_trait'}:
+        from warnings import warn
+        import enable.api
+        warn(
+            f"Please import {name} from enable.api instead of chaco.api.",
+            DeprecationWarning,
+        )
+        return getattr(enable.api, name)
+
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

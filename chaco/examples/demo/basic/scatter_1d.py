@@ -75,7 +75,7 @@ def _create_plot_component():
         marker="square",
         index_sort="ascending",
         color="orange",
-        marker_size=3,  # randint(1,5, numpts),
+        marker_size=3,
         bgcolor="white",
         use_backbuffer=True,
     )

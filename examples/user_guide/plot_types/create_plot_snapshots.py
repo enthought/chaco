@@ -59,8 +59,8 @@ PLOT_DEFAULTS = {
 AXIS_DEFAULTS = {
     "axis_line_weight": AXIS_WIDTH,
     "tick_weight": AXIS_WIDTH,
-    "tick_label_font": "modern 16",
-    "title_font": "modern 20",
+    "tick_label_font": "sans-serif 16",
+    "title_font": "sans-serif 20",
 }
 
 

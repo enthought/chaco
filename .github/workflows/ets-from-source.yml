@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        toolkit: ['null', 'pyqt5', 'pyside2']
+        toolkit: ['null', 'pyside6']
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -36,18 +36,18 @@ jobs:
       - name: Install click to the default EDM environment
         run: edm install -y wheel click coverage
       - name: Install test environment
-        run: edm run -- python ci/edmtool.py install --toolkit=${{ matrix.toolkit }} --source
+        run: edm run -- python ci/edmtool.py install --runtime=3.8 --toolkit=${{ matrix.toolkit }} --source
       - name: Run tests
         # kiva agg requires at least 15-bit color depth.
         # The --server-args assumes xvfb-run is called, hence Linux only.
-        run: xvfb-run -a --server-args="-screen 0 1024x768x24" edm run -- python ci/edmtool.py test --toolkit=${{ matrix.toolkit }}
+        run: xvfb-run -a --server-args="-screen 0 1024x768x24" edm run -- python ci/edmtool.py test --runtime=3.8 --toolkit=${{ matrix.toolkit }}
 
 # Test against EDM packages from source on Windows and OSX
   test-ets-source:
     strategy:
       matrix:
         os: [windows-latest]
-        toolkit: ['null', 'pyqt5', 'pyside2']
+        toolkit: ['null', 'pyside6']
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -63,9 +63,9 @@ jobs:
       - name: Install click to the default EDM environment
         run: edm install -y wheel click coverage
       - name: Install test environment
-        run: edm run -- python ci/edmtool.py install --toolkit=${{ matrix.toolkit }} --source
+        run: edm run -- python ci/edmtool.py install --runtime=3.8 --toolkit=${{ matrix.toolkit }} --source
       - name: Run tests
-        run: edm run -- python ci/edmtool.py test --toolkit=${{ matrix.toolkit }}
+        run: edm run -- python ci/edmtool.py test --runtime=3.8 --toolkit=${{ matrix.toolkit }}
 
   notify-on-failure:
     needs: [test-ets-source-linux, test-ets-source]

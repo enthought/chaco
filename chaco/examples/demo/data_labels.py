@@ -104,7 +104,7 @@ class PlotExample(HasTraits):
             marker_color="blue",
             marker_line_color="transparent",
             marker="diamond",
-            font="modern 14",
+            font="sans-serif 14",
             arrow_visible=False,
         )
         plot.overlays.append(label2)
@@ -132,7 +132,7 @@ class PlotExample(HasTraits):
             label_style="bubble",
             label_text="Something interesting",
             label_format="at x=%(x).2f, y=%(y).2f",
-            font="modern 18",
+            font="sans-serif 18",
             bgcolor=(1, 1, 0.75, 1),
         )
         plot.overlays.append(label4)
@@ -155,7 +155,7 @@ class PlotExample(HasTraits):
             label_text="Label with\narrow_min_length=20",
             border_visible=False,
             arrow_min_length=20,
-            font="modern 14",
+            font="sans-serif 14",
             bgcolor=(0.75, 0.75, 0.75, 1),
         )
         plot.overlays.append(label5)

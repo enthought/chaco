@@ -8,14 +8,17 @@
 #
 # Thanks for using Enthought open source!
 
-import warnings
+import unittest
 
-from chaco.overlays.plot_label import PlotLabel  # noqa: F401
+import chaco.api
 
-warnings.warn(
-    "Importing PlotLabel from this module is deprecated. Please use chaco.api "
-    "or chaco.overlays.api instead. This module will be removed in the next "
-    "major release.",
-    DeprecationWarning,
-    stacklevel=2,
-)
+
+class TestAPI(unittest.TestCase):
+
+    def test_enable_imports(self):
+        """Test for deprecated imports from enable.api"""
+        names = {'marker_trait'}
+        for name in names:
+            with self.subTest(name=name):
+                with self.assertWarns(DeprecationWarning):
+                    getattr(chaco.api, name)

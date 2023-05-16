@@ -65,7 +65,7 @@ class RegressionOverlay(LassoOverlay):
         kw=dict(
             bgcolor="white",
             border_color="black",
-            font="modern 14",
+            font="sans-serif 14",
             border_width=1,
         ),
     )

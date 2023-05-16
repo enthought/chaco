@@ -87,7 +87,7 @@ class PlotAxis(AbstractOverlay):
     title = Str()  # May want to add PlotLabel option
 
     #: The font of the title.
-    title_font = KivaFont("modern 12")
+    title_font = KivaFont("sans-serif 12")
 
     #: The spacing between the axis line and the title
     title_spacing = Union(Constant("auto"), Float)
@@ -105,7 +105,7 @@ class PlotAxis(AbstractOverlay):
     tick_color = ColorTrait("black")
 
     #: The font of the tick labels.
-    tick_label_font = KivaFont("modern 10")
+    tick_label_font = KivaFont("sans-serif 10")
 
     #: The color of the tick labels.
     tick_label_color = ColorTrait("black")

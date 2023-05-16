@@ -91,7 +91,7 @@ class Legend(AbstractOverlay):
     """A legend for a plot."""
 
     #: The font to use for the legend text.
-    font = KivaFont("modern 12")
+    font = KivaFont("sans-serif 12")
 
     #: The amount of space between the content of the legend and the border.
     border_padding = Int(10)
@@ -427,7 +427,7 @@ class Legend(AbstractOverlay):
         # We need a dummy GC in order to get font metrics
         dummy_gc = font_metrics_provider()
         label_sizes = array(
-            [label.get_width_height(dummy_gc) for label in labels]
+            [label.get_bounding_box(dummy_gc) for label in labels]
         )
 
         if len(label_sizes) > 0:
@@ -465,8 +465,12 @@ class Legend(AbstractOverlay):
 
     def get_label_at(self, x, y):
         """ Returns the label object at (x,y) """
+        icon_space = array([
+            self.icon_spacing + self.icon_bounds[0],
+            self.icon_bounds[1],
+        ])
         for i, pos in enumerate(self._cached_label_positions):
-            size = self._cached_label_sizes[i]
+            size = self._cached_label_sizes[i] + icon_space
             corner = pos + size
             if (pos[0] <= x <= corner[0]) and (pos[1] <= y <= corner[1]):
                 return self._cached_labels[i]

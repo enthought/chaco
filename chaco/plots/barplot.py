@@ -18,7 +18,7 @@ from numpy import (
     column_stack,
     empty,
     invert,
-    isnan,
+    isfinite,
     transpose,
     zeros,
 )
@@ -271,22 +271,26 @@ class BarPlot(AbstractPlotRenderer):
             self._cache_valid = True
             return
 
-        # TODO: Until we code up a better handling of value-based culling that
-        # takes into account starting_value and dataspace bar widths, just use
-        # the index culling for now.
-        # value_range_mask = self.value_mapper.range.mask_data(value)
-        # nan_mask = invert(isnan(index_mask)) & invert(isnan(value_mask))
-        # point_mask = index_mask & value_mask & nan_mask & \
-        #              index_range_mask & value_range_mask
+        # TODO: better accounting for intersection of boxes with visible region
+        # current strategy simply masks the index values and then does a 1D
+        # dilation of the mask.  This will work in many situations but will
+        # fail on extreme zoom in.
+        # Ideally we would work out all the boxes and compute intersections.
 
         index_range_mask = self.index_mapper.range.mask_data(index)
-        nan_mask = invert(isnan(index_mask))
-        point_mask = index_mask & nan_mask & index_range_mask
+        # include points on either side of clipped range (1D dilation)
+        # - not perfect, but better than simple clipping
+        index_range_mask[:-1] |= index_range_mask[1:]
+        index_range_mask[1:] |= index_range_mask[:-1]
+
+        nan_mask = isfinite(index) & isfinite(value)
+        point_mask = index_mask & value_mask & nan_mask & index_range_mask
 
         if self.starting_value is None:
             starting_values = zeros(len(index))
         else:
             starting_values = self.starting_value.get_data()
+            point_mask &= isfinite(starting_values)
 
         if self.bar_width_type == "data":
             half_width = self.bar_width / 2.0

@@ -34,7 +34,7 @@ class TextPlot(BaseXYPlot):
     text = Instance(ArrayDataSource)
 
     #: The font of the tick labels.
-    text_font = KivaFont("modern 10", redraw=True)
+    text_font = KivaFont("sans-serif 10", redraw=True)
 
     #: The color of the tick labels.
     text_color = black_color_trait(redraw=True)
