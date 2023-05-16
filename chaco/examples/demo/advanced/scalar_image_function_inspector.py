@@ -130,7 +130,7 @@ class Model(HasTraits):
         x, y = meshgrid(gridx, gridy)
 
         d = dict(x=x, y=y)
-        exec("from scipy import *", d)
+        exec("from numpy import *", d)
         exec("from scipy.special import *", d)
         try:
             self.zs = eval(self.function, d)
