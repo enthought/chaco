@@ -17,8 +17,8 @@ from numpy import get_include
 from setuptools import setup, Extension, find_packages
 from Cython.Build import cythonize
 
-MAJOR = 5
-MINOR = 1
+MAJOR = 6
+MINOR = 0
 MICRO = 0
 PRERELEASE = ""
 IS_RELEASED = True
