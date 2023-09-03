@@ -324,9 +324,9 @@ class Plot(DataView):
             For segment plots index and value arrays alternate between
             coordinates for the start and end points of segments.
 
-        type : comma-delimited string of plot type
-            The types of plots to add.  One of "line", "scatter",
-            "cmap_scatter", "polygon", "bar", "filled_line", "segment", "text"
+        type : string of plot type
+            The type of plot to add.  One of "line", "scatter", "cmap_scatter",
+            "polygon", "bar", "filled_line", "segment", "text"
         name : string
             The name of the plot.  If None, then a default one is created
             (usually "plotNNN").
