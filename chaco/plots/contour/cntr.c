@@ -32,7 +32,28 @@
 #ifdef NUMPY
 #include "numpy/arrayobject.h"
 # ifndef PyArray_SBYTE
-#  include "numpy/oldnumeric.h"
+	/* copy of the removed oldnumeric.h file from numpy */
+	#ifndef REFCOUNT
+	#  define REFCOUNT NPY_REFCOUNT
+	#  define MAX_ELSIZE 16
+	#endif
+
+	#define PyArray_UNSIGNED_TYPES
+	#define PyArray_SBYTE NPY_BYTE
+	#define PyArray_CopyArray PyArray_CopyInto
+	#define _PyArray_multiply_list PyArray_MultiplyIntList
+	#define PyArray_ISSPACESAVER(m) NPY_FALSE
+	#define PyScalarArray_Check PyArray_CheckScalar
+
+	#define CONTIGUOUS NPY_CONTIGUOUS
+	#define OWN_DIMENSIONS 0
+	#define OWN_STRIDES 0
+	#define OWN_DATA NPY_OWNDATA
+	#define SAVESPACE 0
+	#define SAVESPACEBIT 0
+
+	#undef import_array
+	#define import_array() { if (_import_array() < 0) {PyErr_Print(); PyErr_SetString(PyExc_ImportError, "numpy.core.multiarray failed to import"); } }
 #  include "numpy/old_defines.h"
 # endif
 #else
