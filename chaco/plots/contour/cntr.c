@@ -31,7 +31,7 @@
 
 #ifdef NUMPY
 #include "numpy/arrayobject.h"
-# ifndef PyArray_SBYTE
+# ifndef PyArray_BYTE
 #  include "numpy/oldnumeric.h"
 #  include "numpy/old_defines.h"
 # endif
