@@ -340,9 +340,9 @@ class Base2DPlot(AbstractPlotRenderer):
 
     def _index_changed(self, old, new):
         if old is not None:
-            old.obseve(self._update_index_data, "data_changed", remove=True)
+            old.observe(self._update_index_data, "data_changed", remove=True)
         if new is not None:
-            new.obseve(self._update_index_data, "data_changed")
+            new.observe(self._update_index_data, "data_changed")
         self._update_index_data()
 
     def _value_changed(self, old, new):
