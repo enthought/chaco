@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
-        toolkit: ['null', 'pyside2', 'pyside6', 'pyqt5', 'wx']
+        toolkit: ['pyside2', 'pyside6', 'pyqt5', 'wx']
         kiva-backend: ['image']
         python-version: ['3.10', '3.11']
         exclude:
