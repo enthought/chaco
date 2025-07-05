@@ -11,7 +11,7 @@
 import unittest
 
 import numpy as np
-from numpy import alltrue, arange, array
+from numpy import arange, array
 
 from enable.api import ComponentEditor
 from enable.testing import EnableTestAssistant
@@ -26,6 +26,7 @@ from chaco.tools.api import PanTool, ZoomTool
 
 
 class PlotTestCase(unittest.TestCase):
+
     def test_plot_from_unsupported_array_shape(self):
         arr = arange(8).reshape(2, 2, 2)
         data = ArrayPlotData(x=arr, y=arr)
@@ -63,7 +64,7 @@ class PlotTestCase(unittest.TestCase):
         gc = PlotGraphicsContext((250, 250))
         gc.render_component(plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_plot_color(self):
         x = arange(10)
@@ -77,7 +78,7 @@ class PlotTestCase(unittest.TestCase):
         gc = PlotGraphicsContext((250, 250))
         gc.render_component(plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_plot_color_width(self):
         x = arange(10)
@@ -94,7 +95,7 @@ class PlotTestCase(unittest.TestCase):
         gc = PlotGraphicsContext((250, 250))
         gc.render_component(plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_plot_map_screen(self):
         x = arange(10)
@@ -120,7 +121,7 @@ class PlotTestCase(unittest.TestCase):
         gc = PlotGraphicsContext((250, 250))
         gc.render_component(plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def check_map_screen(self, renderer):
         arr = arange(10)
