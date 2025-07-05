@@ -12,6 +12,7 @@
 """
 
 # Major library imports
+import numpy as np
 from numpy import (
     arange,
     array,
@@ -24,7 +25,6 @@ from numpy import (
     isnan,
     ones,
     searchsorted,
-    sometrue,
     sort,
     take,
     uint8,
@@ -413,7 +413,7 @@ class ColorMapper(AbstractColormap):
             raise ValueError(
                 "data mapping points must start with x=0. and end with x=1"
             )
-        if sometrue(sort(x) - x):
+        if np.any(sort(x) - x):
             raise ValueError(
                 "data mapping points must have x in increasing order"
             )
