@@ -18,7 +18,7 @@ from numpy import (
     log10,
     exp,
     zeros,
-    sometrue,
+    any,
     floor,
     ceil,
     ndarray,
@@ -79,7 +79,7 @@ class LogMapper(Base1DMapper):
             try:
                 with np.errstate(invalid="ignore"):
                     mask = (data_array <= LOG_MINIMUM) | isnan(data_array)
-                if sometrue(mask):
+                if any(mask):
                     data_array = array(data_array, copy=True, ndmin=1)
                     data_array[mask] = self.fill_value
                 intermediate = (
