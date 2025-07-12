@@ -28,7 +28,7 @@ jobs:
             toolkit: 'pyside2'
     runs-on: ${{ matrix.os }}
     env:
-      ETS_TOOLKIT: qt4.${{ matrix.kiva-backend }}
+      ETS_TOOLKIT: ${{ matrix.tookit }}.image
     steps:
       - name: Check out
         uses: actions/checkout@v4
@@ -41,7 +41,7 @@ jobs:
           python -m pip install --upgrade pip wheel
       - name: Install Qt dependencies
         uses: ./.github/actions/install-qt-support
-        if: matrix.toolkit != 'wx' && matrix.toolkit != 'null'
+        if: matrix.os == 'ubuntu-latest'
       - name: Install local packages
         run: pip install ".[tests,${{ matrix.toolkit }}]"
       - name: Sanity check package version
