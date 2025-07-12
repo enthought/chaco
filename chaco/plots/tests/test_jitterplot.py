@@ -10,7 +10,8 @@
 
 import unittest
 
-from numpy import alltrue, arange, array
+import numpy as np
+from numpy import arange, array
 from numpy.testing import assert_almost_equal
 from enable.compiled_path import CompiledPath
 
@@ -48,7 +49,7 @@ class Jitterplot1DTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_scatter_1d_horizontal(self):
         self.scatterplot.orientation = "h"
@@ -62,7 +63,7 @@ class Jitterplot1DTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_scatter_1d_flipped(self):
         self.scatterplot.direction = "flipped"
@@ -76,7 +77,7 @@ class Jitterplot1DTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_scatter_1d_horizontal_flipped(self):
         self.scatterplot.direction = "flipped"
@@ -91,14 +92,14 @@ class Jitterplot1DTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_scatter_1d_circle(self):
         self.scatterplot.marker = "circle"
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_scatter_1d_custom(self):
         path = CompiledPath()
@@ -113,7 +114,7 @@ class Jitterplot1DTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_scatter_1d_map_data(self):
         points = array([[0, 124.5], [124.5, 0]])

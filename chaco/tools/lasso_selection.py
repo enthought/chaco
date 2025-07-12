@@ -12,7 +12,7 @@
 """
 # Major library imports
 import numpy
-from numpy import array, column_stack, empty, sometrue, vstack, zeros
+from numpy import array, column_stack, empty, vstack, zeros
 
 # Enthought library imports
 from traits.api import (
@@ -306,7 +306,7 @@ class LassoSelection(AbstractController):
         else:
             selected_mask |= active_selection
 
-        if sometrue(
+        if numpy.any(
             selected_mask
             != self.selection_datasource.metadata[self.metadata_name]
         ):

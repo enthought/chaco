@@ -10,7 +10,8 @@
 
 import unittest
 
-from numpy import alltrue, arange, array
+import numpy as np
+from numpy import arange, array
 from numpy.testing import assert_almost_equal
 
 from traits.testing.api import UnittestTools
@@ -53,7 +54,7 @@ class LineScatterPlot1DTest(UnittestTools, unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.linescatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_linescatter_1d_horizontal(self):
         self.linescatterplot.orientation = "h"
@@ -67,7 +68,7 @@ class LineScatterPlot1DTest(UnittestTools, unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.linescatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_linescatter_1d_flipped(self):
         self.linescatterplot.direction = "flipped"
@@ -81,7 +82,7 @@ class LineScatterPlot1DTest(UnittestTools, unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.linescatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_linescatter_1d_horizontal_flipped(self):
         self.linescatterplot.direction = "flipped"
@@ -96,28 +97,28 @@ class LineScatterPlot1DTest(UnittestTools, unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.linescatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_linescatter_1d_thicker(self):
         self.linescatterplot.line_width = 2.0
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.linescatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_linescatter_1d_color(self):
         self.linescatterplot.color = "orange"
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.linescatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_linescatter_1d_line_style(self):
         self.linescatterplot.line_style = "dash"
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.linescatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_linescatter_1d_map_data(self):
         points = array([[0, 124.5], [124.5, 0]])
@@ -155,7 +156,7 @@ class LineScatterPlot1DTest(UnittestTools, unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.linescatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_linescatter_1d_selection_mask_name(self):
         # select with a mask
@@ -167,7 +168,7 @@ class LineScatterPlot1DTest(UnittestTools, unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.linescatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_linescatter_1d_selection_alpha(self):
         # test with different alpha
@@ -179,7 +180,7 @@ class LineScatterPlot1DTest(UnittestTools, unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.linescatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_linescatter_1d_set_index_range(self):
         new_range = DataRange1D(low=0.42, high=1.42)

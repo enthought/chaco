@@ -10,7 +10,8 @@
 
 import unittest
 
-from numpy import alltrue, arange, array
+import numpy as np
+from numpy import arange, array
 from numpy.testing import assert_almost_equal
 
 from enable.compiled_path import CompiledPath
@@ -53,7 +54,7 @@ class Scatterplot1DTest(UnittestTools, unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_scatter_1d_horizontal(self):
         self.scatterplot.orientation = "h"
@@ -67,7 +68,7 @@ class Scatterplot1DTest(UnittestTools, unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_scatter_1d_flipped(self):
         self.scatterplot.direction = "flipped"
@@ -81,7 +82,7 @@ class Scatterplot1DTest(UnittestTools, unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_scatter_1d_horizontal_flipped(self):
         self.scatterplot.direction = "flipped"
@@ -96,14 +97,14 @@ class Scatterplot1DTest(UnittestTools, unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_scatter_1d_circle(self):
         self.scatterplot.marker = "circle"
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_scatter_1d_custom(self):
         path = CompiledPath()
@@ -118,7 +119,7 @@ class Scatterplot1DTest(UnittestTools, unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_scatter_1d_map_data(self):
         points = array([[0, 124.5], [124.5, 0]])
@@ -153,7 +154,7 @@ class Scatterplot1DTest(UnittestTools, unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_scatter_1d_selection_mask_name(self):
         # select with a mask
@@ -165,7 +166,7 @@ class Scatterplot1DTest(UnittestTools, unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_scatter_1d_selection_alpha(self):
         # test with different alpha
@@ -177,7 +178,7 @@ class Scatterplot1DTest(UnittestTools, unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_scatter_1d_set_index_range(self):
         new_range = DataRange1D(low=0.42, high=1.42)
