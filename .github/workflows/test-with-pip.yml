@@ -28,7 +28,7 @@ jobs:
             toolkit: 'pyside2'
     runs-on: ${{ matrix.os }}
     env:
-      ETS_TOOLKIT: ${{ matrix.toolkit }}.image
+      ETS_TOOLKIT: ${{ matrix.toolkit }}.${{ matrix.kiva-backend }}
     steps:
       - name: Check out
         uses: actions/checkout@v4
