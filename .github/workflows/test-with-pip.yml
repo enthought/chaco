@@ -34,20 +34,24 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install build dependencies
-        run: |
-          python -m pip install --upgrade pip wheel
-      - name: Install Qt dependencies
-        uses: ./.github/actions/install-qt-support
-        if: matrix.os == 'ubuntu-latest'
-      - name: Install local packages
-        run: pip install ".[tests,${{ matrix.toolkit }}]"
-      - name: Sanity check package version
-        run: pip list
       - name: Set ETS_TOOLKIT
         uses: ./.github/actions/ets_toolkit
         with:
           toolkit: ${{ matrix.toolkit }}
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip wheel
+      - name: Install wxdependencies for Linux
+        run: |
+          sudo apt-get install libgtk-3-dev
+        if: matrix.os == 'ubuntu-latest' && matrix.toolkit == 'wx'
+      - name: Install Qt dependencies on Linux
+        uses: ./.github/actions/install-qt-support
+        if: matrix.os == 'ubuntu-latest' && startsWith(matrix.toolkit, 'py')
+      - name: Install local packages
+        run: pip install ".[tests,${{ matrix.toolkit }}]"
+      - name: Sanity check package version
+        run: pip list
       - name: Run chaco test suite (Linux)
         env:
           PYTHONFAULTHANDLER: 1
