@@ -45,7 +45,8 @@ jobs:
       - name: Sanity check package version
         run: pip list
       - run: ./.github/actions/ets_toolkit
-        toolkit: ${{ matrix.toolkit }}
+        with:
+          toolkit: ${{ matrix.toolkit }}
       - name: Run chaco test suite (Linux)
         env:
           PYTHONFAULTHANDLER: 1
