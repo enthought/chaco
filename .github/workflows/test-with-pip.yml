@@ -44,7 +44,8 @@ jobs:
         run: pip install ".[tests,${{ matrix.toolkit }}]"
       - name: Sanity check package version
         run: pip list
-      - run: ./.github/actions/ets_toolkit
+      - name: Set ETS_TOOLKIT
+        uses: ./.github/actions/ets_toolkit
         with:
           toolkit: ${{ matrix.toolkit }}
       - name: Run chaco test suite (Linux)
