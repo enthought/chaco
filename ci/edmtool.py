@@ -77,8 +77,7 @@ from contextlib import contextmanager
 import click
 
 supported_combinations = {
-    '3.6': {'pyside2', 'pyqt5', 'null'},
-    '3.8': {'pyside6', 'null'},
+    '3.11': {'pyside6', 'pyqt6', 'wx', 'null'},
 }
 
 dependencies = {
@@ -111,10 +110,9 @@ source_dependencies = [
 github_url_fmt = "git+http://github.com/enthought/{0}.git#egg={0}"
 
 extra_dependencies = {
-    'pyside2': {'pyside2'},
+    'pyqt6': {'pyqt6'},
     'pyside6': {'pyside6'},
-    'pyqt': {'pyqt'},
-    'pyqt5': {'pyqt5'},
+    "wx": {'wxPython'},
     'null': set()
 }
 
@@ -163,10 +161,9 @@ doc_ignore = {
 }
 
 environment_vars = {
-    'pyside2': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside2'},
-    'pyside6': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside6'},
-    'pyqt': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt'},
-    'pyqt5': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt5'},
+    'pyside6': {'ETS_TOOLKIT': 'qt', 'QT_API': 'pyside6'},
+    'pyqt6': {'ETS_TOOLKIT': 'qt', 'QT_API': 'pyqt6'},
+    'wx': {'ETS_TOOLKIT': 'wx'},
     'null': {'ETS_TOOLKIT': 'null.image'},
 }
 
@@ -185,7 +182,7 @@ def cli():
 
 
 @cli.command()
-@click.option('--runtime', default='3.6')
+@click.option('--runtime', default='3.11')
 @click.option('--toolkit', default='null')
 @click.option('--environment', default=None)
 @click.option(
@@ -207,11 +204,6 @@ def install(runtime, toolkit, environment, editable, source):
         | extra_dependencies.get(toolkit, set())
         | ci_dependencies
     )
-
-    if toolkit.startswith("pyside"):
-        addn_repositories = "--add-repository enthought/lgpl"
-    else:
-        addn_repositories = ""
 
     # edm commands to setup the development environment
     commands = [
@@ -267,7 +259,7 @@ def install(runtime, toolkit, environment, editable, source):
 
 
 @cli.command()
-@click.option('--runtime', default='3.6')
+@click.option('--runtime', default='3.11')
 @click.option('--toolkit', default='null')
 @click.option('--environment', default=None)
 def test(runtime, toolkit, environment):
@@ -295,7 +287,7 @@ def test(runtime, toolkit, environment):
 
 
 @cli.command()
-@click.option('--runtime', default='3.6')
+@click.option('--runtime', default='3.11')
 @click.option('--toolkit', default='null')
 @click.option('--environment', default=None)
 def cleanup(runtime, toolkit, environment):
@@ -312,7 +304,7 @@ def cleanup(runtime, toolkit, environment):
 
 
 @cli.command()
-@click.option('--runtime', default='3.6')
+@click.option('--runtime', default='3.11')
 @click.option('--toolkit', default='null')
 def test_clean(runtime, toolkit):
     """ Run tests in a clean environment, cleaning up afterwards
@@ -342,7 +334,7 @@ def update(runtime, toolkit, environment):
 
 
 @cli.command()
-@click.option("--runtime", default="3.6", help="Python version to use")
+@click.option("--runtime", default="3.11", help="Python version to use")
 @click.option("--toolkit", default="null", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
 def docs(runtime, toolkit, environment):
@@ -417,7 +409,7 @@ def test_all():
 
 
 @cli.command()
-@click.option("--runtime", default="3.6", help="Python version to use")
+@click.option("--runtime", default="3.11", help="Python version to use")
 @click.option("--toolkit", default="null", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
 def flake8(runtime, toolkit, environment):
