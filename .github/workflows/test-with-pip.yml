@@ -41,7 +41,7 @@ jobs:
           toolkit: ${{ matrix.toolkit }}
       - name: Install build dependencies
         run: |
-          python -m pip install --upgrade pip wheel
+          python -m pip install --upgrade pip wheel Cython
       - name: Install wxdependencies for Linux
         run: |
           sudo apt-get update
