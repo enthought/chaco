@@ -3,7 +3,7 @@
 name: Test with pip
 
 on:
-  pull_request:
+  #pull_request:
   # Make it possible to manually trigger the workflow
   workflow_dispatch:
 
