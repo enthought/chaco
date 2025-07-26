@@ -208,7 +208,7 @@ def install(runtime, toolkit, environment, editable, source):
     # edm commands to setup the development environment
     commands = [
         "edm environments create {environment} --force --version={runtime}",
-        "edm install -y -e {environment} {packages} " + addn_repositories,
+        "edm install -y -e {environment} {packages}",
         ("edm run -e {environment} -- pip install -r ci/requirements.txt"
          " --no-dependencies"),
     ]
