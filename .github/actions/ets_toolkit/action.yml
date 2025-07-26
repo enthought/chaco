@@ -32,8 +32,9 @@ runs:
     shell: ${{ inputs.shell }}
   - name: PySide2 toolkit
     if: inputs.toolkit == 'pyside2'
-    run: echo "ETS_TOOLKIT=qt.${{ inputs.kiva }}" >> $GITHUB_ENV
-    run: echo "QT_API=pyside2" >> $GITHUB_ENV
+    run: |
+      echo "ETS_TOOLKIT=qt.${{ inputs.kiva }}" >> $GITHUB_ENV
+      echo "QT_API=pyside2" >> $GITHUB_ENV
     shell: ${{ inputs.shell }}
   - name: PySide6 toolkit
     if: inputs.toolkit == 'pyside6'
