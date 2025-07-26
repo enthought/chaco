@@ -22,13 +22,15 @@ runs:
     shell: ${{ inputs.shell }}
   - name: PyQT5 toolkit
     if: inputs.toolkit == 'pyqt5'
-    run: echo "ETS_TOOLKIT=qt.${{ inputs.kiva }}" >> $GITHUB_ENV
-    run: echo "QT_API=pyqt5" >> $GITHUB_ENV
+    run: |
+      echo "ETS_TOOLKIT=qt.${{ inputs.kiva }}" >> $GITHUB_ENV
+      echo "QT_API=pyqt5" >> $GITHUB_ENV
     shell: ${{ inputs.shell }}
   - name: PyQT6 toolkit
     if: inputs.toolkit == 'pyqt6'
-    run: echo "ETS_TOOLKIT=qt.${{ inputs.kiva }}" >> $GITHUB_ENV
-    run: echo "QT_API=pyqt6" >> $GITHUB_ENV
+    run: |
+      echo "ETS_TOOLKIT=qt.${{ inputs.kiva }}" >> $GITHUB_ENV
+      echo "QT_API=pyqt6" >> $GITHUB_ENV
     shell: ${{ inputs.shell }}
   - name: PySide2 toolkit
     if: inputs.toolkit == 'pyside2'
@@ -38,6 +40,7 @@ runs:
     shell: ${{ inputs.shell }}
   - name: PySide6 toolkit
     if: inputs.toolkit == 'pyside6'
-    run: echo "ETS_TOOLKIT=qt.${{ inputs.kiva }}" >> $GITHUB_ENV
-    run: echo "QT_API=pyside6" >> $GITHUB_ENV
+    run: |
+      echo "ETS_TOOLKIT=qt.${{ inputs.kiva }}" >> $GITHUB_ENV
+      echo "QT_API=pyside6" >> $GITHUB_ENV
     shell: ${{ inputs.shell }}
