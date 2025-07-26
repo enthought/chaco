@@ -91,8 +91,6 @@ dependencies = {
     "traitsui",
     "cython",
     "enable",
-    # Needed to install enable from source
-    "swig",
 }
 
 pypi_dependencies = {}
@@ -229,6 +227,7 @@ def install(runtime, toolkit, environment, editable, source):
             "--environment {environment} --force "
         )
         commands = [cmd_fmt + source_pkg for source_pkg in source_dependencies]
+        commands.append(f'edm install -e --environment {environment} swig')
         execute(commands, parameters)
         source_pkgs = [
             github_url_fmt.format(pkg) for pkg in source_dependencies
