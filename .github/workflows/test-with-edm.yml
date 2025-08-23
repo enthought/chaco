@@ -2,7 +2,7 @@
 # Note that some packages may not actually be installed from EDM but from
 # PyPI, see ci/edmtool.py implementations.
 
-name: Test with EDM on Python 3.8
+name: Test with EDM
 
 on: pull_request
 
