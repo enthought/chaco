@@ -38,6 +38,11 @@ jobs:
         uses: enthought/setup-edm-action@v4.1
         with:
           edm-version: ${{ env.INSTALL_EDM_VERSION }}
+      - name: Install opengl for Linux
+        run: |
+          sudo apt-get update
+          sudo apt-get install libglvnd
+        if: matrix.os == 'ubuntu-latest' && matrix.toolkit != 'null'
       - name: Install click to the default EDM environment
         run: edm install -y wheel click coverage
       - name: Set ETS_TOOLKIT
