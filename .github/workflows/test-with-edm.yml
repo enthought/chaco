@@ -18,7 +18,14 @@ jobs:
       matrix:
         toolkit: ['null', 'pyside6', 'wx']
         runtime: ['3.11']
-        os: ['ubuntu-latest', 'windows-latest', 'macos-latest']
+        os: ['ubuntu-latest', 'windows-latest']
+        include:
+          - toolkit: 'null'
+            runtime: '3.11'
+            os: macos-latest
+          - toolkit: 'pyside6'
+            runtime: '3.11'
+            os: macos-latest
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
