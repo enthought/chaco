@@ -28,7 +28,7 @@ n_buckets = 1000
 """
 
 
-@unttitest.skipIf(_lttb is None, "operation is not available")
+@unittest.skipIf(_lttb is None, "operation is not available")
 class TestLargestTriangleThreeBuckets(unittest.TestCase):
     def test_timing(self):
         statement = "largest_triangle_three_buckets(a, n_buckets)"
