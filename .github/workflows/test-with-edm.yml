@@ -41,7 +41,7 @@ jobs:
       - name: Install opengl for Linux
         run: |
           sudo apt-get update
-          sudo apt-get install libglvnd0
+          sudo apt-get install libopengl0
         if: matrix.os == 'ubuntu-latest' && matrix.toolkit != 'null'
       - name: Install click to the default EDM environment
         run: edm install -y wheel click coverage
