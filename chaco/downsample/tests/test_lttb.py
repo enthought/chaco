@@ -14,7 +14,7 @@ import timeit
 import numpy as np
 from numpy.testing import assert_array_equal, assert_almost_equal
 
-from ..lttb import largest_triangle_three_buckets
+from ..lttb import largest_triangle_three_buckets, _lttb
 
 
 TIMING_SETUP = """
@@ -28,6 +28,7 @@ n_buckets = 1000
 """
 
 
+@unttitest.skipIf(_lttb is None, "operation is not available")
 class TestLargestTriangleThreeBuckets(unittest.TestCase):
     def test_timing(self):
         statement = "largest_triangle_three_buckets(a, n_buckets)"
