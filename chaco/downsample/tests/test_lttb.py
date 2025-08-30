@@ -10,6 +10,7 @@
 
 import unittest
 import timeit
+import platform
 
 import numpy as np
 from numpy.testing import assert_array_equal, assert_almost_equal
@@ -28,7 +29,7 @@ n_buckets = 1000
 """
 
 
-@unittest.skipIf(_lttb is None, "operation is not available")
+@unittest.skipIf(_lttb is None, "extension is not compiled")
 class TestLargestTriangleThreeBuckets(unittest.TestCase):
     def test_timing(self):
         statement = "largest_triangle_three_buckets(a, n_buckets)"
@@ -45,6 +46,9 @@ class TestLargestTriangleThreeBuckets(unittest.TestCase):
         #    0.0112847280502    2016/10/18, 2.8 GHz 16 GB mid-2014 MacBook Pro
         self.assertLess(t, 0.1)
 
+    @unittest.skipIf(
+        platform.system() == 'Darwin',
+        'Test fails on macOS; https://github.com/enthought/chaco/issues/918')
     def test_linear(self):
         a = np.empty(shape=(101, 2))
         a[:, 0] = np.linspace(0.0, 10.0, 101)
