@@ -20,10 +20,7 @@ except ImportError:
     logger.warning(
         "Can't import _lttb extension module, lttb downsampling will not work."
     )
-if platform.system() == 'Darwin':
-    #  Disabling acceleration on MacOS see
-    # https://github.com/enthought/chaco/issues/918
-    _lttb = None
+
 
 def largest_triangle_three_buckets(points, n_buckets):
     """Apply the largest triangle three buckets algorithm to data points
