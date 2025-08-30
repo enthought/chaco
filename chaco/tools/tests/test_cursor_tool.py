@@ -66,6 +66,9 @@ class TestCursorTool(unittest.TestCase, EnableTestAssistant):
             )
 
     @unittest.skipIf(ETSConfig.toolkit == "null", "Skip on 'null' toolkit")
+    @unittest.skipIf(
+        ETSConfig.toolkit == "wx" and platform.system() == 'Darwin',
+        "Test does not work correctly on wx; https://github.com/enthought/chaco/issues/919")
     def test_use_with_linear_mappers(self):
         class TestCursor(HasTraits):
             plot = Instance(Plot)
