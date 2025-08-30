@@ -9,10 +9,9 @@
 # Thanks for using Enthought open source!
 
 import os
-
+import platform
 import tempfile
 from contextlib import contextmanager
-
 import unittest
 
 import numpy as np
@@ -207,6 +206,9 @@ class TestResultImage(unittest.TestCase):
 
     # regression test for enthought/chaco#528
     @unittest.skipIf(is_null, "Skip on 'null' toolkit")
+    @unittest.skipIf(
+        ETSConfig.toolkit == "wx" and platform.system() == 'Darwin',
+        "Test does not work correctly on wx; https://github.com/enthought/chaco/issues/919")
     def test_resize_to_zero(self):
         class TestResize(HasTraits):
             plot = Instance(Component)

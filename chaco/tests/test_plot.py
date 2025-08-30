@@ -9,6 +9,7 @@
 # Thanks for using Enthought open source!
 
 import unittest
+import platform
 
 import numpy as np
 from numpy import arange, array
@@ -171,6 +172,10 @@ class EmptyLinePlot(HasTraits):
 @unittest.skipIf(ETSConfig.toolkit == "null", "Skip on 'null' toolkit")
 class TestEmptyPlot(unittest.TestCase, EnableTestAssistant):
 
+
+    @unittest.skipIf(
+        ETSConfig.toolkit == "wx" and platform.system() == 'Darwin',
+        "Test does not work correctly on wx; https://github.com/enthought/chaco/issues/919")
     def test_dont_crash_on_click(self):
         from traitsui.testing.api import UITester
         tester = UITester()

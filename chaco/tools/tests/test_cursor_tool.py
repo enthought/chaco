@@ -8,6 +8,7 @@
 #
 # Thanks for using Enthought open source!
 import unittest
+import platform
 
 import numpy as np
 
@@ -26,6 +27,9 @@ class TestCursorTool(unittest.TestCase, EnableTestAssistant):
 
     # regression test for enthought/chaco#289
     @unittest.skipIf(ETSConfig.toolkit == "null", "Skip on 'null' toolkit")
+    @unittest.skipIf(
+        ETSConfig.toolkit == "wx" and platform.system() == 'Darwin',
+        "Test does not work correctly on wx; https://github.com/enthought/chaco/issues/919")
     def test_use_with_log_mappers(self):
         class TestCursor(HasTraits):
             plot = Instance(Plot)
