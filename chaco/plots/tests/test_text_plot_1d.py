@@ -10,7 +10,8 @@
 
 import unittest
 
-from numpy import alltrue, arange, array
+import numpy as np
+from numpy import arange, array
 from numpy.testing import assert_almost_equal
 
 from traits.testing.api import UnittestTools
@@ -65,7 +66,7 @@ class TextPlot1DTest(UnittestTools, unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.textplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_text_1d_horizontal(self):
         self.textplot.orientation = "h"
@@ -77,7 +78,7 @@ class TextPlot1DTest(UnittestTools, unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.textplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_text_1d_flipped(self):
         self.textplot.direction = "flipped"
@@ -89,7 +90,7 @@ class TextPlot1DTest(UnittestTools, unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.textplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_text_1d_horizontal_flipped(self):
         self.textplot.direction = "flipped"
@@ -102,14 +103,14 @@ class TextPlot1DTest(UnittestTools, unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.textplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_text_1d_rotated(self):
         self.textplot.text_rotate_angle = 45
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.textplot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_text_1d_map_data(self):
         points = array([[0, 124.5], [124.5, 0]])

@@ -10,7 +10,8 @@
 
 import unittest
 
-from numpy import alltrue, arange
+import numpy as np
+from numpy import arange
 from enable.compiled_path import CompiledPath
 
 # Chaco imports
@@ -59,7 +60,7 @@ class TestColormappedScatterplot(unittest.TestCase):
         """ Coverage test to check basic case works """
         self.gc.render_component(self.scatterplot)
         actual = self.gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_scatter_circle(self):
         """ Coverage test to check circles work """
@@ -67,7 +68,7 @@ class TestColormappedScatterplot(unittest.TestCase):
 
         self.gc.render_component(self.scatterplot)
         actual = self.gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_scatter_custom(self):
         """Coverage test to check custom markers work.
@@ -87,7 +88,7 @@ class TestColormappedScatterplot(unittest.TestCase):
 
         self.gc.render_component(self.scatterplot)
         actual = self.gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_colormap_updated(self):
         """ If colormapper updated then we need to redraw """
@@ -100,4 +101,4 @@ class TestColormappedScatterplot(unittest.TestCase):
 
         self.gc.render_component(self.scatterplot)
         actual = self.gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))

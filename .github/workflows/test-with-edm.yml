@@ -2,66 +2,62 @@
 # Note that some packages may not actually be installed from EDM but from
 # PyPI, see ci/edmtool.py implementations.
 
-name: Test with EDM on Python 3.8
+name: Test with EDM
 
 on: pull_request
 
 env:
-  INSTALL_EDM_VERSION: 3.5.0
+  INSTALL_EDM_VERSION: 4.1.1
+  PYTHONUNBUFFERED: 1
+  EDM_CONFIG: '${{ github.workspace }}/ci/edm.yaml'
 
 jobs:
 
-  # Test against EDM packages on Linux
-  test-edm-linux-38:
+  test-edm:
     strategy:
       matrix:
-        toolkit: ['null', 'pyside6']
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install Qt dependencies
-        uses: ./.github/actions/install-qt-support
-        if: matrix.toolkit != 'null'
-      - name: Cache EDM packages
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache
-          key: ${{ runner.os }}-3.8-${{ matrix.toolkit }}-${{ hashFiles('ci/edmtool.py') }}
-      - name: Setup EDM
-        uses: enthought/setup-edm-action@v2
-        with:
-          edm-version: ${{ env.INSTALL_EDM_VERSION }}
-      - name: Install click to the default EDM environment
-        run: edm install -y wheel click coverage
-      - name: Install test environment
-        run: edm run -- python ci/edmtool.py install --runtime=3.8 --toolkit=${{ matrix.toolkit }}
-      - name: Flake8
-        run: edm run -- python ci/edmtool.py flake8 --runtime=3.8 --toolkit=${{ matrix.toolkit }}
-        if: matrix.toolkit == 'null'
-      - name: Run tests
-        run: xvfb-run -a --server-args="-screen 0 1024x768x24" edm run -- python ci/edmtool.py test --runtime=3.8 --toolkit=${{ matrix.toolkit }}
-
-  # Test against EDM packages on Windows and OSX
-  test-with-edm-38:
-    strategy:
-      matrix:
-        os: [windows-latest]
-        toolkit: ['null', 'pyside6']
+        toolkit: ['null', 'pyside6', 'wx']
+        runtime: ['3.11']
+        os: ['ubuntu-latest', 'windows-latest']
+        include:
+          - toolkit: 'null'
+            runtime: '3.11'
+            os: macos-latest
+          - toolkit: 'pyside6'
+            runtime: '3.11'
+            os: macos-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Cache EDM packages
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/.cache
-          key: ${{ runner.os }}-3.8-${{ matrix.toolkit }}-${{ hashFiles('ci/edmtool.py') }}
+          key: ${{ runner.os }}-${{ matrix.toolkit }}-${{ matrix.runtime }}-${{ hashFiles('ci/edmtool.py') }}
       - name: Setup EDM
-        uses: enthought/setup-edm-action@v1
+        uses: enthought/setup-edm-action@v4.1
         with:
           edm-version: ${{ env.INSTALL_EDM_VERSION }}
+      - name: Install opengl for Linux
+        run: |
+          sudo apt-get update
+          sudo apt-get install libopengl0 libegl1
+        if: matrix.os == 'ubuntu-latest' && matrix.toolkit != 'null'
       - name: Install click to the default EDM environment
         run: edm install -y wheel click coverage
+      - name: Set ETS_TOOLKIT
+        uses: ./.github/actions/ets_toolkit
+        with:
+          toolkit: ${{ matrix.toolkit }}
       - name: Install test environment
-        run: edm run -- python ci/edmtool.py install --runtime=3.8 --toolkit=${{ matrix.toolkit }}
+        run: edm run -- python ci/edmtool.py install --toolkit=${{ matrix.toolkit }} --runtime=${{ matrix.runtime }}
+      - name: Run tests on Linux
+        if: matrix.os == 'ubuntu-latest'
+        env:
+          PYTHONFAULTHANDLER: 1
+        run: xvfb-run -a --server-args="-screen 0 1024x768x24" edm run -- python ci/edmtool.py test --toolkit=${{ matrix.toolkit }} --runtime=${{ matrix.runtime }}
       - name: Run tests
-        run: edm run -- python ci/edmtool.py test --runtime=3.8 --toolkit=${{ matrix.toolkit }}
+        if: matrix.os != 'ubuntu-latest'
+        env:
+          PYTHONFAULTHANDLER: 1
+        run: edm run -- python ci/edmtool.py test --toolkit=${{ matrix.toolkit }} --runtime=${{ matrix.runtime }}

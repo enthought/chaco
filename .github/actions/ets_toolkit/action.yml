@@ -1,0 +1,46 @@
+name: Set ETS_TOOLKIT
+description: 'Set the ETS_TOOLKIT environment variable'
+inputs:
+  toolkit:
+    required: true
+    description: 'The GUI toolkit to use (wx, null, pyqt5, pyqt6, pyside2, pyside6)'
+  kiva:
+    default: 'image'
+    description: 'The kiva toolkit to set'
+  shell:
+    default: 'bash'
+runs:
+  using: composite
+  steps:
+  - name: Null toolkit
+    if: inputs.toolkit == 'null'
+    run: echo "ETS_TOOLKIT=null.${{ inputs.kiva }}" >> $GITHUB_ENV
+    shell: ${{ inputs.shell }}
+  - name: WxPython toolkit
+    if: inputs.toolkit == 'wx'
+    run: echo "ETS_TOOLKIT=wx.${{ inputs.kiva }}" >> $GITHUB_ENV
+    shell: ${{ inputs.shell }}
+  - name: PyQT5 toolkit
+    if: inputs.toolkit == 'pyqt5'
+    run: |
+      echo "ETS_TOOLKIT=qt.${{ inputs.kiva }}" >> $GITHUB_ENV
+      echo "QT_API=pyqt5" >> $GITHUB_ENV
+    shell: ${{ inputs.shell }}
+  - name: PyQT6 toolkit
+    if: inputs.toolkit == 'pyqt6'
+    run: |
+      echo "ETS_TOOLKIT=qt.${{ inputs.kiva }}" >> $GITHUB_ENV
+      echo "QT_API=pyqt6" >> $GITHUB_ENV
+    shell: ${{ inputs.shell }}
+  - name: PySide2 toolkit
+    if: inputs.toolkit == 'pyside2'
+    run: |
+      echo "ETS_TOOLKIT=qt.${{ inputs.kiva }}" >> $GITHUB_ENV
+      echo "QT_API=pyside2" >> $GITHUB_ENV
+    shell: ${{ inputs.shell }}
+  - name: PySide6 toolkit
+    if: inputs.toolkit == 'pyside6'
+    run: |
+      echo "ETS_TOOLKIT=qt.${{ inputs.kiva }}" >> $GITHUB_ENV
+      echo "QT_API=pyside6" >> $GITHUB_ENV
+    shell: ${{ inputs.shell }}

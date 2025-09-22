@@ -17,7 +17,8 @@
 
 import unittest
 
-from numpy import array, alltrue, ravel
+import numpy as np
+from numpy import array, ravel
 
 # Chaco imports
 from chaco.api import Plot, PlotGraphicsContext
@@ -26,7 +27,7 @@ from chaco.api import Plot, PlotGraphicsContext
 class DrawBorderTestCase(unittest.TestCase):
     def assertRavelEqual(self, x, y):
         self.assertTrue(
-            alltrue(ravel(x) == ravel(y)), "\n%s\n !=\n%s" % (x, y)
+            np.all(ravel(x) == ravel(y)), "\n%s\n !=\n%s" % (x, y)
         )
 
     def test_draw_border_simple(self):

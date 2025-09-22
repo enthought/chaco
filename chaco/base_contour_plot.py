@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-from numpy import array, isscalar, issubsctype, linspace, number
+from numpy import array, isscalar, issubdtype, linspace, number
 
 # Enthought library imports
 from enable.api import ColorTrait
@@ -135,7 +135,7 @@ class BaseContourPlot(Base2DPlot):
         # be converted via self._color_map_trait.
         else:
             if len(colors) in (3, 4) and (
-                isscalar(colors[0]) and issubsctype(type(colors[0]), number)
+                isscalar(colors[0]) and issubdtype(type(colors[0]), number)
             ):
                 self._color_map_trait = colors
                 self._colors = [self._color_map_trait_] * numcolors

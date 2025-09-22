@@ -10,7 +10,8 @@
 
 import unittest
 
-from numpy import alltrue, arange, array
+import numpy as np
+from numpy import arange, array
 from numpy.testing import assert_array_equal
 
 # Chaco imports
@@ -79,7 +80,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_orthogonal(self):
         self.segment_plot.render_style = "orthogonal"
@@ -95,7 +96,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_quad(self):
         self.segment_plot.render_style = "quad"
@@ -111,7 +112,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_cubic(self):
         self.segment_plot.render_style = "cubic"
@@ -127,7 +128,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_color(self):
         self.set_color_data()
@@ -135,7 +136,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_color_orthogonal(self):
         self.segment_plot.render_style = "orthogonal"
@@ -144,7 +145,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_color_quad(self):
         self.segment_plot.render_style = "quad"
@@ -153,7 +154,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_color_cubic(self):
         self.segment_plot.render_style = "cubic"
@@ -162,7 +163,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_width(self):
         self.set_width_data()
@@ -170,7 +171,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_width_orthogonal(self):
         self.segment_plot.render_style = "orthogonal"
@@ -179,7 +180,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_width_quad(self):
         self.segment_plot.render_style = "quad"
@@ -188,7 +189,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_width_cubic(self):
         self.segment_plot.render_style = "cubic"
@@ -197,7 +198,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_width_color(self):
         self.set_width_data()
@@ -206,7 +207,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_width_orthogonal_color(self):
         self.segment_plot.render_style = "orthogonal"
@@ -216,7 +217,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_width_quad_color(self):
         self.segment_plot.render_style = "quad"
@@ -226,7 +227,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_width_cubic_color(self):
         self.segment_plot.render_style = "cubic"
@@ -236,7 +237,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_alpha(self):
         self.segment_plot.alpha = 0.5
@@ -244,7 +245,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_orthogonal_alpha(self):
         self.segment_plot.render_style = "orthogonal"
@@ -253,7 +254,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_quad_alpha(self):
         self.segment_plot.render_style = "quad"
@@ -262,7 +263,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_cubic_alpha(self):
         self.segment_plot.render_style = "cubic"
@@ -271,7 +272,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_selection(self):
         mask = array([True, True, False, False, True])
@@ -290,7 +291,7 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
 
     def test_segment_selection_color(self):
         mask = array([True, True, False, False, True])
@@ -309,4 +310,4 @@ class SegmentPlotTest(unittest.TestCase):
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
         actual = gc.bmp_array[:, :, :]
-        self.assertFalse(alltrue(actual == 255))
+        self.assertFalse(np.all(actual == 255))
