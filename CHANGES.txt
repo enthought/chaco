@@ -15,11 +15,21 @@ Enhancements
 * Update code to work with recent numpy 2.x (#917)
 * Update minimum tested Python to 3.10
 
+Fixes
+
+* Fix typo in base_2d_plot.py (#915)
+
 Build/CI
 
 * Update pypi testing workflow (#917)
 * Update edm testing workflow (#917)
 * skip known failures #919 and #918 (#917)
+
+Thanks to all who contributed to the release:
+
+* Mark Asbach
+* Ioannis Tziakos
+
 
 Release 6.0.0
 -------------
