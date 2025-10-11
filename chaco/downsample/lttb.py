@@ -7,8 +7,8 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-
 import logging
+import platform
 
 logger = logging.getLogger(__name__)
 

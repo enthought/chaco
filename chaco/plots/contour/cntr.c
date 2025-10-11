@@ -32,8 +32,7 @@
 #ifdef NUMPY
 #include "numpy/arrayobject.h"
 # ifndef PyArray_SBYTE
-#  include "numpy/oldnumeric.h"
-#  include "numpy/old_defines.h"
+#   define PyArray_SBYTE NPY_INT8
 # endif
 #else
 # include "Numeric/arrayobject.h"
@@ -1717,7 +1716,7 @@ static PyMethodDef module_methods[] = {
 MOD_INIT(contour)
 {
     PyObject* m = NULL;
-  
+
     static struct PyModuleDef moduledef = {
         PyModuleDef_HEAD_INIT,
         "contour",     /* m_name */
@@ -1744,4 +1743,3 @@ MOD_INIT(contour)
     PyModule_AddObject(m, "Cntr", (PyObject *)&CntrType);
     RETURN_MODINIT;
 }
-

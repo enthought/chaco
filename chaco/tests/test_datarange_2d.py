@@ -11,7 +11,8 @@
 import unittest
 import warnings
 
-from numpy import alltrue, arange, array, ravel, transpose, zeros, inf, isinf
+import numpy as np
+from numpy import arange, array, ravel, transpose, zeros, inf, isinf
 from numpy.testing import assert_equal, assert_
 
 from chaco.api import DataRange2D, GridDataSource, PointDataSource
@@ -249,7 +250,7 @@ def assert_close_(desired, actual):
     diff = abs(ravel(actual) - ravel(desired))
     for d in diff:
         if not isinf(d):
-            assert_(alltrue(d <= diff_allowed))
+            assert_(np.all(d <= diff_allowed))
             return
 
 
