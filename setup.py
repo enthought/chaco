@@ -18,7 +18,7 @@ from setuptools import setup, Extension, find_packages
 from Cython.Build import cythonize
 
 MAJOR = 6
-MINOR = 0
+MINOR = 1
 MICRO = 0
 PRERELEASE = ""
 IS_RELEASED = True

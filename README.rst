@@ -32,7 +32,7 @@ Features
 
 Prerequisites
 -------------
-Chaco is only supported on Python >= 3.6.
+Chaco is only supported on Python >= 3.10.
 You must have the following libraries installed before building or installing
 Chaco:
 
