@@ -3,7 +3,7 @@ requires = ["cython", "numpy>=2", "setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.cibuildwheel]
-skip = "pp* *-manylinux_i686 *_ppc64le *_s390x *-musllinux* cp36-* cp37-* cp38-*"
+skip = "pp* *-manylinux_i686 *_ppc64le *_s390x *-musllinux* cp36-* cp37-* cp38-* cp39-*"
 
 [tool.cibuildwheel.macos]
 archs = "x86_64 universal2 arm64"
