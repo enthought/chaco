@@ -19,7 +19,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Set up QEMU
-      uses: docker/setup-qemu-action@v2
+      uses: docker/setup-qemu-action@v3.6.0
       with:
         platforms: arm64
       if: runner.os == 'Linux'
@@ -33,9 +33,10 @@ jobs:
       run: python -m pip install twine
 
     - name: Build wheels
-      uses: pypa/cibuildwheel@v2.11.2
+      uses: pypa/cibuildwheel@v3.2.1
 
     - name: Check and upload wheels
+      if: ${{ github.event_name == 'release' }}
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
@@ -63,6 +64,7 @@ jobs:
       run: python -m build --sdist
 
     - name: Publish sdist to PyPI
+      if: ${{ github.event_name == 'release' }}
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
