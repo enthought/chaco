@@ -36,6 +36,7 @@ jobs:
       uses: pypa/cibuildwheel@v3.2.1
 
     - name: Check and upload wheels
+      if: ${{ github.event_name == 'release' }}
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
@@ -63,6 +64,7 @@ jobs:
       run: python -m build --sdist
 
     - name: Publish sdist to PyPI
+      if: ${{ github.event_name == 'release' }}
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
