@@ -1,6 +1,21 @@
 Chaco CHANGELOG
 ===============
 
+Release 6.1.1
+-------------
+
+A bugfix release which updates pypi wheel upload workflow
+
+Thanks to all who contributed to the release:
+
+* Fix pypi upload workflow (#922)
+* Set correct minimum Python version in setup.py (#922)
+
+Thanks to all who contributed to the release:
+
+* Ioannis Tziakos
+
+
 Release 6.1.0
 -------------
 
