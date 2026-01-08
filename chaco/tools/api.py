@@ -29,6 +29,7 @@ from .point_marker import PointMarker
 from .range_selection import RangeSelection
 from .range_selection_2d import RangeSelection2D
 from .range_selection_overlay import RangeSelectionOverlay
+from .rectangle_selection import RectangleSelection
 from .rectangular_selection import RectangularSelection
 from .regression_lasso import RegressionLasso, RegressionOverlay
 from .save_tool import SaveTool
