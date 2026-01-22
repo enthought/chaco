@@ -624,6 +624,10 @@ class RangeSelection(AbstractController):
                 new_mask = (data_pts >= low) & (data_pts <= high)
                 selection_masks.append(new_mask)
                 self._selection_mask = new_mask
+            else:
+                # Reset datasource metadata if no points selected
+                del datasource.metadata[self.mask_metadata_name]
+                
             datasource.metadata_changed = {self.mask_metadata_name: val}
 
         self.trait_property_changed("selection", oldval, val)
