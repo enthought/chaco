@@ -8,7 +8,7 @@ on:
     - cron:  '0 0 * * 5'
 
 env:
-  INSTALL_EDM_VERSION: 3.2.3
+  INSTALL_EDM_VERSION: 4.1.7
 
 jobs:
 
@@ -30,7 +30,7 @@ jobs:
           path: ~/.cache
           key: ${{ runner.os }}-${{ matrix.toolkit }}-${{ hashFiles('ci/edmtool.py') }}
       - name: Set up EDM
-        uses: enthought/setup-edm-action@v2
+        uses: enthought/setup-edm-action@v4.2
         with:
           edm-version: ${{ env.INSTALL_EDM_VERSION }}
       - name: Install click to the default EDM environment
@@ -57,7 +57,7 @@ jobs:
           path: ~/.cache
           key: ${{ runner.os }}-${{ matrix.toolkit }}-${{ hashFiles('ci/edmtool.py') }}
       - name: Setup EDM
-        uses: enthought/setup-edm-action@v2
+        uses: enthought/setup-edm-action@v4.2
         with:
           edm-version: ${{ env.INSTALL_EDM_VERSION }}
       - name: Install click to the default EDM environment

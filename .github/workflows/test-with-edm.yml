@@ -7,7 +7,7 @@ name: Test with EDM
 on: pull_request
 
 env:
-  INSTALL_EDM_VERSION: 4.1.1
+  INSTALL_EDM_VERSION: 4.1.7
   PYTHONUNBUFFERED: 1
   EDM_CONFIG: '${{ github.workspace }}/ci/edm.yaml'
 
